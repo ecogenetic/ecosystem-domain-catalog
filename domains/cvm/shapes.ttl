@@ -80,3 +80,107 @@
         sh:minCount 1 ;
         sh:in ( "draft" "targeted" "launched" "measured" "closed" ) ;
     ] .
+
+:PropensityScoreShape a sh:NodeShape ;
+    sh:targetClass :PropensityScore ;
+    sh:property [
+        sh:path :estimatesCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :propensityValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:PredictiveModelShape a sh:NodeShape ;
+    sh:targetClass :PredictiveModel ;
+    sh:property [
+        sh:path :modelName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :modelStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "training" "validated" "deployed" "retired" ) ;
+    ] .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:property [
+        sh:path :productCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :productName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PricePlanShape a sh:NodeShape ;
+    sh:targetClass :PricePlan ;
+    sh:property [
+        sh:path :planName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :monthlyFee ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :planStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "active" "grandfathered" "retired" ) ;
+    ] .
+
+:NextBestActionShape a sh:NodeShape ;
+    sh:targetClass :NextBestAction ;
+    sh:property [
+        sh:path :recommendedForCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :recommendsOffer ;
+        sh:class :Offer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :expectedValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:TreatmentShape a sh:NodeShape ;
+    sh:targetClass :Treatment ;
+    sh:property [
+        sh:path :deliversOfferToCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :executesOffer ;
+        sh:class :Offer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :responseStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "selected" "delivered" "responded" "no_response" "suppressed" ) ;
+    ] .
+
+:ChannelShape a sh:NodeShape ;
+    sh:targetClass :Channel ;
+    sh:property [
+        sh:path :channelName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

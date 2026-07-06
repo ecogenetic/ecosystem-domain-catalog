@@ -1,0 +1,167 @@
+@prefix :     <https://ecosystemcode.com/ontology/cvm/telco#> .
+@prefix cvm:  <https://ecosystemcode.com/ontology/cvm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cvm/telco> a owl:Ontology ;
+    rdfs:label "CVM Telco Overlay" ;
+    rdfs:comment "Telco specialization of the CVM base ontology: subscribers, rate plans, bundles, usage-driven scoring, and ARPU-band base management." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Subscriber a owl:Class ;
+    rdfs:subClassOf cvm:Customer ;
+    skos:prefLabel "Subscriber" ;
+    skos:altLabel "SIM", "Line", "MSISDN Holder" ;
+    skos:definition "The service identity (per SIM/line, identified by MSISDN) whose usage, spend, and churn risk are managed; a customer may hold several." .
+
+:RatePlan a owl:Class ;
+    rdfs:subClassOf cvm:PricePlan ;
+    skos:prefLabel "Rate Plan" ;
+    skos:altLabel "Tariff", "Price Plan" ;
+    skos:definition "The telco tariff a subscriber is on; the central pricing construct that CVM migrations and save offers act upon." .
+
+:Bundle a owl:Class ;
+    rdfs:subClassOf cvm:Product ;
+    skos:prefLabel "Bundle" ;
+    skos:altLabel "Add-On", "Allowance Pack", "Data Bundle" ;
+    skos:definition "A packaged allowance (data, voice, SMS) sold on top of or within a rate plan; the most common CVM offer payload." .
+
+:UsageRecord a owl:Class ;
+    rdfs:subClassOf cvm:CustomerEvent ;
+    skos:prefLabel "Usage Record" ;
+    skos:altLabel "Usage Event", "CDR Aggregate", "Recharge Event" ;
+    skos:definition "An aggregated usage event (data session, call, recharge, top-up) that feeds value and churn scoring." .
+
+:ARPUBand a owl:Class ;
+    skos:prefLabel "ARPU Band" ;
+    skos:altLabel "Value Band", "Revenue Band" ;
+    skos:definition "The average-revenue-per-user band a subscriber falls into, used for segmentation and campaign targeting." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:belongsToCustomer a owl:ObjectProperty ;
+    rdfs:label "belongs to customer" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  cvm:Customer ;
+    skos:definition "The paying customer who holds this subscriber identity (SIM/line)." .
+
+:currentlyOnRatePlan a owl:ObjectProperty ;
+    rdfs:label "currently on rate plan" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  :RatePlan ;
+    skos:definition "The rate plan the subscriber is currently billed on." .
+
+:soldWithRatePlan a owl:ObjectProperty ;
+    rdfs:label "sold with rate plan" ;
+    rdfs:domain :Bundle ;
+    rdfs:range  :RatePlan ;
+    skos:definition "The rate plans a bundle can be sold on top of or within." .
+
+:usageOfSubscriber a owl:ObjectProperty ;
+    rdfs:label "usage of subscriber" ;
+    rdfs:domain :UsageRecord ;
+    rdfs:range  :Subscriber ;
+    skos:definition "The subscriber whose usage the record aggregates." .
+
+:classifiedInArpuBand a owl:ObjectProperty ;
+    rdfs:label "classified in ARPU band" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  :ARPUBand ;
+    skos:definition "The ARPU band the subscriber is currently classified into." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:msisdn a owl:DatatypeProperty ;
+    rdfs:label "msisdn" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  xsd:string ;
+    skos:definition "The mobile number identifying the subscriber; the operational identifier customers recognise." .
+
+:paymentType a owl:DatatypeProperty ;
+    rdfs:label "payment type" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  xsd:string ;
+    skos:definition "Whether the subscriber is prepaid or postpaid; drives different value and churn logic." .
+
+:daysSinceLastRecharge a owl:DatatypeProperty ;
+    rdfs:label "days since last recharge" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  xsd:integer ;
+    skos:definition "Days since the last recharge; the leading prepaid churn signal." .
+
+:dataAllowanceMb a owl:DatatypeProperty ;
+    rdfs:label "data allowance mb" ;
+    rdfs:domain :Bundle ;
+    rdfs:range  xsd:integer .
+
+:bundlePrice a owl:DatatypeProperty ;
+    rdfs:label "bundle price" ;
+    rdfs:domain :Bundle ;
+    rdfs:range  xsd:decimal .
+
+:arpuBandName a owl:DatatypeProperty ;
+    rdfs:label "arpu band name" ;
+    rdfs:domain :ARPUBand ;
+    rdfs:range  xsd:string .
+
+:arpuFloor a owl:DatatypeProperty ;
+    rdfs:label "arpu floor" ;
+    rdfs:domain :ARPUBand ;
+    rdfs:range  xsd:decimal .
+
+:arpuCeiling a owl:DatatypeProperty ;
+    rdfs:label "arpu ceiling" ;
+    rdfs:domain :ARPUBand ;
+    rdfs:range  xsd:decimal .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:BaseManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Base Manager" ;
+    skos:altLabel "Base Management Analyst", "Subscriber Base Manager" ;
+    skos:definition "Person role that owns the subscriber base plan: monitors ARPU bands, usage decay, and churn cohorts, and commissions campaigns. Bearer: person. Permissions: Subscriber:read, ARPUBand:read, UsageRecord:read, Campaign:read, Campaign:write, Segment:read." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:SubscriberShape a sh:NodeShape ;
+    sh:targetClass :Subscriber ;
+    sh:property [
+        sh:path :msisdn ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :currentlyOnRatePlan ;
+        sh:class :RatePlan ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :paymentType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "prepaid" "postpaid" ) ;
+    ] .
+
+:BundleShape a sh:NodeShape ;
+    sh:targetClass :Bundle ;
+    sh:property [
+        sh:path :bundlePrice ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .

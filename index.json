@@ -48,28 +48,39 @@
       "icon": "TrendingUp",
       "chips": [
         "Segment",
-        "Offer",
+        "NextBestAction",
         "Campaign"
       ],
       "entities": [
         "Customer",
         "Segment",
+        "CustomerEvent",
         "ValueScore",
         "ChurnRisk",
+        "PropensityScore",
+        "PredictiveModel",
+        "Product",
+        "PricePlan",
+        "EligibilityRule",
         "Offer",
-        "Campaign"
+        "NextBestAction",
+        "Treatment",
+        "Channel",
+        "Campaign",
+        "ControlGroup"
       ],
-      "capability": "segment customers, score lifetime value and churn risk, and target offers and campaigns to grow customer value",
-      "benefit": "marketing and retention teams grow revenue per customer and reduce churn with measurable uplift",
-      "workflow": "Segment customers → score value and churn risk → design offer → launch campaign → measure uplift",
+      "capability": "score customer value, churn, and propensity, match products and pricing to segments, and deliver next-best-action offers with measured uplift",
+      "benefit": "marketing, pricing, and retention decisions are evidence-based and grow revenue per customer",
+      "workflow": "Ingest events → score value and churn → segment → match products and pricing → decide next best action → deliver treatments → measure uplift vs control",
       "statefulEntity": "Campaign (draft → targeted → launched → measured → closed)",
       "industries": [
-        "gambling"
+        "gambling",
+        "telco"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "erp",
