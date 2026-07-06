@@ -1,0 +1,90 @@
+@prefix :     <https://ecosystemcode.com/ontology/crm/banking#> .
+@prefix crm:  <https://ecosystemcode.com/ontology/crm#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/crm/banking> a owl:Ontology ;
+    rdfs:label "CRM Banking Overlay" ;
+    rdfs:comment "Banking specialization of the CRM base ontology: client parties, KYC-gated onboarding, mandates, and relationship management." .
+
+:ClientParty a owl:Class ;
+    rdfs:subClassOf crm:Contact ;
+    skos:prefLabel "Client Party" ;
+    skos:altLabel "Client", "Banking Customer" ;
+    skos:definition "A contact who is a verified banking client; onboarding requires a completed KYC profile." .
+
+:CorporateClient a owl:Class ;
+    rdfs:subClassOf crm:Account ;
+    skos:prefLabel "Corporate Client" ;
+    skos:altLabel "Counterparty", "Business Client" ;
+    skos:definition "An account representing a corporate banking relationship with its own mandates and signatories." .
+
+:KYCProfile a owl:Class ;
+    rdfs:subClassOf bank:KYCProfile ;
+    skos:prefLabel "KYC Profile" ;
+    skos:altLabel "Identity Verification Record" ;
+    skos:definition "The verified identity record gating client onboarding; must be verified before opportunities can be closed." .
+
+:Mandate a owl:Class ;
+    rdfs:subClassOf bank:Mandate ;
+    skos:prefLabel "Mandate" ;
+    skos:altLabel "Signing Authority" ;
+    skos:definition "An authorisation allowing a person to operate accounts or approve instructions for a corporate client." .
+
+:clientHasKycProfile a owl:ObjectProperty ;
+    rdfs:label "client has kyc profile" ;
+    rdfs:domain :ClientParty ;
+    rdfs:range  :KYCProfile ;
+    skos:definition "Links a client party to the KYC profile that verifies their identity (exactly one active profile)." .
+
+:mandateForCorporateClient a owl:ObjectProperty ;
+    rdfs:label "mandate for corporate client" ;
+    rdfs:domain :Mandate ;
+    rdfs:range  :CorporateClient ;
+    skos:definition "The corporate client whose accounts the mandate authorises." .
+
+:mandateHeldByClient a owl:ObjectProperty ;
+    rdfs:label "mandate held by client" ;
+    rdfs:domain :Mandate ;
+    rdfs:range  :ClientParty ;
+    skos:definition "The person authorised to act under the mandate." .
+
+:kycStatus a owl:DatatypeProperty ;
+    rdfs:label "kyc status" ;
+    rdfs:domain :KYCProfile ;
+    rdfs:range  xsd:string ;
+    skos:definition "Verification state: pending, verified, rejected, expired." .
+
+:riskRating a owl:DatatypeProperty ;
+    rdfs:label "risk rating" ;
+    rdfs:domain :ClientParty ;
+    rdfs:range  xsd:string ;
+    skos:definition "AML risk classification of the client: low, medium, high." .
+
+:RelationshipManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Relationship Manager" ;
+    skos:altLabel "RM", "Private Banker" ;
+    skos:definition "Person role that owns a portfolio of client relationships and progresses opportunities. Bearer: person. Permissions: ClientParty:read, ClientParty:write, Opportunity:read, Opportunity:write, KYCProfile:read." .
+
+:KYCProfileShape a sh:NodeShape ;
+    sh:targetClass :KYCProfile ;
+    sh:property [
+        sh:path :kycStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "pending" "verified" "rejected" "expired" ) ;
+    ] .
+
+:ClientPartyShape a sh:NodeShape ;
+    sh:targetClass :ClientParty ;
+    sh:property [
+        sh:path :clientHasKycProfile ;
+        sh:class :KYCProfile ;
+        sh:minCount 1 ;
+    ] .

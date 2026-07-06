@@ -1,0 +1,81 @@
+@prefix :     <https://ecosystemcode.com/ontology/fms/banking#> .
+@prefix fms:  <https://ecosystemcode.com/ontology/fms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/fms/banking> a owl:Ontology ;
+    rdfs:label "FMS Banking Overlay" ;
+    rdfs:comment "Banking specialization of Financial Management: nostro accounts, suspense control, intraday positions, and regulatory reporting lines." .
+
+:NostroAccount a owl:Class ;
+    rdfs:subClassOf fms:ChartOfAccount ;
+    skos:prefLabel "Nostro Account" ;
+    skos:altLabel "Correspondent Account" ;
+    skos:definition "An account the bank holds with a correspondent bank in another currency, reconciled daily." .
+
+:SuspenseAccount a owl:Class ;
+    rdfs:subClassOf fms:ChartOfAccount ;
+    skos:prefLabel "Suspense Account" ;
+    skos:altLabel "Control Account" ;
+    skos:definition "A temporary holding account for unmatched postings; balances must clear within policy age limits." .
+
+:IntradayPosition a owl:Class ;
+    skos:prefLabel "Intraday Position" ;
+    skos:altLabel "Liquidity Position" ;
+    skos:definition "The running balance of a currency or account during the business day, monitored for liquidity limits." .
+
+:positionOnAccount a owl:ObjectProperty ;
+    rdfs:label "position on account" ;
+    rdfs:domain :IntradayPosition ;
+    rdfs:range  fms:ChartOfAccount ;
+    skos:definition "The account the intraday position tracks." .
+
+:nostroReconciledBy a owl:ObjectProperty ;
+    rdfs:label "nostro reconciled by" ;
+    rdfs:domain :NostroAccount ;
+    rdfs:range  fms:Reconciliation ;
+    skos:definition "The daily reconciliation covering this nostro account." .
+
+:suspenseClearedByEntry a owl:ObjectProperty ;
+    rdfs:label "suspense cleared by entry" ;
+    rdfs:domain :SuspenseAccount ;
+    rdfs:range  fms:JournalEntry ;
+    skos:definition "The journal entry that clears an aged suspense balance." .
+
+:suspenseAgeDays a owl:DatatypeProperty ;
+    rdfs:label "suspense age days" ;
+    rdfs:domain :SuspenseAccount ;
+    rdfs:range  xsd:integer ;
+    skos:definition "Age in days of the oldest unmatched item in the suspense account." .
+
+:positionCurrency a owl:DatatypeProperty ;
+    rdfs:label "position currency" ;
+    rdfs:domain :IntradayPosition ;
+    rdfs:range  xsd:string ;
+    skos:definition "ISO 4217 currency code of the position." .
+
+:FinancialControlOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Financial Control Officer" ;
+    skos:altLabel "Head of Financial Control" ;
+    skos:definition "Person role that owns suspense clearance and nostro reconciliation sign-off. Bearer: person. Permissions: SuspenseAccount:read, Reconciliation:read, Reconciliation:approve, JournalEntry:read." .
+
+:NostroAccountShape a sh:NodeShape ;
+    sh:targetClass :NostroAccount ;
+    sh:property [
+        sh:path :nostroReconciledBy ;
+        sh:class fms:Reconciliation ;
+        sh:minCount 1 ;
+    ] .
+
+:IntradayPositionShape a sh:NodeShape ;
+    sh:targetClass :IntradayPosition ;
+    sh:property [
+        sh:path :positionCurrency ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

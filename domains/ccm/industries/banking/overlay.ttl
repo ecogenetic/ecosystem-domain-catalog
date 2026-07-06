@@ -1,0 +1,87 @@
+@prefix :     <https://ecosystemcode.com/ontology/ccm/banking#> .
+@prefix ccm:  <https://ecosystemcode.com/ontology/ccm#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/ccm/banking> a owl:Ontology ;
+    rdfs:label "CCM Banking Overlay" ;
+    rdfs:comment "Banking specialization of Credit & Collections: facilities, covenants, regulatory provisioning, and maker-checker limit approval." .
+
+:CreditFacility a owl:Class ;
+    rdfs:subClassOf ccm:CreditLimit ;
+    skos:prefLabel "Credit Facility" ;
+    skos:altLabel "Facility", "Line of Credit" ;
+    skos:definition "A formal lending arrangement (overdraft, term loan, revolving line) with limit, tenor, and covenants." .
+
+:Covenant a owl:Class ;
+    skos:prefLabel "Covenant" ;
+    skos:altLabel "Facility Condition" ;
+    skos:definition "A condition attached to a credit facility (financial ratio, reporting duty) whose breach triggers review." .
+
+:ProvisionEntry a owl:Class ;
+    skos:prefLabel "Provision Entry" ;
+    skos:altLabel "Impairment", "Expected Credit Loss" ;
+    skos:definition "The expected-credit-loss amount recognised against an exposure per the applicable accounting standard." .
+
+:covenantOnFacility a owl:ObjectProperty ;
+    rdfs:label "covenant on facility" ;
+    rdfs:domain :Covenant ;
+    rdfs:range  :CreditFacility ;
+    skos:definition "The facility this covenant conditions." .
+
+:provisionAgainstExposure a owl:ObjectProperty ;
+    rdfs:label "provision against exposure" ;
+    rdfs:domain :ProvisionEntry ;
+    rdfs:range  ccm:CreditExposure ;
+    skos:definition "The exposure the provision covers." .
+
+:facilityForParty a owl:ObjectProperty ;
+    rdfs:label "facility for party" ;
+    rdfs:domain :CreditFacility ;
+    rdfs:range  bank:Party ;
+    skos:definition "The banking party the facility is granted to." .
+
+:facilityTenorMonths a owl:DatatypeProperty ;
+    rdfs:label "facility tenor months" ;
+    rdfs:domain :CreditFacility ;
+    rdfs:range  xsd:integer ;
+    skos:definition "Contractual duration of the facility in months." .
+
+:provisionStage a owl:DatatypeProperty ;
+    rdfs:label "provision stage" ;
+    rdfs:domain :ProvisionEntry ;
+    rdfs:range  xsd:string ;
+    skos:definition "Impairment stage: stage1, stage2, stage3." .
+
+:CreditCommitteeMemberRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Credit Committee Member" ;
+    skos:altLabel "Credit Approver" ;
+    skos:definition "Person role that approves facilities above delegated limits (maker-checker). Bearer: person. Permissions: CreditFacility:read, CreditFacility:approve, CreditExposure:read." .
+
+:CreditFacilityShape a sh:NodeShape ;
+    sh:targetClass :CreditFacility ;
+    sh:property [
+        sh:path :facilityForParty ;
+        sh:class bank:Party ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :facilityTenorMonths ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:ProvisionEntryShape a sh:NodeShape ;
+    sh:targetClass :ProvisionEntry ;
+    sh:property [
+        sh:path :provisionStage ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "stage1" "stage2" "stage3" ) ;
+    ] .

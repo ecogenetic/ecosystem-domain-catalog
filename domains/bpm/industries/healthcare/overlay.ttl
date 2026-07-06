@@ -1,0 +1,88 @@
+@prefix :     <https://ecosystemcode.com/ontology/bpm/healthcare#> .
+@prefix bpm:  <https://ecosystemcode.com/ontology/bpm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bpm/healthcare> a owl:Ontology ;
+    rdfs:label "BPM Healthcare Overlay" ;
+    rdfs:comment "Healthcare specialization of BPM: care pathways, clinical tasks, consent gates, and clinical governance roles." .
+
+:CarePathway a owl:Class ;
+    rdfs:subClassOf bpm:ProcessDefinition ;
+    skos:prefLabel "Care Pathway" ;
+    skos:altLabel "Clinical Pathway", "Protocol" ;
+    skos:definition "A clinically approved process definition describing the sequence of care activities for a condition." .
+
+:ClinicalTask a owl:Class ;
+    rdfs:subClassOf bpm:Task ;
+    skos:prefLabel "Clinical Task" ;
+    skos:altLabel "Care Activity" ;
+    skos:definition "A task in a care pathway performed by a clinician, subject to scope-of-practice rules." .
+
+:PatientCase a owl:Class ;
+    rdfs:subClassOf bpm:Case ;
+    skos:prefLabel "Patient Case" ;
+    skos:altLabel "Care Episode" ;
+    skos:definition "A case instance tracking one patient's journey through a care pathway." .
+
+:ConsentRecord a owl:Class ;
+    skos:prefLabel "Consent Record" ;
+    skos:altLabel "Patient Consent" ;
+    skos:definition "Documented patient consent that gates clinical tasks and data sharing within a case." .
+
+:caseFollowsPathway a owl:ObjectProperty ;
+    rdfs:label "case follows pathway" ;
+    rdfs:domain :PatientCase ;
+    rdfs:range  :CarePathway ;
+    skos:definition "The care pathway the patient case is executing." .
+
+:consentForCase a owl:ObjectProperty ;
+    rdfs:label "consent for case" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range  :PatientCase ;
+    skos:definition "The patient case the consent applies to." .
+
+:taskRequiresConsent a owl:ObjectProperty ;
+    rdfs:label "task requires consent" ;
+    rdfs:domain :ClinicalTask ;
+    rdfs:range  :ConsentRecord ;
+    skos:definition "A clinical task that must not start until the referenced consent is granted." .
+
+:consentStatus a owl:DatatypeProperty ;
+    rdfs:label "consent status" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range  xsd:string ;
+    skos:definition "Consent state: requested, granted, declined, withdrawn." .
+
+:acuityLevel a owl:DatatypeProperty ;
+    rdfs:label "acuity level" ;
+    rdfs:domain :PatientCase ;
+    rdfs:range  xsd:string ;
+    skos:definition "Clinical urgency of the case: routine, urgent, emergency." .
+
+:ClinicalGovernanceLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Clinical Governance Lead" ;
+    skos:altLabel "Medical Director Delegate" ;
+    skos:definition "Person role that approves care pathways and reviews escalated patient cases. Bearer: person. Permissions: CarePathway:read, CarePathway:approve, PatientCase:read, SLA:read." .
+
+:ConsentRecordShape a sh:NodeShape ;
+    sh:targetClass :ConsentRecord ;
+    sh:property [
+        sh:path :consentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "requested" "granted" "declined" "withdrawn" ) ;
+    ] .
+
+:PatientCaseShape a sh:NodeShape ;
+    sh:targetClass :PatientCase ;
+    sh:property [
+        sh:path :caseFollowsPathway ;
+        sh:class :CarePathway ;
+        sh:minCount 1 ;
+    ] .

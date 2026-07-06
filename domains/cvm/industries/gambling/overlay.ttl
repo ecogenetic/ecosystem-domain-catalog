@@ -1,0 +1,84 @@
+@prefix :     <https://ecosystemcode.com/ontology/cvm/gambling#> .
+@prefix cvm:  <https://ecosystemcode.com/ontology/cvm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cvm/gambling> a owl:Ontology ;
+    rdfs:label "CVM Gambling Overlay" ;
+    rdfs:comment "Gaming & gambling specialization of the CVM base ontology: players, responsible-gambling limits, and safer-gambling-aware value management." .
+
+:Player a owl:Class ;
+    rdfs:subClassOf cvm:Customer ;
+    skos:prefLabel "Player" ;
+    skos:altLabel "Punter", "Account Holder" ;
+    skos:definition "A customer who wagers on games or bets; the primary customer term in gambling." .
+
+:PlayerSegment a owl:Class ;
+    rdfs:subClassOf cvm:Segment ;
+    skos:prefLabel "Player Segment" ;
+    skos:altLabel "Player Tier" ;
+    skos:definition "A segment of players sharing wagering behaviour, value, and risk characteristics (e.g. casual, VIP, at-risk)." .
+
+:ResponsibleGamblingLimit a owl:Class ;
+    skos:prefLabel "Responsible Gambling Limit" ;
+    skos:altLabel "Safer Gambling Limit", "Deposit Limit" ;
+    skos:definition "A player-set or operator-imposed limit (deposit, loss, session time) that campaigns and offers must respect." .
+
+:SaferGamblingFlag a owl:Class ;
+    skos:prefLabel "Safer Gambling Flag" ;
+    skos:altLabel "RG Flag", "At-Risk Marker" ;
+    skos:definition "A marker on a player indicating detected at-risk behaviour or self-exclusion; excludes the player from value campaigns." .
+
+:limitSetByPlayer a owl:ObjectProperty ;
+    rdfs:label "limit set by player" ;
+    rdfs:domain :ResponsibleGamblingLimit ;
+    rdfs:range  :Player ;
+    skos:definition "The player the limit applies to." .
+
+:flagRaisedOnPlayer a owl:ObjectProperty ;
+    rdfs:label "flag raised on player" ;
+    rdfs:domain :SaferGamblingFlag ;
+    rdfs:range  :Player ;
+    skos:definition "The player carrying the safer-gambling flag." .
+
+:offerRespectsLimit a owl:ObjectProperty ;
+    rdfs:label "offer respects limit" ;
+    rdfs:domain cvm:Offer ;
+    rdfs:range  :ResponsibleGamblingLimit ;
+    skos:definition "Records that an offer was checked against the player's active limits before being sent." .
+
+:limitType a owl:DatatypeProperty ;
+    rdfs:label "limit type" ;
+    rdfs:domain :ResponsibleGamblingLimit ;
+    rdfs:range  xsd:string ;
+    skos:definition "Kind of limit: deposit, loss, wager, session-time, self-exclusion." .
+
+:limitAmount a owl:DatatypeProperty ;
+    rdfs:label "limit amount" ;
+    rdfs:domain :ResponsibleGamblingLimit ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "The monetary or time value of the limit." .
+
+:ResponsibleGamblingOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Responsible Gambling Officer" ;
+    skos:altLabel "Safer Gambling Analyst" ;
+    skos:definition "Person role that reviews at-risk players and enforces limits and exclusions. Bearer: person. Permissions: Player:read, SaferGamblingFlag:read, SaferGamblingFlag:write, ResponsibleGamblingLimit:read, ResponsibleGamblingLimit:write." .
+
+:ResponsibleGamblingLimitShape a sh:NodeShape ;
+    sh:targetClass :ResponsibleGamblingLimit ;
+    sh:property [
+        sh:path :limitType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "deposit" "loss" "wager" "session-time" "self-exclusion" ) ;
+    ] ;
+    sh:property [
+        sh:path :limitSetByPlayer ;
+        sh:class :Player ;
+        sh:minCount 1 ;
+    ] .

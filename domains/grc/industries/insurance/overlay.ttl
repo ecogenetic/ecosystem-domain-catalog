@@ -1,0 +1,84 @@
+@prefix :     <https://ecosystemcode.com/ontology/grc/insurance#> .
+@prefix grc:  <https://ecosystemcode.com/ontology/grc#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/grc/insurance> a owl:Ontology ;
+    rdfs:label "GRC Insurance Overlay" ;
+    rdfs:comment "Insurance specialization of GRC: solvency and conduct-risk categories, actuarial sign-off, and regulatory returns." .
+
+:SolvencyRisk a owl:Class ;
+    rdfs:subClassOf grc:Risk ;
+    skos:prefLabel "Solvency Risk" ;
+    skos:altLabel "Capital Adequacy Risk" ;
+    skos:definition "Risk that the insurer's capital falls below regulatory solvency requirements." .
+
+:ConductRisk a owl:Class ;
+    rdfs:subClassOf grc:Risk ;
+    skos:prefLabel "Conduct Risk" ;
+    skos:altLabel "Customer Treatment Risk" ;
+    skos:definition "Risk of unfair customer outcomes from product design, sales, or claims handling." .
+
+:RegulatoryReturn a owl:Class ;
+    skos:prefLabel "Regulatory Return" ;
+    skos:altLabel "Supervisory Filing" ;
+    skos:definition "A periodic filing to the insurance regulator (solvency, conduct, statistics) with a due date and sign-off." .
+
+:ActuarialSignOff a owl:Class ;
+    skos:prefLabel "Actuarial Sign-Off" ;
+    skos:altLabel "Actuarial Opinion" ;
+    skos:definition "Formal approval by the appointed actuary that reserves and solvency figures in a return are sound." .
+
+:returnCoversAssessment a owl:ObjectProperty ;
+    rdfs:label "return covers assessment" ;
+    rdfs:domain :RegulatoryReturn ;
+    rdfs:range  grc:Assessment ;
+    skos:definition "The risk assessment period the return reports on." .
+
+:signOffForReturn a owl:ObjectProperty ;
+    rdfs:label "sign off for return" ;
+    rdfs:domain :ActuarialSignOff ;
+    rdfs:range  :RegulatoryReturn ;
+    skos:definition "The regulatory return this sign-off approves." .
+
+:controlMitigatesSolvencyRisk a owl:ObjectProperty ;
+    rdfs:label "control mitigates solvency risk" ;
+    rdfs:domain grc:Control ;
+    rdfs:range  :SolvencyRisk ;
+    skos:definition "Links a control to the solvency risk it mitigates." .
+
+:returnDueDate a owl:DatatypeProperty ;
+    rdfs:label "return due date" ;
+    rdfs:domain :RegulatoryReturn ;
+    rdfs:range  xsd:date ;
+    skos:definition "Regulatory deadline for filing the return." .
+
+:returnStatus a owl:DatatypeProperty ;
+    rdfs:label "return status" ;
+    rdfs:domain :RegulatoryReturn ;
+    rdfs:range  xsd:string ;
+    skos:definition "Filing state: draft, signed-off, filed, queried." .
+
+:AppointedActuaryRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Appointed Actuary" ;
+    skos:altLabel "Head of Actuarial Function" ;
+    skos:definition "Person role that signs off reserves and solvency positions in regulatory returns. Bearer: person. Permissions: RegulatoryReturn:read, ActuarialSignOff:write, Risk:read, Assessment:read." .
+
+:RegulatoryReturnShape a sh:NodeShape ;
+    sh:targetClass :RegulatoryReturn ;
+    sh:property [
+        sh:path :returnDueDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :returnStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "signed-off" "filed" "queried" ) ;
+    ] .

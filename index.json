@@ -7,13 +7,27 @@
       "name": "Customer Relationship Management",
       "description": "Customer Relationship Management",
       "icon": "Users",
-      "chips": ["Contact", "Account", "Opportunity"],
-      "entities": ["Contact", "Account", "Opportunity", "Pipeline", "Activity", "Lead"],
+      "chips": [
+        "Contact",
+        "Account",
+        "Opportunity"
+      ],
+      "entities": [
+        "Contact",
+        "Account",
+        "Opportunity",
+        "Pipeline",
+        "Activity",
+        "Lead"
+      ],
       "capability": "capture leads, manage accounts and contacts, and progress opportunities through pipeline stages",
       "benefit": "sales teams share one forecastable view of every customer relationship",
       "workflow": "Capture lead → qualify → open opportunity → log activities → close won or lost",
       "statefulEntity": "Opportunity (pipeline stages: lead → qualified → proposal → won/lost)",
-      "industries": [],
+      "industries": [
+        "banking",
+        "telco"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
@@ -25,13 +39,26 @@
       "name": "Customer Value Management",
       "description": "Customer Value Management",
       "icon": "TrendingUp",
-      "chips": ["Segment", "Offer", "Campaign"],
-      "entities": ["Customer", "Segment", "ValueScore", "ChurnRisk", "Offer", "Campaign"],
+      "chips": [
+        "Segment",
+        "Offer",
+        "Campaign"
+      ],
+      "entities": [
+        "Customer",
+        "Segment",
+        "ValueScore",
+        "ChurnRisk",
+        "Offer",
+        "Campaign"
+      ],
       "capability": "segment customers, score lifetime value and churn risk, and target offers and campaigns to grow customer value",
       "benefit": "marketing and retention teams grow revenue per customer and reduce churn with measurable uplift",
       "workflow": "Segment customers → score value and churn risk → design offer → launch campaign → measure uplift",
       "statefulEntity": "Campaign (draft → targeted → launched → measured → closed)",
-      "industries": [],
+      "industries": [
+        "gambling"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
@@ -43,8 +70,19 @@
       "name": "Enterprise Resource Planning",
       "description": "Enterprise Resource Planning",
       "icon": "Building2",
-      "chips": ["Product", "Vendor", "Invoice"],
-      "entities": ["Product", "Vendor", "Invoice", "PurchaseOrder", "Warehouse", "Ledger"],
+      "chips": [
+        "Product",
+        "Vendor",
+        "Invoice"
+      ],
+      "entities": [
+        "Product",
+        "Vendor",
+        "Invoice",
+        "PurchaseOrder",
+        "Warehouse",
+        "Ledger"
+      ],
       "capability": "manage products, vendors, purchase orders, inventory, and financial postings",
       "benefit": "finance and operations work from a single source of enterprise truth",
       "workflow": "Create requisition → approve purchase order → receive goods → match invoice → post to ledger",
@@ -61,8 +99,19 @@
       "name": "Human Capital Management",
       "description": "Human Capital Management",
       "icon": "UserCircle",
-      "chips": ["Employee", "Payroll", "Leave"],
-      "entities": ["Employee", "Department", "Position", "Payroll", "LeaveRequest", "Appraisal"],
+      "chips": [
+        "Employee",
+        "Payroll",
+        "Leave"
+      ],
+      "entities": [
+        "Employee",
+        "Department",
+        "Position",
+        "Payroll",
+        "LeaveRequest",
+        "Appraisal"
+      ],
       "capability": "maintain employee records, org structure, leave requests, and payroll inputs",
       "benefit": "HR and managers handle workforce changes with consistent approvals",
       "workflow": "Onboard employee → assign position → submit leave → approve → reflect in payroll",
@@ -79,8 +128,19 @@
       "name": "Supply Chain Management",
       "description": "Supply Chain Management",
       "icon": "Truck",
-      "chips": ["Supplier", "Order", "Route"],
-      "entities": ["Supplier", "Shipment", "Inventory", "FulfillmentOrder", "Route", "Carrier"],
+      "chips": [
+        "Supplier",
+        "Order",
+        "Route"
+      ],
+      "entities": [
+        "Supplier",
+        "Shipment",
+        "Inventory",
+        "FulfillmentOrder",
+        "Route",
+        "Carrier"
+      ],
       "capability": "coordinate suppliers, inventory levels, fulfillment orders, and shipments",
       "benefit": "supply chain teams resolve stock-outs and delays before they hit customers",
       "workflow": "Forecast demand → place supplier order → receive inventory → fulfill customer order → ship",
@@ -97,8 +157,19 @@
       "name": "Warehouse Management System",
       "description": "Warehouse Management System",
       "icon": "Package",
-      "chips": ["Location", "Pick", "Ship"],
-      "entities": ["Warehouse", "BinLocation", "PickList", "StockLevel", "Receipt", "Shipment"],
+      "chips": [
+        "Location",
+        "Pick",
+        "Ship"
+      ],
+      "entities": [
+        "Warehouse",
+        "BinLocation",
+        "PickList",
+        "StockLevel",
+        "Receipt",
+        "Shipment"
+      ],
       "capability": "control bin locations, pick lists, stock levels, receipts, and outbound shipments",
       "benefit": "warehouse staff pick and ship orders accurately and on time",
       "workflow": "Receive stock → put away → allocate pick list → pick → pack → ship",
@@ -115,8 +186,19 @@
       "name": "Transportation Management System",
       "description": "Transportation Management",
       "icon": "MapPin",
-      "chips": ["Carrier", "Route", "Load"],
-      "entities": ["Carrier", "Route", "LoadPlan", "Shipment", "FreightRate", "DeliveryStop"],
+      "chips": [
+        "Carrier",
+        "Route",
+        "Load"
+      ],
+      "entities": [
+        "Carrier",
+        "Route",
+        "LoadPlan",
+        "Shipment",
+        "FreightRate",
+        "DeliveryStop"
+      ],
       "capability": "plan carriers, routes, loads, and freight rates for deliveries",
       "benefit": "logistics teams reduce cost while meeting delivery commitments",
       "workflow": "Create shipment → plan route and load → assign carrier → track stops → confirm delivery",
@@ -133,8 +215,19 @@
       "name": "Order Management System",
       "description": "Order Management System",
       "icon": "ClipboardList",
-      "chips": ["Order", "Fulfillment", "Return"],
-      "entities": ["Order", "OrderLine", "Fulfillment", "Return", "Allocation", "Channel"],
+      "chips": [
+        "Order",
+        "Fulfillment",
+        "Return"
+      ],
+      "entities": [
+        "Order",
+        "OrderLine",
+        "Fulfillment",
+        "Return",
+        "Allocation",
+        "Channel"
+      ],
       "capability": "ingest orders from channels, allocate inventory, fulfill, and handle returns",
       "benefit": "operations teams fulfill omnichannel orders without manual reconciliation",
       "workflow": "Receive order → allocate inventory → pick and pack → ship → process return if needed",
@@ -151,8 +244,19 @@
       "name": "Product Lifecycle Management",
       "description": "Product Lifecycle Management",
       "icon": "Layers",
-      "chips": ["BOM", "Revision", "Change"],
-      "entities": ["Product", "BillOfMaterials", "EngineeringChange", "Revision", "Part", "Workflow"],
+      "chips": [
+        "BOM",
+        "Revision",
+        "Change"
+      ],
+      "entities": [
+        "Product",
+        "BillOfMaterials",
+        "EngineeringChange",
+        "Revision",
+        "Part",
+        "Workflow"
+      ],
       "capability": "manage product revisions, bills of material, and engineering change orders",
       "benefit": "engineering and manufacturing build from approved product definitions",
       "workflow": "Create part → define BOM → submit engineering change → review → release revision",
@@ -169,8 +273,19 @@
       "name": "Product Information Management",
       "description": "Product Information Management",
       "icon": "Tags",
-      "chips": ["Catalog", "Attribute", "Channel"],
-      "entities": ["Product", "Attribute", "Category", "Catalog", "Variant", "Publication"],
+      "chips": [
+        "Catalog",
+        "Attribute",
+        "Channel"
+      ],
+      "entities": [
+        "Product",
+        "Attribute",
+        "Category",
+        "Catalog",
+        "Variant",
+        "Publication"
+      ],
       "capability": "maintain product attributes, categories, catalogs, and channel publications",
       "benefit": "merchandising teams publish accurate product data everywhere it is sold",
       "workflow": "Create product → enrich attributes → assign category → publish to catalog channel",
@@ -187,8 +302,19 @@
       "name": "Master Data Management",
       "description": "Master Data Management",
       "icon": "Database",
-      "chips": ["Golden Record", "Match", "Hierarchy"],
-      "entities": ["MasterRecord", "DataDomain", "MatchRule", "Hierarchy", "Steward", "Lineage"],
+      "chips": [
+        "Golden Record",
+        "Match",
+        "Hierarchy"
+      ],
+      "entities": [
+        "MasterRecord",
+        "DataDomain",
+        "MatchRule",
+        "Hierarchy",
+        "Steward",
+        "Lineage"
+      ],
       "capability": "govern golden records, hierarchies, match rules, and data stewardship tasks",
       "benefit": "the organization trusts one authoritative master for each data domain",
       "workflow": "Ingest source record → match and merge → steward review → publish golden record",
@@ -205,13 +331,26 @@
       "name": "Business Process Management",
       "description": "Business Process Management",
       "icon": "Workflow",
-      "chips": ["Process", "Task", "SLA"],
-      "entities": ["ProcessDefinition", "Task", "Case", "SLA", "Form", "Decision"],
+      "chips": [
+        "Process",
+        "Task",
+        "SLA"
+      ],
+      "entities": [
+        "ProcessDefinition",
+        "Task",
+        "Case",
+        "SLA",
+        "Form",
+        "Decision"
+      ],
       "capability": "run process definitions, human tasks, cases, and SLA-tracked workflows",
       "benefit": "teams execute repeatable processes with visible bottlenecks and escalations",
       "workflow": "Start case → assign tasks → complete forms → decision gateway → close case",
       "statefulEntity": "Case (started → in progress → decision → closed)",
-      "industries": [],
+      "industries": [
+        "healthcare"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
@@ -223,13 +362,26 @@
       "name": "Governance, Risk & Compliance",
       "description": "Governance, Risk & Compliance",
       "icon": "Scale",
-      "chips": ["Control", "Risk", "Audit"],
-      "entities": ["Control", "Risk", "Policy", "AuditFinding", "Evidence", "Assessment"],
+      "chips": [
+        "Control",
+        "Risk",
+        "Audit"
+      ],
+      "entities": [
+        "Control",
+        "Risk",
+        "Policy",
+        "AuditFinding",
+        "Evidence",
+        "Assessment"
+      ],
       "capability": "track controls, risks, policies, audit findings, and remediation evidence",
       "benefit": "compliance teams prove adherence and close gaps before audits",
       "workflow": "Assess risk → map control → collect evidence → record finding → remediate",
       "statefulEntity": "AuditFinding (identified → remediated → verified → closed)",
-      "industries": [],
+      "industries": [
+        "insurance"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
@@ -241,8 +393,19 @@
       "name": "Enterprise Asset Management",
       "description": "Enterprise Asset Management",
       "icon": "Wrench",
-      "chips": ["Asset", "Work Order", "PM"],
-      "entities": ["Asset", "WorkOrder", "MaintenancePlan", "SparePart", "Location", "MeterReading"],
+      "chips": [
+        "Asset",
+        "Work Order",
+        "PM"
+      ],
+      "entities": [
+        "Asset",
+        "WorkOrder",
+        "MaintenancePlan",
+        "SparePart",
+        "Location",
+        "MeterReading"
+      ],
       "capability": "maintain assets, work orders, maintenance plans, and spare parts",
       "benefit": "reliability teams reduce downtime through planned maintenance",
       "workflow": "Register asset → schedule preventive maintenance → create work order → complete → update meter reading",
@@ -259,8 +422,19 @@
       "name": "Manufacturing Execution System",
       "description": "Manufacturing Execution System",
       "icon": "Factory",
-      "chips": ["Work Center", "Batch", "Quality"],
-      "entities": ["WorkOrder", "WorkCenter", "Batch", "Routing", "QualityCheck", "Downtime"],
+      "chips": [
+        "Work Center",
+        "Batch",
+        "Quality"
+      ],
+      "entities": [
+        "WorkOrder",
+        "WorkCenter",
+        "Batch",
+        "Routing",
+        "QualityCheck",
+        "Downtime"
+      ],
       "capability": "execute shop-floor work orders, batches, routings, and quality checks",
       "benefit": "production supervisors see real-time status across work centers",
       "workflow": "Release work order → start batch at work center → record production → perform quality check → complete",
@@ -277,8 +451,19 @@
       "name": "Quality Management System",
       "description": "Quality Management System",
       "icon": "BadgeCheck",
-      "chips": ["Inspection", "CAPA", "Spec"],
-      "entities": ["Inspection", "NonConformance", "CAPA", "Specification", "Sample", "Certificate"],
+      "chips": [
+        "Inspection",
+        "CAPA",
+        "Spec"
+      ],
+      "entities": [
+        "Inspection",
+        "NonConformance",
+        "CAPA",
+        "Specification",
+        "Sample",
+        "Certificate"
+      ],
       "capability": "manage inspections, non-conformances, CAPA, and product specifications",
       "benefit": "quality teams contain defects and prevent recurrence",
       "workflow": "Schedule inspection → record sample → raise non-conformance → initiate CAPA → verify effectiveness",
@@ -295,8 +480,19 @@
       "name": "Content Management System",
       "description": "Content Management System",
       "icon": "FileText",
-      "chips": ["Page", "Media", "Workflow"],
-      "entities": ["Content", "Page", "MediaAsset", "Taxonomy", "Workflow", "Publication"],
+      "chips": [
+        "Page",
+        "Media",
+        "Workflow"
+      ],
+      "entities": [
+        "Content",
+        "Page",
+        "MediaAsset",
+        "Taxonomy",
+        "Workflow",
+        "Publication"
+      ],
       "capability": "author content, manage pages and media, and publish through approval workflows",
       "benefit": "editors ship approved content to the right channels on schedule",
       "workflow": "Draft content → review → approve → publish page → archive or update",
@@ -313,8 +509,19 @@
       "name": "Business Intelligence & Analytics",
       "description": "Business Intelligence & Analytics",
       "icon": "LineChart",
-      "chips": ["Dashboard", "Metric", "Dataset"],
-      "entities": ["Dashboard", "Report", "Metric", "Dataset", "Dimension", "KPI"],
+      "chips": [
+        "Dashboard",
+        "Metric",
+        "Dataset"
+      ],
+      "entities": [
+        "Dashboard",
+        "Report",
+        "Metric",
+        "Dataset",
+        "Dimension",
+        "KPI"
+      ],
       "capability": "define datasets, metrics, dashboards, and reports for decision-makers",
       "benefit": "leaders monitor KPIs without waiting for ad hoc analysis",
       "workflow": "Model dataset → define metric → build dashboard → share report → refresh on schedule",
@@ -331,8 +538,19 @@
       "name": "IT Service Management",
       "description": "IT Service Management",
       "icon": "Headphones",
-      "chips": ["Incident", "Change", "CMDB"],
-      "entities": ["Incident", "ChangeRequest", "Service", "ConfigurationItem", "Problem", "SLA"],
+      "chips": [
+        "Incident",
+        "Change",
+        "CMDB"
+      ],
+      "entities": [
+        "Incident",
+        "ChangeRequest",
+        "Service",
+        "ConfigurationItem",
+        "Problem",
+        "SLA"
+      ],
       "capability": "log incidents, manage changes, track configuration items, and meet SLAs",
       "benefit": "IT support restores service quickly with traceable change history",
       "workflow": "Log incident → diagnose → link configuration item → resolve → close with SLA met",
@@ -349,8 +567,19 @@
       "name": "Learning Management System",
       "description": "Learning Management System",
       "icon": "GraduationCap",
-      "chips": ["Course", "Enrollment", "Cert"],
-      "entities": ["Course", "Enrollment", "Lesson", "Assessment", "Certificate", "Learner"],
+      "chips": [
+        "Course",
+        "Enrollment",
+        "Cert"
+      ],
+      "entities": [
+        "Course",
+        "Enrollment",
+        "Lesson",
+        "Assessment",
+        "Certificate",
+        "Learner"
+      ],
       "capability": "publish courses, manage enrollments, deliver lessons, and issue certificates",
       "benefit": "learners progress through structured training with measurable outcomes",
       "workflow": "Publish course → enroll learner → complete lessons → pass assessment → issue certificate",
@@ -367,8 +596,19 @@
       "name": "Configure, Price, Quote",
       "description": "Configure, Price, Quote",
       "icon": "Cog",
-      "chips": ["Quote", "Bundle", "Rule"],
-      "entities": ["Quote", "Configuration", "PriceRule", "Bundle", "Discount", "Approval"],
+      "chips": [
+        "Quote",
+        "Bundle",
+        "Rule"
+      ],
+      "entities": [
+        "Quote",
+        "Configuration",
+        "PriceRule",
+        "Bundle",
+        "Discount",
+        "Approval"
+      ],
       "capability": "configure products, apply price rules, bundle offers, and generate customer quotes",
       "benefit": "sales reps quote complex deals accurately without spreadsheet errors",
       "workflow": "Select product → configure options → apply pricing rules → generate quote → submit for approval",
@@ -385,13 +625,33 @@
       "name": "Financial Management System",
       "description": "Financial Management — GL, AP, AR, subledgers & close",
       "icon": "Landmark",
-      "chips": ["GL", "AP", "AR", "Sales Ledger", "Purchase Ledger", "Close"],
-      "entities": ["ChartOfAccount", "JournalEntry", "GeneralLedger", "VendorInvoice", "CustomerInvoice", "Payment", "SalesLedger", "PurchaseLedger", "FiscalPeriod", "Reconciliation"],
+      "chips": [
+        "GL",
+        "AP",
+        "AR",
+        "Sales Ledger",
+        "Purchase Ledger",
+        "Close"
+      ],
+      "entities": [
+        "ChartOfAccount",
+        "JournalEntry",
+        "GeneralLedger",
+        "VendorInvoice",
+        "CustomerInvoice",
+        "Payment",
+        "SalesLedger",
+        "PurchaseLedger",
+        "FiscalPeriod",
+        "Reconciliation"
+      ],
       "capability": "manage the chart of accounts, general ledger, accounts payable and receivable, sales and purchase subledgers, payments, and period close",
       "benefit": "finance teams post, reconcile, and close books with auditable GL-to-subledger traceability",
       "workflow": "Post to GL → record AP/Purchase Ledger invoice → approve payment → post AR/Sales Ledger receipt → reconcile subledgers → close fiscal period",
       "statefulEntity": "JournalEntry (draft → posted → reconciled → period closed)",
-      "industries": [],
+      "industries": [
+        "banking"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
@@ -403,13 +663,26 @@
       "name": "Credit & Collections Management",
       "description": "Credit & Collections Management",
       "icon": "CreditCard",
-      "chips": ["Credit Limit", "Exposure", "Collection"],
-      "entities": ["CustomerAccount", "CreditLimit", "CreditExposure", "CollectionCase", "PaymentPromise", "RiskScore"],
+      "chips": [
+        "Credit Limit",
+        "Exposure",
+        "Collection"
+      ],
+      "entities": [
+        "CustomerAccount",
+        "CreditLimit",
+        "CreditExposure",
+        "CollectionCase",
+        "PaymentPromise",
+        "RiskScore"
+      ],
       "capability": "set credit limits, monitor exposure, score risk, and manage collections cases",
       "benefit": "finance teams reduce bad debt while keeping good customers trading within policy",
       "workflow": "Onboard account → assign credit limit → monitor exposure → flag breach → open collection case → resolve",
       "statefulEntity": "CollectionCase (opened → in progress → resolved → closed)",
-      "industries": [],
+      "industries": [
+        "banking"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
@@ -421,8 +694,19 @@
       "name": "Lease Management System",
       "description": "Lease Management System",
       "icon": "KeyRound",
-      "chips": ["Lease", "Asset", "Payment"],
-      "entities": ["LeaseContract", "LeasedAsset", "LeasePayment", "RenewalOption", "EscalationSchedule", "Tenant"],
+      "chips": [
+        "Lease",
+        "Asset",
+        "Payment"
+      ],
+      "entities": [
+        "LeaseContract",
+        "LeasedAsset",
+        "LeasePayment",
+        "RenewalOption",
+        "EscalationSchedule",
+        "Tenant"
+      ],
       "capability": "manage lease contracts, leased assets, payment schedules, renewals, and escalations",
       "benefit": "real estate and finance teams stay compliant with lease terms and accounting standards",
       "workflow": "Create lease contract → link asset → schedule payments → track renewal → amend or terminate",
@@ -439,8 +723,19 @@
       "name": "Financial Technology Platform",
       "description": "Financial Technology Platform",
       "icon": "Coins",
-      "chips": ["Account", "Ledger", "Audit"],
-      "entities": ["Account", "Transaction", "Ledger", "AuditLog", "Currency", "Reconciliation"],
+      "chips": [
+        "Account",
+        "Ledger",
+        "Audit"
+      ],
+      "entities": [
+        "Account",
+        "Transaction",
+        "Ledger",
+        "AuditLog",
+        "Currency",
+        "Reconciliation"
+      ],
       "capability": "process transactions, maintain ledgers, and enforce financial controls",
       "benefit": "stakeholders trust balances and audit trails in real time",
       "workflow": "Initiate transaction → validate limits → post to ledger → reconcile → audit",
@@ -457,8 +752,19 @@
       "name": "Digital Commerce & Retail",
       "description": "Digital Commerce & Retail",
       "icon": "ShoppingCart",
-      "chips": ["Product", "Cart", "Order"],
-      "entities": ["Product", "Cart", "Order", "Payment", "Review", "Fulfilment"],
+      "chips": [
+        "Product",
+        "Cart",
+        "Order"
+      ],
+      "entities": [
+        "Product",
+        "Cart",
+        "Order",
+        "Payment",
+        "Review",
+        "Fulfilment"
+      ],
       "capability": "browse products, manage carts, checkout, pay, and track order fulfillment",
       "benefit": "shoppers complete purchases with visibility into order status",
       "workflow": "Browse catalog → add to cart → checkout → pay → fulfill order → confirm delivery",
@@ -475,8 +781,19 @@
       "name": "Point of Sale System",
       "description": "Point of Sale System",
       "icon": "Store",
-      "chips": ["Register", "Receipt", "Tender"],
-      "entities": ["Register", "Transaction", "LineItem", "Tender", "Shift", "Receipt"],
+      "chips": [
+        "Register",
+        "Receipt",
+        "Tender"
+      ],
+      "entities": [
+        "Register",
+        "Transaction",
+        "LineItem",
+        "Tender",
+        "Shift",
+        "Receipt"
+      ],
       "capability": "ring up sales, apply tenders, manage register shifts, and print receipts",
       "benefit": "store staff checkout customers quickly with accurate cash control",
       "workflow": "Open shift → scan items → apply tender → print receipt → close shift and reconcile",
@@ -493,8 +810,19 @@
       "name": "Electronic Health Records",
       "description": "Electronic Health Records",
       "icon": "Stethoscope",
-      "chips": ["Patient", "Record", "Rx"],
-      "entities": ["Patient", "Appointment", "MedicalRecord", "Prescription", "Clinician", "Facility"],
+      "chips": [
+        "Patient",
+        "Record",
+        "Rx"
+      ],
+      "entities": [
+        "Patient",
+        "Appointment",
+        "MedicalRecord",
+        "Prescription",
+        "Clinician",
+        "Facility"
+      ],
       "capability": "manage patients, appointments, medical records, and prescriptions",
       "benefit": "clinicians coordinate care with complete patient context at the point of service",
       "workflow": "Register patient → schedule appointment → document visit → prescribe → follow up",

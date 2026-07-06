@@ -1,0 +1,77 @@
+@prefix :     <https://ecosystemcode.com/ontology/crm/telco#> .
+@prefix crm:  <https://ecosystemcode.com/ontology/crm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/crm/telco> a owl:Ontology ;
+    rdfs:label "CRM Telco Overlay" ;
+    rdfs:comment "Telco specialization of the CRM base ontology: subscribers, MSISDNs, rate plans, and service subscriptions." .
+
+:Subscriber a owl:Class ;
+    rdfs:subClassOf crm:Contact ;
+    skos:prefLabel "Subscriber" ;
+    skos:altLabel "Mobile Customer", "MSISDN Holder" ;
+    skos:definition "A contact who holds one or more active service subscriptions identified by MSISDNs." .
+
+:RatePlan a owl:Class ;
+    skos:prefLabel "Rate Plan" ;
+    skos:altLabel "Tariff", "Price Plan" ;
+    skos:definition "A commercial tariff defining charges, allowances, and contract terms for a subscription." .
+
+:Subscription a owl:Class ;
+    skos:prefLabel "Subscription" ;
+    skos:altLabel "Service Instance" ;
+    skos:definition "An active service held by a subscriber on a rate plan, identified by an MSISDN." .
+
+:subscriptionOfSubscriber a owl:ObjectProperty ;
+    rdfs:label "subscription of subscriber" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  :Subscriber ;
+    skos:definition "The subscriber who owns the subscription." .
+
+:subscriptionOnRatePlan a owl:ObjectProperty ;
+    rdfs:label "subscription on rate plan" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  :RatePlan ;
+    skos:definition "The tariff the subscription is billed on (exactly one at a time)." .
+
+:upsellOpportunityForSubscription a owl:ObjectProperty ;
+    rdfs:label "upsell opportunity for subscription" ;
+    rdfs:domain crm:Opportunity ;
+    rdfs:range  :Subscription ;
+    skos:definition "Links an upgrade/upsell opportunity to the subscription it would change." .
+
+:msisdn a owl:DatatypeProperty ;
+    rdfs:label "msisdn" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  xsd:string ;
+    skos:definition "The mobile number identifying this subscription (E.164 format)." .
+
+:contractEndDate a owl:DatatypeProperty ;
+    rdfs:label "contract end date" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  xsd:date ;
+    skos:definition "When the current commitment period ends; drives retention timing." .
+
+:RetentionAgentRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Retention Agent" ;
+    skos:altLabel "Save Desk Agent" ;
+    skos:definition "Person role that handles churn-risk subscribers with retention offers. Bearer: person. Permissions: Subscriber:read, Subscription:read, Opportunity:read, Opportunity:write." .
+
+:SubscriptionShape a sh:NodeShape ;
+    sh:targetClass :Subscription ;
+    sh:property [
+        sh:path :msisdn ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :subscriptionOnRatePlan ;
+        sh:class :RatePlan ;
+        sh:minCount 1 ;
+    ] .
