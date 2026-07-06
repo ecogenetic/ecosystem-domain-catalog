@@ -87,6 +87,26 @@ cd ../ecosystem-server
 git add src/main/resources/modeling/domains && git commit -m "Sync domain catalog"
 ```
 
+### Automatic sync (GitHub Actions)
+
+`.github/workflows/sync-to-server.yml` runs on every push to `main`:
+
+1. Validates the catalog (`tools/validate-catalog.sh`) — also runs on PRs as a gate.
+2. Runs the server's sync script against a fresh `ecosystem-server` checkout.
+3. Opens (or updates) a PR in `ecogenetic/ecosystem-server` on the
+   `chore/sync-domain-catalog` branch containing the new snapshot.
+
+**That PR is the reminder** that someone changed the catalog: review the diff under
+`src/main/resources/modeling/domains/` and merge to ship it with the next server build.
+
+One-time setup: add a repository secret named `ECOSYSTEM_SERVER_TOKEN` in this repo's
+settings — a GitHub PAT with `repo` scope on `ecogenetic/ecosystem-server`.
+
+Local/CI staleness check: `ecosystem-server/scripts/check-domain-catalog-sync.sh`
+compares the bundled snapshot's `SYNC-INFO.json` commit with the catalog HEAD (local
+checkout, or remote `main` when no checkout exists) and exits non-zero when the
+snapshot is stale.
+
 ## Extending the catalog
 
 Follow the step-by-step playbooks (agents: read [AGENTS.md](AGENTS.md) first):
