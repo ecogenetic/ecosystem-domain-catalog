@@ -8,21 +8,28 @@
       "description": "Customer Relationship Management",
       "icon": "Users",
       "chips": [
-        "Contact",
-        "Account",
-        "Opportunity"
-      ],
-      "entities": [
-        "Contact",
         "Account",
         "Opportunity",
-        "Pipeline",
-        "Activity",
-        "Lead"
+        "Case"
       ],
-      "capability": "capture leads, manage accounts and contacts, and progress opportunities through pipeline stages",
-      "benefit": "sales teams share one forecastable view of every customer relationship",
-      "workflow": "Capture lead → qualify → open opportunity → log activities → close won or lost",
+      "entities": [
+        "Account",
+        "Contact",
+        "Territory",
+        "Campaign",
+        "Lead",
+        "Opportunity",
+        "Pipeline",
+        "Product",
+        "Quote",
+        "Contract",
+        "Forecast",
+        "Activity",
+        "Case"
+      ],
+      "capability": "run campaigns, capture and qualify leads, progress opportunities with quotes and contracts, and resolve service cases",
+      "benefit": "marketing, sales, and service share one forecastable, auditable view of every customer relationship",
+      "workflow": "Run campaign → capture lead → qualify → open opportunity → quote products → negotiate → close won → sign contract",
       "statefulEntity": "Opportunity (pipeline stages: lead → qualified → proposal → won/lost)",
       "industries": [
         "banking",
@@ -31,7 +38,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "cvm",

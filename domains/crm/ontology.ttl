@@ -7,7 +7,7 @@
 
 <https://ecosystemcode.com/ontology/crm> a owl:Ontology ;
     rdfs:label "CRM Domain Ontology" ;
-    rdfs:comment "Seed ontology for Customer Relationship Management: accounts, contacts, leads, opportunities, pipelines, and activities." .
+    rdfs:comment "Seed ontology for Customer Relationship Management: accounts, contacts, campaigns, leads, opportunities, quotes, contracts, forecasts, service cases, and activities." .
 
 #################################################################
 # Classes
@@ -41,7 +41,47 @@
 :Activity a owl:Class ;
     skos:prefLabel "Activity" ;
     skos:altLabel "Interaction", "Touchpoint" ;
-    skos:definition "A logged interaction such as a call, email, meeting, or note against a Contact or Opportunity." .
+    skos:definition "A logged interaction such as a call, email, meeting, or note against a Contact, Opportunity, or Case." .
+
+:Territory a owl:Class ;
+    skos:prefLabel "Territory" ;
+    skos:altLabel "Sales Territory", "Region", "Patch" ;
+    skos:definition "A named market segment (geography, industry, or size band) that accounts are assigned to for coverage and quota purposes." .
+
+:Campaign a owl:Class ;
+    skos:prefLabel "Campaign" ;
+    skos:altLabel "Marketing Campaign", "Marketing Initiative" ;
+    skos:definition "A planned marketing initiative (event, email, ads, webinar) with a budget that generates and influences leads." .
+
+:Product a owl:Class ;
+    skos:prefLabel "Product" ;
+    skos:altLabel "Catalog Item", "Offering", "Service" ;
+    skos:definition "A sellable product or service in the catalog that opportunities and quotes reference." .
+
+:Quote a owl:Class ;
+    skos:prefLabel "Quote" ;
+    skos:altLabel "Proposal", "Quotation" ;
+    skos:definition "A priced, time-limited proposal presented to the customer for an opportunity." .
+
+:QuoteLine a owl:Class ;
+    skos:prefLabel "Quote Line" ;
+    skos:altLabel "Quote Line Item", "Proposal Line" ;
+    skos:definition "A single product line on a quote with quantity, unit price, and discount." .
+
+:Contract a owl:Class ;
+    skos:prefLabel "Contract" ;
+    skos:altLabel "Agreement", "Order Form" ;
+    skos:definition "The negotiated agreement that governs a won deal, with value, term, and renewal dates." .
+
+:Forecast a owl:Class ;
+    skos:prefLabel "Forecast" ;
+    skos:altLabel "Sales Forecast", "Revenue Projection" ;
+    skos:definition "A periodic projection of expected revenue for a territory, built from weighted open opportunities." .
+
+:Case a owl:Class ;
+    skos:prefLabel "Case" ;
+    skos:altLabel "Ticket", "Service Request", "Complaint" ;
+    skos:definition "A post-sale service request or complaint raised by a contact, tracked to resolution." .
 
 #################################################################
 # Object properties
@@ -88,6 +128,90 @@
     rdfs:domain :Activity ;
     rdfs:range  :Contact ;
     skos:definition "The contact who took part in the activity." .
+
+:assignedToTerritory a owl:ObjectProperty ;
+    rdfs:label "assigned to territory" ;
+    rdfs:domain :Account ;
+    rdfs:range  :Territory ;
+    skos:definition "The territory an account is assigned to for coverage and quota purposes." .
+
+:generatesLead a owl:ObjectProperty ;
+    rdfs:label "generates lead" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  :Lead ;
+    skos:definition "The leads captured as responses to a marketing campaign." .
+
+:influencedByCampaign a owl:ObjectProperty ;
+    rdfs:label "influenced by campaign" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  :Campaign ;
+    skos:definition "The campaign credited with sourcing or influencing an opportunity." .
+
+:includesProduct a owl:ObjectProperty ;
+    rdfs:label "includes product" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  :Product ;
+    skos:definition "The catalog products an opportunity is expected to sell." .
+
+:quotesOpportunity a owl:ObjectProperty ;
+    rdfs:label "quotes opportunity" ;
+    rdfs:domain :Quote ;
+    rdfs:range  :Opportunity ;
+    skos:definition "The opportunity a quote prices a proposal for." .
+
+:partOfQuote a owl:ObjectProperty ;
+    rdfs:label "part of quote" ;
+    rdfs:domain :QuoteLine ;
+    rdfs:range  :Quote ;
+    skos:definition "The quote a line belongs to." .
+
+:forQuotedProduct a owl:ObjectProperty ;
+    rdfs:label "for quoted product" ;
+    rdfs:domain :QuoteLine ;
+    rdfs:range  :Product ;
+    skos:definition "The product priced on a quote line." .
+
+:resultsFromOpportunity a owl:ObjectProperty ;
+    rdfs:label "results from opportunity" ;
+    rdfs:domain :Contract ;
+    rdfs:range  :Opportunity ;
+    skos:definition "The won opportunity a contract was created from." .
+
+:governsAccount a owl:ObjectProperty ;
+    rdfs:label "governs account" ;
+    rdfs:domain :Contract ;
+    rdfs:range  :Account ;
+    skos:definition "The account whose commercial relationship the contract governs." .
+
+:raisedByContact a owl:ObjectProperty ;
+    rdfs:label "raised by contact" ;
+    rdfs:domain :Case ;
+    rdfs:range  :Contact ;
+    skos:definition "The contact who raised the service case." .
+
+:filedAgainstAccount a owl:ObjectProperty ;
+    rdfs:label "filed against account" ;
+    rdfs:domain :Case ;
+    rdfs:range  :Account ;
+    skos:definition "The account a service case is filed against." .
+
+:aboutProduct a owl:ObjectProperty ;
+    rdfs:label "about product" ;
+    rdfs:domain :Case ;
+    rdfs:range  :Product ;
+    skos:definition "The product a service case concerns." .
+
+:loggedAgainstCase a owl:ObjectProperty ;
+    rdfs:label "logged against case" ;
+    rdfs:domain :Activity ;
+    rdfs:range  :Case ;
+    skos:definition "The service case an activity was recorded against." .
+
+:coversTerritory a owl:ObjectProperty ;
+    rdfs:label "covers territory" ;
+    rdfs:domain :Forecast ;
+    rdfs:range  :Territory ;
+    skos:definition "The territory whose expected revenue a forecast projects." .
 
 #################################################################
 # Datatype properties
@@ -159,6 +283,246 @@
     rdfs:domain :Activity ;
     rdfs:range  xsd:dateTime .
 
+:website a owl:DatatypeProperty ;
+    rdfs:label "website" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:string .
+
+:accountType a owl:DatatypeProperty ;
+    rdfs:label "account type" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:string ;
+    skos:definition "Classification of the account: prospect, customer, partner, or former customer." .
+
+:employeeCount a owl:DatatypeProperty ;
+    rdfs:label "employee count" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:integer .
+
+:jobTitle a owl:DatatypeProperty ;
+    rdfs:label "job title" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:string .
+
+:department a owl:DatatypeProperty ;
+    rdfs:label "department" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:string .
+
+:territoryName a owl:DatatypeProperty ;
+    rdfs:label "territory name" ;
+    rdfs:domain :Territory ;
+    rdfs:range  xsd:string .
+
+:region a owl:DatatypeProperty ;
+    rdfs:label "region" ;
+    rdfs:domain :Territory ;
+    rdfs:range  xsd:string .
+
+:campaignName a owl:DatatypeProperty ;
+    rdfs:label "campaign name" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:string .
+
+:campaignType a owl:DatatypeProperty ;
+    rdfs:label "campaign type" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:string ;
+    skos:definition "Kind of campaign: event, email, ads, webinar, content." .
+
+:campaignStartDate a owl:DatatypeProperty ;
+    rdfs:label "campaign start date" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:date .
+
+:campaignEndDate a owl:DatatypeProperty ;
+    rdfs:label "campaign end date" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:date .
+
+:budgetedCost a owl:DatatypeProperty ;
+    rdfs:label "budgeted cost" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:decimal .
+
+:campaignStatus a owl:DatatypeProperty ;
+    rdfs:label "campaign status" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the campaign: planned, active, completed." .
+
+:company a owl:DatatypeProperty ;
+    rdfs:label "company" ;
+    rdfs:domain :Lead ;
+    rdfs:range  xsd:string .
+
+:leadScore a owl:DatatypeProperty ;
+    rdfs:label "lead score" ;
+    rdfs:domain :Lead ;
+    rdfs:range  xsd:integer ;
+    skos:definition "Qualification score assigned by marketing based on fit and engagement." .
+
+:leadStatus a owl:DatatypeProperty ;
+    rdfs:label "lead status" ;
+    rdfs:domain :Lead ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the lead: new, contacted, qualified, converted, disqualified." .
+
+:opportunityName a owl:DatatypeProperty ;
+    rdfs:label "opportunity name" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  xsd:string .
+
+:probability a owl:DatatypeProperty ;
+    rdfs:label "probability" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "Estimated likelihood (0-1) that the opportunity closes won, used for forecast weighting." .
+
+:pipelineName a owl:DatatypeProperty ;
+    rdfs:label "pipeline name" ;
+    rdfs:domain :Pipeline ;
+    rdfs:range  xsd:string .
+
+:stageCount a owl:DatatypeProperty ;
+    rdfs:label "stage count" ;
+    rdfs:domain :Pipeline ;
+    rdfs:range  xsd:integer .
+
+:productCode a owl:DatatypeProperty ;
+    rdfs:label "product code" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:productName a owl:DatatypeProperty ;
+    rdfs:label "product name" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:listPrice a owl:DatatypeProperty ;
+    rdfs:label "list price" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:decimal .
+
+:quoteNumber a owl:DatatypeProperty ;
+    rdfs:label "quote number" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:string .
+
+:quoteDate a owl:DatatypeProperty ;
+    rdfs:label "quote date" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:date .
+
+:validUntil a owl:DatatypeProperty ;
+    rdfs:label "valid until" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:date .
+
+:quoteTotal a owl:DatatypeProperty ;
+    rdfs:label "quote total" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:decimal .
+
+:quoteStatus a owl:DatatypeProperty ;
+    rdfs:label "quote status" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the quote: draft, presented, accepted, rejected, expired." .
+
+:quotedQuantity a owl:DatatypeProperty ;
+    rdfs:label "quoted quantity" ;
+    rdfs:domain :QuoteLine ;
+    rdfs:range  xsd:decimal .
+
+:quotedUnitPrice a owl:DatatypeProperty ;
+    rdfs:label "quoted unit price" ;
+    rdfs:domain :QuoteLine ;
+    rdfs:range  xsd:decimal .
+
+:discountPercent a owl:DatatypeProperty ;
+    rdfs:label "discount percent" ;
+    rdfs:domain :QuoteLine ;
+    rdfs:range  xsd:decimal .
+
+:contractNumber a owl:DatatypeProperty ;
+    rdfs:label "contract number" ;
+    rdfs:domain :Contract ;
+    rdfs:range  xsd:string .
+
+:contractStart a owl:DatatypeProperty ;
+    rdfs:label "contract start" ;
+    rdfs:domain :Contract ;
+    rdfs:range  xsd:date .
+
+:contractEnd a owl:DatatypeProperty ;
+    rdfs:label "contract end" ;
+    rdfs:domain :Contract ;
+    rdfs:range  xsd:date .
+
+:contractValue a owl:DatatypeProperty ;
+    rdfs:label "contract value" ;
+    rdfs:domain :Contract ;
+    rdfs:range  xsd:decimal .
+
+:contractStatus a owl:DatatypeProperty ;
+    rdfs:label "contract status" ;
+    rdfs:domain :Contract ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the contract: draft, active, expired, terminated." .
+
+:forecastPeriod a owl:DatatypeProperty ;
+    rdfs:label "forecast period" ;
+    rdfs:domain :Forecast ;
+    rdfs:range  xsd:string .
+
+:forecastAmount a owl:DatatypeProperty ;
+    rdfs:label "forecast amount" ;
+    rdfs:domain :Forecast ;
+    rdfs:range  xsd:decimal .
+
+:commitAmount a owl:DatatypeProperty ;
+    rdfs:label "commit amount" ;
+    rdfs:domain :Forecast ;
+    rdfs:range  xsd:decimal .
+
+:bestCaseAmount a owl:DatatypeProperty ;
+    rdfs:label "best case amount" ;
+    rdfs:domain :Forecast ;
+    rdfs:range  xsd:decimal .
+
+:caseNumber a owl:DatatypeProperty ;
+    rdfs:label "case number" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:string .
+
+:subject a owl:DatatypeProperty ;
+    rdfs:label "subject" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:string .
+
+:priority a owl:DatatypeProperty ;
+    rdfs:label "priority" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:string ;
+    skos:definition "Urgency of the case: low, medium, high, critical." .
+
+:openedAt a owl:DatatypeProperty ;
+    rdfs:label "opened at" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:dateTime .
+
+:resolvedAt a owl:DatatypeProperty ;
+    rdfs:label "resolved at" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:dateTime .
+
+:caseStatus a owl:DatatypeProperty ;
+    rdfs:label "case status" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the case: new, in_progress, waiting_on_customer, resolved, closed." .
+
 #################################################################
 # Roles (BFO role branch — bearer and permissions in the definition)
 #################################################################
@@ -167,10 +531,28 @@
     rdfs:subClassOf bfo:0000023 ;
     skos:prefLabel "Sales Rep" ;
     skos:altLabel "Account Executive", "Sales Representative" ;
-    skos:definition "Person role that captures leads, owns opportunities, and logs activities. Bearer: person. Permissions: Lead:read, Lead:write, Opportunity:read, Opportunity:write, Activity:read, Activity:write." .
+    skos:definition "Person role that captures leads, owns opportunities, builds quotes, and logs activities. Bearer: person. Permissions: Lead:read, Lead:write, Opportunity:read, Opportunity:write, Quote:read, Quote:write, Activity:read, Activity:write, Account:read, Contact:read, Product:read." .
 
 :SalesManagerRole a owl:Class ;
     rdfs:subClassOf bfo:0000023 ;
     skos:prefLabel "Sales Manager" ;
     skos:altLabel "Head of Sales" ;
-    skos:definition "Person role that configures pipeline stages, reviews forecasts, and approves closes. Bearer: person. Permissions: Pipeline:read, Pipeline:write, Opportunity:read, Account:read." .
+    skos:definition "Person role that configures pipelines and territories, reviews forecasts, and approves discounts and closes. Bearer: person. Permissions: Pipeline:read, Pipeline:write, Territory:read, Territory:write, Forecast:read, Forecast:write, Opportunity:read, Quote:read, Account:read." .
+
+:MarketingSpecialistRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Marketing Specialist" ;
+    skos:altLabel "Campaign Manager", "Demand Generation Manager" ;
+    skos:definition "Person role that plans campaigns, manages budgets, and routes generated leads to sales. Bearer: person. Permissions: Campaign:read, Campaign:write, Lead:read, Lead:write, Account:read, Contact:read." .
+
+:ServiceAgentRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Service Agent" ;
+    skos:altLabel "Support Agent", "Customer Service Representative" ;
+    skos:definition "Person role that owns cases from intake to resolution and logs customer interactions. Bearer: person. Permissions: Case:read, Case:write, Activity:read, Activity:write, Account:read, Contact:read, Product:read." .
+
+:ContractAdminRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Contract Administrator" ;
+    skos:altLabel "Deal Desk Analyst", "Commercial Operations" ;
+    skos:definition "Person role that drafts and administers contracts for won deals and tracks renewals. Bearer: person. Permissions: Contract:read, Contract:write, Opportunity:read, Account:read." .

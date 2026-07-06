@@ -29,6 +29,12 @@
         sh:path :leadSource ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :leadStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "new" "contacted" "qualified" "converted" "disqualified" ) ;
     ] .
 
 :OpportunityShape a sh:NodeShape ;
@@ -64,4 +70,88 @@
         sh:path :occurredAt ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
+    ] .
+
+:CampaignShape a sh:NodeShape ;
+    sh:targetClass :Campaign ;
+    sh:property [
+        sh:path :campaignName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :campaignStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "planned" "active" "completed" ) ;
+    ] .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:property [
+        sh:path :productCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :productName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:QuoteShape a sh:NodeShape ;
+    sh:targetClass :Quote ;
+    sh:property [
+        sh:path :quotesOpportunity ;
+        sh:class :Opportunity ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quoteNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quoteStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "presented" "accepted" "rejected" "expired" ) ;
+    ] .
+
+:ContractShape a sh:NodeShape ;
+    sh:targetClass :Contract ;
+    sh:property [
+        sh:path :governsAccount ;
+        sh:class :Account ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contractNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contractStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "active" "expired" "terminated" ) ;
+    ] .
+
+:CaseShape a sh:NodeShape ;
+    sh:targetClass :Case ;
+    sh:property [
+        sh:path :raisedByContact ;
+        sh:class :Contact ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :caseNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :caseStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "new" "in_progress" "waiting_on_customer" "resolved" "closed" ) ;
     ] .
