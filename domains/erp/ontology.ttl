@@ -7,7 +7,7 @@
 
 <https://ecosystemcode.com/ontology/erp> a owl:Ontology ;
     rdfs:label "ERP Domain Ontology" ;
-    rdfs:comment "Seed ontology for Enterprise Resource Planning: products, vendors, purchase orders, invoices, warehouses, and ledgers." .
+    rdfs:comment "Seed ontology for Enterprise Resource Planning: procure-to-pay, order-to-cash, inventory, manufacturing, and general-ledger accounting." .
 
 #################################################################
 # Classes
@@ -42,6 +42,106 @@
     skos:prefLabel "Ledger" ;
     skos:altLabel "General Ledger", "Book of Record" ;
     skos:definition "The financial book of record where matched invoices are posted as accounting entries." .
+
+:Customer a owl:Class ;
+    skos:prefLabel "Customer" ;
+    skos:altLabel "Client", "Buyer", "Account" ;
+    skos:definition "An organisation or person the business sells products to on agreed terms." .
+
+:GLAccount a owl:Class ;
+    skos:prefLabel "GL Account" ;
+    skos:altLabel "General Ledger Account", "Nominal Account", "Chart of Accounts Entry" ;
+    skos:definition "A general-ledger account in the chart of accounts against which journal lines are posted." .
+
+:CostCenter a owl:Class ;
+    skos:prefLabel "Cost Center" ;
+    skos:altLabel "Cost Centre", "Department Code" ;
+    skos:definition "An organisational unit that absorbs costs for management reporting and budget control." .
+
+:TaxCode a owl:Class ;
+    skos:prefLabel "Tax Code" ;
+    skos:altLabel "VAT Code", "Sales Tax Code" ;
+    skos:definition "A configured tax treatment (rate and jurisdiction) applied to purchase and sales documents." .
+
+:FiscalPeriod a owl:Class ;
+    skos:prefLabel "Fiscal Period" ;
+    skos:altLabel "Accounting Period", "Posting Period" ;
+    skos:definition "An accounting period (month or quarter) that is opened for posting and closed at period end." .
+
+:Requisition a owl:Class ;
+    skos:prefLabel "Requisition" ;
+    skos:altLabel "Purchase Requisition", "Purchase Request" ;
+    skos:definition "An internal request to purchase products, raised by a department before any vendor commitment." .
+
+:PurchaseOrderLine a owl:Class ;
+    skos:prefLabel "Purchase Order Line" ;
+    skos:altLabel "PO Line", "Order Line Item" ;
+    skos:definition "A single product line on a purchase order with ordered quantity and negotiated price." .
+
+:GoodsReceipt a owl:Class ;
+    skos:prefLabel "Goods Receipt" ;
+    skos:altLabel "GRN", "Goods Received Note", "Receiving Report" ;
+    skos:definition "The recorded arrival of ordered products at a warehouse, confirming quantities against the purchase order." .
+
+:Payment a owl:Class ;
+    skos:prefLabel "Payment" ;
+    skos:altLabel "Disbursement", "Remittance", "Settlement" ;
+    skos:definition "A settlement of one or more invoices, executed through a bank and reconciled against the ledger." .
+
+:SalesOrder a owl:Class ;
+    skos:prefLabel "Sales Order" ;
+    skos:altLabel "SO", "Customer Order" ;
+    skos:definition "A customer's confirmed commitment to buy specified products at agreed prices." .
+
+:SalesOrderLine a owl:Class ;
+    skos:prefLabel "Sales Order Line" ;
+    skos:altLabel "SO Line", "Sales Line Item" ;
+    skos:definition "A single product line on a sales order with ordered quantity and selling price." .
+
+:Shipment a owl:Class ;
+    skos:prefLabel "Shipment" ;
+    skos:altLabel "Outbound Delivery", "Dispatch" ;
+    skos:definition "An outbound delivery that fulfils sales order lines from warehouse stock." .
+
+:CustomerInvoice a owl:Class ;
+    skos:prefLabel "Customer Invoice" ;
+    skos:altLabel "Sales Invoice", "AR Invoice", "Billing Document" ;
+    skos:definition "The business's demand for payment issued to a customer for shipped goods." .
+
+:InventoryLevel a owl:Class ;
+    skos:prefLabel "Inventory Level" ;
+    skos:altLabel "Stock Level", "Stock on Hand" ;
+    skos:definition "The on-hand, reserved, and available quantity of one product in one warehouse." .
+
+:StockMovement a owl:Class ;
+    skos:prefLabel "Stock Movement" ;
+    skos:altLabel "Inventory Transaction", "Goods Movement" ;
+    skos:definition "A recorded change of stock (receipt, issue, transfer, or adjustment) that keeps inventory levels auditable." .
+
+:BillOfMaterials a owl:Class ;
+    skos:prefLabel "Bill of Materials" ;
+    skos:altLabel "BOM", "Product Structure", "Recipe" ;
+    skos:definition "The component structure defining which products and quantities are consumed to make a finished product." .
+
+:WorkOrder a owl:Class ;
+    skos:prefLabel "Work Order" ;
+    skos:altLabel "Production Order", "Manufacturing Order" ;
+    skos:definition "An instruction to manufacture a quantity of a product, consuming components per its bill of materials." .
+
+:JournalEntry a owl:Class ;
+    skos:prefLabel "Journal Entry" ;
+    skos:altLabel "Journal Voucher", "Accounting Document" ;
+    skos:definition "A balanced accounting document (debits equal credits) recorded in the ledger for a fiscal period." .
+
+:JournalLine a owl:Class ;
+    skos:prefLabel "Journal Line" ;
+    skos:altLabel "Ledger Line", "Posting Line" ;
+    skos:definition "A single debit or credit line of a journal entry, posted to a GL account and optionally a cost center." .
+
+:Budget a owl:Class ;
+    skos:prefLabel "Budget" ;
+    skos:altLabel "Spending Plan", "Cost Budget" ;
+    skos:definition "A planned spend amount for a cost center in a fiscal period, monitored against actual postings." .
 
 #################################################################
 # Object properties
@@ -82,6 +182,210 @@
     rdfs:domain :Invoice ;
     rdfs:range  :Ledger ;
     skos:definition "The ledger a matched invoice is posted to as an accounting entry." .
+
+:requestsProduct a owl:ObjectProperty ;
+    rdfs:label "requests product" ;
+    rdfs:domain :Requisition ;
+    rdfs:range  :Product ;
+    skos:definition "The products a requisition asks the business to purchase." .
+
+:convertsToPurchaseOrder a owl:ObjectProperty ;
+    rdfs:label "converts to purchase order" ;
+    rdfs:domain :Requisition ;
+    rdfs:range  :PurchaseOrder ;
+    skos:definition "The purchase order created from an approved requisition." .
+
+:partOfPurchaseOrder a owl:ObjectProperty ;
+    rdfs:label "part of purchase order" ;
+    rdfs:domain :PurchaseOrderLine ;
+    rdfs:range  :PurchaseOrder ;
+    skos:definition "The purchase order a line belongs to." .
+
+:forProduct a owl:ObjectProperty ;
+    rdfs:label "for product" ;
+    rdfs:domain :PurchaseOrderLine ;
+    rdfs:range  :Product ;
+    skos:definition "The product ordered on a purchase order line." .
+
+:receiptForPurchaseOrder a owl:ObjectProperty ;
+    rdfs:label "receipt for purchase order" ;
+    rdfs:domain :GoodsReceipt ;
+    rdfs:range  :PurchaseOrder ;
+    skos:definition "The purchase order a goods receipt confirms deliveries against." .
+
+:receivedAtWarehouse a owl:ObjectProperty ;
+    rdfs:label "received at warehouse" ;
+    rdfs:domain :GoodsReceipt ;
+    rdfs:range  :Warehouse ;
+    skos:definition "The warehouse where received goods are booked into stock." .
+
+:matchedToGoodsReceipt a owl:ObjectProperty ;
+    rdfs:label "matched to goods receipt" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  :GoodsReceipt ;
+    skos:definition "The goods receipt an invoice is three-way matched against before approval." .
+
+:appliesTaxCode a owl:ObjectProperty ;
+    rdfs:label "applies tax code" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  :TaxCode ;
+    skos:definition "The tax treatment applied to a vendor invoice." .
+
+:settlesInvoice a owl:ObjectProperty ;
+    rdfs:label "settles invoice" ;
+    rdfs:domain :Payment ;
+    rdfs:range  :Invoice ;
+    skos:definition "The vendor invoices settled by a payment run." .
+
+:settlesCustomerInvoice a owl:ObjectProperty ;
+    rdfs:label "settles customer invoice" ;
+    rdfs:domain :Payment ;
+    rdfs:range  :CustomerInvoice ;
+    skos:definition "The customer invoices settled by an incoming payment." .
+
+:placedByCustomer a owl:ObjectProperty ;
+    rdfs:label "placed by customer" ;
+    rdfs:domain :SalesOrder ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer who placed a sales order." .
+
+:partOfSalesOrder a owl:ObjectProperty ;
+    rdfs:label "part of sales order" ;
+    rdfs:domain :SalesOrderLine ;
+    rdfs:range  :SalesOrder ;
+    skos:definition "The sales order a line belongs to." .
+
+:forSoldProduct a owl:ObjectProperty ;
+    rdfs:label "for sold product" ;
+    rdfs:domain :SalesOrderLine ;
+    rdfs:range  :Product ;
+    skos:definition "The product sold on a sales order line." .
+
+:fulfillsSalesOrder a owl:ObjectProperty ;
+    rdfs:label "fulfills sales order" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :SalesOrder ;
+    skos:definition "The sales order a shipment delivers against." .
+
+:shippedFromWarehouse a owl:ObjectProperty ;
+    rdfs:label "shipped from warehouse" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :Warehouse ;
+    skos:definition "The warehouse stock is picked and dispatched from." .
+
+:billsSalesOrder a owl:ObjectProperty ;
+    rdfs:label "bills sales order" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  :SalesOrder ;
+    skos:definition "The sales order a customer invoice bills for shipped goods." .
+
+:issuedToCustomer a owl:ObjectProperty ;
+    rdfs:label "issued to customer" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer a customer invoice is issued to." .
+
+:appliesSalesTaxCode a owl:ObjectProperty ;
+    rdfs:label "applies sales tax code" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  :TaxCode ;
+    skos:definition "The tax treatment applied to a customer invoice." .
+
+:tracksProduct a owl:ObjectProperty ;
+    rdfs:label "tracks product" ;
+    rdfs:domain :InventoryLevel ;
+    rdfs:range  :Product ;
+    skos:definition "The product whose quantity an inventory level tracks." .
+
+:heldInWarehouse a owl:ObjectProperty ;
+    rdfs:label "held in warehouse" ;
+    rdfs:domain :InventoryLevel ;
+    rdfs:range  :Warehouse ;
+    skos:definition "The warehouse an inventory level applies to." .
+
+:movesProduct a owl:ObjectProperty ;
+    rdfs:label "moves product" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  :Product ;
+    skos:definition "The product moved by a stock movement." .
+
+:fromWarehouse a owl:ObjectProperty ;
+    rdfs:label "from warehouse" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  :Warehouse ;
+    skos:definition "The warehouse stock is issued or transferred from." .
+
+:toWarehouse a owl:ObjectProperty ;
+    rdfs:label "to warehouse" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  :Warehouse ;
+    skos:definition "The warehouse stock is received or transferred into." .
+
+:definesProduct a owl:ObjectProperty ;
+    rdfs:label "defines product" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  :Product ;
+    skos:definition "The finished product a bill of materials defines the structure for." .
+
+:includesComponent a owl:ObjectProperty ;
+    rdfs:label "includes component" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  :Product ;
+    skos:definition "The component products consumed per the bill of materials." .
+
+:producesProduct a owl:ObjectProperty ;
+    rdfs:label "produces product" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  :Product ;
+    skos:definition "The product a work order manufactures." .
+
+:consumesBillOfMaterials a owl:ObjectProperty ;
+    rdfs:label "consumes bill of materials" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  :BillOfMaterials ;
+    skos:definition "The bill of materials a work order consumes components from." .
+
+:recordedInLedger a owl:ObjectProperty ;
+    rdfs:label "recorded in ledger" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  :Ledger ;
+    skos:definition "The ledger a journal entry is recorded in." .
+
+:belongsToFiscalPeriod a owl:ObjectProperty ;
+    rdfs:label "belongs to fiscal period" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  :FiscalPeriod ;
+    skos:definition "The open fiscal period a journal entry is posted into." .
+
+:partOfJournalEntry a owl:ObjectProperty ;
+    rdfs:label "part of journal entry" ;
+    rdfs:domain :JournalLine ;
+    rdfs:range  :JournalEntry ;
+    skos:definition "The journal entry a debit or credit line belongs to." .
+
+:postedToGLAccount a owl:ObjectProperty ;
+    rdfs:label "posted to GL account" ;
+    rdfs:domain :JournalLine ;
+    rdfs:range  :GLAccount ;
+    skos:definition "The general-ledger account a journal line posts to." .
+
+:allocatedToCostCenter a owl:ObjectProperty ;
+    rdfs:label "allocated to cost center" ;
+    rdfs:domain :JournalLine ;
+    rdfs:range  :CostCenter ;
+    skos:definition "The cost center a journal line allocates cost to." .
+
+:plannedForCostCenter a owl:ObjectProperty ;
+    rdfs:label "planned for cost center" ;
+    rdfs:domain :Budget ;
+    rdfs:range  :CostCenter ;
+    skos:definition "The cost center a budget plans spend for." .
+
+:plannedForFiscalPeriod a owl:ObjectProperty ;
+    rdfs:label "planned for fiscal period" ;
+    rdfs:domain :Budget ;
+    rdfs:range  :FiscalPeriod ;
+    skos:definition "The fiscal period a budget applies to." .
 
 #################################################################
 # Datatype properties
@@ -168,6 +472,402 @@
     rdfs:domain :Ledger ;
     rdfs:range  xsd:integer .
 
+:listPrice a owl:DatatypeProperty ;
+    rdfs:label "list price" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:decimal .
+
+:productType a owl:DatatypeProperty ;
+    rdfs:label "product type" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string ;
+    skos:definition "Classification of the product: raw material, component, finished good, or service." .
+
+:vendorRating a owl:DatatypeProperty ;
+    rdfs:label "vendor rating" ;
+    rdfs:domain :Vendor ;
+    rdfs:range  xsd:string .
+
+:customerName a owl:DatatypeProperty ;
+    rdfs:label "customer name" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:string .
+
+:customerNumber a owl:DatatypeProperty ;
+    rdfs:label "customer number" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:string .
+
+:creditLimit a owl:DatatypeProperty ;
+    rdfs:label "credit limit" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:decimal .
+
+:customerPaymentTerms a owl:DatatypeProperty ;
+    rdfs:label "customer payment terms" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:string .
+
+:accountCode a owl:DatatypeProperty ;
+    rdfs:label "account code" ;
+    rdfs:domain :GLAccount ;
+    rdfs:range  xsd:string .
+
+:accountName a owl:DatatypeProperty ;
+    rdfs:label "account name" ;
+    rdfs:domain :GLAccount ;
+    rdfs:range  xsd:string .
+
+:accountType a owl:DatatypeProperty ;
+    rdfs:label "account type" ;
+    rdfs:domain :GLAccount ;
+    rdfs:range  xsd:string ;
+    skos:definition "Classification in the chart of accounts: asset, liability, equity, revenue, or expense." .
+
+:costCenterCode a owl:DatatypeProperty ;
+    rdfs:label "cost center code" ;
+    rdfs:domain :CostCenter ;
+    rdfs:range  xsd:string .
+
+:costCenterName a owl:DatatypeProperty ;
+    rdfs:label "cost center name" ;
+    rdfs:domain :CostCenter ;
+    rdfs:range  xsd:string .
+
+:taxCodeValue a owl:DatatypeProperty ;
+    rdfs:label "tax code value" ;
+    rdfs:domain :TaxCode ;
+    rdfs:range  xsd:string .
+
+:taxRate a owl:DatatypeProperty ;
+    rdfs:label "tax rate" ;
+    rdfs:domain :TaxCode ;
+    rdfs:range  xsd:decimal .
+
+:jurisdiction a owl:DatatypeProperty ;
+    rdfs:label "jurisdiction" ;
+    rdfs:domain :TaxCode ;
+    rdfs:range  xsd:string .
+
+:periodCode a owl:DatatypeProperty ;
+    rdfs:label "period code" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:string .
+
+:startDate a owl:DatatypeProperty ;
+    rdfs:label "start date" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:date .
+
+:endDate a owl:DatatypeProperty ;
+    rdfs:label "end date" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:date .
+
+:fiscalPeriodStatus a owl:DatatypeProperty ;
+    rdfs:label "fiscal period status" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the fiscal period: open, closed." .
+
+:requisitionNumber a owl:DatatypeProperty ;
+    rdfs:label "requisition number" ;
+    rdfs:domain :Requisition ;
+    rdfs:range  xsd:string .
+
+:requestedDate a owl:DatatypeProperty ;
+    rdfs:label "requested date" ;
+    rdfs:domain :Requisition ;
+    rdfs:range  xsd:date .
+
+:justification a owl:DatatypeProperty ;
+    rdfs:label "justification" ;
+    rdfs:domain :Requisition ;
+    rdfs:range  xsd:string .
+
+:requisitionStatus a owl:DatatypeProperty ;
+    rdfs:label "requisition status" ;
+    rdfs:domain :Requisition ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the requisition: draft, submitted, approved, converted, rejected." .
+
+:currencyCode a owl:DatatypeProperty ;
+    rdfs:label "currency code" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  xsd:string .
+
+:lineNumber a owl:DatatypeProperty ;
+    rdfs:label "line number" ;
+    rdfs:domain :PurchaseOrderLine ;
+    rdfs:range  xsd:integer .
+
+:orderedQuantity a owl:DatatypeProperty ;
+    rdfs:label "ordered quantity" ;
+    rdfs:domain :PurchaseOrderLine ;
+    rdfs:range  xsd:decimal .
+
+:negotiatedPrice a owl:DatatypeProperty ;
+    rdfs:label "negotiated price" ;
+    rdfs:domain :PurchaseOrderLine ;
+    rdfs:range  xsd:decimal .
+
+:receiptNumber a owl:DatatypeProperty ;
+    rdfs:label "receipt number" ;
+    rdfs:domain :GoodsReceipt ;
+    rdfs:range  xsd:string .
+
+:receivedDate a owl:DatatypeProperty ;
+    rdfs:label "received date" ;
+    rdfs:domain :GoodsReceipt ;
+    rdfs:range  xsd:date .
+
+:receivedQuantity a owl:DatatypeProperty ;
+    rdfs:label "received quantity" ;
+    rdfs:domain :GoodsReceipt ;
+    rdfs:range  xsd:decimal .
+
+:dueDate a owl:DatatypeProperty ;
+    rdfs:label "due date" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:date .
+
+:invoiceStatus a owl:DatatypeProperty ;
+    rdfs:label "invoice status" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the vendor invoice: received, matched, approved, posted, paid." .
+
+:paymentReference a owl:DatatypeProperty ;
+    rdfs:label "payment reference" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:string .
+
+:paymentDate a owl:DatatypeProperty ;
+    rdfs:label "payment date" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:date .
+
+:paymentAmount a owl:DatatypeProperty ;
+    rdfs:label "payment amount" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:decimal .
+
+:paymentMethod a owl:DatatypeProperty ;
+    rdfs:label "payment method" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:string .
+
+:paymentStatus a owl:DatatypeProperty ;
+    rdfs:label "payment status" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the payment: initiated, executed, reconciled." .
+
+:salesOrderNumber a owl:DatatypeProperty ;
+    rdfs:label "sales order number" ;
+    rdfs:domain :SalesOrder ;
+    rdfs:range  xsd:string .
+
+:salesOrderDate a owl:DatatypeProperty ;
+    rdfs:label "sales order date" ;
+    rdfs:domain :SalesOrder ;
+    rdfs:range  xsd:date .
+
+:orderTotal a owl:DatatypeProperty ;
+    rdfs:label "order total" ;
+    rdfs:domain :SalesOrder ;
+    rdfs:range  xsd:decimal .
+
+:salesOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "sales order status" ;
+    rdfs:domain :SalesOrder ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the sales order: draft, confirmed, allocated, shipped, invoiced, closed." .
+
+:salesLineNumber a owl:DatatypeProperty ;
+    rdfs:label "sales line number" ;
+    rdfs:domain :SalesOrderLine ;
+    rdfs:range  xsd:integer .
+
+:soldQuantity a owl:DatatypeProperty ;
+    rdfs:label "sold quantity" ;
+    rdfs:domain :SalesOrderLine ;
+    rdfs:range  xsd:decimal .
+
+:sellingPrice a owl:DatatypeProperty ;
+    rdfs:label "selling price" ;
+    rdfs:domain :SalesOrderLine ;
+    rdfs:range  xsd:decimal .
+
+:shipmentNumber a owl:DatatypeProperty ;
+    rdfs:label "shipment number" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string .
+
+:shippedDate a owl:DatatypeProperty ;
+    rdfs:label "shipped date" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:date .
+
+:carrier a owl:DatatypeProperty ;
+    rdfs:label "carrier" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string .
+
+:trackingReference a owl:DatatypeProperty ;
+    rdfs:label "tracking reference" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string .
+
+:customerInvoiceNumber a owl:DatatypeProperty ;
+    rdfs:label "customer invoice number" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:string .
+
+:issueDate a owl:DatatypeProperty ;
+    rdfs:label "issue date" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:date .
+
+:invoiceTotal a owl:DatatypeProperty ;
+    rdfs:label "invoice total" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:decimal .
+
+:customerInvoiceStatus a owl:DatatypeProperty ;
+    rdfs:label "customer invoice status" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the customer invoice: draft, issued, partially_paid, paid, written_off." .
+
+:onHandQuantity a owl:DatatypeProperty ;
+    rdfs:label "on hand quantity" ;
+    rdfs:domain :InventoryLevel ;
+    rdfs:range  xsd:decimal .
+
+:reservedQuantity a owl:DatatypeProperty ;
+    rdfs:label "reserved quantity" ;
+    rdfs:domain :InventoryLevel ;
+    rdfs:range  xsd:decimal .
+
+:availableQuantity a owl:DatatypeProperty ;
+    rdfs:label "available quantity" ;
+    rdfs:domain :InventoryLevel ;
+    rdfs:range  xsd:decimal .
+
+:reorderPoint a owl:DatatypeProperty ;
+    rdfs:label "reorder point" ;
+    rdfs:domain :InventoryLevel ;
+    rdfs:range  xsd:decimal .
+
+:movementReference a owl:DatatypeProperty ;
+    rdfs:label "movement reference" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  xsd:string .
+
+:movementType a owl:DatatypeProperty ;
+    rdfs:label "movement type" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  xsd:string ;
+    skos:definition "Kind of stock movement: receipt, issue, transfer, adjustment." .
+
+:movementQuantity a owl:DatatypeProperty ;
+    rdfs:label "movement quantity" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  xsd:decimal .
+
+:movementDate a owl:DatatypeProperty ;
+    rdfs:label "movement date" ;
+    rdfs:domain :StockMovement ;
+    rdfs:range  xsd:date .
+
+:bomCode a owl:DatatypeProperty ;
+    rdfs:label "bom code" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  xsd:string .
+
+:bomVersion a owl:DatatypeProperty ;
+    rdfs:label "bom version" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  xsd:string .
+
+:outputQuantity a owl:DatatypeProperty ;
+    rdfs:label "output quantity" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  xsd:decimal .
+
+:workOrderNumber a owl:DatatypeProperty ;
+    rdfs:label "work order number" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:string .
+
+:plannedQuantity a owl:DatatypeProperty ;
+    rdfs:label "planned quantity" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:decimal .
+
+:completedQuantity a owl:DatatypeProperty ;
+    rdfs:label "completed quantity" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:decimal .
+
+:workOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "work order status" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the work order: planned, released, in_progress, completed, closed." .
+
+:journalNumber a owl:DatatypeProperty ;
+    rdfs:label "journal number" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:string .
+
+:postingDate a owl:DatatypeProperty ;
+    rdfs:label "posting date" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:date .
+
+:journalDescription a owl:DatatypeProperty ;
+    rdfs:label "journal description" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:string .
+
+:journalEntryStatus a owl:DatatypeProperty ;
+    rdfs:label "journal entry status" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the journal entry: draft, posted, reversed." .
+
+:debitAmount a owl:DatatypeProperty ;
+    rdfs:label "debit amount" ;
+    rdfs:domain :JournalLine ;
+    rdfs:range  xsd:decimal .
+
+:creditAmount a owl:DatatypeProperty ;
+    rdfs:label "credit amount" ;
+    rdfs:domain :JournalLine ;
+    rdfs:range  xsd:decimal .
+
+:lineDescription a owl:DatatypeProperty ;
+    rdfs:label "line description" ;
+    rdfs:domain :JournalLine ;
+    rdfs:range  xsd:string .
+
+:budgetAmount a owl:DatatypeProperty ;
+    rdfs:label "budget amount" ;
+    rdfs:domain :Budget ;
+    rdfs:range  xsd:decimal .
+
+:committedAmount a owl:DatatypeProperty ;
+    rdfs:label "committed amount" ;
+    rdfs:domain :Budget ;
+    rdfs:range  xsd:decimal .
+
+:actualAmount a owl:DatatypeProperty ;
+    rdfs:label "actual amount" ;
+    rdfs:domain :Budget ;
+    rdfs:range  xsd:decimal .
+
 #################################################################
 # Roles (BFO role branch — bearer and permissions in the definition)
 #################################################################
@@ -182,10 +882,28 @@
     rdfs:subClassOf bfo:0000023 ;
     skos:prefLabel "Finance Clerk" ;
     skos:altLabel "Accounts Payable Clerk" ;
-    skos:definition "Person role that matches invoices to purchase orders and posts entries to the ledger. Bearer: person. Permissions: Invoice:read, Invoice:write, Ledger:read, Ledger:write, PurchaseOrder:read." .
+    skos:definition "Person role that three-way matches vendor invoices, runs payments, and posts entries to the ledger. Bearer: person. Permissions: Invoice:read, Invoice:write, Payment:read, Payment:write, Ledger:read, Ledger:write, JournalEntry:read, JournalEntry:write, PurchaseOrder:read, GoodsReceipt:read." .
 
 :ApproverRole a owl:Class ;
     rdfs:subClassOf bfo:0000023 ;
     skos:prefLabel "Approver" ;
     skos:altLabel "Purchase Approver" ;
-    skos:definition "Person role that reviews and approves purchase orders before commitment. Bearer: person. Permissions: PurchaseOrder:read, PurchaseOrder:write, Vendor:read." .
+    skos:definition "Person role that reviews and approves requisitions and purchase orders before commitment. Bearer: person. Permissions: Requisition:read, Requisition:write, PurchaseOrder:read, PurchaseOrder:write, Vendor:read." .
+
+:WarehouseOperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Warehouse Operator" ;
+    skos:altLabel "Storekeeper", "Receiving Clerk" ;
+    skos:definition "Person role that receives goods against purchase orders, picks and ships sales orders, and records stock movements. Bearer: person. Permissions: GoodsReceipt:read, GoodsReceipt:write, Shipment:read, Shipment:write, StockMovement:read, StockMovement:write, InventoryLevel:read, PurchaseOrder:read, SalesOrder:read." .
+
+:SalesClerkRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Sales Clerk" ;
+    skos:altLabel "Order Entry Clerk", "Customer Service Representative" ;
+    skos:definition "Person role that captures sales orders, allocates stock, and issues customer invoices. Bearer: person. Permissions: SalesOrder:read, SalesOrder:write, CustomerInvoice:read, CustomerInvoice:write, Customer:read, Product:read, InventoryLevel:read." .
+
+:ControllerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Controller" ;
+    skos:altLabel "Financial Controller", "Chief Accountant" ;
+    skos:definition "Person role that manages the chart of accounts, opens and closes fiscal periods, monitors budgets, and signs off period-end close. Bearer: person. Permissions: GLAccount:read, GLAccount:write, FiscalPeriod:read, FiscalPeriod:write, Budget:read, Budget:write, JournalEntry:read, Ledger:read, CostCenter:read, CostCenter:write." .

@@ -63,6 +63,12 @@
         sh:path :invoiceAmount ;
         sh:datatype xsd:decimal ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :invoiceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "received" "matched" "approved" "posted" "paid" ) ;
     ] .
 
 :WarehouseShape a sh:NodeShape ;
@@ -78,5 +84,256 @@
     sh:property [
         sh:path :ledgerCode ;
         sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CustomerShape a sh:NodeShape ;
+    sh:targetClass :Customer ;
+    sh:property [
+        sh:path :customerName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :customerNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:GLAccountShape a sh:NodeShape ;
+    sh:targetClass :GLAccount ;
+    sh:property [
+        sh:path :accountCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :accountType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "asset" "liability" "equity" "revenue" "expense" ) ;
+    ] .
+
+:FiscalPeriodShape a sh:NodeShape ;
+    sh:targetClass :FiscalPeriod ;
+    sh:property [
+        sh:path :periodCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :fiscalPeriodStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "open" "closed" ) ;
+    ] .
+
+:RequisitionShape a sh:NodeShape ;
+    sh:targetClass :Requisition ;
+    sh:property [
+        sh:path :requisitionNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :requestsProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :requisitionStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "submitted" "approved" "converted" "rejected" ) ;
+    ] .
+
+:GoodsReceiptShape a sh:NodeShape ;
+    sh:targetClass :GoodsReceipt ;
+    sh:property [
+        sh:path :receiptForPurchaseOrder ;
+        sh:class :PurchaseOrder ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :receivedAtWarehouse ;
+        sh:class :Warehouse ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :receiptNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PaymentShape a sh:NodeShape ;
+    sh:targetClass :Payment ;
+    sh:property [
+        sh:path :paymentReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :paymentAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :paymentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "initiated" "executed" "reconciled" ) ;
+    ] .
+
+:SalesOrderShape a sh:NodeShape ;
+    sh:targetClass :SalesOrder ;
+    sh:property [
+        sh:path :placedByCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :salesOrderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :salesOrderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "confirmed" "allocated" "shipped" "invoiced" "closed" ) ;
+    ] .
+
+:ShipmentShape a sh:NodeShape ;
+    sh:targetClass :Shipment ;
+    sh:property [
+        sh:path :fulfillsSalesOrder ;
+        sh:class :SalesOrder ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :shippedFromWarehouse ;
+        sh:class :Warehouse ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :shipmentNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CustomerInvoiceShape a sh:NodeShape ;
+    sh:targetClass :CustomerInvoice ;
+    sh:property [
+        sh:path :billsSalesOrder ;
+        sh:class :SalesOrder ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :issuedToCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :customerInvoiceNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :customerInvoiceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "issued" "partially_paid" "paid" "written_off" ) ;
+    ] .
+
+:InventoryLevelShape a sh:NodeShape ;
+    sh:targetClass :InventoryLevel ;
+    sh:property [
+        sh:path :tracksProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :heldInWarehouse ;
+        sh:class :Warehouse ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :onHandQuantity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:StockMovementShape a sh:NodeShape ;
+    sh:targetClass :StockMovement ;
+    sh:property [
+        sh:path :movesProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :movementType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "receipt" "issue" "transfer" "adjustment" ) ;
+    ] ;
+    sh:property [
+        sh:path :movementQuantity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:WorkOrderShape a sh:NodeShape ;
+    sh:targetClass :WorkOrder ;
+    sh:property [
+        sh:path :producesProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :workOrderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :workOrderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "planned" "released" "in_progress" "completed" "closed" ) ;
+    ] .
+
+:JournalEntryShape a sh:NodeShape ;
+    sh:targetClass :JournalEntry ;
+    sh:property [
+        sh:path :recordedInLedger ;
+        sh:class :Ledger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :belongsToFiscalPeriod ;
+        sh:class :FiscalPeriod ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :journalNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :journalEntryStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "posted" "reversed" ) ;
+    ] .
+
+:JournalLineShape a sh:NodeShape ;
+    sh:targetClass :JournalLine ;
+    sh:property [
+        sh:path :partOfJournalEntry ;
+        sh:class :JournalEntry ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :postedToGLAccount ;
+        sh:class :GLAccount ;
         sh:minCount 1 ;
     ] .

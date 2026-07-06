@@ -71,27 +71,37 @@
       "description": "Enterprise Resource Planning",
       "icon": "Building2",
       "chips": [
-        "Product",
-        "Vendor",
-        "Invoice"
+        "PurchaseOrder",
+        "SalesOrder",
+        "Ledger"
       ],
       "entities": [
         "Product",
         "Vendor",
-        "Invoice",
-        "PurchaseOrder",
+        "Customer",
         "Warehouse",
+        "Requisition",
+        "PurchaseOrder",
+        "GoodsReceipt",
+        "Invoice",
+        "Payment",
+        "SalesOrder",
+        "Shipment",
+        "CustomerInvoice",
+        "InventoryLevel",
+        "GLAccount",
+        "JournalEntry",
         "Ledger"
       ],
-      "capability": "manage products, vendors, purchase orders, inventory, and financial postings",
-      "benefit": "finance and operations work from a single source of enterprise truth",
-      "workflow": "Create requisition → approve purchase order → receive goods → match invoice → post to ledger",
+      "capability": "integrate procure-to-pay, order-to-cash, inventory, and general-ledger accounting across the enterprise",
+      "benefit": "finance and operations work from a single, auditable source of enterprise truth",
+      "workflow": "Create requisition → approve → raise purchase order → receive goods → three-way match invoice → pay vendor → post to ledger",
       "statefulEntity": "PurchaseOrder (draft → approved → received → invoiced → closed)",
       "industries": [],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "hcm",
