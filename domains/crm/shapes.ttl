@@ -1,0 +1,67 @@
+@prefix :    <https://ecosystemcode.com/ontology/crm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:AccountShape a sh:NodeShape ;
+    sh:targetClass :Account ;
+    sh:property [
+        sh:path :accountName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ContactShape a sh:NodeShape ;
+    sh:targetClass :Contact ;
+    sh:property [
+        sh:path :belongsToAccount ;
+        sh:class :Account ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :fullName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LeadShape a sh:NodeShape ;
+    sh:targetClass :Lead ;
+    sh:property [
+        sh:path :leadSource ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:OpportunityShape a sh:NodeShape ;
+    sh:targetClass :Opportunity ;
+    sh:property [
+        sh:path :pursuedWithAccount ;
+        sh:class :Account ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :amount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :opportunityStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "lead" "qualified" "proposal" "won" "lost" ) ;
+    ] .
+
+:PipelineShape a sh:NodeShape ;
+    sh:targetClass :Pipeline .
+
+:ActivityShape a sh:NodeShape ;
+    sh:targetClass :Activity ;
+    sh:property [
+        sh:path :activityType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :occurredAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .

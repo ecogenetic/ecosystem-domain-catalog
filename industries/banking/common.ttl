@@ -1,0 +1,55 @@
+@prefix : <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/industry/banking> a owl:Ontology ;
+    rdfs:label "Banking Industry Common Concepts" ;
+    rdfs:comment "Shared banking concepts reused across domain overlays: parties, KYC, mandates, and relationship management roles." .
+
+:Party a owl:Class ;
+    skos:prefLabel "Party" ;
+    skos:altLabel "Client", "Counterparty" ;
+    skos:definition "A person or organisation that holds products or transacts with the bank." .
+
+:KYCProfile a owl:Class ;
+    skos:prefLabel "KYC Profile" ;
+    skos:altLabel "Know Your Customer Profile", "Identity Verification Record" ;
+    skos:definition "The verified identity record for a party, including verification status and documents." .
+
+:Mandate a owl:Class ;
+    skos:prefLabel "Mandate" ;
+    skos:altLabel "Authority", "Signing Authority" ;
+    skos:definition "An authorisation allowing a person to operate an account or approve payments on behalf of a party." .
+
+:kycProfileOfParty a owl:ObjectProperty ;
+    rdfs:label "kyc profile of party" ;
+    rdfs:domain :KYCProfile ;
+    rdfs:range  :Party ;
+    skos:definition "Links a KYC profile to the party it verifies." .
+
+:mandateGrantedByParty a owl:ObjectProperty ;
+    rdfs:label "mandate granted by party" ;
+    rdfs:domain :Mandate ;
+    rdfs:range  :Party ;
+    skos:definition "The party on whose behalf the mandate authorises action." .
+
+:kycStatus a owl:DatatypeProperty ;
+    rdfs:label "kyc status" ;
+    rdfs:domain :KYCProfile ;
+    rdfs:range  xsd:string ;
+    skos:definition "Verification state: pending, verified, rejected, expired." .
+
+:RelationshipManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Relationship Manager" ;
+    skos:altLabel "RM", "Private Banker" ;
+    skos:definition "Person role that owns a portfolio of client relationships. Bearer: person. Permissions: Party:read, Party:write, KYCProfile:read." .
+
+:ComplianceOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Compliance Officer" ;
+    skos:altLabel "AML Officer" ;
+    skos:definition "Person role that reviews KYC profiles and monitors suspicious activity. Bearer: person. Permissions: KYCProfile:read, KYCProfile:write, Mandate:read." .

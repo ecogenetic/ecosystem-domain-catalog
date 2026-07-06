@@ -1,0 +1,176 @@
+@prefix : <https://ecosystemcode.com/ontology/crm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/crm> a owl:Ontology ;
+    rdfs:label "CRM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Customer Relationship Management: accounts, contacts, leads, opportunities, pipelines, and activities." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Account a owl:Class ;
+    skos:prefLabel "Account" ;
+    skos:altLabel "Customer Account", "Client", "Company" ;
+    skos:definition "An organisation the business sells to or has a commercial relationship with." .
+
+:Contact a owl:Class ;
+    skos:prefLabel "Contact" ;
+    skos:altLabel "Customer Contact", "Person of Interest" ;
+    skos:definition "A person affiliated with an Account who participates in the buying process." .
+
+:Lead a owl:Class ;
+    skos:prefLabel "Lead" ;
+    skos:altLabel "Prospect", "Inquiry" ;
+    skos:definition "An unqualified prospect captured from marketing or outreach, not yet linked to a deal." .
+
+:Opportunity a owl:Class ;
+    skos:prefLabel "Opportunity" ;
+    skos:altLabel "Deal", "Sales Opportunity" ;
+    skos:definition "A potential deal with monetary value and an expected close date." .
+
+:Pipeline a owl:Class ;
+    skos:prefLabel "Pipeline" ;
+    skos:altLabel "Sales Pipeline", "Stage Model" ;
+    skos:definition "The ordered set of stages an Opportunity moves through toward close." .
+
+:Activity a owl:Class ;
+    skos:prefLabel "Activity" ;
+    skos:altLabel "Interaction", "Touchpoint" ;
+    skos:definition "A logged interaction such as a call, email, meeting, or note against a Contact or Opportunity." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:belongsToAccount a owl:ObjectProperty ;
+    rdfs:label "belongs to account" ;
+    rdfs:domain :Contact ;
+    rdfs:range  :Account ;
+    skos:definition "Associates a contact with the account they work for." .
+
+:pursuedWithAccount a owl:ObjectProperty ;
+    rdfs:label "pursued with account" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  :Account ;
+    skos:definition "The account an opportunity is being pursued with." .
+
+:hasPrimaryContact a owl:ObjectProperty ;
+    rdfs:label "has primary contact" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  :Contact ;
+    skos:definition "The main contact person driving the deal on the customer side." .
+
+:progressesThroughPipeline a owl:ObjectProperty ;
+    rdfs:label "progresses through pipeline" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  :Pipeline ;
+    skos:definition "The pipeline whose stages the opportunity moves through." .
+
+:convertsToOpportunity a owl:ObjectProperty ;
+    rdfs:label "converts to opportunity" ;
+    rdfs:domain :Lead ;
+    rdfs:range  :Opportunity ;
+    skos:definition "Links a qualified lead to the opportunity it was converted into." .
+
+:loggedAgainstOpportunity a owl:ObjectProperty ;
+    rdfs:label "logged against opportunity" ;
+    rdfs:domain :Activity ;
+    rdfs:range  :Opportunity ;
+    skos:definition "The opportunity an activity was recorded against." .
+
+:involvesContact a owl:ObjectProperty ;
+    rdfs:label "involves contact" ;
+    rdfs:domain :Activity ;
+    rdfs:range  :Contact ;
+    skos:definition "The contact who took part in the activity." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:accountName a owl:DatatypeProperty ;
+    rdfs:label "account name" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:string .
+
+:industry a owl:DatatypeProperty ;
+    rdfs:label "industry" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:string .
+
+:annualRevenue a owl:DatatypeProperty ;
+    rdfs:label "annual revenue" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:decimal .
+
+:fullName a owl:DatatypeProperty ;
+    rdfs:label "full name" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:string .
+
+:email a owl:DatatypeProperty ;
+    rdfs:label "email" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:string .
+
+:phone a owl:DatatypeProperty ;
+    rdfs:label "phone" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:string .
+
+:leadSource a owl:DatatypeProperty ;
+    rdfs:label "lead source" ;
+    rdfs:domain :Lead ;
+    rdfs:range  xsd:string .
+
+:capturedAt a owl:DatatypeProperty ;
+    rdfs:label "captured at" ;
+    rdfs:domain :Lead ;
+    rdfs:range  xsd:dateTime .
+
+:amount a owl:DatatypeProperty ;
+    rdfs:label "amount" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  xsd:decimal .
+
+:closeDate a owl:DatatypeProperty ;
+    rdfs:label "close date" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  xsd:date .
+
+:opportunityStatus a owl:DatatypeProperty ;
+    rdfs:label "opportunity status" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the opportunity: lead, qualified, proposal, won, lost." .
+
+:activityType a owl:DatatypeProperty ;
+    rdfs:label "activity type" ;
+    rdfs:domain :Activity ;
+    rdfs:range  xsd:string .
+
+:occurredAt a owl:DatatypeProperty ;
+    rdfs:label "occurred at" ;
+    rdfs:domain :Activity ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:SalesRepRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Sales Rep" ;
+    skos:altLabel "Account Executive", "Sales Representative" ;
+    skos:definition "Person role that captures leads, owns opportunities, and logs activities. Bearer: person. Permissions: Lead:read, Lead:write, Opportunity:read, Opportunity:write, Activity:read, Activity:write." .
+
+:SalesManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Sales Manager" ;
+    skos:altLabel "Head of Sales" ;
+    skos:definition "Person role that configures pipeline stages, reviews forecasts, and approves closes. Bearer: person. Permissions: Pipeline:read, Pipeline:write, Opportunity:read, Account:read." .

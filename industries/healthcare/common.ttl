@@ -1,0 +1,53 @@
+@prefix : <https://ecosystemcode.com/ontology/industry/healthcare#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/industry/healthcare> a owl:Ontology ;
+    rdfs:label "Healthcare Industry Common Concepts" ;
+    rdfs:comment "Shared healthcare concepts reused across domain overlays: patients, encounters, and consent." .
+
+:Patient a owl:Class ;
+    skos:prefLabel "Patient" ;
+    skos:altLabel "Service User", "Care Recipient" ;
+    skos:definition "The person receiving care; may differ from the guarantor who pays for it." .
+
+:Encounter a owl:Class ;
+    skos:prefLabel "Encounter" ;
+    skos:altLabel "Visit", "Admission" ;
+    skos:definition "A clinical interaction between a patient and a provider, such as a visit, admission, or telehealth session." .
+
+:Consent a owl:Class ;
+    skos:prefLabel "Consent" ;
+    skos:altLabel "Authorization", "Permission" ;
+    skos:definition "A patient's scoped, revocable permission for treatment or for sharing health data." .
+
+:encounterOfPatient a owl:ObjectProperty ;
+    rdfs:label "encounter of patient" ;
+    rdfs:domain :Encounter ;
+    rdfs:range  :Patient ;
+    skos:definition "Links an encounter to the patient who received care." .
+
+:consentGivenByPatient a owl:ObjectProperty ;
+    rdfs:label "consent given by patient" ;
+    rdfs:domain :Consent ;
+    rdfs:range  :Patient ;
+    skos:definition "The patient who granted the consent." .
+
+:consentScope a owl:DatatypeProperty ;
+    rdfs:label "consent scope" ;
+    rdfs:domain :Consent ;
+    rdfs:range  xsd:string ;
+    skos:definition "What the consent covers: treatment, data-sharing, research, marketing." .
+
+:CareCoordinatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Care Coordinator" ;
+    skos:definition "Person role that schedules and coordinates a patient's care journey. Bearer: person. Permissions: Patient:read, Encounter:read, Encounter:write." .
+
+:PrivacyOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Privacy Officer" ;
+    skos:definition "Person role that oversees consent and health-data access compliance. Bearer: person. Permissions: Consent:read, Consent:write." .

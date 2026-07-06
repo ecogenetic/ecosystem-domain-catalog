@@ -1,0 +1,29 @@
+{
+  "industries": [
+    {
+      "id": "banking",
+      "label": "Banking",
+      "description": "Retail and commercial banking: accounts, lending, payments, relationship management, KYC/AML and regulatory compliance."
+    },
+    {
+      "id": "insurance",
+      "label": "Insurance",
+      "description": "Life and non-life insurance: policies, underwriting, claims, brokers, and solvency/regulatory reporting."
+    },
+    {
+      "id": "telco",
+      "label": "Telecommunications",
+      "description": "Mobile, fixed-line and broadband operators: subscribers, rate plans, usage, provisioning, and churn management."
+    },
+    {
+      "id": "healthcare",
+      "label": "Healthcare",
+      "description": "Providers and payers: patients, clinical workflows, coding and billing, consent, and health-data privacy (HIPAA/GDPR)."
+    },
+    {
+      "id": "gambling",
+      "label": "Gaming & Gambling",
+      "description": "Licensed betting and gaming operators: players, wagers, wallets, bonusing, responsible gambling, and licensing compliance."
+    }
+  ]
+}

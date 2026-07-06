@@ -1,0 +1,154 @@
+@prefix : <https://ecosystemcode.com/ontology/ecom#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/ecom> a owl:Ontology ;
+    rdfs:label "E-Commerce Domain Ontology" ;
+    rdfs:comment "Seed ontology for digital commerce: products, carts, orders, payments, reviews, and fulfilment." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Product a owl:Class ;
+    skos:prefLabel "Product" ;
+    skos:altLabel "Item", "SKU", "Listing" ;
+    skos:definition "A sellable item with price, description, and stock availability." .
+
+:Cart a owl:Class ;
+    skos:prefLabel "Cart" ;
+    skos:altLabel "Basket", "Shopping Cart" ;
+    skos:definition "The shopper's working collection of products before checkout." .
+
+:Order a owl:Class ;
+    skos:prefLabel "Order" ;
+    skos:altLabel "Purchase", "Sales Order" ;
+    skos:definition "A confirmed purchase created from a cart at checkout." .
+
+:Payment a owl:Class ;
+    skos:prefLabel "Payment" ;
+    skos:altLabel "Settlement", "Transaction" ;
+    skos:definition "The settlement of an order through a payment method." .
+
+:Review a owl:Class ;
+    skos:prefLabel "Review" ;
+    skos:altLabel "Rating", "Product Review" ;
+    skos:definition "A shopper's rating and commentary about a product." .
+
+:Fulfilment a owl:Class ;
+    skos:prefLabel "Fulfilment" ;
+    skos:altLabel "Fulfillment", "Shipment" ;
+    skos:definition "The picking, packing, shipping, and delivery of an order." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:containsProduct a owl:ObjectProperty ;
+    rdfs:label "contains product" ;
+    rdfs:domain :Cart ;
+    rdfs:range  :Product ;
+    skos:definition "A product currently in the shopper's cart." .
+
+:createdFromCart a owl:ObjectProperty ;
+    rdfs:label "created from cart" ;
+    rdfs:domain :Order ;
+    rdfs:range  :Cart ;
+    skos:definition "The cart this order was checked out from." .
+
+:settlesOrder a owl:ObjectProperty ;
+    rdfs:label "settles order" ;
+    rdfs:domain :Payment ;
+    rdfs:range  :Order ;
+    skos:definition "The order this payment settles." .
+
+:shipsOrder a owl:ObjectProperty ;
+    rdfs:label "ships order" ;
+    rdfs:domain :Fulfilment ;
+    rdfs:range  :Order ;
+    skos:definition "The order this fulfilment delivers." .
+
+:writtenAboutProduct a owl:ObjectProperty ;
+    rdfs:label "written about product" ;
+    rdfs:domain :Review ;
+    rdfs:range  :Product ;
+    skos:definition "The product the review describes." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:productName a owl:DatatypeProperty ;
+    rdfs:label "product name" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:price a owl:DatatypeProperty ;
+    rdfs:label "price" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:decimal .
+
+:stockAvailable a owl:DatatypeProperty ;
+    rdfs:label "stock available" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:integer .
+
+:cartTotal a owl:DatatypeProperty ;
+    rdfs:label "cart total" ;
+    rdfs:domain :Cart ;
+    rdfs:range  xsd:decimal .
+
+:orderNumber a owl:DatatypeProperty ;
+    rdfs:label "order number" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:string .
+
+:orderStatus a owl:DatatypeProperty ;
+    rdfs:label "order status" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the order: cart, paid, fulfilled, delivered." .
+
+:orderTotal a owl:DatatypeProperty ;
+    rdfs:label "order total" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:decimal .
+
+:paymentMethod a owl:DatatypeProperty ;
+    rdfs:label "payment method" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:string .
+
+:paidAmount a owl:DatatypeProperty ;
+    rdfs:label "paid amount" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:decimal .
+
+:rating a owl:DatatypeProperty ;
+    rdfs:label "rating" ;
+    rdfs:domain :Review ;
+    rdfs:range  xsd:integer .
+
+:trackingNumber a owl:DatatypeProperty ;
+    rdfs:label "tracking number" ;
+    rdfs:domain :Fulfilment ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:ShopperRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Shopper" ;
+    skos:altLabel "Customer", "Buyer" ;
+    skos:definition "Person role that browses products, manages a cart, places orders, and writes reviews. Bearer: person. Permissions: Product:read, Cart:read, Cart:write, Order:read, Review:read, Review:write." .
+
+:StoreAdministratorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Store Administrator" ;
+    skos:altLabel "Merchant Admin", "Shop Manager" ;
+    skos:definition "Person role that maintains the catalog, monitors orders, and manages fulfilment. Bearer: person. Permissions: Product:read, Product:write, Order:read, Order:write, Fulfilment:read, Fulfilment:write." .

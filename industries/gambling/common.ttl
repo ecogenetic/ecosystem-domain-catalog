@@ -1,0 +1,60 @@
+@prefix : <https://ecosystemcode.com/ontology/industry/gambling#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/industry/gambling> a owl:Ontology ;
+    rdfs:label "Gaming & Gambling Industry Common Concepts" ;
+    rdfs:comment "Shared gambling concepts reused across domain overlays: players, wallets, wagers, and responsible gambling controls." .
+
+:Player a owl:Class ;
+    skos:prefLabel "Player" ;
+    skos:altLabel "Punter", "Account Holder" ;
+    skos:definition "The registered, age-verified account holder who places wagers." .
+
+:Wallet a owl:Class ;
+    skos:prefLabel "Wallet" ;
+    skos:altLabel "Player Balance", "Account Balance" ;
+    skos:definition "The player's balance, split between withdrawable cash and restricted bonus funds." .
+
+:Wager a owl:Class ;
+    skos:prefLabel "Wager" ;
+    skos:altLabel "Bet", "Stake" ;
+    skos:definition "A stake placed on an outcome; settled as won, lost, or void." .
+
+:ResponsibleGamblingLimit a owl:Class ;
+    skos:prefLabel "Responsible Gambling Limit" ;
+    skos:altLabel "RG Limit", "Player Protection Limit" ;
+    skos:definition "A deposit, loss, wager, or session limit protecting the player; includes cool-off and self-exclusion states." .
+
+:walletOfPlayer a owl:ObjectProperty ;
+    rdfs:label "wallet of player" ;
+    rdfs:domain :Wallet ;
+    rdfs:range  :Player ;
+    skos:definition "Links a wallet to its owning player." .
+
+:wagerPlacedByPlayer a owl:ObjectProperty ;
+    rdfs:label "wager placed by player" ;
+    rdfs:domain :Wager ;
+    rdfs:range  :Player ;
+    skos:definition "The player who placed the wager." .
+
+:limitAppliesToPlayer a owl:ObjectProperty ;
+    rdfs:label "limit applies to player" ;
+    rdfs:domain :ResponsibleGamblingLimit ;
+    rdfs:range  :Player ;
+    skos:definition "The player protected by the responsible gambling limit." .
+
+:selfExcluded a owl:DatatypeProperty ;
+    rdfs:label "self excluded" ;
+    rdfs:domain :Player ;
+    rdfs:range  xsd:boolean ;
+    skos:definition "Whether the player has self-excluded; excluded players must be suppressed from play and marketing." .
+
+:ResponsibleGamblingOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Responsible Gambling Officer" ;
+    skos:altLabel "RG Officer", "Player Protection Officer" ;
+    skos:definition "Person role that monitors player protection markers and enforces limits. Bearer: person. Permissions: Player:read, ResponsibleGamblingLimit:read, ResponsibleGamblingLimit:write." .

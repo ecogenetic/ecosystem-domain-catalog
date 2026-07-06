@@ -1,0 +1,60 @@
+@prefix : <https://ecosystemcode.com/ontology/industry/insurance#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/industry/insurance> a owl:Ontology ;
+    rdfs:label "Insurance Industry Common Concepts" ;
+    rdfs:comment "Shared insurance concepts reused across domain overlays: policies, claims, policyholders, and distribution roles." .
+
+:Policy a owl:Class ;
+    skos:prefLabel "Policy" ;
+    skos:altLabel "Insurance Contract", "Cover" ;
+    skos:definition "A contract of insurance defining cover, premium, term, and exclusions." .
+
+:Policyholder a owl:Class ;
+    skos:prefLabel "Policyholder" ;
+    skos:altLabel "Insured Party", "Policy Owner" ;
+    skos:definition "The party who owns an insurance policy and pays its premium." .
+
+:Claim a owl:Class ;
+    skos:prefLabel "Claim" ;
+    skos:altLabel "Loss Event", "Insurance Claim" ;
+    skos:definition "A demand for payment under a policy following an insured event." .
+
+:policyHeldByPolicyholder a owl:ObjectProperty ;
+    rdfs:label "policy held by policyholder" ;
+    rdfs:domain :Policy ;
+    rdfs:range  :Policyholder ;
+    skos:definition "Links a policy to the party who owns it." .
+
+:claimAgainstPolicy a owl:ObjectProperty ;
+    rdfs:label "claim against policy" ;
+    rdfs:domain :Claim ;
+    rdfs:range  :Policy ;
+    skos:definition "The policy a claim draws against." .
+
+:claimStatus a owl:DatatypeProperty ;
+    rdfs:label "claim status" ;
+    rdfs:domain :Claim ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state: notified, assessed, approved, settled, repudiated." .
+
+:UnderwriterRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Underwriter" ;
+    skos:definition "Person role that assesses risk and prices cover. Bearer: person. Permissions: Policy:read, Policy:write." .
+
+:ClaimsAssessorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Claims Assessor" ;
+    skos:altLabel "Loss Adjuster" ;
+    skos:definition "Person role that investigates and adjudicates claims. Bearer: person. Permissions: Claim:read, Claim:write, Policy:read." .
+
+:BrokerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Broker" ;
+    skos:altLabel "Agent", "Intermediary" ;
+    skos:definition "Organisation role that distributes policies on behalf of insurers. Bearer: organisation. Permissions: Policy:read, Policyholder:read." .

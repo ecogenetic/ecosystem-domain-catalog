@@ -1,0 +1,49 @@
+@prefix : <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/industry/telco> a owl:Ontology ;
+    rdfs:label "Telecommunications Industry Common Concepts" ;
+    rdfs:comment "Shared telco concepts reused across domain overlays: subscribers, rate plans, and service usage." .
+
+:Subscriber a owl:Class ;
+    skos:prefLabel "Subscriber" ;
+    skos:altLabel "Service Identity", "Line" ;
+    skos:definition "The service identity (typically per SIM or line) that consumes network services; distinct from the paying customer." .
+
+:RatePlan a owl:Class ;
+    skos:prefLabel "Rate Plan" ;
+    skos:altLabel "Tariff", "Price Plan" ;
+    skos:definition "The pricing construct governing subscription fees and usage charges for a subscriber." .
+
+:UsageRecord a owl:Class ;
+    skos:prefLabel "Usage Record" ;
+    skos:altLabel "CDR", "Charging Data Record" ;
+    skos:definition "A record of consumed service units (data, voice, SMS) attributable to a subscriber." .
+
+:subscribedToRatePlan a owl:ObjectProperty ;
+    rdfs:label "subscribed to rate plan" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  :RatePlan ;
+    skos:definition "The rate plan currently governing a subscriber's charges." .
+
+:usageBySubscriber a owl:ObjectProperty ;
+    rdfs:label "usage by subscriber" ;
+    rdfs:domain :UsageRecord ;
+    rdfs:range  :Subscriber ;
+    skos:definition "Attributes a usage record to the subscriber that generated it." .
+
+:msisdn a owl:DatatypeProperty ;
+    rdfs:label "msisdn" ;
+    rdfs:domain :Subscriber ;
+    rdfs:range  xsd:string ;
+    skos:definition "The mobile number identifying the subscriber." .
+
+:RetentionAgentRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Retention Agent" ;
+    skos:altLabel "Save Desk Agent" ;
+    skos:definition "Person role that handles churn-risk subscribers with retention offers. Bearer: person. Permissions: Subscriber:read, RatePlan:read." .

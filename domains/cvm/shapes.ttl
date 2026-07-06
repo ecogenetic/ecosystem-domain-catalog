@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/cvm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:CustomerShape a sh:NodeShape ;
+    sh:targetClass :Customer ;
+    sh:property [
+        sh:path :externalRef ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :consentToMarketing ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+    ] .
+
+:SegmentShape a sh:NodeShape ;
+    sh:targetClass :Segment ;
+    sh:property [
+        sh:path :segmentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ValueScoreShape a sh:NodeShape ;
+    sh:targetClass :ValueScore ;
+    sh:property [
+        sh:path :scoresCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :scoreValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:ChurnRiskShape a sh:NodeShape ;
+    sh:targetClass :ChurnRisk ;
+    sh:property [
+        sh:path :assessesCustomer ;
+        sh:class :Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :probability ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:OfferShape a sh:NodeShape ;
+    sh:targetClass :Offer ;
+    sh:property [
+        sh:path :offerName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :targetedAtSegment ;
+        sh:class :Segment ;
+        sh:minCount 1 ;
+    ] .
+
+:CampaignShape a sh:NodeShape ;
+    sh:targetClass :Campaign ;
+    sh:property [
+        sh:path :deliversOffer ;
+        sh:class :Offer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :targetsSegment ;
+        sh:class :Segment ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :campaignStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "targeted" "launched" "measured" "closed" ) ;
+    ] .

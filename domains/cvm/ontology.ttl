@@ -1,0 +1,170 @@
+@prefix : <https://ecosystemcode.com/ontology/cvm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/cvm> a owl:Ontology ;
+    rdfs:label "CVM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Customer Value Management: customers, segments, value and churn scoring, offers, and campaigns." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Customer a owl:Class ;
+    skos:prefLabel "Customer" ;
+    skos:altLabel "Client", "Subscriber", "Member" ;
+    skos:definition "A person or organisation whose value and behaviour the business manages." .
+
+:Segment a owl:Class ;
+    skos:prefLabel "Segment" ;
+    skos:altLabel "Customer Segment", "Audience" ;
+    skos:definition "A defined group of customers sharing value, behaviour, or risk characteristics." .
+
+:ValueScore a owl:Class ;
+    skos:prefLabel "Value Score" ;
+    skos:altLabel "CLV Score", "Lifetime Value Score" ;
+    skos:definition "A computed measure of a customer's current and predicted lifetime value." .
+
+:ChurnRisk a owl:Class ;
+    skos:prefLabel "Churn Risk" ;
+    skos:altLabel "Attrition Risk", "Lapse Risk" ;
+    skos:definition "A computed probability that a customer will lapse or defect." .
+
+:Offer a owl:Class ;
+    skos:prefLabel "Offer" ;
+    skos:altLabel "Incentive", "Promotion" ;
+    skos:definition "An incentive such as a discount, upgrade, or reward designed to change customer behaviour." .
+
+:Campaign a owl:Class ;
+    skos:prefLabel "Campaign" ;
+    skos:altLabel "Marketing Campaign", "Retention Campaign" ;
+    skos:definition "A targeted delivery of offers to one or more segments with measured outcomes." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:assignedToSegment a owl:ObjectProperty ;
+    rdfs:label "assigned to segment" ;
+    rdfs:domain :Customer ;
+    rdfs:range  :Segment ;
+    skos:definition "Places a customer into a segment." .
+
+:scoresCustomer a owl:ObjectProperty ;
+    rdfs:label "scores customer" ;
+    rdfs:domain :ValueScore ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer a value score was computed for." .
+
+:assessesCustomer a owl:ObjectProperty ;
+    rdfs:label "assesses customer" ;
+    rdfs:domain :ChurnRisk ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer a churn risk was assessed for." .
+
+:targetedAtSegment a owl:ObjectProperty ;
+    rdfs:label "targeted at segment" ;
+    rdfs:domain :Offer ;
+    rdfs:range  :Segment ;
+    skos:definition "The segment an offer is designed for." .
+
+:deliversOffer a owl:ObjectProperty ;
+    rdfs:label "delivers offer" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  :Offer ;
+    skos:definition "The offer a campaign delivers to its target segments." .
+
+:targetsSegment a owl:ObjectProperty ;
+    rdfs:label "targets segment" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  :Segment ;
+    skos:definition "A segment the campaign is delivered to." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:externalRef a owl:DatatypeProperty ;
+    rdfs:label "external reference" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:string .
+
+:consentToMarketing a owl:DatatypeProperty ;
+    rdfs:label "consent to marketing" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:boolean .
+
+:segmentName a owl:DatatypeProperty ;
+    rdfs:label "segment name" ;
+    rdfs:domain :Segment ;
+    rdfs:range  xsd:string .
+
+:criteria a owl:DatatypeProperty ;
+    rdfs:label "criteria" ;
+    rdfs:domain :Segment ;
+    rdfs:range  xsd:string .
+
+:scoreValue a owl:DatatypeProperty ;
+    rdfs:label "score value" ;
+    rdfs:domain :ValueScore ;
+    rdfs:range  xsd:decimal .
+
+:probability a owl:DatatypeProperty ;
+    rdfs:label "probability" ;
+    rdfs:domain :ChurnRisk ;
+    rdfs:range  xsd:decimal .
+
+:riskBand a owl:DatatypeProperty ;
+    rdfs:label "risk band" ;
+    rdfs:domain :ChurnRisk ;
+    rdfs:range  xsd:string .
+
+:offerName a owl:DatatypeProperty ;
+    rdfs:label "offer name" ;
+    rdfs:domain :Offer ;
+    rdfs:range  xsd:string .
+
+:incentiveType a owl:DatatypeProperty ;
+    rdfs:label "incentive type" ;
+    rdfs:domain :Offer ;
+    rdfs:range  xsd:string .
+
+:validUntil a owl:DatatypeProperty ;
+    rdfs:label "valid until" ;
+    rdfs:domain :Offer ;
+    rdfs:range  xsd:date .
+
+:campaignName a owl:DatatypeProperty ;
+    rdfs:label "campaign name" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:string .
+
+:campaignStatus a owl:DatatypeProperty ;
+    rdfs:label "campaign status" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the campaign: draft, targeted, launched, measured, closed." .
+
+:upliftMeasured a owl:DatatypeProperty ;
+    rdfs:label "uplift measured" ;
+    rdfs:domain :Campaign ;
+    rdfs:range  xsd:decimal .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:MarketingAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Marketing Analyst" ;
+    skos:altLabel "CVM Analyst", "Campaign Analyst" ;
+    skos:definition "Person role that builds segments, designs offers, and configures campaigns. Bearer: person. Permissions: Segment:read, Segment:write, Offer:read, Offer:write, Campaign:read, Campaign:write." .
+
+:RetentionManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Retention Manager" ;
+    skos:altLabel "Loyalty Manager" ;
+    skos:definition "Person role that monitors churn risk and approves retention campaigns. Bearer: person. Permissions: ChurnRisk:read, ValueScore:read, Campaign:read, Campaign:write." .

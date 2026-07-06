@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/ecom#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:property [
+        sh:path :productName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :price ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:CartShape a sh:NodeShape ;
+    sh:targetClass :Cart ;
+    sh:property [
+        sh:path :containsProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] .
+
+:OrderShape a sh:NodeShape ;
+    sh:targetClass :Order ;
+    sh:property [
+        sh:path :orderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :createdFromCart ;
+        sh:class :Cart ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :orderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "cart" "paid" "fulfilled" "delivered" ) ;
+    ] .
+
+:PaymentShape a sh:NodeShape ;
+    sh:targetClass :Payment ;
+    sh:property [
+        sh:path :settlesOrder ;
+        sh:class :Order ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :paidAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:ReviewShape a sh:NodeShape ;
+    sh:targetClass :Review ;
+    sh:property [
+        sh:path :writtenAboutProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :rating ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:FulfilmentShape a sh:NodeShape ;
+    sh:targetClass :Fulfilment ;
+    sh:property [
+        sh:path :shipsOrder ;
+        sh:class :Order ;
+        sh:minCount 1 ;
+    ] .
