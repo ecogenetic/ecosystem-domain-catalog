@@ -74,13 +74,15 @@
       "workflow": "Ingest events → score value and churn → segment → match products and pricing → decide next best action → deliver treatments → measure uplift vs control",
       "statefulEntity": "Campaign (draft → targeted → launched → measured → closed)",
       "industries": [
+        "banking",
         "gambling",
+        "insurance",
         "telco"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "erp",

@@ -1,0 +1,177 @@
+@prefix :     <https://ecosystemcode.com/ontology/cvm/banking#> .
+@prefix cvm:  <https://ecosystemcode.com/ontology/cvm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cvm/banking> a owl:Ontology ;
+    rdfs:label "CVM Banking Overlay" ;
+    rdfs:comment "Banking specialization of the CVM base ontology: client relationships, product holdings, pre-approved offers, affordability gating, and attrition signals." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ClientRelationship a owl:Class ;
+    skos:prefLabel "Client Relationship" ;
+    skos:altLabel "Relationship", "Client Portfolio View" ;
+    skos:definition "The value-managed view of a client spanning every product they hold with the bank; relationship value equals holding values minus cost to serve." .
+
+:ProductHolding a owl:Class ;
+    rdfs:subClassOf cvm:Product ;
+    skos:prefLabel "Product Holding" ;
+    skos:altLabel "Holding", "Banking Product Holding" ;
+    skos:definition "One banking product (current account, savings, card, loan, mortgage) held by a client; the unit cross-sell and retention act on." .
+
+:PreApprovedOffer a owl:Class ;
+    rdfs:subClassOf cvm:Offer ;
+    skos:prefLabel "Pre-Approved Offer" ;
+    skos:altLabel "Pre-Qualified Offer", "Pre-Scored Offer" ;
+    skos:definition "An offer backed by a prior credit decision (limit, rate) that the client can accept without a new application." .
+
+:AffordabilityCheck a owl:Class ;
+    skos:prefLabel "Affordability Check" ;
+    skos:altLabel "Suitability Check", "Responsible Lending Check" ;
+    skos:definition "An assessment that a credit-bearing offer is affordable and suitable for the client before it may be presented." .
+
+:AttritionSignal a owl:Class ;
+    rdfs:subClassOf cvm:CustomerEvent ;
+    skos:prefLabel "Attrition Signal" ;
+    skos:altLabel "Run-Off Signal", "Silent Attrition Indicator" ;
+    skos:definition "A behavioural indicator of relationship run-off (salary deposit stopped, balances migrating out, dormancy) that triggers retention action." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:aggregatesCustomer a owl:ObjectProperty ;
+    rdfs:label "aggregates customer" ;
+    rdfs:domain :ClientRelationship ;
+    rdfs:range  cvm:Customer ;
+    skos:definition "The customer whose product portfolio this relationship view aggregates." .
+
+:heldByClient a owl:ObjectProperty ;
+    rdfs:label "held by client" ;
+    rdfs:domain :ProductHolding ;
+    rdfs:range  :ClientRelationship ;
+    skos:definition "The client relationship a product holding belongs to." .
+
+:validatesPreApprovedOffer a owl:ObjectProperty ;
+    rdfs:label "validates pre-approved offer" ;
+    rdfs:domain :AffordabilityCheck ;
+    rdfs:range  :PreApprovedOffer ;
+    skos:definition "The pre-approved offer this affordability check gates; failed checks suppress the treatment." .
+
+:detectedOnRelationship a owl:ObjectProperty ;
+    rdfs:label "detected on relationship" ;
+    rdfs:domain :AttritionSignal ;
+    rdfs:range  :ClientRelationship ;
+    skos:definition "The client relationship the attrition signal was detected on." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:relationshipValue a owl:DatatypeProperty ;
+    rdfs:label "relationship value" ;
+    rdfs:domain :ClientRelationship ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "Aggregate value of the client relationship across all product holdings." .
+
+:primaryBankFlag a owl:DatatypeProperty ;
+    rdfs:label "primary bank flag" ;
+    rdfs:domain :ClientRelationship ;
+    rdfs:range  xsd:boolean ;
+    skos:definition "Whether the bank is the client's primary bank (salary account plus multiple holdings); the strongest retention predictor." .
+
+:holdingType a owl:DatatypeProperty ;
+    rdfs:label "holding type" ;
+    rdfs:domain :ProductHolding ;
+    rdfs:range  xsd:string ;
+    skos:definition "Kind of banking product held: current-account, savings, card, personal-loan, mortgage, investment." .
+
+:holdingBalance a owl:DatatypeProperty ;
+    rdfs:label "holding balance" ;
+    rdfs:domain :ProductHolding ;
+    rdfs:range  xsd:decimal .
+
+:preApprovedLimit a owl:DatatypeProperty ;
+    rdfs:label "pre-approved limit" ;
+    rdfs:domain :PreApprovedOffer ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "The credit limit already approved for the client on this offer." .
+
+:preApprovedRate a owl:DatatypeProperty ;
+    rdfs:label "pre-approved rate" ;
+    rdfs:domain :PreApprovedOffer ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "The interest rate already approved for the client on this offer." .
+
+:checkOutcome a owl:DatatypeProperty ;
+    rdfs:label "check outcome" ;
+    rdfs:domain :AffordabilityCheck ;
+    rdfs:range  xsd:string ;
+    skos:definition "Outcome of the affordability check: passed, failed, referred." .
+
+:checkedAt a owl:DatatypeProperty ;
+    rdfs:label "checked at" ;
+    rdfs:domain :AffordabilityCheck ;
+    rdfs:range  xsd:dateTime .
+
+:signalSeverity a owl:DatatypeProperty ;
+    rdfs:label "signal severity" ;
+    rdfs:domain :AttritionSignal ;
+    rdfs:range  xsd:string ;
+    skos:definition "Severity of the attrition signal: low, medium, high." .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:RelationshipManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Relationship Manager" ;
+    skos:altLabel "RM", "Private Banker" ;
+    skos:definition "Person role that owns high-value client relationships, reviews next-best-action recommendations, and delivers advice-led treatments. Bearer: person. Permissions: ClientRelationship:read, ProductHolding:read, NextBestAction:read, Treatment:read, Treatment:write, Customer:read." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:ClientRelationshipShape a sh:NodeShape ;
+    sh:targetClass :ClientRelationship ;
+    sh:property [
+        sh:path :aggregatesCustomer ;
+        sh:class cvm:Customer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :relationshipValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:PreApprovedOfferShape a sh:NodeShape ;
+    sh:targetClass :PreApprovedOffer ;
+    sh:property [
+        sh:path :preApprovedLimit ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:AffordabilityCheckShape a sh:NodeShape ;
+    sh:targetClass :AffordabilityCheck ;
+    sh:property [
+        sh:path :validatesPreApprovedOffer ;
+        sh:class :PreApprovedOffer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :checkOutcome ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "passed" "failed" "referred" ) ;
+    ] .

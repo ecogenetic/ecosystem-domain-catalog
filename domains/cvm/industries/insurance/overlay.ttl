@@ -1,0 +1,208 @@
+@prefix :     <https://ecosystemcode.com/ontology/cvm/insurance#> .
+@prefix cvm:  <https://ecosystemcode.com/ontology/cvm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cvm/insurance> a owl:Ontology ;
+    rdfs:label "CVM Insurance Overlay" ;
+    rdfs:comment "Insurance specialization of the CVM base ontology: policyholders, policy holdings, renewal events, lapse risk, fair renewal pricing, and household-shaped cross-sell." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Policyholder a owl:Class ;
+    rdfs:subClassOf cvm:Customer ;
+    skos:prefLabel "Policyholder" ;
+    skos:altLabel "Insured Customer", "Policy Owner" ;
+    skos:definition "The customer who owns one or more policies; the unit whose lifetime value and lapse risk are managed." .
+
+:PolicyHolding a owl:Class ;
+    rdfs:subClassOf cvm:Product ;
+    skos:prefLabel "Policy Holding" ;
+    skos:altLabel "In-Force Policy", "Policy" ;
+    skos:definition "One in-force policy (motor, home, life, health) held by a policyholder; the unit renewal and cross-sell act on." .
+
+:RenewalEvent a owl:Class ;
+    rdfs:subClassOf cvm:CustomerEvent ;
+    skos:prefLabel "Renewal Event" ;
+    skos:altLabel "Policy Renewal", "Renewal Window" ;
+    skos:definition "The approaching renewal of a policy holding: the decisive CVM moment where lapse risk peaks and pricing is decided." .
+
+:LapseRisk a owl:Class ;
+    rdfs:subClassOf cvm:ChurnRisk ;
+    skos:prefLabel "Lapse Risk" ;
+    skos:altLabel "Non-Renewal Risk", "Switch Risk" ;
+    skos:definition "A computed probability that the policyholder lets a policy lapse or switches insurer at renewal." .
+
+:RenewalPriceDecision a owl:Class ;
+    skos:prefLabel "Renewal Price Decision" ;
+    skos:altLabel "Renewal Premium Decision", "Renewal Quote" ;
+    skos:definition "The premium decision for a renewal (proposed premium, prior premium, concession applied) subject to fairness rules." .
+
+:Household a owl:Class ;
+    skos:prefLabel "Household" ;
+    skos:altLabel "Family Unit", "Address Group" ;
+    skos:definition "The grouping of policyholders at one address whose combined holdings drive bundle offers and multi-policy discounts." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:heldByPolicyholder a owl:ObjectProperty ;
+    rdfs:label "held by policyholder" ;
+    rdfs:domain :PolicyHolding ;
+    rdfs:range  :Policyholder ;
+    skos:definition "The policyholder who owns this in-force policy." .
+
+:renewsPolicyHolding a owl:ObjectProperty ;
+    rdfs:label "renews policy holding" ;
+    rdfs:domain :RenewalEvent ;
+    rdfs:range  :PolicyHolding ;
+    skos:definition "The policy holding this renewal event applies to." .
+
+:assessesLapseOfPolicyholder a owl:ObjectProperty ;
+    rdfs:label "assesses lapse of policyholder" ;
+    rdfs:domain :LapseRisk ;
+    rdfs:range  :Policyholder ;
+    skos:definition "The policyholder whose lapse probability this score assesses." .
+
+:pricesRenewalEvent a owl:ObjectProperty ;
+    rdfs:label "prices renewal event" ;
+    rdfs:domain :RenewalPriceDecision ;
+    rdfs:range  :RenewalEvent ;
+    skos:definition "The renewal event this price decision applies to." .
+
+:memberOfHousehold a owl:ObjectProperty ;
+    rdfs:label "member of household" ;
+    rdfs:domain :Policyholder ;
+    rdfs:range  :Household ;
+    skos:definition "The household the policyholder belongs to, used for bundle targeting and multi-policy discounts." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:lineOfBusiness a owl:DatatypeProperty ;
+    rdfs:label "line of business" ;
+    rdfs:domain :PolicyHolding ;
+    rdfs:range  xsd:string ;
+    skos:definition "The insurance line of the holding: motor, home, life, health, travel." .
+
+:annualPremium a owl:DatatypeProperty ;
+    rdfs:label "annual premium" ;
+    rdfs:domain :PolicyHolding ;
+    rdfs:range  xsd:decimal .
+
+:renewalDate a owl:DatatypeProperty ;
+    rdfs:label "renewal date" ;
+    rdfs:domain :RenewalEvent ;
+    rdfs:range  xsd:date .
+
+:renewalOutcome a owl:DatatypeProperty ;
+    rdfs:label "renewal outcome" ;
+    rdfs:domain :RenewalEvent ;
+    rdfs:range  xsd:string ;
+    skos:definition "Outcome of the renewal event: pending, renewed, lapsed, switched." .
+
+:proposedPremium a owl:DatatypeProperty ;
+    rdfs:label "proposed premium" ;
+    rdfs:domain :RenewalPriceDecision ;
+    rdfs:range  xsd:decimal .
+
+:priorPremium a owl:DatatypeProperty ;
+    rdfs:label "prior premium" ;
+    rdfs:domain :RenewalPriceDecision ;
+    rdfs:range  xsd:decimal .
+
+:concessionApplied a owl:DatatypeProperty ;
+    rdfs:label "concession applied" ;
+    rdfs:domain :RenewalPriceDecision ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "Discount applied against the technical premium to retain the policyholder; requires a documented reason." .
+
+:decisionReasonText a owl:DatatypeProperty ;
+    rdfs:label "decision reason text" ;
+    rdfs:domain :RenewalPriceDecision ;
+    rdfs:range  xsd:string ;
+    skos:definition "Auditable justification for the renewal price decision, required under fairness rules." .
+
+:householdSize a owl:DatatypeProperty ;
+    rdfs:label "household size" ;
+    rdfs:domain :Household ;
+    rdfs:range  xsd:integer .
+
+:multiPolicyCount a owl:DatatypeProperty ;
+    rdfs:label "multi policy count" ;
+    rdfs:domain :Household ;
+    rdfs:range  xsd:integer ;
+    skos:definition "Number of in-force policies across the household, driving multi-policy discount eligibility." .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:RenewalPricingAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Renewal Pricing Analyst" ;
+    skos:altLabel "Retention Pricing Analyst" ;
+    skos:definition "Person role that sets renewal price decisions within fairness constraints and monitors lapse-price elasticity. Bearer: person. Permissions: RenewalPriceDecision:read, RenewalPriceDecision:write, RenewalEvent:read, LapseRisk:read, PolicyHolding:read, Policyholder:read." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:PolicyHoldingShape a sh:NodeShape ;
+    sh:targetClass :PolicyHolding ;
+    sh:property [
+        sh:path :heldByPolicyholder ;
+        sh:class :Policyholder ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :lineOfBusiness ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "motor" "home" "life" "health" "travel" ) ;
+    ] ;
+    sh:property [
+        sh:path :annualPremium ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:RenewalEventShape a sh:NodeShape ;
+    sh:targetClass :RenewalEvent ;
+    sh:property [
+        sh:path :renewsPolicyHolding ;
+        sh:class :PolicyHolding ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :renewalDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :renewalOutcome ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "pending" "renewed" "lapsed" "switched" ) ;
+    ] .
+
+:RenewalPriceDecisionShape a sh:NodeShape ;
+    sh:targetClass :RenewalPriceDecision ;
+    sh:property [
+        sh:path :pricesRenewalEvent ;
+        sh:class :RenewalEvent ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :proposedPremium ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
