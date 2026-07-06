@@ -1,0 +1,134 @@
+@prefix :    <https://ecosystemcode.com/ontology/fms#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ChartOfAccountShape a sh:NodeShape ;
+    sh:targetClass :ChartOfAccount ;
+    sh:property [
+        sh:path :accountCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :accountName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:JournalEntryShape a sh:NodeShape ;
+    sh:targetClass :JournalEntry ;
+    sh:property [
+        sh:path :postedToGeneralLedger ;
+        sh:class :GeneralLedger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :withinFiscalPeriod ;
+        sh:class :FiscalPeriod ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :postingDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :journalEntryStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "posted" "reconciled" "period closed" ) ;
+    ] .
+
+:GeneralLedgerShape a sh:NodeShape ;
+    sh:targetClass :GeneralLedger ;
+    sh:property [
+        sh:path :ledgerName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:VendorInvoiceShape a sh:NodeShape ;
+    sh:targetClass :VendorInvoice ;
+    sh:property [
+        sh:path :recordedInPurchaseLedger ;
+        sh:class :PurchaseLedger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :invoiceNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :invoiceAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:CustomerInvoiceShape a sh:NodeShape ;
+    sh:targetClass :CustomerInvoice ;
+    sh:property [
+        sh:path :recordedInSalesLedger ;
+        sh:class :SalesLedger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :customerInvoiceNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :customerInvoiceAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:PaymentShape a sh:NodeShape ;
+    sh:targetClass :Payment ;
+    sh:property [
+        sh:path :paymentAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :paymentDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] .
+
+:SalesLedgerShape a sh:NodeShape ;
+    sh:targetClass :SalesLedger .
+
+:PurchaseLedgerShape a sh:NodeShape ;
+    sh:targetClass :PurchaseLedger .
+
+:FiscalPeriodShape a sh:NodeShape ;
+    sh:targetClass :FiscalPeriod ;
+    sh:property [
+        sh:path :periodName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] .
+
+:ReconciliationShape a sh:NodeShape ;
+    sh:targetClass :Reconciliation ;
+    sh:property [
+        sh:path :tiesLedger ;
+        sh:class :GeneralLedger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :reconciledAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .

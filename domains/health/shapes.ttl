@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/health#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:PatientShape a sh:NodeShape ;
+    sh:targetClass :Patient ;
+    sh:property [
+        sh:path :fullName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :dateOfBirth ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] .
+
+:AppointmentShape a sh:NodeShape ;
+    sh:targetClass :Appointment ;
+    sh:property [
+        sh:path :withClinician ;
+        sh:class :Clinician ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :atFacility ;
+        sh:class :Facility ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :scheduledAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :appointmentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "scheduled" "checked in" "completed" "follow-up" ) ;
+    ] .
+
+:MedicalRecordShape a sh:NodeShape ;
+    sh:targetClass :MedicalRecord ;
+    sh:property [
+        sh:path :documentsPatient ;
+        sh:class :Patient ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :createdAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+:PrescriptionShape a sh:NodeShape ;
+    sh:targetClass :Prescription ;
+    sh:property [
+        sh:path :issuedByClinician ;
+        sh:class :Clinician ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :prescribedForPatient ;
+        sh:class :Patient ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :medicationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ClinicianShape a sh:NodeShape ;
+    sh:targetClass :Clinician ;
+    sh:property [
+        sh:path :clinicianName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FacilityShape a sh:NodeShape ;
+    sh:targetClass :Facility ;
+    sh:property [
+        sh:path :facilityName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

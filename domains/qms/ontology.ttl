@@ -1,0 +1,164 @@
+@prefix : <https://ecosystemcode.com/ontology/qms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/qms> a owl:Ontology ;
+    rdfs:label "QMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Quality Management: inspections, samples, specifications, non-conformances, CAPA, and certificates." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Inspection a owl:Class ;
+    skos:prefLabel "Inspection" ;
+    skos:altLabel "Quality Inspection", "Audit Check" ;
+    skos:definition "A scheduled or triggered examination of product or process against specifications." .
+
+:NonConformance a owl:Class ;
+    skos:prefLabel "Non-Conformance" ;
+    skos:altLabel "NCR", "Deviation" ;
+    skos:definition "A documented deviation from a specification found during inspection." .
+
+:CAPA a owl:Class ;
+    skos:prefLabel "CAPA" ;
+    skos:altLabel "Corrective Action", "Preventive Action" ;
+    skos:definition "A corrective and preventive action plan that remediates a non-conformance and prevents recurrence." .
+
+:Specification a owl:Class ;
+    skos:prefLabel "Specification" ;
+    skos:altLabel "Spec", "Quality Standard" ;
+    skos:definition "A controlled definition of acceptable characteristics and tolerance limits for a product or process." .
+
+:Sample a owl:Class ;
+    skos:prefLabel "Sample" ;
+    skos:altLabel "Test Sample", "Specimen" ;
+    skos:definition "A unit or portion of product drawn during an inspection for measurement against a specification." .
+
+:Certificate a owl:Class ;
+    skos:prefLabel "Certificate" ;
+    skos:altLabel "Certificate of Conformance", "CoC" ;
+    skos:definition "A formal document attesting that an inspection was passed and requirements were met." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:drawsSample a owl:ObjectProperty ;
+    rdfs:label "draws sample" ;
+    rdfs:domain :Inspection ;
+    rdfs:range  :Sample ;
+    skos:definition "A sample drawn from product or process during the inspection." .
+
+:checkedAgainstSpecification a owl:ObjectProperty ;
+    rdfs:label "checked against specification" ;
+    rdfs:domain :Sample ;
+    rdfs:range  :Specification ;
+    skos:definition "The specification whose tolerance limits the sample is measured against." .
+
+:raisedFromInspection a owl:ObjectProperty ;
+    rdfs:label "raised from inspection" ;
+    rdfs:domain :NonConformance ;
+    rdfs:range  :Inspection ;
+    skos:definition "The inspection during which the non-conformance was detected and raised." .
+
+:remediatesNonConformance a owl:ObjectProperty ;
+    rdfs:label "remediates non-conformance" ;
+    rdfs:domain :CAPA ;
+    rdfs:range  :NonConformance ;
+    skos:definition "The non-conformance the CAPA plan corrects and prevents from recurring." .
+
+:attestsInspection a owl:ObjectProperty ;
+    rdfs:label "attests inspection" ;
+    rdfs:domain :Certificate ;
+    rdfs:range  :Inspection ;
+    skos:definition "The passed inspection the certificate formally attests to." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:inspectionType a owl:DatatypeProperty ;
+    rdfs:label "inspection type" ;
+    rdfs:domain :Inspection ;
+    rdfs:range  xsd:string .
+
+:inspectedAt a owl:DatatypeProperty ;
+    rdfs:label "inspected at" ;
+    rdfs:domain :Inspection ;
+    rdfs:range  xsd:dateTime .
+
+:severity a owl:DatatypeProperty ;
+    rdfs:label "severity" ;
+    rdfs:domain :NonConformance ;
+    rdfs:range  xsd:string .
+
+:defectDescription a owl:DatatypeProperty ;
+    rdfs:label "defect description" ;
+    rdfs:domain :NonConformance ;
+    rdfs:range  xsd:string .
+
+:nonConformanceStatus a owl:DatatypeProperty ;
+    rdfs:label "non-conformance status" ;
+    rdfs:domain :NonConformance ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the non-conformance: recorded, capa initiated, verified, closed." .
+
+:actionPlan a owl:DatatypeProperty ;
+    rdfs:label "action plan" ;
+    rdfs:domain :CAPA ;
+    rdfs:range  xsd:string .
+
+:targetDate a owl:DatatypeProperty ;
+    rdfs:label "target date" ;
+    rdfs:domain :CAPA ;
+    rdfs:range  xsd:date .
+
+:specificationName a owl:DatatypeProperty ;
+    rdfs:label "specification name" ;
+    rdfs:domain :Specification ;
+    rdfs:range  xsd:string .
+
+:toleranceLimit a owl:DatatypeProperty ;
+    rdfs:label "tolerance limit" ;
+    rdfs:domain :Specification ;
+    rdfs:range  xsd:decimal .
+
+:sampleCode a owl:DatatypeProperty ;
+    rdfs:label "sample code" ;
+    rdfs:domain :Sample ;
+    rdfs:range  xsd:string .
+
+:collectedAt a owl:DatatypeProperty ;
+    rdfs:label "collected at" ;
+    rdfs:domain :Sample ;
+    rdfs:range  xsd:dateTime .
+
+:certificateNumber a owl:DatatypeProperty ;
+    rdfs:label "certificate number" ;
+    rdfs:domain :Certificate ;
+    rdfs:range  xsd:string .
+
+:issuedAt a owl:DatatypeProperty ;
+    rdfs:label "issued at" ;
+    rdfs:domain :Certificate ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:QualityInspectorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Quality Inspector" ;
+    skos:altLabel "QC Inspector" ;
+    skos:definition "Person role that performs inspections, draws samples, and raises non-conformances. Bearer: person. Permissions: Inspection:read, Inspection:write, Sample:read, Sample:write, NonConformance:read, NonConformance:write." .
+
+:QualityManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Quality Manager" ;
+    skos:altLabel "Head of Quality" ;
+    skos:definition "Person role that approves specifications, initiates CAPA, verifies effectiveness, and issues certificates. Bearer: person. Permissions: Specification:read, Specification:write, CAPA:read, CAPA:write, Certificate:read, Certificate:write." .

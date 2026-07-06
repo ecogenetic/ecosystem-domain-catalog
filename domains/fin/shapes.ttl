@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/fin#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:AccountShape a sh:NodeShape ;
+    sh:targetClass :Account ;
+    sh:property [
+        sh:path :accountNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :accountHolder ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:TransactionShape a sh:NodeShape ;
+    sh:targetClass :Transaction ;
+    sh:property [
+        sh:path :postedToLedger ;
+        sh:class :Ledger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :transactionReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :amount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :transactionStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "initiated" "validated" "posted" "reconciled" ) ;
+    ] .
+
+:LedgerShape a sh:NodeShape ;
+    sh:targetClass :Ledger ;
+    sh:property [
+        sh:path :denominatedInCurrency ;
+        sh:class :Currency ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :ledgerName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AuditLogShape a sh:NodeShape ;
+    sh:targetClass :AuditLog ;
+    sh:property [
+        sh:path :recordsTransaction ;
+        sh:class :Transaction ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :loggedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+:CurrencyShape a sh:NodeShape ;
+    sh:targetClass :Currency ;
+    sh:property [
+        sh:path :currencyCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ReconciliationShape a sh:NodeShape ;
+    sh:targetClass :Reconciliation ;
+    sh:property [
+        sh:path :balancesLedger ;
+        sh:class :Ledger ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :reconciledAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .

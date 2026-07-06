@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/erp#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:property [
+        sh:path :sku ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :productName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:VendorShape a sh:NodeShape ;
+    sh:targetClass :Vendor ;
+    sh:property [
+        sh:path :vendorName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PurchaseOrderShape a sh:NodeShape ;
+    sh:targetClass :PurchaseOrder ;
+    sh:property [
+        sh:path :orderedFromVendor ;
+        sh:class :Vendor ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :containsProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :orderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :purchaseOrderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "approved" "received" "invoiced" "closed" ) ;
+    ] .
+
+:InvoiceShape a sh:NodeShape ;
+    sh:targetClass :Invoice ;
+    sh:property [
+        sh:path :matchedToPurchaseOrder ;
+        sh:class :PurchaseOrder ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :invoiceNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :invoiceAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:WarehouseShape a sh:NodeShape ;
+    sh:targetClass :Warehouse ;
+    sh:property [
+        sh:path :warehouseCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LedgerShape a sh:NodeShape ;
+    sh:targetClass :Ledger ;
+    sh:property [
+        sh:path :ledgerCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

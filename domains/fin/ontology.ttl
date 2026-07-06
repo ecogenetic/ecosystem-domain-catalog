@@ -1,0 +1,179 @@
+@prefix : <https://ecosystemcode.com/ontology/fin#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/fin> a owl:Ontology ;
+    rdfs:label "FinTech Domain Ontology" ;
+    rdfs:comment "Seed ontology for a Financial Technology Platform: accounts, transactions, ledgers, audit logs, currencies, and reconciliations." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Account a owl:Class ;
+    skos:prefLabel "Account" ;
+    skos:altLabel "Customer Account", "Wallet" ;
+    skos:definition "A balance-holding record for a customer or internal party on the platform." .
+
+:Transaction a owl:Class ;
+    skos:prefLabel "Transaction" ;
+    skos:altLabel "Payment Transaction", "Money Movement" ;
+    skos:definition "A monetary movement initiated against an account, validated and posted to a ledger." .
+
+:Ledger a owl:Class ;
+    skos:prefLabel "Ledger" ;
+    skos:altLabel "Book of Record", "Posting Ledger" ;
+    skos:definition "An append-only book of posted transactions from which balances are derived." .
+
+:AuditLog a owl:Class ;
+    skos:prefLabel "Audit Log" ;
+    skos:altLabel "Audit Trail", "Event Log" ;
+    skos:definition "An immutable record of every transaction and control decision for audit review." .
+
+:Currency a owl:Class ;
+    skos:prefLabel "Currency" ;
+    skos:altLabel "Monetary Unit", "Denomination" ;
+    skos:definition "The monetary unit in which ledgers and transactions are denominated." .
+
+:Reconciliation a owl:Class ;
+    skos:prefLabel "Reconciliation" ;
+    skos:altLabel "Balance Check", "Ledger Tie-out" ;
+    skos:definition "A control that verifies ledger balances against external or counterpart records." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:holdsTransaction a owl:ObjectProperty ;
+    rdfs:label "holds transaction" ;
+    rdfs:domain :Account ;
+    rdfs:range  :Transaction ;
+    skos:definition "A transaction initiated against the account." .
+
+:postedToLedger a owl:ObjectProperty ;
+    rdfs:label "posted to ledger" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  :Ledger ;
+    skos:definition "The ledger the validated transaction is posted into." .
+
+:denominatedInCurrency a owl:ObjectProperty ;
+    rdfs:label "denominated in currency" ;
+    rdfs:domain :Ledger ;
+    rdfs:range  :Currency ;
+    skos:definition "The currency in which the ledger's entries are denominated." .
+
+:recordsTransaction a owl:ObjectProperty ;
+    rdfs:label "records transaction" ;
+    rdfs:domain :AuditLog ;
+    rdfs:range  :Transaction ;
+    skos:definition "The transaction the audit log entry documents." .
+
+:balancesLedger a owl:ObjectProperty ;
+    rdfs:label "balances ledger" ;
+    rdfs:domain :Reconciliation ;
+    rdfs:range  :Ledger ;
+    skos:definition "The ledger whose balances the reconciliation verifies." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:accountNumber a owl:DatatypeProperty ;
+    rdfs:label "account number" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:string .
+
+:accountHolder a owl:DatatypeProperty ;
+    rdfs:label "account holder" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:string .
+
+:balance a owl:DatatypeProperty ;
+    rdfs:label "balance" ;
+    rdfs:domain :Account ;
+    rdfs:range  xsd:decimal .
+
+:transactionReference a owl:DatatypeProperty ;
+    rdfs:label "transaction reference" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:string .
+
+:amount a owl:DatatypeProperty ;
+    rdfs:label "amount" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:decimal .
+
+:initiatedAt a owl:DatatypeProperty ;
+    rdfs:label "initiated at" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:dateTime .
+
+:transactionStatus a owl:DatatypeProperty ;
+    rdfs:label "transaction status" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the transaction: initiated, validated, posted, reconciled." .
+
+:ledgerName a owl:DatatypeProperty ;
+    rdfs:label "ledger name" ;
+    rdfs:domain :Ledger ;
+    rdfs:range  xsd:string .
+
+:ledgerType a owl:DatatypeProperty ;
+    rdfs:label "ledger type" ;
+    rdfs:domain :Ledger ;
+    rdfs:range  xsd:string .
+
+:loggedAt a owl:DatatypeProperty ;
+    rdfs:label "logged at" ;
+    rdfs:domain :AuditLog ;
+    rdfs:range  xsd:dateTime .
+
+:actor a owl:DatatypeProperty ;
+    rdfs:label "actor" ;
+    rdfs:domain :AuditLog ;
+    rdfs:range  xsd:string .
+
+:eventDetail a owl:DatatypeProperty ;
+    rdfs:label "event detail" ;
+    rdfs:domain :AuditLog ;
+    rdfs:range  xsd:string .
+
+:currencyCode a owl:DatatypeProperty ;
+    rdfs:label "currency code" ;
+    rdfs:domain :Currency ;
+    rdfs:range  xsd:string .
+
+:currencyName a owl:DatatypeProperty ;
+    rdfs:label "currency name" ;
+    rdfs:domain :Currency ;
+    rdfs:range  xsd:string .
+
+:reconciledAt a owl:DatatypeProperty ;
+    rdfs:label "reconciled at" ;
+    rdfs:domain :Reconciliation ;
+    rdfs:range  xsd:dateTime .
+
+:variance a owl:DatatypeProperty ;
+    rdfs:label "variance" ;
+    rdfs:domain :Reconciliation ;
+    rdfs:range  xsd:decimal .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:OperationsAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Operations Analyst" ;
+    skos:altLabel "Payments Operations Analyst" ;
+    skos:definition "Person role that monitors transaction processing, investigates exceptions, and runs reconciliations. Bearer: person. Permissions: Transaction:read, Transaction:write, Reconciliation:read, Reconciliation:write, Ledger:read, Account:read." .
+
+:AuditorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Auditor" ;
+    skos:altLabel "Internal Auditor", "Compliance Auditor" ;
+    skos:definition "Person role that reviews audit logs and verifies ledger integrity without altering records. Bearer: person. Permissions: AuditLog:read, Ledger:read, Transaction:read, Reconciliation:read." .

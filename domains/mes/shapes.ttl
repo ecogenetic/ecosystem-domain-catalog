@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/mes#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:WorkOrderShape a sh:NodeShape ;
+    sh:targetClass :WorkOrder ;
+    sh:property [
+        sh:path :orderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :executedAtWorkCenter ;
+        sh:class :WorkCenter ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :workOrderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "released" "in progress" "quality check" "complete" ) ;
+    ] .
+
+:WorkCenterShape a sh:NodeShape ;
+    sh:targetClass :WorkCenter ;
+    sh:property [
+        sh:path :workCenterName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BatchShape a sh:NodeShape ;
+    sh:targetClass :Batch ;
+    sh:property [
+        sh:path :batchNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :producedByWorkOrder ;
+        sh:class :WorkOrder ;
+        sh:minCount 1 ;
+    ] .
+
+:RoutingShape a sh:NodeShape ;
+    sh:targetClass :Routing ;
+    sh:property [
+        sh:path :routingName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:QualityCheckShape a sh:NodeShape ;
+    sh:targetClass :QualityCheck ;
+    sh:property [
+        sh:path :inspectsBatch ;
+        sh:class :Batch ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :checkResult ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DowntimeShape a sh:NodeShape ;
+    sh:targetClass :Downtime ;
+    sh:property [
+        sh:path :recordedAtWorkCenter ;
+        sh:class :WorkCenter ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :downtimeReason ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

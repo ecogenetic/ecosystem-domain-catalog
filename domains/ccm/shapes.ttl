@@ -1,0 +1,92 @@
+@prefix :    <https://ecosystemcode.com/ontology/ccm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:CustomerAccountShape a sh:NodeShape ;
+    sh:targetClass :CustomerAccount ;
+    sh:property [
+        sh:path :accountName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CreditLimitShape a sh:NodeShape ;
+    sh:targetClass :CreditLimit ;
+    sh:property [
+        sh:path :limitAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :effectiveFrom ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] .
+
+:CreditExposureShape a sh:NodeShape ;
+    sh:targetClass :CreditExposure ;
+    sh:property [
+        sh:path :exposesCustomerAccount ;
+        sh:class :CustomerAccount ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :measuredAgainstCreditLimit ;
+        sh:class :CreditLimit ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :exposureAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:CollectionCaseShape a sh:NodeShape ;
+    sh:targetClass :CollectionCase ;
+    sh:property [
+        sh:path :openedForCustomerAccount ;
+        sh:class :CustomerAccount ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :overdueAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :collectionCaseStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "opened" "in progress" "resolved" "closed" ) ;
+    ] .
+
+:PaymentPromiseShape a sh:NodeShape ;
+    sh:targetClass :PaymentPromise ;
+    sh:property [
+        sh:path :madeOnCollectionCase ;
+        sh:class :CollectionCase ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :promisedAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :promisedDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] .
+
+:RiskScoreShape a sh:NodeShape ;
+    sh:targetClass :RiskScore ;
+    sh:property [
+        sh:path :assessesCustomerAccount ;
+        sh:class :CustomerAccount ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :scoreValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .

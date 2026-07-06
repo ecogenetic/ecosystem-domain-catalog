@@ -1,0 +1,191 @@
+@prefix : <https://ecosystemcode.com/ontology/health#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/health> a owl:Ontology ;
+    rdfs:label "EHR / EMR Domain Ontology" ;
+    rdfs:comment "Seed ontology for Electronic Health Records: patients, appointments, medical records, prescriptions, clinicians, and facilities." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Patient a owl:Class ;
+    skos:prefLabel "Patient" ;
+    skos:altLabel "Care Recipient", "Service User" ;
+    skos:definition "A person receiving care whose demographics, history, and visits are recorded." .
+
+:Appointment a owl:Class ;
+    skos:prefLabel "Appointment" ;
+    skos:altLabel "Visit", "Encounter" ;
+    skos:definition "A scheduled encounter between a patient and a clinician at a facility." .
+
+:MedicalRecord a owl:Class ;
+    skos:prefLabel "Medical Record" ;
+    skos:altLabel "Health Record", "Patient Chart" ;
+    skos:definition "The longitudinal clinical documentation of a patient's conditions, visits, and results." .
+
+:Prescription a owl:Class ;
+    skos:prefLabel "Prescription" ;
+    skos:altLabel "Rx", "Medication Order" ;
+    skos:definition "A clinician's order for medication issued to a patient with dosage instructions." .
+
+:Clinician a owl:Class ;
+    skos:prefLabel "Clinician" ;
+    skos:altLabel "Practitioner", "Provider", "Doctor" ;
+    skos:definition "A licensed practitioner who conducts appointments, documents care, and prescribes." .
+
+:Facility a owl:Class ;
+    skos:prefLabel "Facility" ;
+    skos:altLabel "Clinic", "Care Site" ;
+    skos:definition "A physical care location such as a clinic, ward, or practice where appointments occur." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:hasAppointment a owl:ObjectProperty ;
+    rdfs:label "has appointment" ;
+    rdfs:domain :Patient ;
+    rdfs:range  :Appointment ;
+    skos:definition "An appointment scheduled for the patient." .
+
+:withClinician a owl:ObjectProperty ;
+    rdfs:label "with clinician" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  :Clinician ;
+    skos:definition "The clinician who conducts the appointment." .
+
+:atFacility a owl:ObjectProperty ;
+    rdfs:label "at facility" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  :Facility ;
+    skos:definition "The facility where the appointment takes place." .
+
+:documentsPatient a owl:ObjectProperty ;
+    rdfs:label "documents patient" ;
+    rdfs:domain :MedicalRecord ;
+    rdfs:range  :Patient ;
+    skos:definition "The patient whose care history the medical record documents." .
+
+:issuedByClinician a owl:ObjectProperty ;
+    rdfs:label "issued by clinician" ;
+    rdfs:domain :Prescription ;
+    rdfs:range  :Clinician ;
+    skos:definition "The clinician who issued the prescription." .
+
+:prescribedForPatient a owl:ObjectProperty ;
+    rdfs:label "prescribed for patient" ;
+    rdfs:domain :Prescription ;
+    rdfs:range  :Patient ;
+    skos:definition "The patient the prescription was issued to." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:fullName a owl:DatatypeProperty ;
+    rdfs:label "full name" ;
+    rdfs:domain :Patient ;
+    rdfs:range  xsd:string .
+
+:dateOfBirth a owl:DatatypeProperty ;
+    rdfs:label "date of birth" ;
+    rdfs:domain :Patient ;
+    rdfs:range  xsd:date .
+
+:medicalRecordNumber a owl:DatatypeProperty ;
+    rdfs:label "medical record number" ;
+    rdfs:domain :Patient ;
+    rdfs:range  xsd:string .
+
+:scheduledAt a owl:DatatypeProperty ;
+    rdfs:label "scheduled at" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  xsd:dateTime .
+
+:reason a owl:DatatypeProperty ;
+    rdfs:label "reason" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  xsd:string .
+
+:appointmentStatus a owl:DatatypeProperty ;
+    rdfs:label "appointment status" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the appointment: scheduled, checked in, completed, follow-up." .
+
+:createdAt a owl:DatatypeProperty ;
+    rdfs:label "created at" ;
+    rdfs:domain :MedicalRecord ;
+    rdfs:range  xsd:dateTime .
+
+:summary a owl:DatatypeProperty ;
+    rdfs:label "summary" ;
+    rdfs:domain :MedicalRecord ;
+    rdfs:range  xsd:string .
+
+:medicationName a owl:DatatypeProperty ;
+    rdfs:label "medication name" ;
+    rdfs:domain :Prescription ;
+    rdfs:range  xsd:string .
+
+:dosage a owl:DatatypeProperty ;
+    rdfs:label "dosage" ;
+    rdfs:domain :Prescription ;
+    rdfs:range  xsd:string .
+
+:issuedAt a owl:DatatypeProperty ;
+    rdfs:label "issued at" ;
+    rdfs:domain :Prescription ;
+    rdfs:range  xsd:dateTime .
+
+:clinicianName a owl:DatatypeProperty ;
+    rdfs:label "clinician name" ;
+    rdfs:domain :Clinician ;
+    rdfs:range  xsd:string .
+
+:specialty a owl:DatatypeProperty ;
+    rdfs:label "specialty" ;
+    rdfs:domain :Clinician ;
+    rdfs:range  xsd:string .
+
+:licenseNumber a owl:DatatypeProperty ;
+    rdfs:label "license number" ;
+    rdfs:domain :Clinician ;
+    rdfs:range  xsd:string .
+
+:facilityName a owl:DatatypeProperty ;
+    rdfs:label "facility name" ;
+    rdfs:domain :Facility ;
+    rdfs:range  xsd:string .
+
+:address a owl:DatatypeProperty ;
+    rdfs:label "address" ;
+    rdfs:domain :Facility ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:ClinicianRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Clinician" ;
+    skos:altLabel "Practitioner", "Attending Provider" ;
+    skos:definition "Person role that conducts appointments, documents medical records, and issues prescriptions. Bearer: person. Permissions: Appointment:read, Appointment:write, MedicalRecord:read, MedicalRecord:write, Prescription:read, Prescription:write." .
+
+:ReceptionistRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Receptionist" ;
+    skos:altLabel "Front Desk Coordinator" ;
+    skos:definition "Person role that registers patients and schedules appointments at facilities. Bearer: person. Permissions: Patient:read, Patient:write, Appointment:read, Appointment:write, Facility:read." .
+
+:PatientRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Patient" ;
+    skos:altLabel "Care Recipient" ;
+    skos:definition "Person role that attends appointments and views their own records and prescriptions. Bearer: person. Permissions: Appointment:read, MedicalRecord:read, Prescription:read." .

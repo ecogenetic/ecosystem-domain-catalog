@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/oms#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:OrderShape a sh:NodeShape ;
+    sh:targetClass :Order ;
+    sh:property [
+        sh:path :receivedViaChannel ;
+        sh:class :Channel ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :composedOfOrderLine ;
+        sh:class :OrderLine ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :orderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :orderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "received" "allocated" "fulfilled" "shipped" "returned" ) ;
+    ] .
+
+:OrderLineShape a sh:NodeShape ;
+    sh:targetClass :OrderLine ;
+    sh:property [
+        sh:path :productSku ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quantity ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:ChannelShape a sh:NodeShape ;
+    sh:targetClass :Channel ;
+    sh:property [
+        sh:path :channelName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AllocationShape a sh:NodeShape ;
+    sh:targetClass :Allocation ;
+    sh:property [
+        sh:path :reservesForOrderLine ;
+        sh:class :OrderLine ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :allocatedQuantity ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:FulfillmentShape a sh:NodeShape ;
+    sh:targetClass :Fulfillment ;
+    sh:property [
+        sh:path :shipsOrder ;
+        sh:class :Order ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :fulfillmentNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ReturnShape a sh:NodeShape ;
+    sh:targetClass :Return ;
+    sh:property [
+        sh:path :reversesOrderLine ;
+        sh:class :OrderLine ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :returnReason ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

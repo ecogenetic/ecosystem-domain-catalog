@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/plm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:property [
+        sh:path :productName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :productNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PartShape a sh:NodeShape ;
+    sh:targetClass :Part ;
+    sh:property [
+        sh:path :partNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :partName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BillOfMaterialsShape a sh:NodeShape ;
+    sh:targetClass :BillOfMaterials ;
+    sh:property [
+        sh:path :composedOfPart ;
+        sh:class :Part ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :bomName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RevisionShape a sh:NodeShape ;
+    sh:targetClass :Revision ;
+    sh:property [
+        sh:path :versionOfProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :revisionCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:EngineeringChangeShape a sh:NodeShape ;
+    sh:targetClass :EngineeringChange ;
+    sh:property [
+        sh:path :modifiesRevision ;
+        sh:class :Revision ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :changeNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :engineeringChangeStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "review" "approved" "released" ) ;
+    ] .
+
+:WorkflowShape a sh:NodeShape ;
+    sh:targetClass :Workflow ;
+    sh:property [
+        sh:path :workflowName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,174 @@
+@prefix : <https://ecosystemcode.com/ontology/plm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/plm> a owl:Ontology ;
+    rdfs:label "PLM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Product Lifecycle Management: products, parts, bills of material, revisions, engineering changes, and approval workflows." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Product a owl:Class ;
+    skos:prefLabel "Product" ;
+    skos:altLabel "Designed Item", "End Item" ;
+    skos:definition "A designed item the business develops, manufactures, and maintains over its lifecycle." .
+
+:Part a owl:Class ;
+    skos:prefLabel "Part" ;
+    skos:altLabel "Component", "Material" ;
+    skos:definition "A discrete component or raw material that can appear on a bill of materials." .
+
+:BillOfMaterials a owl:Class ;
+    skos:prefLabel "Bill of Materials" ;
+    skos:altLabel "BOM", "Product Structure" ;
+    skos:definition "The structured list of parts and quantities required to build a product." .
+
+:Revision a owl:Class ;
+    skos:prefLabel "Revision" ;
+    skos:altLabel "Version", "Product Revision" ;
+    skos:definition "A versioned snapshot of a product definition at a point in time." .
+
+:EngineeringChange a owl:Class ;
+    skos:prefLabel "Engineering Change" ;
+    skos:altLabel "Engineering Change Order", "ECO", "Change Request" ;
+    skos:definition "A controlled request to modify a product definition, tracked from draft to release." .
+
+:Workflow a owl:Class ;
+    skos:prefLabel "Workflow" ;
+    skos:altLabel "Approval Workflow", "Change Process" ;
+    skos:definition "The approval process that governs how an engineering change moves to release." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:definedByBillOfMaterials a owl:ObjectProperty ;
+    rdfs:label "defined by bill of materials" ;
+    rdfs:domain :Product ;
+    rdfs:range  :BillOfMaterials ;
+    skos:definition "The bill of materials that defines how the product is built." .
+
+:composedOfPart a owl:ObjectProperty ;
+    rdfs:label "composed of part" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  :Part ;
+    skos:definition "A part included as a line on the bill of materials." .
+
+:versionOfProduct a owl:ObjectProperty ;
+    rdfs:label "version of product" ;
+    rdfs:domain :Revision ;
+    rdfs:range  :Product ;
+    skos:definition "The product this revision is a versioned snapshot of." .
+
+:modifiesRevision a owl:ObjectProperty ;
+    rdfs:label "modifies revision" ;
+    rdfs:domain :EngineeringChange ;
+    rdfs:range  :Revision ;
+    skos:definition "The product revision the engineering change proposes to modify." .
+
+:governsEngineeringChange a owl:ObjectProperty ;
+    rdfs:label "governs engineering change" ;
+    rdfs:domain :Workflow ;
+    rdfs:range  :EngineeringChange ;
+    skos:definition "The engineering change whose review and release is governed by this workflow." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:productName a owl:DatatypeProperty ;
+    rdfs:label "product name" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:productNumber a owl:DatatypeProperty ;
+    rdfs:label "product number" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:partNumber a owl:DatatypeProperty ;
+    rdfs:label "part number" ;
+    rdfs:domain :Part ;
+    rdfs:range  xsd:string .
+
+:partName a owl:DatatypeProperty ;
+    rdfs:label "part name" ;
+    rdfs:domain :Part ;
+    rdfs:range  xsd:string .
+
+:unitOfMeasure a owl:DatatypeProperty ;
+    rdfs:label "unit of measure" ;
+    rdfs:domain :Part ;
+    rdfs:range  xsd:string .
+
+:bomName a owl:DatatypeProperty ;
+    rdfs:label "bom name" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  xsd:string .
+
+:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  xsd:decimal .
+
+:effectiveFrom a owl:DatatypeProperty ;
+    rdfs:label "effective from" ;
+    rdfs:domain :BillOfMaterials ;
+    rdfs:range  xsd:date .
+
+:revisionCode a owl:DatatypeProperty ;
+    rdfs:label "revision code" ;
+    rdfs:domain :Revision ;
+    rdfs:range  xsd:string .
+
+:releasedAt a owl:DatatypeProperty ;
+    rdfs:label "released at" ;
+    rdfs:domain :Revision ;
+    rdfs:range  xsd:dateTime .
+
+:changeNumber a owl:DatatypeProperty ;
+    rdfs:label "change number" ;
+    rdfs:domain :EngineeringChange ;
+    rdfs:range  xsd:string .
+
+:changeReason a owl:DatatypeProperty ;
+    rdfs:label "change reason" ;
+    rdfs:domain :EngineeringChange ;
+    rdfs:range  xsd:string .
+
+:engineeringChangeStatus a owl:DatatypeProperty ;
+    rdfs:label "engineering change status" ;
+    rdfs:domain :EngineeringChange ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the engineering change: draft, review, approved, released." .
+
+:workflowName a owl:DatatypeProperty ;
+    rdfs:label "workflow name" ;
+    rdfs:domain :Workflow ;
+    rdfs:range  xsd:string .
+
+:stepCount a owl:DatatypeProperty ;
+    rdfs:label "step count" ;
+    rdfs:domain :Workflow ;
+    rdfs:range  xsd:integer .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:EngineerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Engineer" ;
+    skos:altLabel "Design Engineer", "Product Engineer" ;
+    skos:definition "Person role that creates parts, defines bills of material, and drafts engineering changes. Bearer: person. Permissions: Part:read, Part:write, BillOfMaterials:read, BillOfMaterials:write, EngineeringChange:read, EngineeringChange:write." .
+
+:ChangeApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Change Approver" ;
+    skos:altLabel "Change Board Member", "Release Manager" ;
+    skos:definition "Person role that reviews and approves engineering changes and releases revisions. Bearer: person. Permissions: EngineeringChange:read, EngineeringChange:write, Revision:read, Revision:write." .

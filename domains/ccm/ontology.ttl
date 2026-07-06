@@ -1,0 +1,190 @@
+@prefix : <https://ecosystemcode.com/ontology/ccm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/ccm> a owl:Ontology ;
+    rdfs:label "CCM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Credit & Collections Management: customer accounts, credit limits, exposure, risk scores, collection cases, and payment promises." .
+
+#################################################################
+# Classes
+#################################################################
+
+:CustomerAccount a owl:Class ;
+    skos:prefLabel "Customer Account" ;
+    skos:altLabel "Debtor Account", "Trading Account" ;
+    skos:definition "A trading customer whose credit terms and outstanding balances are managed." .
+
+:CreditLimit a owl:Class ;
+    skos:prefLabel "Credit Limit" ;
+    skos:altLabel "Credit Line", "Trading Limit" ;
+    skos:definition "The maximum outstanding balance a customer account is permitted to carry." .
+
+:CreditExposure a owl:Class ;
+    skos:prefLabel "Credit Exposure" ;
+    skos:altLabel "Outstanding Exposure", "Open Balance" ;
+    skos:definition "The current outstanding amount measured against a customer's credit limit." .
+
+:CollectionCase a owl:Class ;
+    skos:prefLabel "Collection Case" ;
+    skos:altLabel "Dunning Case", "Recovery Case" ;
+    skos:definition "A managed workstream to recover overdue amounts from a customer account." .
+
+:PaymentPromise a owl:Class ;
+    skos:prefLabel "Payment Promise" ;
+    skos:altLabel "Promise to Pay", "Payment Commitment" ;
+    skos:definition "A customer commitment to pay an agreed amount by an agreed date on a case." .
+
+:RiskScore a owl:Class ;
+    skos:prefLabel "Risk Score" ;
+    skos:altLabel "Credit Score", "Default Risk Rating" ;
+    skos:definition "A computed rating of a customer's likelihood of default or late payment." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:grantedCreditLimit a owl:ObjectProperty ;
+    rdfs:label "granted credit limit" ;
+    rdfs:domain :CustomerAccount ;
+    rdfs:range  :CreditLimit ;
+    skos:definition "The credit limit granted to the customer account." .
+
+:measuredAgainstCreditLimit a owl:ObjectProperty ;
+    rdfs:label "measured against credit limit" ;
+    rdfs:domain :CreditExposure ;
+    rdfs:range  :CreditLimit ;
+    skos:definition "The credit limit the exposure is compared against for breach detection." .
+
+:exposesCustomerAccount a owl:ObjectProperty ;
+    rdfs:label "exposes customer account" ;
+    rdfs:domain :CreditExposure ;
+    rdfs:range  :CustomerAccount ;
+    skos:definition "The customer account the exposure amount belongs to." .
+
+:assessesCustomerAccount a owl:ObjectProperty ;
+    rdfs:label "assesses customer account" ;
+    rdfs:domain :RiskScore ;
+    rdfs:range  :CustomerAccount ;
+    skos:definition "The customer account whose default risk the score assesses." .
+
+:openedForCustomerAccount a owl:ObjectProperty ;
+    rdfs:label "opened for customer account" ;
+    rdfs:domain :CollectionCase ;
+    rdfs:range  :CustomerAccount ;
+    skos:definition "The customer account the collection case was opened against." .
+
+:madeOnCollectionCase a owl:ObjectProperty ;
+    rdfs:label "made on collection case" ;
+    rdfs:domain :PaymentPromise ;
+    rdfs:range  :CollectionCase ;
+    skos:definition "The collection case the payment promise was recorded on." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:accountName a owl:DatatypeProperty ;
+    rdfs:label "account name" ;
+    rdfs:domain :CustomerAccount ;
+    rdfs:range  xsd:string .
+
+:paymentTerms a owl:DatatypeProperty ;
+    rdfs:label "payment terms" ;
+    rdfs:domain :CustomerAccount ;
+    rdfs:range  xsd:string .
+
+:onCreditHold a owl:DatatypeProperty ;
+    rdfs:label "on credit hold" ;
+    rdfs:domain :CustomerAccount ;
+    rdfs:range  xsd:boolean .
+
+:limitAmount a owl:DatatypeProperty ;
+    rdfs:label "limit amount" ;
+    rdfs:domain :CreditLimit ;
+    rdfs:range  xsd:decimal .
+
+:effectiveFrom a owl:DatatypeProperty ;
+    rdfs:label "effective from" ;
+    rdfs:domain :CreditLimit ;
+    rdfs:range  xsd:date .
+
+:reviewDate a owl:DatatypeProperty ;
+    rdfs:label "review date" ;
+    rdfs:domain :CreditLimit ;
+    rdfs:range  xsd:date .
+
+:exposureAmount a owl:DatatypeProperty ;
+    rdfs:label "exposure amount" ;
+    rdfs:domain :CreditExposure ;
+    rdfs:range  xsd:decimal .
+
+:measuredAt a owl:DatatypeProperty ;
+    rdfs:label "measured at" ;
+    rdfs:domain :CreditExposure ;
+    rdfs:range  xsd:dateTime .
+
+:caseNumber a owl:DatatypeProperty ;
+    rdfs:label "case number" ;
+    rdfs:domain :CollectionCase ;
+    rdfs:range  xsd:string .
+
+:overdueAmount a owl:DatatypeProperty ;
+    rdfs:label "overdue amount" ;
+    rdfs:domain :CollectionCase ;
+    rdfs:range  xsd:decimal .
+
+:collectionCaseStatus a owl:DatatypeProperty ;
+    rdfs:label "collection case status" ;
+    rdfs:domain :CollectionCase ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the collection case: opened, in progress, resolved, closed." .
+
+:promisedAmount a owl:DatatypeProperty ;
+    rdfs:label "promised amount" ;
+    rdfs:domain :PaymentPromise ;
+    rdfs:range  xsd:decimal .
+
+:promisedDate a owl:DatatypeProperty ;
+    rdfs:label "promised date" ;
+    rdfs:domain :PaymentPromise ;
+    rdfs:range  xsd:date .
+
+:kept a owl:DatatypeProperty ;
+    rdfs:label "kept" ;
+    rdfs:domain :PaymentPromise ;
+    rdfs:range  xsd:boolean .
+
+:scoreValue a owl:DatatypeProperty ;
+    rdfs:label "score value" ;
+    rdfs:domain :RiskScore ;
+    rdfs:range  xsd:decimal .
+
+:scoredAt a owl:DatatypeProperty ;
+    rdfs:label "scored at" ;
+    rdfs:domain :RiskScore ;
+    rdfs:range  xsd:dateTime .
+
+:scoreModel a owl:DatatypeProperty ;
+    rdfs:label "score model" ;
+    rdfs:domain :RiskScore ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:CreditAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Credit Analyst" ;
+    skos:altLabel "Credit Controller", "Risk Analyst" ;
+    skos:definition "Person role that sets credit limits, reviews risk scores, and monitors exposure. Bearer: person. Permissions: CreditLimit:read, CreditLimit:write, RiskScore:read, CreditExposure:read, CustomerAccount:read." .
+
+:CollectionsAgentRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Collections Agent" ;
+    skos:altLabel "Collections Specialist", "Dunning Agent" ;
+    skos:definition "Person role that works collection cases and records payment promises. Bearer: person. Permissions: CollectionCase:read, CollectionCase:write, PaymentPromise:read, PaymentPromise:write, CustomerAccount:read." .

@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/tms#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:CarrierShape a sh:NodeShape ;
+    sh:targetClass :Carrier ;
+    sh:property [
+        sh:path :carrierName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RouteShape a sh:NodeShape ;
+    sh:targetClass :Route ;
+    sh:property [
+        sh:path :routeName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LoadPlanShape a sh:NodeShape ;
+    sh:targetClass :LoadPlan ;
+    sh:property [
+        sh:path :groupsShipment ;
+        sh:class :Shipment ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :loadNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ShipmentShape a sh:NodeShape ;
+    sh:targetClass :Shipment ;
+    sh:property [
+        sh:path :followsRoute ;
+        sh:class :Route ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :shipmentNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :shipmentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "planned" "in transit" "delivered" "confirmed" ) ;
+    ] .
+
+:FreightRateShape a sh:NodeShape ;
+    sh:targetClass :FreightRate ;
+    sh:property [
+        sh:path :pricesCarrier ;
+        sh:class :Carrier ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :ratePerKm ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:DeliveryStopShape a sh:NodeShape ;
+    sh:targetClass :DeliveryStop ;
+    sh:property [
+        sh:path :stopSequence ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :stopAddress ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/hcm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:EmployeeShape a sh:NodeShape ;
+    sh:targetClass :Employee ;
+    sh:property [
+        sh:path :employeeNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :fullName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :belongsToDepartment ;
+        sh:class :Department ;
+        sh:minCount 1 ;
+    ] .
+
+:DepartmentShape a sh:NodeShape ;
+    sh:targetClass :Department ;
+    sh:property [
+        sh:path :departmentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PositionShape a sh:NodeShape ;
+    sh:targetClass :Position ;
+    sh:property [
+        sh:path :positionTitle ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PayrollShape a sh:NodeShape ;
+    sh:targetClass :Payroll ;
+    sh:property [
+        sh:path :compensatesEmployee ;
+        sh:class :Employee ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :payPeriod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LeaveRequestShape a sh:NodeShape ;
+    sh:targetClass :LeaveRequest ;
+    sh:property [
+        sh:path :submittedByEmployee ;
+        sh:class :Employee ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :leaveRequestStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "submitted" "approved" "rejected" "reflected" ) ;
+    ] .
+
+:AppraisalShape a sh:NodeShape ;
+    sh:targetClass :Appraisal ;
+    sh:property [
+        sh:path :evaluatesEmployee ;
+        sh:class :Employee ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :reviewPeriod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/eam#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:AssetShape a sh:NodeShape ;
+    sh:targetClass :Asset ;
+    sh:property [
+        sh:path :locatedAtLocation ;
+        sh:class :Location ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :assetTag ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LocationShape a sh:NodeShape ;
+    sh:targetClass :Location ;
+    sh:property [
+        sh:path :locationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:MaintenancePlanShape a sh:NodeShape ;
+    sh:targetClass :MaintenancePlan ;
+    sh:property [
+        sh:path :planName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :intervalDays ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:WorkOrderShape a sh:NodeShape ;
+    sh:targetClass :WorkOrder ;
+    sh:property [
+        sh:path :performedOnAsset ;
+        sh:class :Asset ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :workOrderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :workOrderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "scheduled" "in progress" "completed" "closed" ) ;
+    ] .
+
+:SparePartShape a sh:NodeShape ;
+    sh:targetClass :SparePart ;
+    sh:property [
+        sh:path :sparePartNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:MeterReadingShape a sh:NodeShape ;
+    sh:targetClass :MeterReading ;
+    sh:property [
+        sh:path :recordedForAsset ;
+        sh:class :Asset ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :readingValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .

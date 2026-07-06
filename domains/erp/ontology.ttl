@@ -1,0 +1,191 @@
+@prefix : <https://ecosystemcode.com/ontology/erp#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/erp> a owl:Ontology ;
+    rdfs:label "ERP Domain Ontology" ;
+    rdfs:comment "Seed ontology for Enterprise Resource Planning: products, vendors, purchase orders, invoices, warehouses, and ledgers." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Product a owl:Class ;
+    skos:prefLabel "Product" ;
+    skos:altLabel "Item", "SKU", "Material" ;
+    skos:definition "A good or material the business purchases, stocks, or sells, identified by SKU." .
+
+:Vendor a owl:Class ;
+    skos:prefLabel "Vendor" ;
+    skos:altLabel "Supplier", "Provider" ;
+    skos:definition "An external organisation that supplies products or services to the business." .
+
+:PurchaseOrder a owl:Class ;
+    skos:prefLabel "Purchase Order" ;
+    skos:altLabel "PO", "Procurement Order" ;
+    skos:definition "A formal commitment to buy specified products from a vendor at agreed terms." .
+
+:Invoice a owl:Class ;
+    skos:prefLabel "Invoice" ;
+    skos:altLabel "Vendor Invoice", "Bill" ;
+    skos:definition "A vendor's demand for payment, matched against a purchase order before posting." .
+
+:Warehouse a owl:Class ;
+    skos:prefLabel "Warehouse" ;
+    skos:altLabel "Storage Facility", "Distribution Center" ;
+    skos:definition "A physical facility where purchased products are received and stored." .
+
+:Ledger a owl:Class ;
+    skos:prefLabel "Ledger" ;
+    skos:altLabel "General Ledger", "Book of Record" ;
+    skos:definition "The financial book of record where matched invoices are posted as accounting entries." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:supplies a owl:ObjectProperty ;
+    rdfs:label "supplies" ;
+    rdfs:domain :Vendor ;
+    rdfs:range  :Product ;
+    skos:definition "The products a vendor is able to supply to the business." .
+
+:orderedFromVendor a owl:ObjectProperty ;
+    rdfs:label "ordered from vendor" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  :Vendor ;
+    skos:definition "The vendor a purchase order is placed with." .
+
+:containsProduct a owl:ObjectProperty ;
+    rdfs:label "contains product" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  :Product ;
+    skos:definition "The products listed as lines on a purchase order." .
+
+:matchedToPurchaseOrder a owl:ObjectProperty ;
+    rdfs:label "matched to purchase order" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  :PurchaseOrder ;
+    skos:definition "The purchase order an invoice is matched against before payment." .
+
+:storesProduct a owl:ObjectProperty ;
+    rdfs:label "stores product" ;
+    rdfs:domain :Warehouse ;
+    rdfs:range  :Product ;
+    skos:definition "The products physically held in a warehouse." .
+
+:postedToLedger a owl:ObjectProperty ;
+    rdfs:label "posted to ledger" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  :Ledger ;
+    skos:definition "The ledger a matched invoice is posted to as an accounting entry." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:sku a owl:DatatypeProperty ;
+    rdfs:label "sku" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:productName a owl:DatatypeProperty ;
+    rdfs:label "product name" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:unitCost a owl:DatatypeProperty ;
+    rdfs:label "unit cost" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:decimal .
+
+:vendorName a owl:DatatypeProperty ;
+    rdfs:label "vendor name" ;
+    rdfs:domain :Vendor ;
+    rdfs:range  xsd:string .
+
+:taxId a owl:DatatypeProperty ;
+    rdfs:label "tax id" ;
+    rdfs:domain :Vendor ;
+    rdfs:range  xsd:string .
+
+:paymentTerms a owl:DatatypeProperty ;
+    rdfs:label "payment terms" ;
+    rdfs:domain :Vendor ;
+    rdfs:range  xsd:string .
+
+:orderNumber a owl:DatatypeProperty ;
+    rdfs:label "order number" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  xsd:string .
+
+:orderDate a owl:DatatypeProperty ;
+    rdfs:label "order date" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  xsd:date .
+
+:totalAmount a owl:DatatypeProperty ;
+    rdfs:label "total amount" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  xsd:decimal .
+
+:purchaseOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "purchase order status" ;
+    rdfs:domain :PurchaseOrder ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the purchase order: draft, approved, received, invoiced, closed." .
+
+:invoiceNumber a owl:DatatypeProperty ;
+    rdfs:label "invoice number" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:string .
+
+:invoiceDate a owl:DatatypeProperty ;
+    rdfs:label "invoice date" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:date .
+
+:invoiceAmount a owl:DatatypeProperty ;
+    rdfs:label "invoice amount" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:decimal .
+
+:warehouseCode a owl:DatatypeProperty ;
+    rdfs:label "warehouse code" ;
+    rdfs:domain :Warehouse ;
+    rdfs:range  xsd:string .
+
+:ledgerCode a owl:DatatypeProperty ;
+    rdfs:label "ledger code" ;
+    rdfs:domain :Ledger ;
+    rdfs:range  xsd:string .
+
+:fiscalYear a owl:DatatypeProperty ;
+    rdfs:label "fiscal year" ;
+    rdfs:domain :Ledger ;
+    rdfs:range  xsd:integer .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:BuyerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Buyer" ;
+    skos:altLabel "Procurement Officer", "Purchasing Agent" ;
+    skos:definition "Person role that creates requisitions and purchase orders and selects vendors. Bearer: person. Permissions: PurchaseOrder:read, PurchaseOrder:write, Vendor:read, Product:read." .
+
+:FinanceClerkRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Finance Clerk" ;
+    skos:altLabel "Accounts Payable Clerk" ;
+    skos:definition "Person role that matches invoices to purchase orders and posts entries to the ledger. Bearer: person. Permissions: Invoice:read, Invoice:write, Ledger:read, Ledger:write, PurchaseOrder:read." .
+
+:ApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Approver" ;
+    skos:altLabel "Purchase Approver" ;
+    skos:definition "Person role that reviews and approves purchase orders before commitment. Bearer: person. Permissions: PurchaseOrder:read, PurchaseOrder:write, Vendor:read." .

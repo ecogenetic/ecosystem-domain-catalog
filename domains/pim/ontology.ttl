@@ -1,0 +1,169 @@
+@prefix : <https://ecosystemcode.com/ontology/pim#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/pim> a owl:Ontology ;
+    rdfs:label "PIM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Product Information Management: products, attributes, categories, variants, catalogs, and channel publications." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Product a owl:Class ;
+    skos:prefLabel "Product" ;
+    skos:altLabel "Item", "Sellable Product" ;
+    skos:definition "A sellable item whose descriptive information is enriched and published to channels." .
+
+:Attribute a owl:Class ;
+    skos:prefLabel "Attribute" ;
+    skos:altLabel "Product Attribute", "Property" ;
+    skos:definition "A named descriptive property such as colour, size, or material that enriches a product." .
+
+:Category a owl:Class ;
+    skos:prefLabel "Category" ;
+    skos:altLabel "Product Category", "Classification" ;
+    skos:definition "A node in the merchandising classification tree that products are assigned to." .
+
+:Variant a owl:Class ;
+    skos:prefLabel "Variant" ;
+    skos:altLabel "Product Variant", "SKU Variant" ;
+    skos:definition "A sellable variation of a product distinguished by option values such as size or colour." .
+
+:Catalog a owl:Class ;
+    skos:prefLabel "Catalog" ;
+    skos:altLabel "Product Catalog", "Assortment" ;
+    skos:definition "A curated collection of products assembled for a channel or audience." .
+
+:Publication a owl:Class ;
+    skos:prefLabel "Publication" ;
+    skos:altLabel "Channel Publication", "Release" ;
+    skos:definition "The act of releasing a catalog to a sales channel at a point in time." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:describedByAttribute a owl:ObjectProperty ;
+    rdfs:label "described by attribute" ;
+    rdfs:domain :Product ;
+    rdfs:range  :Attribute ;
+    skos:definition "An attribute that enriches the product's descriptive information." .
+
+:classifiedInCategory a owl:ObjectProperty ;
+    rdfs:label "classified in category" ;
+    rdfs:domain :Product ;
+    rdfs:range  :Category ;
+    skos:definition "The merchandising category the product is assigned to." .
+
+:variantOfProduct a owl:ObjectProperty ;
+    rdfs:label "variant of product" ;
+    rdfs:domain :Variant ;
+    rdfs:range  :Product ;
+    skos:definition "The parent product this variant is a sellable variation of." .
+
+:aggregatesProduct a owl:ObjectProperty ;
+    rdfs:label "aggregates product" ;
+    rdfs:domain :Catalog ;
+    rdfs:range  :Product ;
+    skos:definition "A product included in the curated catalog collection." .
+
+:publishesCatalog a owl:ObjectProperty ;
+    rdfs:label "publishes catalog" ;
+    rdfs:domain :Publication ;
+    rdfs:range  :Catalog ;
+    skos:definition "The catalog released to a sales channel by this publication." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:productName a owl:DatatypeProperty ;
+    rdfs:label "product name" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:sku a owl:DatatypeProperty ;
+    rdfs:label "sku" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string .
+
+:productStatus a owl:DatatypeProperty ;
+    rdfs:label "product status" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the product: draft, enriched, approved, published." .
+
+:attributeName a owl:DatatypeProperty ;
+    rdfs:label "attribute name" ;
+    rdfs:domain :Attribute ;
+    rdfs:range  xsd:string .
+
+:attributeType a owl:DatatypeProperty ;
+    rdfs:label "attribute type" ;
+    rdfs:domain :Attribute ;
+    rdfs:range  xsd:string .
+
+:attributeValue a owl:DatatypeProperty ;
+    rdfs:label "attribute value" ;
+    rdfs:domain :Attribute ;
+    rdfs:range  xsd:string .
+
+:categoryName a owl:DatatypeProperty ;
+    rdfs:label "category name" ;
+    rdfs:domain :Category ;
+    rdfs:range  xsd:string .
+
+:categoryPath a owl:DatatypeProperty ;
+    rdfs:label "category path" ;
+    rdfs:domain :Category ;
+    rdfs:range  xsd:string .
+
+:variantSku a owl:DatatypeProperty ;
+    rdfs:label "variant sku" ;
+    rdfs:domain :Variant ;
+    rdfs:range  xsd:string .
+
+:optionValues a owl:DatatypeProperty ;
+    rdfs:label "option values" ;
+    rdfs:domain :Variant ;
+    rdfs:range  xsd:string .
+
+:catalogName a owl:DatatypeProperty ;
+    rdfs:label "catalog name" ;
+    rdfs:domain :Catalog ;
+    rdfs:range  xsd:string .
+
+:channel a owl:DatatypeProperty ;
+    rdfs:label "channel" ;
+    rdfs:domain :Catalog ;
+    rdfs:range  xsd:string .
+
+:publishedAt a owl:DatatypeProperty ;
+    rdfs:label "published at" ;
+    rdfs:domain :Publication ;
+    rdfs:range  xsd:dateTime .
+
+:targetChannel a owl:DatatypeProperty ;
+    rdfs:label "target channel" ;
+    rdfs:domain :Publication ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:MerchandiserRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Merchandiser" ;
+    skos:altLabel "Merchandising Manager", "Catalog Manager" ;
+    skos:definition "Person role that creates products, assigns categories, assembles catalogs, and publishes to channels. Bearer: person. Permissions: Product:read, Product:write, Catalog:read, Catalog:write, Publication:read, Publication:write." .
+
+:DataStewardRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Data Steward" ;
+    skos:altLabel "Product Data Steward", "Content Steward" ;
+    skos:definition "Person role that defines attributes, enforces data quality, and approves enriched product data. Bearer: person. Permissions: Attribute:read, Attribute:write, Product:read, Product:write, Category:read." .

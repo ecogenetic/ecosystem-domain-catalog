@@ -1,0 +1,67 @@
+@prefix :    <https://ecosystemcode.com/ontology/cms#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ContentShape a sh:NodeShape ;
+    sh:targetClass :Content ;
+    sh:property [
+        sh:path :title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "review" "approved" "published" ) ;
+    ] .
+
+:PageShape a sh:NodeShape ;
+    sh:targetClass :Page ;
+    sh:property [
+        sh:path :slug ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :composedOfContent ;
+        sh:class :Content ;
+        sh:minCount 1 ;
+    ] .
+
+:MediaAssetShape a sh:NodeShape ;
+    sh:targetClass :MediaAsset ;
+    sh:property [
+        sh:path :fileName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:TaxonomyShape a sh:NodeShape ;
+    sh:targetClass :Taxonomy ;
+    sh:property [
+        sh:path :taxonomyName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:WorkflowShape a sh:NodeShape ;
+    sh:targetClass :Workflow ;
+    sh:property [
+        sh:path :workflowName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PublicationShape a sh:NodeShape ;
+    sh:targetClass :Publication ;
+    sh:property [
+        sh:path :releasesPage ;
+        sh:class :Page ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :channel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

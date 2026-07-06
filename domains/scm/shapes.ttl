@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/scm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:SupplierShape a sh:NodeShape ;
+    sh:targetClass :Supplier ;
+    sh:property [
+        sh:path :supplierName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:InventoryShape a sh:NodeShape ;
+    sh:targetClass :Inventory ;
+    sh:property [
+        sh:path :itemCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quantityOnHand ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:FulfillmentOrderShape a sh:NodeShape ;
+    sh:targetClass :FulfillmentOrder ;
+    sh:property [
+        sh:path :allocatesInventory ;
+        sh:class :Inventory ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :fulfillmentOrderNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :fulfillmentOrderStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "allocated" "picked" "shipped" "delivered" ) ;
+    ] .
+
+:ShipmentShape a sh:NodeShape ;
+    sh:targetClass :Shipment ;
+    sh:property [
+        sh:path :fulfillsOrder ;
+        sh:class :FulfillmentOrder ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :trackingNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RouteShape a sh:NodeShape ;
+    sh:targetClass :Route ;
+    sh:property [
+        sh:path :originLocation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :destinationLocation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CarrierShape a sh:NodeShape ;
+    sh:targetClass :Carrier ;
+    sh:property [
+        sh:path :carrierName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

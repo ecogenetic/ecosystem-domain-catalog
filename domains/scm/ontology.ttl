@@ -1,0 +1,174 @@
+@prefix : <https://ecosystemcode.com/ontology/scm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/scm> a owl:Ontology ;
+    rdfs:label "SCM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Supply Chain Management: suppliers, inventory, fulfillment orders, shipments, routes, and carriers." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Supplier a owl:Class ;
+    skos:prefLabel "Supplier" ;
+    skos:altLabel "Vendor", "Source" ;
+    skos:definition "An external organisation that provides inventory to replenish the supply chain." .
+
+:Inventory a owl:Class ;
+    skos:prefLabel "Inventory" ;
+    skos:altLabel "Stock", "On-Hand Goods" ;
+    skos:definition "Stock of goods held at a location and available for allocation to orders." .
+
+:FulfillmentOrder a owl:Class ;
+    skos:prefLabel "Fulfillment Order" ;
+    skos:altLabel "Customer Order", "Demand Order" ;
+    skos:definition "An instruction to allocate, pick, and ship inventory to satisfy customer demand." .
+
+:Shipment a owl:Class ;
+    skos:prefLabel "Shipment" ;
+    skos:altLabel "Consignment", "Delivery" ;
+    skos:definition "A physical consignment that carries a fulfillment order along a route to its destination." .
+
+:Route a owl:Class ;
+    skos:prefLabel "Route" ;
+    skos:altLabel "Lane", "Transport Path" ;
+    skos:definition "A planned path from origin to destination used to move shipments." .
+
+:Carrier a owl:Class ;
+    skos:prefLabel "Carrier" ;
+    skos:altLabel "Transport Provider", "Freight Company" ;
+    skos:definition "A transport organisation that operates routes and moves shipments." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:providesInventory a owl:ObjectProperty ;
+    rdfs:label "provides inventory" ;
+    rdfs:domain :Supplier ;
+    rdfs:range  :Inventory ;
+    skos:definition "The inventory a supplier replenishes into the supply chain." .
+
+:allocatesInventory a owl:ObjectProperty ;
+    rdfs:label "allocates inventory" ;
+    rdfs:domain :FulfillmentOrder ;
+    rdfs:range  :Inventory ;
+    skos:definition "The inventory reserved to satisfy a fulfillment order." .
+
+:fulfillsOrder a owl:ObjectProperty ;
+    rdfs:label "fulfills order" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :FulfillmentOrder ;
+    skos:definition "The fulfillment order a shipment carries to the customer." .
+
+:operatesRoute a owl:ObjectProperty ;
+    rdfs:label "operates route" ;
+    rdfs:domain :Carrier ;
+    rdfs:range  :Route ;
+    skos:definition "The routes a carrier runs its transport services on." .
+
+:followsRoute a owl:ObjectProperty ;
+    rdfs:label "follows route" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :Route ;
+    skos:definition "The route a shipment travels from origin to destination." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:supplierName a owl:DatatypeProperty ;
+    rdfs:label "supplier name" ;
+    rdfs:domain :Supplier ;
+    rdfs:range  xsd:string .
+
+:leadTimeDays a owl:DatatypeProperty ;
+    rdfs:label "lead time days" ;
+    rdfs:domain :Supplier ;
+    rdfs:range  xsd:integer .
+
+:itemCode a owl:DatatypeProperty ;
+    rdfs:label "item code" ;
+    rdfs:domain :Inventory ;
+    rdfs:range  xsd:string .
+
+:quantityOnHand a owl:DatatypeProperty ;
+    rdfs:label "quantity on hand" ;
+    rdfs:domain :Inventory ;
+    rdfs:range  xsd:integer .
+
+:reorderPoint a owl:DatatypeProperty ;
+    rdfs:label "reorder point" ;
+    rdfs:domain :Inventory ;
+    rdfs:range  xsd:integer .
+
+:fulfillmentOrderNumber a owl:DatatypeProperty ;
+    rdfs:label "fulfillment order number" ;
+    rdfs:domain :FulfillmentOrder ;
+    rdfs:range  xsd:string .
+
+:requestedDate a owl:DatatypeProperty ;
+    rdfs:label "requested date" ;
+    rdfs:domain :FulfillmentOrder ;
+    rdfs:range  xsd:date .
+
+:fulfillmentOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "fulfillment order status" ;
+    rdfs:domain :FulfillmentOrder ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the fulfillment order: allocated, picked, shipped, delivered." .
+
+:trackingNumber a owl:DatatypeProperty ;
+    rdfs:label "tracking number" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string .
+
+:shippedAt a owl:DatatypeProperty ;
+    rdfs:label "shipped at" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:dateTime .
+
+:originLocation a owl:DatatypeProperty ;
+    rdfs:label "origin location" ;
+    rdfs:domain :Route ;
+    rdfs:range  xsd:string .
+
+:destinationLocation a owl:DatatypeProperty ;
+    rdfs:label "destination location" ;
+    rdfs:domain :Route ;
+    rdfs:range  xsd:string .
+
+:transitTimeDays a owl:DatatypeProperty ;
+    rdfs:label "transit time days" ;
+    rdfs:domain :Route ;
+    rdfs:range  xsd:integer .
+
+:carrierName a owl:DatatypeProperty ;
+    rdfs:label "carrier name" ;
+    rdfs:domain :Carrier ;
+    rdfs:range  xsd:string .
+
+:serviceLevel a owl:DatatypeProperty ;
+    rdfs:label "service level" ;
+    rdfs:domain :Carrier ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:SupplyPlannerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Supply Planner" ;
+    skos:altLabel "Demand Planner", "Replenishment Planner" ;
+    skos:definition "Person role that forecasts demand, plans replenishment, and allocates inventory to fulfillment orders. Bearer: person. Permissions: Inventory:read, Inventory:write, FulfillmentOrder:read, FulfillmentOrder:write, Supplier:read." .
+
+:SupplierRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Supplier" ;
+    skos:altLabel "Supplying Organisation" ;
+    skos:definition "Organisation role that confirms replenishment orders and provides inventory on agreed lead times. Bearer: organisation. Permissions: Inventory:read, Supplier:read, Supplier:write." .

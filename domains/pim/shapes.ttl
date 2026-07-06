@@ -1,0 +1,72 @@
+@prefix :    <https://ecosystemcode.com/ontology/pim#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:property [
+        sh:path :productName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :sku ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :productStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "enriched" "approved" "published" ) ;
+    ] .
+
+:AttributeShape a sh:NodeShape ;
+    sh:targetClass :Attribute ;
+    sh:property [
+        sh:path :attributeName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CategoryShape a sh:NodeShape ;
+    sh:targetClass :Category ;
+    sh:property [
+        sh:path :categoryName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:VariantShape a sh:NodeShape ;
+    sh:targetClass :Variant ;
+    sh:property [
+        sh:path :variantOfProduct ;
+        sh:class :Product ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :variantSku ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CatalogShape a sh:NodeShape ;
+    sh:targetClass :Catalog ;
+    sh:property [
+        sh:path :catalogName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PublicationShape a sh:NodeShape ;
+    sh:targetClass :Publication ;
+    sh:property [
+        sh:path :publishesCatalog ;
+        sh:class :Catalog ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :targetChannel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

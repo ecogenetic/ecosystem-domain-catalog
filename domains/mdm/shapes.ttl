@@ -1,0 +1,72 @@
+@prefix :    <https://ecosystemcode.com/ontology/mdm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:MasterRecordShape a sh:NodeShape ;
+    sh:targetClass :MasterRecord ;
+    sh:property [
+        sh:path :belongsToDataDomain ;
+        sh:class :DataDomain ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :recordKey ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :masterRecordStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "ingested" "matched" "stewarded" "published" ) ;
+    ] .
+
+:DataDomainShape a sh:NodeShape ;
+    sh:targetClass :DataDomain ;
+    sh:property [
+        sh:path :domainName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:MatchRuleShape a sh:NodeShape ;
+    sh:targetClass :MatchRule ;
+    sh:property [
+        sh:path :ruleName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :matchThreshold ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:HierarchyShape a sh:NodeShape ;
+    sh:targetClass :Hierarchy ;
+    sh:property [
+        sh:path :hierarchyName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:StewardShape a sh:NodeShape ;
+    sh:targetClass :Steward ;
+    sh:property [
+        sh:path :stewardName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LineageShape a sh:NodeShape ;
+    sh:targetClass :Lineage ;
+    sh:property [
+        sh:path :tracesMasterRecord ;
+        sh:class :MasterRecord ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :sourceSystem ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

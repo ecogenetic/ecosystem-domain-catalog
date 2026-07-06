@@ -1,0 +1,92 @@
+@prefix :    <https://ecosystemcode.com/ontology/pos#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:RegisterShape a sh:NodeShape ;
+    sh:targetClass :Register ;
+    sh:property [
+        sh:path :registerNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:TransactionShape a sh:NodeShape ;
+    sh:targetClass :Transaction ;
+    sh:property [
+        sh:path :comprisesLineItem ;
+        sh:class :LineItem ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :transactionNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :totalAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :transactionStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "open" "items scanned" "tendered" "receipt printed" "reconciled" ) ;
+    ] .
+
+:LineItemShape a sh:NodeShape ;
+    sh:targetClass :LineItem ;
+    sh:property [
+        sh:path :sku ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quantity ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:TenderShape a sh:NodeShape ;
+    sh:targetClass :Tender ;
+    sh:property [
+        sh:path :settlesTransaction ;
+        sh:class :Transaction ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :tenderType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :tenderAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:ShiftShape a sh:NodeShape ;
+    sh:targetClass :Shift ;
+    sh:property [
+        sh:path :openedOnRegister ;
+        sh:class :Register ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :openedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+:ReceiptShape a sh:NodeShape ;
+    sh:targetClass :Receipt ;
+    sh:property [
+        sh:path :documentsTransaction ;
+        sh:class :Transaction ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :receiptNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

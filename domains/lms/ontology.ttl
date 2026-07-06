@@ -1,0 +1,164 @@
+@prefix : <https://ecosystemcode.com/ontology/lms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/lms> a owl:Ontology ;
+    rdfs:label "LMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Learning Management: courses, enrollments, lessons, assessments, certificates, and learners." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Course a owl:Class ;
+    skos:prefLabel "Course" ;
+    skos:altLabel "Training Course", "Program" ;
+    skos:definition "A structured program of lessons and assessments published for learners to take." .
+
+:Enrollment a owl:Class ;
+    skos:prefLabel "Enrollment" ;
+    skos:altLabel "Registration", "Course Enrollment" ;
+    skos:definition "A learner's registration in a course, tracking progress from start to certification." .
+
+:Lesson a owl:Class ;
+    skos:prefLabel "Lesson" ;
+    skos:altLabel "Module", "Learning Unit" ;
+    skos:definition "A single unit of instructional content delivered in sequence within a course." .
+
+:Assessment a owl:Class ;
+    skos:prefLabel "Assessment" ;
+    skos:altLabel "Quiz", "Exam" ;
+    skos:definition "A quiz or exam that evaluates whether an enrollment has met the learning objectives." .
+
+:Certificate a owl:Class ;
+    skos:prefLabel "Certificate" ;
+    skos:altLabel "Credential", "Certificate of Completion" ;
+    skos:definition "A credential issued when an enrollment completes the course and passes assessment." .
+
+:Learner a owl:Class ;
+    skos:prefLabel "Learner" ;
+    skos:altLabel "Student", "Trainee" ;
+    skos:definition "A person who enrolls in courses to complete training." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:composedOfLesson a owl:ObjectProperty ;
+    rdfs:label "composed of lesson" ;
+    rdfs:domain :Course ;
+    rdfs:range  :Lesson ;
+    skos:definition "A lesson that forms part of the course's instructional sequence." .
+
+:joinsLearnerToCourse a owl:ObjectProperty ;
+    rdfs:label "joins learner to course" ;
+    rdfs:domain :Enrollment ;
+    rdfs:range  :Course ;
+    skos:definition "The course the enrollment registers the learner into." .
+
+:forLearner a owl:ObjectProperty ;
+    rdfs:label "for learner" ;
+    rdfs:domain :Enrollment ;
+    rdfs:range  :Learner ;
+    skos:definition "The learner who holds the enrollment." .
+
+:evaluatesEnrollment a owl:ObjectProperty ;
+    rdfs:label "evaluates enrollment" ;
+    rdfs:domain :Assessment ;
+    rdfs:range  :Enrollment ;
+    skos:definition "An enrollment whose learning outcomes the assessment evaluates." .
+
+:awardedForEnrollment a owl:ObjectProperty ;
+    rdfs:label "awarded for enrollment" ;
+    rdfs:domain :Certificate ;
+    rdfs:range  :Enrollment ;
+    skos:definition "The completed enrollment the certificate was awarded for." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:courseTitle a owl:DatatypeProperty ;
+    rdfs:label "course title" ;
+    rdfs:domain :Course ;
+    rdfs:range  xsd:string .
+
+:durationHours a owl:DatatypeProperty ;
+    rdfs:label "duration hours" ;
+    rdfs:domain :Course ;
+    rdfs:range  xsd:decimal .
+
+:enrolledAt a owl:DatatypeProperty ;
+    rdfs:label "enrolled at" ;
+    rdfs:domain :Enrollment ;
+    rdfs:range  xsd:dateTime .
+
+:progressPercent a owl:DatatypeProperty ;
+    rdfs:label "progress percent" ;
+    rdfs:domain :Enrollment ;
+    rdfs:range  xsd:decimal .
+
+:enrollmentStatus a owl:DatatypeProperty ;
+    rdfs:label "enrollment status" ;
+    rdfs:domain :Enrollment ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the enrollment: enrolled, in progress, completed, certified." .
+
+:lessonTitle a owl:DatatypeProperty ;
+    rdfs:label "lesson title" ;
+    rdfs:domain :Lesson ;
+    rdfs:range  xsd:string .
+
+:sequenceNumber a owl:DatatypeProperty ;
+    rdfs:label "sequence number" ;
+    rdfs:domain :Lesson ;
+    rdfs:range  xsd:integer .
+
+:assessmentType a owl:DatatypeProperty ;
+    rdfs:label "assessment type" ;
+    rdfs:domain :Assessment ;
+    rdfs:range  xsd:string .
+
+:passingScore a owl:DatatypeProperty ;
+    rdfs:label "passing score" ;
+    rdfs:domain :Assessment ;
+    rdfs:range  xsd:decimal .
+
+:certificateNumber a owl:DatatypeProperty ;
+    rdfs:label "certificate number" ;
+    rdfs:domain :Certificate ;
+    rdfs:range  xsd:string .
+
+:issuedAt a owl:DatatypeProperty ;
+    rdfs:label "issued at" ;
+    rdfs:domain :Certificate ;
+    rdfs:range  xsd:dateTime .
+
+:fullName a owl:DatatypeProperty ;
+    rdfs:label "full name" ;
+    rdfs:domain :Learner ;
+    rdfs:range  xsd:string .
+
+:email a owl:DatatypeProperty ;
+    rdfs:label "email" ;
+    rdfs:domain :Learner ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:LearnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Learner" ;
+    skos:altLabel "Student", "Course Participant" ;
+    skos:definition "Person role that enrolls in courses, completes lessons, takes assessments, and receives certificates. Bearer: person. Permissions: Course:read, Lesson:read, Enrollment:read, Assessment:read, Certificate:read." .
+
+:InstructorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Instructor" ;
+    skos:altLabel "Trainer", "Course Author" ;
+    skos:definition "Person role that publishes courses, authors lessons and assessments, monitors enrollments, and issues certificates. Bearer: person. Permissions: Course:read, Course:write, Lesson:read, Lesson:write, Assessment:read, Assessment:write, Enrollment:read, Certificate:write." .

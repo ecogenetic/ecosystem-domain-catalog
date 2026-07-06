@@ -1,0 +1,174 @@
+@prefix : <https://ecosystemcode.com/ontology/wms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/wms> a owl:Ontology ;
+    rdfs:label "WMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Warehouse Management: warehouses, bin locations, stock levels, receipts, pick lists, and shipments." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Warehouse a owl:Class ;
+    skos:prefLabel "Warehouse" ;
+    skos:altLabel "Distribution Center", "Fulfillment Center" ;
+    skos:definition "A physical facility whose storage space is organised into addressable bin locations." .
+
+:BinLocation a owl:Class ;
+    skos:prefLabel "Bin Location" ;
+    skos:altLabel "Bin", "Storage Slot" ;
+    skos:definition "An addressable slot within a warehouse where stock is put away and picked from." .
+
+:StockLevel a owl:Class ;
+    skos:prefLabel "Stock Level" ;
+    skos:altLabel "Inventory Balance", "On-Hand Quantity" ;
+    skos:definition "The recorded quantity of an item at a specific bin location." .
+
+:Receipt a owl:Class ;
+    skos:prefLabel "Receipt" ;
+    skos:altLabel "Goods Receipt", "Inbound Delivery" ;
+    skos:definition "A record of inbound goods received into the warehouse that increases stock levels." .
+
+:PickList a owl:Class ;
+    skos:prefLabel "Pick List" ;
+    skos:altLabel "Picking Order", "Pick Ticket" ;
+    skos:definition "An ordered set of picking instructions that reserves stock for outbound orders." .
+
+:Shipment a owl:Class ;
+    skos:prefLabel "Shipment" ;
+    skos:altLabel "Outbound Delivery", "Dispatch" ;
+    skos:definition "An outbound consignment that packs and dispatches completed pick lists." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:containsBinLocation a owl:ObjectProperty ;
+    rdfs:label "contains bin location" ;
+    rdfs:domain :Warehouse ;
+    rdfs:range  :BinLocation ;
+    skos:definition "The bin locations that make up a warehouse's storage space." .
+
+:measuredAtBinLocation a owl:ObjectProperty ;
+    rdfs:label "measured at bin location" ;
+    rdfs:domain :StockLevel ;
+    rdfs:range  :BinLocation ;
+    skos:definition "The bin location a stock level is recorded against." .
+
+:increasesStockLevel a owl:ObjectProperty ;
+    rdfs:label "increases stock level" ;
+    rdfs:domain :Receipt ;
+    rdfs:range  :StockLevel ;
+    skos:definition "The stock levels an inbound receipt adds quantity to." .
+
+:reservesStockLevel a owl:ObjectProperty ;
+    rdfs:label "reserves stock level" ;
+    rdfs:domain :PickList ;
+    rdfs:range  :StockLevel ;
+    skos:definition "The stock levels a pick list reserves quantity from for picking." .
+
+:fulfillsPickList a owl:ObjectProperty ;
+    rdfs:label "fulfills pick list" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :PickList ;
+    skos:definition "The completed pick list an outbound shipment packs and dispatches." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:warehouseCode a owl:DatatypeProperty ;
+    rdfs:label "warehouse code" ;
+    rdfs:domain :Warehouse ;
+    rdfs:range  xsd:string .
+
+:warehouseName a owl:DatatypeProperty ;
+    rdfs:label "warehouse name" ;
+    rdfs:domain :Warehouse ;
+    rdfs:range  xsd:string .
+
+:binCode a owl:DatatypeProperty ;
+    rdfs:label "bin code" ;
+    rdfs:domain :BinLocation ;
+    rdfs:range  xsd:string .
+
+:zone a owl:DatatypeProperty ;
+    rdfs:label "zone" ;
+    rdfs:domain :BinLocation ;
+    rdfs:range  xsd:string .
+
+:capacity a owl:DatatypeProperty ;
+    rdfs:label "capacity" ;
+    rdfs:domain :BinLocation ;
+    rdfs:range  xsd:integer .
+
+:itemCode a owl:DatatypeProperty ;
+    rdfs:label "item code" ;
+    rdfs:domain :StockLevel ;
+    rdfs:range  xsd:string .
+
+:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    rdfs:domain :StockLevel ;
+    rdfs:range  xsd:integer .
+
+:lastCountedAt a owl:DatatypeProperty ;
+    rdfs:label "last counted at" ;
+    rdfs:domain :StockLevel ;
+    rdfs:range  xsd:dateTime .
+
+:receiptNumber a owl:DatatypeProperty ;
+    rdfs:label "receipt number" ;
+    rdfs:domain :Receipt ;
+    rdfs:range  xsd:string .
+
+:receivedAt a owl:DatatypeProperty ;
+    rdfs:label "received at" ;
+    rdfs:domain :Receipt ;
+    rdfs:range  xsd:dateTime .
+
+:pickListNumber a owl:DatatypeProperty ;
+    rdfs:label "pick list number" ;
+    rdfs:domain :PickList ;
+    rdfs:range  xsd:string .
+
+:releasedAt a owl:DatatypeProperty ;
+    rdfs:label "released at" ;
+    rdfs:domain :PickList ;
+    rdfs:range  xsd:dateTime .
+
+:pickListStatus a owl:DatatypeProperty ;
+    rdfs:label "pick list status" ;
+    rdfs:domain :PickList ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the pick list: created, in progress, completed, shipped." .
+
+:shipmentNumber a owl:DatatypeProperty ;
+    rdfs:label "shipment number" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string .
+
+:dispatchedAt a owl:DatatypeProperty ;
+    rdfs:label "dispatched at" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:PickerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Picker" ;
+    skos:altLabel "Warehouse Operative", "Order Picker" ;
+    skos:definition "Person role that executes pick lists, confirms picked quantities, and reports shortages. Bearer: person. Permissions: PickList:read, PickList:write, StockLevel:read, BinLocation:read." .
+
+:WarehouseManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Warehouse Manager" ;
+    skos:altLabel "DC Manager", "Operations Supervisor" ;
+    skos:definition "Person role that configures bin locations, releases pick lists, and oversees receipts and shipments. Bearer: person. Permissions: Warehouse:read, Warehouse:write, BinLocation:read, BinLocation:write, PickList:read, PickList:write, Receipt:read, Receipt:write, Shipment:read, Shipment:write." .

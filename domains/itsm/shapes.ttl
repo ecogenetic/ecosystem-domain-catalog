@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/itsm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:IncidentShape a sh:NodeShape ;
+    sh:targetClass :Incident ;
+    sh:property [
+        sh:path :incidentNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :affectsService ;
+        sh:class :Service ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :incidentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "logged" "in progress" "resolved" "closed" ) ;
+    ] .
+
+:ChangeRequestShape a sh:NodeShape ;
+    sh:targetClass :ChangeRequest ;
+    sh:property [
+        sh:path :modifiesConfigurationItem ;
+        sh:class :ConfigurationItem ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :changeSummary ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceShape a sh:NodeShape ;
+    sh:targetClass :Service ;
+    sh:property [
+        sh:path :serviceName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ConfigurationItemShape a sh:NodeShape ;
+    sh:targetClass :ConfigurationItem ;
+    sh:property [
+        sh:path :ciName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :ciType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ProblemShape a sh:NodeShape ;
+    sh:targetClass :Problem ;
+    sh:property [
+        sh:path :groupsIncident ;
+        sh:class :Incident ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :rootCause ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SLAShape a sh:NodeShape ;
+    sh:targetClass :SLA ;
+    sh:property [
+        sh:path :responseTimeMinutes ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :resolutionTimeMinutes ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .

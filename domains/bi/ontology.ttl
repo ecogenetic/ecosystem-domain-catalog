@@ -1,0 +1,170 @@
+@prefix : <https://ecosystemcode.com/ontology/bi#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/bi> a owl:Ontology ;
+    rdfs:label "BI Domain Ontology" ;
+    rdfs:comment "Seed ontology for Business Intelligence and Analytics: dashboards, reports, metrics, datasets, dimensions, and KPIs." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Dashboard a owl:Class ;
+    skos:prefLabel "Dashboard" ;
+    skos:altLabel "Analytics Dashboard", "Scoreboard" ;
+    skos:definition "An interactive collection of visualizations that presents metrics at a glance." .
+
+:Report a owl:Class ;
+    skos:prefLabel "Report" ;
+    skos:altLabel "Analytics Report", "Scheduled Report" ;
+    skos:definition "A scheduled or on-demand document that presents metrics for a defined audience." .
+
+:Metric a owl:Class ;
+    skos:prefLabel "Metric" ;
+    skos:altLabel "Measure", "Calculated Field" ;
+    skos:definition "A computed measure derived from a dataset, such as revenue or conversion rate." .
+
+:Dataset a owl:Class ;
+    skos:prefLabel "Dataset" ;
+    skos:altLabel "Data Model", "Data Table" ;
+    skos:definition "A modeled collection of records that feeds metrics and can be sliced by dimensions." .
+
+:Dimension a owl:Class ;
+    skos:prefLabel "Dimension" ;
+    skos:altLabel "Attribute", "Slicer" ;
+    skos:definition "A categorical attribute, such as region or product line, used to slice datasets." .
+
+:KPI a owl:Class ;
+    rdfs:subClassOf :Metric ;
+    skos:prefLabel "KPI" ;
+    skos:altLabel "Key Performance Indicator", "Target Metric" ;
+    skos:definition "A key performance indicator that sets a target value against a metric." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:slicedByDimension a owl:ObjectProperty ;
+    rdfs:label "sliced by dimension" ;
+    rdfs:domain :Dataset ;
+    rdfs:range  :Dimension ;
+    skos:definition "A dimension available for slicing and grouping records in the dataset." .
+
+:feedsMetric a owl:ObjectProperty ;
+    rdfs:label "feeds metric" ;
+    rdfs:domain :Dataset ;
+    rdfs:range  :Metric ;
+    skos:definition "A metric computed from the records of the dataset." .
+
+:visualizesMetric a owl:ObjectProperty ;
+    rdfs:label "visualizes metric" ;
+    rdfs:domain :Dashboard ;
+    rdfs:range  :Metric ;
+    skos:definition "A metric rendered as a visualization on the dashboard." .
+
+:presentsMetric a owl:ObjectProperty ;
+    rdfs:label "presents metric" ;
+    rdfs:domain :Report ;
+    rdfs:range  :Metric ;
+    skos:definition "A metric included in the body of the report." .
+
+:targetsMetric a owl:ObjectProperty ;
+    rdfs:label "targets metric" ;
+    rdfs:domain :KPI ;
+    rdfs:range  :Metric ;
+    skos:definition "The underlying metric the KPI sets a target value against." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:dashboardName a owl:DatatypeProperty ;
+    rdfs:label "dashboard name" ;
+    rdfs:domain :Dashboard ;
+    rdfs:range  xsd:string .
+
+:refreshIntervalMinutes a owl:DatatypeProperty ;
+    rdfs:label "refresh interval minutes" ;
+    rdfs:domain :Dashboard ;
+    rdfs:range  xsd:integer .
+
+:reportName a owl:DatatypeProperty ;
+    rdfs:label "report name" ;
+    rdfs:domain :Report ;
+    rdfs:range  xsd:string .
+
+:schedule a owl:DatatypeProperty ;
+    rdfs:label "schedule" ;
+    rdfs:domain :Report ;
+    rdfs:range  xsd:string .
+
+:reportStatus a owl:DatatypeProperty ;
+    rdfs:label "report status" ;
+    rdfs:domain :Report ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the report: defined, scheduled, refreshed, archived." .
+
+:metricName a owl:DatatypeProperty ;
+    rdfs:label "metric name" ;
+    rdfs:domain :Metric ;
+    rdfs:range  xsd:string .
+
+:aggregationType a owl:DatatypeProperty ;
+    rdfs:label "aggregation type" ;
+    rdfs:domain :Metric ;
+    rdfs:range  xsd:string .
+
+:datasetName a owl:DatatypeProperty ;
+    rdfs:label "dataset name" ;
+    rdfs:domain :Dataset ;
+    rdfs:range  xsd:string .
+
+:rowCount a owl:DatatypeProperty ;
+    rdfs:label "row count" ;
+    rdfs:domain :Dataset ;
+    rdfs:range  xsd:integer .
+
+:lastRefreshedAt a owl:DatatypeProperty ;
+    rdfs:label "last refreshed at" ;
+    rdfs:domain :Dataset ;
+    rdfs:range  xsd:dateTime .
+
+:dimensionName a owl:DatatypeProperty ;
+    rdfs:label "dimension name" ;
+    rdfs:domain :Dimension ;
+    rdfs:range  xsd:string .
+
+:hierarchyLevel a owl:DatatypeProperty ;
+    rdfs:label "hierarchy level" ;
+    rdfs:domain :Dimension ;
+    rdfs:range  xsd:integer .
+
+:targetValue a owl:DatatypeProperty ;
+    rdfs:label "target value" ;
+    rdfs:domain :KPI ;
+    rdfs:range  xsd:decimal .
+
+:thresholdDirection a owl:DatatypeProperty ;
+    rdfs:label "threshold direction" ;
+    rdfs:domain :KPI ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:AnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Analyst" ;
+    skos:altLabel "Data Analyst", "BI Developer" ;
+    skos:definition "Person role that models datasets, defines metrics and KPIs, and builds dashboards and reports. Bearer: person. Permissions: Dataset:read, Dataset:write, Metric:read, Metric:write, Dashboard:read, Dashboard:write, Report:read, Report:write." .
+
+:ViewerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Viewer" ;
+    skos:altLabel "Report Consumer" ;
+    skos:definition "Person role that consumes shared dashboards and reports to monitor KPIs. Bearer: person. Permissions: Dashboard:read, Report:read, KPI:read, Metric:read." .

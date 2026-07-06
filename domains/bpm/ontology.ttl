@@ -1,0 +1,169 @@
+@prefix : <https://ecosystemcode.com/ontology/bpm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/bpm> a owl:Ontology ;
+    rdfs:label "BPM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Business Process Management: process definitions, cases, tasks, forms, decisions, and SLAs." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ProcessDefinition a owl:Class ;
+    skos:prefLabel "Process Definition" ;
+    skos:altLabel "Process Model", "Workflow Definition" ;
+    skos:definition "A reusable model of a business process that can be instantiated as running cases." .
+
+:Case a owl:Class ;
+    skos:prefLabel "Case" ;
+    skos:altLabel "Process Instance", "Running Case" ;
+    skos:definition "A single running instance of a process definition, tracked from start to close." .
+
+:Task a owl:Class ;
+    skos:prefLabel "Task" ;
+    skos:altLabel "Work Item", "Human Task" ;
+    skos:definition "A unit of human or automated work assigned within a case." .
+
+:Form a owl:Class ;
+    skos:prefLabel "Form" ;
+    skos:altLabel "Task Form", "Data Entry Screen" ;
+    skos:definition "A structured data-entry screen presented to complete a task." .
+
+:Decision a owl:Class ;
+    skos:prefLabel "Decision" ;
+    skos:altLabel "Gateway", "Decision Point" ;
+    skos:definition "A gateway that evaluates rules or data to route a case along a path." .
+
+:SLA a owl:Class ;
+    skos:prefLabel "SLA" ;
+    skos:altLabel "Service Level Agreement", "Deadline Policy" ;
+    skos:definition "A service-level agreement that constrains how long a case or task may take before escalation." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:instantiatedAsCase a owl:ObjectProperty ;
+    rdfs:label "instantiated as case" ;
+    rdfs:domain :ProcessDefinition ;
+    rdfs:range  :Case ;
+    skos:definition "A running case created from this process definition." .
+
+:comprisesTask a owl:ObjectProperty ;
+    rdfs:label "comprises task" ;
+    rdfs:domain :Case ;
+    rdfs:range  :Task ;
+    skos:definition "A task that forms part of the case's work." .
+
+:presentsForm a owl:ObjectProperty ;
+    rdfs:label "presents form" ;
+    rdfs:domain :Task ;
+    rdfs:range  :Form ;
+    skos:definition "The form presented to the assignee to complete the task." .
+
+:routesCase a owl:ObjectProperty ;
+    rdfs:label "routes case" ;
+    rdfs:domain :Decision ;
+    rdfs:range  :Case ;
+    skos:definition "The case whose path is routed by this decision gateway." .
+
+:constrainsCase a owl:ObjectProperty ;
+    rdfs:label "constrains case" ;
+    rdfs:domain :SLA ;
+    rdfs:range  :Case ;
+    skos:definition "The case whose duration is constrained by this service-level agreement." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:processName a owl:DatatypeProperty ;
+    rdfs:label "process name" ;
+    rdfs:domain :ProcessDefinition ;
+    rdfs:range  xsd:string .
+
+:processVersion a owl:DatatypeProperty ;
+    rdfs:label "process version" ;
+    rdfs:domain :ProcessDefinition ;
+    rdfs:range  xsd:string .
+
+:caseNumber a owl:DatatypeProperty ;
+    rdfs:label "case number" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:string .
+
+:startedAt a owl:DatatypeProperty ;
+    rdfs:label "started at" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:dateTime .
+
+:caseStatus a owl:DatatypeProperty ;
+    rdfs:label "case status" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the case: started, in progress, decision, closed." .
+
+:taskName a owl:DatatypeProperty ;
+    rdfs:label "task name" ;
+    rdfs:domain :Task ;
+    rdfs:range  xsd:string .
+
+:assignee a owl:DatatypeProperty ;
+    rdfs:label "assignee" ;
+    rdfs:domain :Task ;
+    rdfs:range  xsd:string .
+
+:dueAt a owl:DatatypeProperty ;
+    rdfs:label "due at" ;
+    rdfs:domain :Task ;
+    rdfs:range  xsd:dateTime .
+
+:formName a owl:DatatypeProperty ;
+    rdfs:label "form name" ;
+    rdfs:domain :Form ;
+    rdfs:range  xsd:string .
+
+:fieldCount a owl:DatatypeProperty ;
+    rdfs:label "field count" ;
+    rdfs:domain :Form ;
+    rdfs:range  xsd:integer .
+
+:decisionName a owl:DatatypeProperty ;
+    rdfs:label "decision name" ;
+    rdfs:domain :Decision ;
+    rdfs:range  xsd:string .
+
+:ruleExpression a owl:DatatypeProperty ;
+    rdfs:label "rule expression" ;
+    rdfs:domain :Decision ;
+    rdfs:range  xsd:string .
+
+:slaName a owl:DatatypeProperty ;
+    rdfs:label "sla name" ;
+    rdfs:domain :SLA ;
+    rdfs:range  xsd:string .
+
+:targetDuration a owl:DatatypeProperty ;
+    rdfs:label "target duration" ;
+    rdfs:domain :SLA ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:ProcessOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Process Owner" ;
+    skos:altLabel "Process Manager", "Workflow Owner" ;
+    skos:definition "Person role that designs process definitions, monitors case throughput, and tunes SLAs. Bearer: person. Permissions: ProcessDefinition:read, ProcessDefinition:write, Case:read, SLA:read, SLA:write." .
+
+:TaskAssigneeRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Task Assignee" ;
+    skos:altLabel "Task Worker", "Case Worker" ;
+    skos:definition "Person role that claims tasks, completes forms, and progresses cases. Bearer: person. Permissions: Task:read, Task:write, Form:read, Form:write, Case:read." .

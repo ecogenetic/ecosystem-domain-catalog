@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/qms#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:InspectionShape a sh:NodeShape ;
+    sh:targetClass :Inspection ;
+    sh:property [
+        sh:path :inspectionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :inspectedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+:NonConformanceShape a sh:NodeShape ;
+    sh:targetClass :NonConformance ;
+    sh:property [
+        sh:path :raisedFromInspection ;
+        sh:class :Inspection ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :severity ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :nonConformanceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "recorded" "capa initiated" "verified" "closed" ) ;
+    ] .
+
+:CAPAShape a sh:NodeShape ;
+    sh:targetClass :CAPA ;
+    sh:property [
+        sh:path :remediatesNonConformance ;
+        sh:class :NonConformance ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :actionPlan ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SpecificationShape a sh:NodeShape ;
+    sh:targetClass :Specification ;
+    sh:property [
+        sh:path :specificationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SampleShape a sh:NodeShape ;
+    sh:targetClass :Sample ;
+    sh:property [
+        sh:path :checkedAgainstSpecification ;
+        sh:class :Specification ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :sampleCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CertificateShape a sh:NodeShape ;
+    sh:targetClass :Certificate ;
+    sh:property [
+        sh:path :attestsInspection ;
+        sh:class :Inspection ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :certificateNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

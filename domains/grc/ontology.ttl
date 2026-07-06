@@ -1,0 +1,180 @@
+@prefix : <https://ecosystemcode.com/ontology/grc#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/grc> a owl:Ontology ;
+    rdfs:label "GRC Domain Ontology" ;
+    rdfs:comment "Seed ontology for Governance, Risk & Compliance: policies, controls, risks, assessments, audit findings, and evidence." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Policy a owl:Class ;
+    skos:prefLabel "Policy" ;
+    skos:altLabel "Governance Policy", "Corporate Policy" ;
+    skos:definition "A governing statement of intent that mandates one or more controls." .
+
+:Control a owl:Class ;
+    skos:prefLabel "Control" ;
+    skos:altLabel "Safeguard", "Internal Control" ;
+    skos:definition "A safeguard or procedure implemented to mitigate a risk and satisfy a policy." .
+
+:Risk a owl:Class ;
+    skos:prefLabel "Risk" ;
+    skos:altLabel "Threat", "Risk Item" ;
+    skos:definition "An identified threat to objectives, scored by likelihood and impact." .
+
+:Assessment a owl:Class ;
+    skos:prefLabel "Assessment" ;
+    skos:altLabel "Risk Assessment", "Control Assessment" ;
+    skos:definition "A structured evaluation of risks or controls performed at a point in time." .
+
+:AuditFinding a owl:Class ;
+    skos:prefLabel "Audit Finding" ;
+    skos:altLabel "Finding", "Audit Gap" ;
+    skos:definition "A gap raised against a control during an audit, tracked to closure." .
+
+:Evidence a owl:Class ;
+    skos:prefLabel "Evidence" ;
+    skos:altLabel "Supporting Evidence", "Compliance Artefact" ;
+    skos:definition "An artefact collected to support an assessment or demonstrate remediation." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:mandatesControl a owl:ObjectProperty ;
+    rdfs:label "mandates control" ;
+    rdfs:domain :Policy ;
+    rdfs:range  :Control ;
+    skos:definition "A control the policy requires to be implemented." .
+
+:mitigatesRisk a owl:ObjectProperty ;
+    rdfs:label "mitigates risk" ;
+    rdfs:domain :Control ;
+    rdfs:range  :Risk ;
+    skos:definition "The risk this control is implemented to reduce." .
+
+:evaluatesRisk a owl:ObjectProperty ;
+    rdfs:label "evaluates risk" ;
+    rdfs:domain :Assessment ;
+    rdfs:range  :Risk ;
+    skos:definition "A risk evaluated during the assessment." .
+
+:raisedAgainstControl a owl:ObjectProperty ;
+    rdfs:label "raised against control" ;
+    rdfs:domain :AuditFinding ;
+    rdfs:range  :Control ;
+    skos:definition "The control the audit finding identifies a gap in." .
+
+:supportsAssessment a owl:ObjectProperty ;
+    rdfs:label "supports assessment" ;
+    rdfs:domain :Evidence ;
+    rdfs:range  :Assessment ;
+    skos:definition "The assessment this evidence artefact supports." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:policyName a owl:DatatypeProperty ;
+    rdfs:label "policy name" ;
+    rdfs:domain :Policy ;
+    rdfs:range  xsd:string .
+
+:effectiveDate a owl:DatatypeProperty ;
+    rdfs:label "effective date" ;
+    rdfs:domain :Policy ;
+    rdfs:range  xsd:date .
+
+:controlName a owl:DatatypeProperty ;
+    rdfs:label "control name" ;
+    rdfs:domain :Control ;
+    rdfs:range  xsd:string .
+
+:controlType a owl:DatatypeProperty ;
+    rdfs:label "control type" ;
+    rdfs:domain :Control ;
+    rdfs:range  xsd:string .
+
+:controlFrequency a owl:DatatypeProperty ;
+    rdfs:label "control frequency" ;
+    rdfs:domain :Control ;
+    rdfs:range  xsd:string .
+
+:riskName a owl:DatatypeProperty ;
+    rdfs:label "risk name" ;
+    rdfs:domain :Risk ;
+    rdfs:range  xsd:string .
+
+:likelihood a owl:DatatypeProperty ;
+    rdfs:label "likelihood" ;
+    rdfs:domain :Risk ;
+    rdfs:range  xsd:integer .
+
+:impact a owl:DatatypeProperty ;
+    rdfs:label "impact" ;
+    rdfs:domain :Risk ;
+    rdfs:range  xsd:integer .
+
+:assessmentName a owl:DatatypeProperty ;
+    rdfs:label "assessment name" ;
+    rdfs:domain :Assessment ;
+    rdfs:range  xsd:string .
+
+:performedAt a owl:DatatypeProperty ;
+    rdfs:label "performed at" ;
+    rdfs:domain :Assessment ;
+    rdfs:range  xsd:dateTime .
+
+:findingReference a owl:DatatypeProperty ;
+    rdfs:label "finding reference" ;
+    rdfs:domain :AuditFinding ;
+    rdfs:range  xsd:string .
+
+:severity a owl:DatatypeProperty ;
+    rdfs:label "severity" ;
+    rdfs:domain :AuditFinding ;
+    rdfs:range  xsd:string .
+
+:auditFindingStatus a owl:DatatypeProperty ;
+    rdfs:label "audit finding status" ;
+    rdfs:domain :AuditFinding ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the audit finding: identified, remediated, verified, closed." .
+
+:evidenceName a owl:DatatypeProperty ;
+    rdfs:label "evidence name" ;
+    rdfs:domain :Evidence ;
+    rdfs:range  xsd:string .
+
+:collectedAt a owl:DatatypeProperty ;
+    rdfs:label "collected at" ;
+    rdfs:domain :Evidence ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:ComplianceOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Compliance Officer" ;
+    skos:altLabel "Compliance Manager", "GRC Officer" ;
+    skos:definition "Person role that maintains policies, maps controls, and tracks findings to closure. Bearer: person. Permissions: Policy:read, Policy:write, Control:read, AuditFinding:read, AuditFinding:write." .
+
+:AuditorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Auditor" ;
+    skos:altLabel "Internal Auditor", "External Auditor" ;
+    skos:definition "Person role that performs assessments, raises findings, and verifies remediation evidence. Bearer: person. Permissions: Assessment:read, Assessment:write, AuditFinding:read, AuditFinding:write, Evidence:read." .
+
+:ControlOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Control Owner" ;
+    skos:altLabel "Control Operator", "Process Control Owner" ;
+    skos:definition "Person role that operates assigned controls, remediates findings, and supplies evidence. Bearer: person. Permissions: Control:read, Control:write, Evidence:read, Evidence:write, Risk:read." .

@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/lsm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:LeaseContractShape a sh:NodeShape ;
+    sh:targetClass :LeaseContract ;
+    sh:property [
+        sh:path :coversLeasedAsset ;
+        sh:class :LeasedAsset ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contractNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :commencementDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :leaseContractStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "active" "renewal" "terminated" ) ;
+    ] .
+
+:LeasedAssetShape a sh:NodeShape ;
+    sh:targetClass :LeasedAsset ;
+    sh:property [
+        sh:path :assetName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LeasePaymentShape a sh:NodeShape ;
+    sh:targetClass :LeasePayment ;
+    sh:property [
+        sh:path :dueUnderLeaseContract ;
+        sh:class :LeaseContract ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :paymentAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :dueDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+    ] .
+
+:RenewalOptionShape a sh:NodeShape ;
+    sh:targetClass :RenewalOption ;
+    sh:property [
+        sh:path :extendsLeaseContract ;
+        sh:class :LeaseContract ;
+        sh:minCount 1 ;
+    ] .
+
+:EscalationScheduleShape a sh:NodeShape ;
+    sh:targetClass :EscalationSchedule ;
+    sh:property [
+        sh:path :escalationRate ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:TenantShape a sh:NodeShape ;
+    sh:targetClass :Tenant ;
+    sh:property [
+        sh:path :tenantName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

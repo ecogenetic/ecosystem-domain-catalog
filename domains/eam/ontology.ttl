@@ -1,0 +1,174 @@
+@prefix : <https://ecosystemcode.com/ontology/eam#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/eam> a owl:Ontology ;
+    rdfs:label "EAM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Enterprise Asset Management: assets, locations, maintenance plans, work orders, spare parts, and meter readings." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Asset a owl:Class ;
+    skos:prefLabel "Asset" ;
+    skos:altLabel "Equipment", "Physical Asset" ;
+    skos:definition "A physical piece of equipment or infrastructure the organization maintains over its life." .
+
+:Location a owl:Class ;
+    skos:prefLabel "Location" ;
+    skos:altLabel "Site", "Functional Location" ;
+    skos:definition "A physical site or functional position where an asset is installed or stored." .
+
+:MaintenancePlan a owl:Class ;
+    skos:prefLabel "Maintenance Plan" ;
+    skos:altLabel "PM Plan", "Preventive Maintenance Schedule" ;
+    skos:definition "A preventive schedule that generates work orders for an asset at defined intervals." .
+
+:WorkOrder a owl:Class ;
+    skos:prefLabel "Work Order" ;
+    skos:altLabel "Maintenance Order", "Job Order" ;
+    skos:definition "An authorized job to inspect, service, or repair an asset, tracked from schedule to close." .
+
+:SparePart a owl:Class ;
+    skos:prefLabel "Spare Part" ;
+    skos:altLabel "Replacement Part", "Spare" ;
+    skos:definition "A stocked replacement component consumed when executing a work order." .
+
+:MeterReading a owl:Class ;
+    skos:prefLabel "Meter Reading" ;
+    skos:altLabel "Usage Reading", "Condition Reading" ;
+    skos:definition "A recorded measurement such as hours run or kilometres captured for an asset." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:locatedAtLocation a owl:ObjectProperty ;
+    rdfs:label "located at location" ;
+    rdfs:domain :Asset ;
+    rdfs:range  :Location ;
+    skos:definition "The physical site or functional position where the asset is installed or stored." .
+
+:schedulesWorkOrder a owl:ObjectProperty ;
+    rdfs:label "schedules work order" ;
+    rdfs:domain :MaintenancePlan ;
+    rdfs:range  :WorkOrder ;
+    skos:definition "A work order generated on the maintenance plan's preventive schedule." .
+
+:performedOnAsset a owl:ObjectProperty ;
+    rdfs:label "performed on asset" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  :Asset ;
+    skos:definition "The asset the work order inspects, services, or repairs." .
+
+:consumesSparePart a owl:ObjectProperty ;
+    rdfs:label "consumes spare part" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  :SparePart ;
+    skos:definition "A spare part consumed while executing the work order." .
+
+:recordedForAsset a owl:ObjectProperty ;
+    rdfs:label "recorded for asset" ;
+    rdfs:domain :MeterReading ;
+    rdfs:range  :Asset ;
+    skos:definition "The asset the meter reading was captured for." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:assetTag a owl:DatatypeProperty ;
+    rdfs:label "asset tag" ;
+    rdfs:domain :Asset ;
+    rdfs:range  xsd:string .
+
+:assetName a owl:DatatypeProperty ;
+    rdfs:label "asset name" ;
+    rdfs:domain :Asset ;
+    rdfs:range  xsd:string .
+
+:commissionedOn a owl:DatatypeProperty ;
+    rdfs:label "commissioned on" ;
+    rdfs:domain :Asset ;
+    rdfs:range  xsd:date .
+
+:locationName a owl:DatatypeProperty ;
+    rdfs:label "location name" ;
+    rdfs:domain :Location ;
+    rdfs:range  xsd:string .
+
+:locationCode a owl:DatatypeProperty ;
+    rdfs:label "location code" ;
+    rdfs:domain :Location ;
+    rdfs:range  xsd:string .
+
+:planName a owl:DatatypeProperty ;
+    rdfs:label "plan name" ;
+    rdfs:domain :MaintenancePlan ;
+    rdfs:range  xsd:string .
+
+:intervalDays a owl:DatatypeProperty ;
+    rdfs:label "interval days" ;
+    rdfs:domain :MaintenancePlan ;
+    rdfs:range  xsd:integer .
+
+:workOrderNumber a owl:DatatypeProperty ;
+    rdfs:label "work order number" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:string .
+
+:scheduledFor a owl:DatatypeProperty ;
+    rdfs:label "scheduled for" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:dateTime .
+
+:workOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "work order status" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the work order: scheduled, in progress, completed, closed." .
+
+:sparePartNumber a owl:DatatypeProperty ;
+    rdfs:label "spare part number" ;
+    rdfs:domain :SparePart ;
+    rdfs:range  xsd:string .
+
+:quantityOnHand a owl:DatatypeProperty ;
+    rdfs:label "quantity on hand" ;
+    rdfs:domain :SparePart ;
+    rdfs:range  xsd:integer .
+
+:meterType a owl:DatatypeProperty ;
+    rdfs:label "meter type" ;
+    rdfs:domain :MeterReading ;
+    rdfs:range  xsd:string .
+
+:readingValue a owl:DatatypeProperty ;
+    rdfs:label "reading value" ;
+    rdfs:domain :MeterReading ;
+    rdfs:range  xsd:decimal .
+
+:readAt a owl:DatatypeProperty ;
+    rdfs:label "read at" ;
+    rdfs:domain :MeterReading ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:TechnicianRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Technician" ;
+    skos:altLabel "Maintenance Technician", "Field Engineer" ;
+    skos:definition "Person role that executes work orders, consumes spare parts, and records meter readings. Bearer: person. Permissions: WorkOrder:read, WorkOrder:write, SparePart:read, MeterReading:read, MeterReading:write." .
+
+:MaintenancePlannerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Maintenance Planner" ;
+    skos:altLabel "Reliability Planner", "PM Planner" ;
+    skos:definition "Person role that registers assets, defines maintenance plans, and schedules work orders. Bearer: person. Permissions: Asset:read, Asset:write, MaintenancePlan:read, MaintenancePlan:write, WorkOrder:read, WorkOrder:write." .

@@ -1,0 +1,184 @@
+@prefix : <https://ecosystemcode.com/ontology/pos#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/pos> a owl:Ontology ;
+    rdfs:label "POS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Point of Sale: registers, sale transactions, line items, tenders, shifts, and receipts." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Register a owl:Class ;
+    skos:prefLabel "Register" ;
+    skos:altLabel "Till", "Checkout Terminal" ;
+    skos:definition "A checkout terminal where sale transactions are rung up and tenders taken." .
+
+:Transaction a owl:Class ;
+    skos:prefLabel "Transaction" ;
+    skos:altLabel "Sale", "Basket" ;
+    skos:definition "A sale rung up at a register, comprising scanned line items settled by tenders." .
+
+:LineItem a owl:Class ;
+    skos:prefLabel "Line Item" ;
+    skos:altLabel "Basket Line", "Sale Line" ;
+    skos:definition "A single scanned product line on a transaction with quantity and price." .
+
+:Tender a owl:Class ;
+    skos:prefLabel "Tender" ;
+    skos:altLabel "Payment Tender", "Payment Method" ;
+    skos:definition "A payment instrument such as cash, card, or voucher applied to settle a transaction." .
+
+:Shift a owl:Class ;
+    skos:prefLabel "Shift" ;
+    skos:altLabel "Register Session", "Cashier Shift" ;
+    skos:definition "A cashier's working session on a register, opened and closed with a cash count." .
+
+:Receipt a owl:Class ;
+    skos:prefLabel "Receipt" ;
+    skos:altLabel "Sales Receipt", "Proof of Purchase" ;
+    skos:definition "The printed or digital proof of purchase documenting a completed transaction." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:hostsTransaction a owl:ObjectProperty ;
+    rdfs:label "hosts transaction" ;
+    rdfs:domain :Register ;
+    rdfs:range  :Transaction ;
+    skos:definition "A sale transaction rung up on the register." .
+
+:comprisesLineItem a owl:ObjectProperty ;
+    rdfs:label "comprises line item" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  :LineItem ;
+    skos:definition "A scanned product line included in the transaction." .
+
+:settlesTransaction a owl:ObjectProperty ;
+    rdfs:label "settles transaction" ;
+    rdfs:domain :Tender ;
+    rdfs:range  :Transaction ;
+    skos:definition "The transaction the tender pays for." .
+
+:openedOnRegister a owl:ObjectProperty ;
+    rdfs:label "opened on register" ;
+    rdfs:domain :Shift ;
+    rdfs:range  :Register ;
+    skos:definition "The register the cashier shift was opened on." .
+
+:documentsTransaction a owl:ObjectProperty ;
+    rdfs:label "documents transaction" ;
+    rdfs:domain :Receipt ;
+    rdfs:range  :Transaction ;
+    skos:definition "The completed transaction the receipt is proof of." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:registerNumber a owl:DatatypeProperty ;
+    rdfs:label "register number" ;
+    rdfs:domain :Register ;
+    rdfs:range  xsd:string .
+
+:storeLocation a owl:DatatypeProperty ;
+    rdfs:label "store location" ;
+    rdfs:domain :Register ;
+    rdfs:range  xsd:string .
+
+:transactionNumber a owl:DatatypeProperty ;
+    rdfs:label "transaction number" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:string .
+
+:totalAmount a owl:DatatypeProperty ;
+    rdfs:label "total amount" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:decimal .
+
+:transactedAt a owl:DatatypeProperty ;
+    rdfs:label "transacted at" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:dateTime .
+
+:transactionStatus a owl:DatatypeProperty ;
+    rdfs:label "transaction status" ;
+    rdfs:domain :Transaction ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the sale transaction: open, items scanned, tendered, receipt printed, reconciled." .
+
+:sku a owl:DatatypeProperty ;
+    rdfs:label "sku" ;
+    rdfs:domain :LineItem ;
+    rdfs:range  xsd:string .
+
+:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    rdfs:domain :LineItem ;
+    rdfs:range  xsd:integer .
+
+:unitPrice a owl:DatatypeProperty ;
+    rdfs:label "unit price" ;
+    rdfs:domain :LineItem ;
+    rdfs:range  xsd:decimal .
+
+:tenderType a owl:DatatypeProperty ;
+    rdfs:label "tender type" ;
+    rdfs:domain :Tender ;
+    rdfs:range  xsd:string .
+
+:tenderAmount a owl:DatatypeProperty ;
+    rdfs:label "tender amount" ;
+    rdfs:domain :Tender ;
+    rdfs:range  xsd:decimal .
+
+:openedAt a owl:DatatypeProperty ;
+    rdfs:label "opened at" ;
+    rdfs:domain :Shift ;
+    rdfs:range  xsd:dateTime .
+
+:closedAt a owl:DatatypeProperty ;
+    rdfs:label "closed at" ;
+    rdfs:domain :Shift ;
+    rdfs:range  xsd:dateTime .
+
+:openingFloat a owl:DatatypeProperty ;
+    rdfs:label "opening float" ;
+    rdfs:domain :Shift ;
+    rdfs:range  xsd:decimal .
+
+:closingCount a owl:DatatypeProperty ;
+    rdfs:label "closing count" ;
+    rdfs:domain :Shift ;
+    rdfs:range  xsd:decimal .
+
+:receiptNumber a owl:DatatypeProperty ;
+    rdfs:label "receipt number" ;
+    rdfs:domain :Receipt ;
+    rdfs:range  xsd:string .
+
+:printedAt a owl:DatatypeProperty ;
+    rdfs:label "printed at" ;
+    rdfs:domain :Receipt ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:CashierRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Cashier" ;
+    skos:altLabel "Till Operator", "Checkout Operator" ;
+    skos:definition "Person role that opens shifts, scans items, applies tenders, and prints receipts. Bearer: person. Permissions: Transaction:read, Transaction:write, LineItem:read, LineItem:write, Tender:read, Tender:write, Shift:read, Shift:write." .
+
+:StoreManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Store Manager" ;
+    skos:altLabel "Shop Manager" ;
+    skos:definition "Person role that manages registers, reviews shifts, and reconciles cash counts. Bearer: person. Permissions: Register:read, Register:write, Shift:read, Shift:write, Transaction:read, Receipt:read." .

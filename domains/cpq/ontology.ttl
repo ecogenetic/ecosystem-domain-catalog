@@ -1,0 +1,174 @@
+@prefix : <https://ecosystemcode.com/ontology/cpq#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/cpq> a owl:Ontology ;
+    rdfs:label "CPQ Domain Ontology" ;
+    rdfs:comment "Seed ontology for Configure, Price, Quote: quotes, configurations, price rules, bundles, discounts, and approvals." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Quote a owl:Class ;
+    skos:prefLabel "Quote" ;
+    skos:altLabel "Sales Quote", "Proposal", "Quotation" ;
+    skos:definition "A priced offer document presented to a customer for a configured set of products." .
+
+:Configuration a owl:Class ;
+    skos:prefLabel "Configuration" ;
+    skos:altLabel "Product Configuration", "Option Set" ;
+    skos:definition "A valid combination of product options and features selected for a deal." .
+
+:PriceRule a owl:Class ;
+    skos:prefLabel "Price Rule" ;
+    skos:altLabel "Pricing Rule", "Price Policy" ;
+    skos:definition "A rule that computes or adjusts prices based on configuration, volume, or customer terms." .
+
+:Bundle a owl:Class ;
+    skos:prefLabel "Bundle" ;
+    skos:altLabel "Product Bundle", "Package" ;
+    skos:definition "A predefined grouping of products and options sold together at a combined price." .
+
+:Discount a owl:Class ;
+    skos:prefLabel "Discount" ;
+    skos:altLabel "Price Reduction", "Markdown" ;
+    skos:definition "A reduction applied to a quote's price, subject to approval thresholds." .
+
+:Approval a owl:Class ;
+    skos:prefLabel "Approval" ;
+    skos:altLabel "Sign-off", "Authorization" ;
+    skos:definition "A sign-off decision that authorizes a quote to be sent to the customer." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:containsConfiguration a owl:ObjectProperty ;
+    rdfs:label "contains configuration" ;
+    rdfs:domain :Quote ;
+    rdfs:range  :Configuration ;
+    skos:definition "The product configuration included in the quote." .
+
+:selectsBundle a owl:ObjectProperty ;
+    rdfs:label "selects bundle" ;
+    rdfs:domain :Configuration ;
+    rdfs:range  :Bundle ;
+    skos:definition "The bundle the configuration is based on." .
+
+:pricesConfiguration a owl:ObjectProperty ;
+    rdfs:label "prices configuration" ;
+    rdfs:domain :PriceRule ;
+    rdfs:range  :Configuration ;
+    skos:definition "The configuration whose price is computed or adjusted by the rule." .
+
+:adjustsQuote a owl:ObjectProperty ;
+    rdfs:label "adjusts quote" ;
+    rdfs:domain :Discount ;
+    rdfs:range  :Quote ;
+    skos:definition "The quote whose total price the discount reduces." .
+
+:authorizesQuote a owl:ObjectProperty ;
+    rdfs:label "authorizes quote" ;
+    rdfs:domain :Approval ;
+    rdfs:range  :Quote ;
+    skos:definition "The quote the approval decision authorizes or rejects." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:quoteNumber a owl:DatatypeProperty ;
+    rdfs:label "quote number" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:string .
+
+:totalPrice a owl:DatatypeProperty ;
+    rdfs:label "total price" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:decimal .
+
+:validUntil a owl:DatatypeProperty ;
+    rdfs:label "valid until" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:date .
+
+:quoteStatus a owl:DatatypeProperty ;
+    rdfs:label "quote status" ;
+    rdfs:domain :Quote ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the quote: configured, priced, submitted, approved, rejected." .
+
+:configurationName a owl:DatatypeProperty ;
+    rdfs:label "configuration name" ;
+    rdfs:domain :Configuration ;
+    rdfs:range  xsd:string .
+
+:optionCount a owl:DatatypeProperty ;
+    rdfs:label "option count" ;
+    rdfs:domain :Configuration ;
+    rdfs:range  xsd:integer .
+
+:ruleName a owl:DatatypeProperty ;
+    rdfs:label "rule name" ;
+    rdfs:domain :PriceRule ;
+    rdfs:range  xsd:string .
+
+:ruleExpression a owl:DatatypeProperty ;
+    rdfs:label "rule expression" ;
+    rdfs:domain :PriceRule ;
+    rdfs:range  xsd:string .
+
+:priority a owl:DatatypeProperty ;
+    rdfs:label "priority" ;
+    rdfs:domain :PriceRule ;
+    rdfs:range  xsd:integer .
+
+:bundleName a owl:DatatypeProperty ;
+    rdfs:label "bundle name" ;
+    rdfs:domain :Bundle ;
+    rdfs:range  xsd:string .
+
+:listPrice a owl:DatatypeProperty ;
+    rdfs:label "list price" ;
+    rdfs:domain :Bundle ;
+    rdfs:range  xsd:decimal .
+
+:discountPercent a owl:DatatypeProperty ;
+    rdfs:label "discount percent" ;
+    rdfs:domain :Discount ;
+    rdfs:range  xsd:decimal .
+
+:discountReason a owl:DatatypeProperty ;
+    rdfs:label "discount reason" ;
+    rdfs:domain :Discount ;
+    rdfs:range  xsd:string .
+
+:approvedAt a owl:DatatypeProperty ;
+    rdfs:label "approved at" ;
+    rdfs:domain :Approval ;
+    rdfs:range  xsd:dateTime .
+
+:approvalDecision a owl:DatatypeProperty ;
+    rdfs:label "approval decision" ;
+    rdfs:domain :Approval ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:SalesRepRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Sales Rep" ;
+    skos:altLabel "Account Executive", "Sales Representative" ;
+    skos:definition "Person role that configures products, applies discounts, and submits quotes. Bearer: person. Permissions: Quote:read, Quote:write, Configuration:read, Configuration:write, Discount:read, Discount:write." .
+
+:PricingApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Pricing Approver" ;
+    skos:altLabel "Deal Desk Approver" ;
+    skos:definition "Person role that reviews submitted quotes and approves or rejects discounts beyond threshold. Bearer: person. Permissions: Quote:read, Approval:read, Approval:write, PriceRule:read." .

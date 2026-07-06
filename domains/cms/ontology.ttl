@@ -1,0 +1,170 @@
+@prefix : <https://ecosystemcode.com/ontology/cms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/cms> a owl:Ontology ;
+    rdfs:label "CMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Content Management: content, pages, media assets, taxonomies, workflows, and publications." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Content a owl:Class ;
+    skos:prefLabel "Content" ;
+    skos:altLabel "Content Item", "Article" ;
+    skos:definition "An authored unit of text or structured information that moves through an editorial workflow." .
+
+:Page a owl:Class ;
+    skos:prefLabel "Page" ;
+    skos:altLabel "Web Page", "Landing Page" ;
+    skos:definition "A navigable destination composed of one or more content items." .
+
+:MediaAsset a owl:Class ;
+    skos:prefLabel "Media Asset" ;
+    skos:altLabel "Media File", "Digital Asset" ;
+    skos:definition "An uploaded file such as an image, video, or document referenced by content." .
+
+:Taxonomy a owl:Class ;
+    skos:prefLabel "Taxonomy" ;
+    skos:altLabel "Category Tree", "Controlled Vocabulary" ;
+    skos:definition "A controlled vocabulary of terms used to classify content for navigation and search." .
+
+:Workflow a owl:Class ;
+    skos:prefLabel "Workflow" ;
+    skos:altLabel "Editorial Workflow", "Approval Process" ;
+    skos:definition "The approval process that governs how content moves from draft to published." .
+
+:Publication a owl:Class ;
+    skos:prefLabel "Publication" ;
+    skos:altLabel "Release", "Publish Event" ;
+    skos:definition "A release event that pushes an approved page to a channel at a scheduled time." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:composedOfContent a owl:ObjectProperty ;
+    rdfs:label "composed of content" ;
+    rdfs:domain :Page ;
+    rdfs:range  :Content ;
+    skos:definition "A content item that forms part of the page." .
+
+:referencesMediaAsset a owl:ObjectProperty ;
+    rdfs:label "references media asset" ;
+    rdfs:domain :Content ;
+    rdfs:range  :MediaAsset ;
+    skos:definition "A media asset embedded in or attached to the content item." .
+
+:classifiesContent a owl:ObjectProperty ;
+    rdfs:label "classifies content" ;
+    rdfs:domain :Taxonomy ;
+    rdfs:range  :Content ;
+    skos:definition "A content item classified under a term of the taxonomy." .
+
+:governsContent a owl:ObjectProperty ;
+    rdfs:label "governs content" ;
+    rdfs:domain :Workflow ;
+    rdfs:range  :Content ;
+    skos:definition "A content item whose editorial approval is governed by the workflow." .
+
+:releasesPage a owl:ObjectProperty ;
+    rdfs:label "releases page" ;
+    rdfs:domain :Publication ;
+    rdfs:range  :Page ;
+    skos:definition "The page that the publication releases to a channel." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:domain :Content ;
+    rdfs:range  xsd:string .
+
+:body a owl:DatatypeProperty ;
+    rdfs:label "body" ;
+    rdfs:domain :Content ;
+    rdfs:range  xsd:string .
+
+:contentStatus a owl:DatatypeProperty ;
+    rdfs:label "content status" ;
+    rdfs:domain :Content ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the content item: draft, review, approved, published." .
+
+:slug a owl:DatatypeProperty ;
+    rdfs:label "slug" ;
+    rdfs:domain :Page ;
+    rdfs:range  xsd:string .
+
+:pageTitle a owl:DatatypeProperty ;
+    rdfs:label "page title" ;
+    rdfs:domain :Page ;
+    rdfs:range  xsd:string .
+
+:fileName a owl:DatatypeProperty ;
+    rdfs:label "file name" ;
+    rdfs:domain :MediaAsset ;
+    rdfs:range  xsd:string .
+
+:mimeType a owl:DatatypeProperty ;
+    rdfs:label "mime type" ;
+    rdfs:domain :MediaAsset ;
+    rdfs:range  xsd:string .
+
+:taxonomyName a owl:DatatypeProperty ;
+    rdfs:label "taxonomy name" ;
+    rdfs:domain :Taxonomy ;
+    rdfs:range  xsd:string .
+
+:termCount a owl:DatatypeProperty ;
+    rdfs:label "term count" ;
+    rdfs:domain :Taxonomy ;
+    rdfs:range  xsd:integer .
+
+:workflowName a owl:DatatypeProperty ;
+    rdfs:label "workflow name" ;
+    rdfs:domain :Workflow ;
+    rdfs:range  xsd:string .
+
+:approvalSteps a owl:DatatypeProperty ;
+    rdfs:label "approval steps" ;
+    rdfs:domain :Workflow ;
+    rdfs:range  xsd:integer .
+
+:channel a owl:DatatypeProperty ;
+    rdfs:label "channel" ;
+    rdfs:domain :Publication ;
+    rdfs:range  xsd:string .
+
+:publishedAt a owl:DatatypeProperty ;
+    rdfs:label "published at" ;
+    rdfs:domain :Publication ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:AuthorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Author" ;
+    skos:altLabel "Content Author", "Writer" ;
+    skos:definition "Person role that drafts content, attaches media assets, and submits for review. Bearer: person. Permissions: Content:read, Content:write, MediaAsset:read, MediaAsset:write." .
+
+:EditorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Editor" ;
+    skos:altLabel "Content Editor", "Reviewer" ;
+    skos:definition "Person role that reviews drafts, applies taxonomy terms, and approves or returns content. Bearer: person. Permissions: Content:read, Content:write, Taxonomy:read, Taxonomy:write, Workflow:read." .
+
+:PublisherRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Publisher" ;
+    skos:altLabel "Release Manager" ;
+    skos:definition "Person role that schedules and releases approved pages to channels. Bearer: person. Permissions: Page:read, Page:write, Publication:read, Publication:write." .

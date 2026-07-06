@@ -1,0 +1,184 @@
+@prefix : <https://ecosystemcode.com/ontology/lsm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/lsm> a owl:Ontology ;
+    rdfs:label "LSM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Lease Management: lease contracts, leased assets, payments, renewal options, escalation schedules, and tenants." .
+
+#################################################################
+# Classes
+#################################################################
+
+:LeaseContract a owl:Class ;
+    skos:prefLabel "Lease Contract" ;
+    skos:altLabel "Lease Agreement", "Lease" ;
+    skos:definition "A binding agreement granting a tenant the right to use an asset for a term and rent." .
+
+:LeasedAsset a owl:Class ;
+    skos:prefLabel "Leased Asset" ;
+    skos:altLabel "Leased Property", "Demised Premises" ;
+    skos:definition "The property, equipment, or vehicle whose use is granted under a lease contract." .
+
+:LeasePayment a owl:Class ;
+    skos:prefLabel "Lease Payment" ;
+    skos:altLabel "Rent Instalment", "Rent Payment" ;
+    skos:definition "A scheduled rent or charge instalment due under a lease contract." .
+
+:RenewalOption a owl:Class ;
+    skos:prefLabel "Renewal Option" ;
+    skos:altLabel "Extension Option", "Option to Renew" ;
+    skos:definition "A contractual right to extend the lease contract beyond its initial term." .
+
+:EscalationSchedule a owl:Class ;
+    skos:prefLabel "Escalation Schedule" ;
+    skos:altLabel "Rent Escalation", "Uplift Schedule" ;
+    skos:definition "The agreed timetable of rent increases applied to lease payments over the term." .
+
+:Tenant a owl:Class ;
+    skos:prefLabel "Tenant" ;
+    skos:altLabel "Lessee", "Occupier" ;
+    skos:definition "The organisation or person that leases the asset and owes the payments." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:coversLeasedAsset a owl:ObjectProperty ;
+    rdfs:label "covers leased asset" ;
+    rdfs:domain :LeaseContract ;
+    rdfs:range  :LeasedAsset ;
+    skos:definition "The asset whose use the lease contract grants." .
+
+:partyToLeaseContract a owl:ObjectProperty ;
+    rdfs:label "party to lease contract" ;
+    rdfs:domain :Tenant ;
+    rdfs:range  :LeaseContract ;
+    skos:definition "The lease contract the tenant is a party to." .
+
+:dueUnderLeaseContract a owl:ObjectProperty ;
+    rdfs:label "due under lease contract" ;
+    rdfs:domain :LeasePayment ;
+    rdfs:range  :LeaseContract ;
+    skos:definition "The lease contract under which the payment is due." .
+
+:adjustsLeasePayment a owl:ObjectProperty ;
+    rdfs:label "adjusts lease payment" ;
+    rdfs:domain :EscalationSchedule ;
+    rdfs:range  :LeasePayment ;
+    skos:definition "The lease payment the escalation schedule increases over time." .
+
+:extendsLeaseContract a owl:ObjectProperty ;
+    rdfs:label "extends lease contract" ;
+    rdfs:domain :RenewalOption ;
+    rdfs:range  :LeaseContract ;
+    skos:definition "The lease contract the renewal option can extend." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:contractNumber a owl:DatatypeProperty ;
+    rdfs:label "contract number" ;
+    rdfs:domain :LeaseContract ;
+    rdfs:range  xsd:string .
+
+:commencementDate a owl:DatatypeProperty ;
+    rdfs:label "commencement date" ;
+    rdfs:domain :LeaseContract ;
+    rdfs:range  xsd:date .
+
+:expiryDate a owl:DatatypeProperty ;
+    rdfs:label "expiry date" ;
+    rdfs:domain :LeaseContract ;
+    rdfs:range  xsd:date .
+
+:baseRent a owl:DatatypeProperty ;
+    rdfs:label "base rent" ;
+    rdfs:domain :LeaseContract ;
+    rdfs:range  xsd:decimal .
+
+:leaseContractStatus a owl:DatatypeProperty ;
+    rdfs:label "lease contract status" ;
+    rdfs:domain :LeaseContract ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the lease contract: draft, active, renewal, terminated." .
+
+:assetName a owl:DatatypeProperty ;
+    rdfs:label "asset name" ;
+    rdfs:domain :LeasedAsset ;
+    rdfs:range  xsd:string .
+
+:assetType a owl:DatatypeProperty ;
+    rdfs:label "asset type" ;
+    rdfs:domain :LeasedAsset ;
+    rdfs:range  xsd:string .
+
+:location a owl:DatatypeProperty ;
+    rdfs:label "location" ;
+    rdfs:domain :LeasedAsset ;
+    rdfs:range  xsd:string .
+
+:paymentAmount a owl:DatatypeProperty ;
+    rdfs:label "payment amount" ;
+    rdfs:domain :LeasePayment ;
+    rdfs:range  xsd:decimal .
+
+:dueDate a owl:DatatypeProperty ;
+    rdfs:label "due date" ;
+    rdfs:domain :LeasePayment ;
+    rdfs:range  xsd:date .
+
+:paid a owl:DatatypeProperty ;
+    rdfs:label "paid" ;
+    rdfs:domain :LeasePayment ;
+    rdfs:range  xsd:boolean .
+
+:noticeDate a owl:DatatypeProperty ;
+    rdfs:label "notice date" ;
+    rdfs:domain :RenewalOption ;
+    rdfs:range  xsd:date .
+
+:extensionMonths a owl:DatatypeProperty ;
+    rdfs:label "extension months" ;
+    rdfs:domain :RenewalOption ;
+    rdfs:range  xsd:integer .
+
+:escalationRate a owl:DatatypeProperty ;
+    rdfs:label "escalation rate" ;
+    rdfs:domain :EscalationSchedule ;
+    rdfs:range  xsd:decimal .
+
+:frequency a owl:DatatypeProperty ;
+    rdfs:label "frequency" ;
+    rdfs:domain :EscalationSchedule ;
+    rdfs:range  xsd:string .
+
+:tenantName a owl:DatatypeProperty ;
+    rdfs:label "tenant name" ;
+    rdfs:domain :Tenant ;
+    rdfs:range  xsd:string .
+
+:contactEmail a owl:DatatypeProperty ;
+    rdfs:label "contact email" ;
+    rdfs:domain :Tenant ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:LeaseAdministratorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Lease Administrator" ;
+    skos:altLabel "Lease Manager", "Portfolio Administrator" ;
+    skos:definition "Person role that drafts contracts, schedules payments, and tracks renewals and escalations. Bearer: person. Permissions: LeaseContract:read, LeaseContract:write, LeasePayment:read, LeasePayment:write, RenewalOption:read, RenewalOption:write." .
+
+:TenantRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Tenant" ;
+    skos:altLabel "Lessee" ;
+    skos:definition "Organisation role that occupies the leased asset, pays scheduled amounts, and exercises renewal options. Bearer: organisation. Permissions: LeaseContract:read, LeasePayment:read, RenewalOption:read." .

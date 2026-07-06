@@ -1,0 +1,180 @@
+@prefix : <https://ecosystemcode.com/ontology/mes#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/mes> a owl:Ontology ;
+    rdfs:label "MES Domain Ontology" ;
+    rdfs:comment "Seed ontology for Manufacturing Execution: work orders, work centers, batches, routings, quality checks, and downtime." .
+
+#################################################################
+# Classes
+#################################################################
+
+:WorkOrder a owl:Class ;
+    skos:prefLabel "Work Order" ;
+    skos:altLabel "Production Order", "Job Order" ;
+    skos:definition "An authorised instruction to produce a quantity of product by a due date." .
+
+:WorkCenter a owl:Class ;
+    skos:prefLabel "Work Center" ;
+    skos:altLabel "Production Line", "Machine Cell" ;
+    skos:definition "A machine, cell, or line on the shop floor where production steps are executed." .
+
+:Batch a owl:Class ;
+    skos:prefLabel "Batch" ;
+    skos:altLabel "Lot", "Production Batch" ;
+    skos:definition "A discrete quantity of product produced together under one work order." .
+
+:Routing a owl:Class ;
+    skos:prefLabel "Routing" ;
+    skos:altLabel "Process Route", "Operation Sequence" ;
+    skos:definition "The ordered sequence of work centers and steps a product follows during production." .
+
+:QualityCheck a owl:Class ;
+    skos:prefLabel "Quality Check" ;
+    skos:altLabel "In-Process Inspection", "QC Check" ;
+    skos:definition "An in-process or final inspection performed against a batch." .
+
+:Downtime a owl:Class ;
+    skos:prefLabel "Downtime" ;
+    skos:altLabel "Stoppage", "Outage" ;
+    skos:definition "A recorded period during which a work center is unavailable for production." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:executedAtWorkCenter a owl:ObjectProperty ;
+    rdfs:label "executed at work center" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  :WorkCenter ;
+    skos:definition "The work center where the work order is currently being executed." .
+
+:followsRouting a owl:ObjectProperty ;
+    rdfs:label "follows routing" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  :Routing ;
+    skos:definition "The routing that defines the production steps for the work order." .
+
+:producedByWorkOrder a owl:ObjectProperty ;
+    rdfs:label "produced by work order" ;
+    rdfs:domain :Batch ;
+    rdfs:range  :WorkOrder ;
+    skos:definition "The work order under which the batch was produced." .
+
+:sequencesWorkCenter a owl:ObjectProperty ;
+    rdfs:label "sequences work center" ;
+    rdfs:domain :Routing ;
+    rdfs:range  :WorkCenter ;
+    skos:definition "A work center included as a step in the routing's operation sequence." .
+
+:inspectsBatch a owl:ObjectProperty ;
+    rdfs:label "inspects batch" ;
+    rdfs:domain :QualityCheck ;
+    rdfs:range  :Batch ;
+    skos:definition "The batch that the quality check inspects." .
+
+:recordedAtWorkCenter a owl:ObjectProperty ;
+    rdfs:label "recorded at work center" ;
+    rdfs:domain :Downtime ;
+    rdfs:range  :WorkCenter ;
+    skos:definition "The work center at which the downtime period was recorded." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:orderNumber a owl:DatatypeProperty ;
+    rdfs:label "order number" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:string .
+
+:quantityPlanned a owl:DatatypeProperty ;
+    rdfs:label "quantity planned" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:decimal .
+
+:dueDate a owl:DatatypeProperty ;
+    rdfs:label "due date" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:date .
+
+:workOrderStatus a owl:DatatypeProperty ;
+    rdfs:label "work order status" ;
+    rdfs:domain :WorkOrder ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the work order: released, in progress, quality check, complete." .
+
+:workCenterName a owl:DatatypeProperty ;
+    rdfs:label "work center name" ;
+    rdfs:domain :WorkCenter ;
+    rdfs:range  xsd:string .
+
+:capacityPerHour a owl:DatatypeProperty ;
+    rdfs:label "capacity per hour" ;
+    rdfs:domain :WorkCenter ;
+    rdfs:range  xsd:decimal .
+
+:batchNumber a owl:DatatypeProperty ;
+    rdfs:label "batch number" ;
+    rdfs:domain :Batch ;
+    rdfs:range  xsd:string .
+
+:quantityProduced a owl:DatatypeProperty ;
+    rdfs:label "quantity produced" ;
+    rdfs:domain :Batch ;
+    rdfs:range  xsd:decimal .
+
+:startedAt a owl:DatatypeProperty ;
+    rdfs:label "started at" ;
+    rdfs:domain :Batch ;
+    rdfs:range  xsd:dateTime .
+
+:routingName a owl:DatatypeProperty ;
+    rdfs:label "routing name" ;
+    rdfs:domain :Routing ;
+    rdfs:range  xsd:string .
+
+:stepCount a owl:DatatypeProperty ;
+    rdfs:label "step count" ;
+    rdfs:domain :Routing ;
+    rdfs:range  xsd:integer .
+
+:checkResult a owl:DatatypeProperty ;
+    rdfs:label "check result" ;
+    rdfs:domain :QualityCheck ;
+    rdfs:range  xsd:string .
+
+:checkedAt a owl:DatatypeProperty ;
+    rdfs:label "checked at" ;
+    rdfs:domain :QualityCheck ;
+    rdfs:range  xsd:dateTime .
+
+:downtimeReason a owl:DatatypeProperty ;
+    rdfs:label "downtime reason" ;
+    rdfs:domain :Downtime ;
+    rdfs:range  xsd:string .
+
+:durationMinutes a owl:DatatypeProperty ;
+    rdfs:label "duration minutes" ;
+    rdfs:domain :Downtime ;
+    rdfs:range  xsd:decimal .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:OperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Operator" ;
+    skos:altLabel "Machine Operator", "Line Operator" ;
+    skos:definition "Person role that starts batches at work centers, records production quantities, and logs downtime. Bearer: person. Permissions: WorkOrder:read, Batch:read, Batch:write, Downtime:read, Downtime:write." .
+
+:ProductionSupervisorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Production Supervisor" ;
+    skos:altLabel "Shift Supervisor" ;
+    skos:definition "Person role that releases work orders, monitors work-center status, and reviews quality checks. Bearer: person. Permissions: WorkOrder:read, WorkOrder:write, WorkCenter:read, QualityCheck:read, Routing:read." .

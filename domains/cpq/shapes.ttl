@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/cpq#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:QuoteShape a sh:NodeShape ;
+    sh:targetClass :Quote ;
+    sh:property [
+        sh:path :containsConfiguration ;
+        sh:class :Configuration ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quoteNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :totalPrice ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quoteStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "configured" "priced" "submitted" "approved" "rejected" ) ;
+    ] .
+
+:ConfigurationShape a sh:NodeShape ;
+    sh:targetClass :Configuration ;
+    sh:property [
+        sh:path :configurationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PriceRuleShape a sh:NodeShape ;
+    sh:targetClass :PriceRule ;
+    sh:property [
+        sh:path :ruleName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :ruleExpression ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BundleShape a sh:NodeShape ;
+    sh:targetClass :Bundle ;
+    sh:property [
+        sh:path :bundleName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DiscountShape a sh:NodeShape ;
+    sh:targetClass :Discount ;
+    sh:property [
+        sh:path :adjustsQuote ;
+        sh:class :Quote ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :discountPercent ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:ApprovalShape a sh:NodeShape ;
+    sh:targetClass :Approval ;
+    sh:property [
+        sh:path :authorizesQuote ;
+        sh:class :Quote ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :approvalDecision ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

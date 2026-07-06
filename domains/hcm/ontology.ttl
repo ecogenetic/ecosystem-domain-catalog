@@ -1,0 +1,190 @@
+@prefix : <https://ecosystemcode.com/ontology/hcm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/hcm> a owl:Ontology ;
+    rdfs:label "HCM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Human Capital Management: employees, departments, positions, payroll, leave requests, and appraisals." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Employee a owl:Class ;
+    skos:prefLabel "Employee" ;
+    skos:altLabel "Staff Member", "Worker" ;
+    skos:definition "A person employed by the organisation with a contract and personnel record." .
+
+:Department a owl:Class ;
+    skos:prefLabel "Department" ;
+    skos:altLabel "Org Unit", "Business Unit" ;
+    skos:definition "An organisational unit that groups employees under a common function and budget." .
+
+:Position a owl:Class ;
+    skos:prefLabel "Position" ;
+    skos:altLabel "Job", "Post" ;
+    skos:definition "A defined job within the org structure that an employee is appointed to." .
+
+:Payroll a owl:Class ;
+    skos:prefLabel "Payroll" ;
+    skos:altLabel "Pay Run", "Compensation Run" ;
+    skos:definition "The periodic run that computes and pays employee compensation from approved inputs." .
+
+:LeaveRequest a owl:Class ;
+    skos:prefLabel "Leave Request" ;
+    skos:altLabel "Time-Off Request", "Absence Request" ;
+    skos:definition "An employee's request for time off, routed through approval and into payroll." .
+
+:Appraisal a owl:Class ;
+    skos:prefLabel "Appraisal" ;
+    skos:altLabel "Performance Review", "Evaluation" ;
+    skos:definition "A periodic evaluation of an employee's performance against objectives." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:belongsToDepartment a owl:ObjectProperty ;
+    rdfs:label "belongs to department" ;
+    rdfs:domain :Employee ;
+    rdfs:range  :Department ;
+    skos:definition "The department an employee is organisationally assigned to." .
+
+:holdsPosition a owl:ObjectProperty ;
+    rdfs:label "holds position" ;
+    rdfs:domain :Employee ;
+    rdfs:range  :Position ;
+    skos:definition "The position an employee is currently appointed to." .
+
+:compensatesEmployee a owl:ObjectProperty ;
+    rdfs:label "compensates employee" ;
+    rdfs:domain :Payroll ;
+    rdfs:range  :Employee ;
+    skos:definition "The employee a payroll run computes and pays compensation for." .
+
+:submittedByEmployee a owl:ObjectProperty ;
+    rdfs:label "submitted by employee" ;
+    rdfs:domain :LeaveRequest ;
+    rdfs:range  :Employee ;
+    skos:definition "The employee who submitted the leave request." .
+
+:evaluatesEmployee a owl:ObjectProperty ;
+    rdfs:label "evaluates employee" ;
+    rdfs:domain :Appraisal ;
+    rdfs:range  :Employee ;
+    skos:definition "The employee whose performance the appraisal evaluates." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:employeeNumber a owl:DatatypeProperty ;
+    rdfs:label "employee number" ;
+    rdfs:domain :Employee ;
+    rdfs:range  xsd:string .
+
+:fullName a owl:DatatypeProperty ;
+    rdfs:label "full name" ;
+    rdfs:domain :Employee ;
+    rdfs:range  xsd:string .
+
+:hireDate a owl:DatatypeProperty ;
+    rdfs:label "hire date" ;
+    rdfs:domain :Employee ;
+    rdfs:range  xsd:date .
+
+:departmentName a owl:DatatypeProperty ;
+    rdfs:label "department name" ;
+    rdfs:domain :Department ;
+    rdfs:range  xsd:string .
+
+:costCenter a owl:DatatypeProperty ;
+    rdfs:label "cost center" ;
+    rdfs:domain :Department ;
+    rdfs:range  xsd:string .
+
+:positionTitle a owl:DatatypeProperty ;
+    rdfs:label "position title" ;
+    rdfs:domain :Position ;
+    rdfs:range  xsd:string .
+
+:grade a owl:DatatypeProperty ;
+    rdfs:label "grade" ;
+    rdfs:domain :Position ;
+    rdfs:range  xsd:string .
+
+:payPeriod a owl:DatatypeProperty ;
+    rdfs:label "pay period" ;
+    rdfs:domain :Payroll ;
+    rdfs:range  xsd:string .
+
+:grossAmount a owl:DatatypeProperty ;
+    rdfs:label "gross amount" ;
+    rdfs:domain :Payroll ;
+    rdfs:range  xsd:decimal .
+
+:runDate a owl:DatatypeProperty ;
+    rdfs:label "run date" ;
+    rdfs:domain :Payroll ;
+    rdfs:range  xsd:date .
+
+:leaveType a owl:DatatypeProperty ;
+    rdfs:label "leave type" ;
+    rdfs:domain :LeaveRequest ;
+    rdfs:range  xsd:string .
+
+:startDate a owl:DatatypeProperty ;
+    rdfs:label "start date" ;
+    rdfs:domain :LeaveRequest ;
+    rdfs:range  xsd:date .
+
+:endDate a owl:DatatypeProperty ;
+    rdfs:label "end date" ;
+    rdfs:domain :LeaveRequest ;
+    rdfs:range  xsd:date .
+
+:leaveRequestStatus a owl:DatatypeProperty ;
+    rdfs:label "leave request status" ;
+    rdfs:domain :LeaveRequest ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the leave request: submitted, approved, rejected, reflected." .
+
+:reviewPeriod a owl:DatatypeProperty ;
+    rdfs:label "review period" ;
+    rdfs:domain :Appraisal ;
+    rdfs:range  xsd:string .
+
+:rating a owl:DatatypeProperty ;
+    rdfs:label "rating" ;
+    rdfs:domain :Appraisal ;
+    rdfs:range  xsd:string .
+
+:reviewedAt a owl:DatatypeProperty ;
+    rdfs:label "reviewed at" ;
+    rdfs:domain :Appraisal ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:EmployeeRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Employee" ;
+    skos:altLabel "Staff Self-Service User" ;
+    skos:definition "Person role that maintains their own record, submits leave requests, and views payslips. Bearer: person. Permissions: LeaveRequest:read, LeaveRequest:write, Employee:read." .
+
+:ManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Manager" ;
+    skos:altLabel "Line Manager", "Team Lead" ;
+    skos:definition "Person role that approves or rejects leave requests and conducts appraisals for direct reports. Bearer: person. Permissions: LeaveRequest:read, LeaveRequest:write, Appraisal:read, Appraisal:write, Employee:read." .
+
+:HRAdministratorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "HR Administrator" ;
+    skos:altLabel "HR Admin", "People Operations Specialist" ;
+    skos:definition "Person role that onboards employees, maintains org structure, and runs payroll. Bearer: person. Permissions: Employee:read, Employee:write, Department:read, Department:write, Position:read, Position:write, Payroll:read, Payroll:write." .

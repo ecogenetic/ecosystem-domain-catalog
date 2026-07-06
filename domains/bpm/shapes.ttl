@@ -1,0 +1,67 @@
+@prefix :    <https://ecosystemcode.com/ontology/bpm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ProcessDefinitionShape a sh:NodeShape ;
+    sh:targetClass :ProcessDefinition ;
+    sh:property [
+        sh:path :processName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CaseShape a sh:NodeShape ;
+    sh:targetClass :Case ;
+    sh:property [
+        sh:path :caseNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :startedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :caseStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "started" "in progress" "decision" "closed" ) ;
+    ] .
+
+:TaskShape a sh:NodeShape ;
+    sh:targetClass :Task ;
+    sh:property [
+        sh:path :taskName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FormShape a sh:NodeShape ;
+    sh:targetClass :Form ;
+    sh:property [
+        sh:path :formName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DecisionShape a sh:NodeShape ;
+    sh:targetClass :Decision ;
+    sh:property [
+        sh:path :decisionName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SLAShape a sh:NodeShape ;
+    sh:targetClass :SLA ;
+    sh:property [
+        sh:path :slaName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :targetDuration ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

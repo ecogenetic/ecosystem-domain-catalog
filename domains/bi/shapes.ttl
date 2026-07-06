@@ -1,0 +1,72 @@
+@prefix :    <https://ecosystemcode.com/ontology/bi#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:DashboardShape a sh:NodeShape ;
+    sh:targetClass :Dashboard ;
+    sh:property [
+        sh:path :dashboardName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :visualizesMetric ;
+        sh:class :Metric ;
+        sh:minCount 1 ;
+    ] .
+
+:ReportShape a sh:NodeShape ;
+    sh:targetClass :Report ;
+    sh:property [
+        sh:path :reportName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :presentsMetric ;
+        sh:class :Metric ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :reportStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "defined" "scheduled" "refreshed" "archived" ) ;
+    ] .
+
+:MetricShape a sh:NodeShape ;
+    sh:targetClass :Metric ;
+    sh:property [
+        sh:path :metricName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DatasetShape a sh:NodeShape ;
+    sh:targetClass :Dataset ;
+    sh:property [
+        sh:path :datasetName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DimensionShape a sh:NodeShape ;
+    sh:targetClass :Dimension ;
+    sh:property [
+        sh:path :dimensionName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:KPIShape a sh:NodeShape ;
+    sh:targetClass :KPI ;
+    sh:property [
+        sh:path :targetsMetric ;
+        sh:class :Metric ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :targetValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .

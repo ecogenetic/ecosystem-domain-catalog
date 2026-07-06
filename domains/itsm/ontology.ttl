@@ -1,0 +1,175 @@
+@prefix : <https://ecosystemcode.com/ontology/itsm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/itsm> a owl:Ontology ;
+    rdfs:label "ITSM Domain Ontology" ;
+    rdfs:comment "Seed ontology for IT Service Management: incidents, change requests, services, configuration items, problems, and SLAs." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Incident a owl:Class ;
+    skos:prefLabel "Incident" ;
+    skos:altLabel "Ticket", "Service Disruption" ;
+    skos:definition "An unplanned interruption or degradation of an IT service reported for restoration." .
+
+:ChangeRequest a owl:Class ;
+    skos:prefLabel "Change Request" ;
+    skos:altLabel "RFC", "Change" ;
+    skos:definition "A proposed modification to configuration items, assessed for risk and approved before execution." .
+
+:Service a owl:Class ;
+    skos:prefLabel "Service" ;
+    skos:altLabel "IT Service", "Business Service" ;
+    skos:definition "An IT capability delivered to users, such as email or the payroll application." .
+
+:ConfigurationItem a owl:Class ;
+    skos:prefLabel "Configuration Item" ;
+    skos:altLabel "CI", "CMDB Item" ;
+    skos:definition "A tracked infrastructure or software component that supports one or more services." .
+
+:Problem a owl:Class ;
+    skos:prefLabel "Problem" ;
+    skos:altLabel "Root Cause Record", "Known Error" ;
+    skos:definition "The underlying root cause identified across one or more related incidents." .
+
+:SLA a owl:Class ;
+    skos:prefLabel "SLA" ;
+    skos:altLabel "Service Level Agreement", "Service Commitment" ;
+    skos:definition "A service level agreement defining response and resolution time commitments." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:supportsService a owl:ObjectProperty ;
+    rdfs:label "supports service" ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range  :Service ;
+    skos:definition "A service that depends on the configuration item to operate." .
+
+:affectsService a owl:ObjectProperty ;
+    rdfs:label "affects service" ;
+    rdfs:domain :Incident ;
+    rdfs:range  :Service ;
+    skos:definition "The service whose availability or quality the incident degrades." .
+
+:linkedToConfigurationItem a owl:ObjectProperty ;
+    rdfs:label "linked to configuration item" ;
+    rdfs:domain :Incident ;
+    rdfs:range  :ConfigurationItem ;
+    skos:definition "The configuration item identified as the source or subject of the incident." .
+
+:groupsIncident a owl:ObjectProperty ;
+    rdfs:label "groups incident" ;
+    rdfs:domain :Problem ;
+    rdfs:range  :Incident ;
+    skos:definition "An incident attributed to the problem's underlying root cause." .
+
+:modifiesConfigurationItem a owl:ObjectProperty ;
+    rdfs:label "modifies configuration item" ;
+    rdfs:domain :ChangeRequest ;
+    rdfs:range  :ConfigurationItem ;
+    skos:definition "A configuration item the change request proposes to modify." .
+
+:constrainsIncident a owl:ObjectProperty ;
+    rdfs:label "constrains incident" ;
+    rdfs:domain :SLA ;
+    rdfs:range  :Incident ;
+    skos:definition "An incident whose response and resolution times are bound by the SLA." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:incidentNumber a owl:DatatypeProperty ;
+    rdfs:label "incident number" ;
+    rdfs:domain :Incident ;
+    rdfs:range  xsd:string .
+
+:priority a owl:DatatypeProperty ;
+    rdfs:label "priority" ;
+    rdfs:domain :Incident ;
+    rdfs:range  xsd:string .
+
+:loggedAt a owl:DatatypeProperty ;
+    rdfs:label "logged at" ;
+    rdfs:domain :Incident ;
+    rdfs:range  xsd:dateTime .
+
+:incidentStatus a owl:DatatypeProperty ;
+    rdfs:label "incident status" ;
+    rdfs:domain :Incident ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the incident: logged, in progress, resolved, closed." .
+
+:changeSummary a owl:DatatypeProperty ;
+    rdfs:label "change summary" ;
+    rdfs:domain :ChangeRequest ;
+    rdfs:range  xsd:string .
+
+:riskLevel a owl:DatatypeProperty ;
+    rdfs:label "risk level" ;
+    rdfs:domain :ChangeRequest ;
+    rdfs:range  xsd:string .
+
+:serviceName a owl:DatatypeProperty ;
+    rdfs:label "service name" ;
+    rdfs:domain :Service ;
+    rdfs:range  xsd:string .
+
+:criticality a owl:DatatypeProperty ;
+    rdfs:label "criticality" ;
+    rdfs:domain :Service ;
+    rdfs:range  xsd:string .
+
+:ciName a owl:DatatypeProperty ;
+    rdfs:label "ci name" ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range  xsd:string .
+
+:ciType a owl:DatatypeProperty ;
+    rdfs:label "ci type" ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range  xsd:string .
+
+:rootCause a owl:DatatypeProperty ;
+    rdfs:label "root cause" ;
+    rdfs:domain :Problem ;
+    rdfs:range  xsd:string .
+
+:identifiedAt a owl:DatatypeProperty ;
+    rdfs:label "identified at" ;
+    rdfs:domain :Problem ;
+    rdfs:range  xsd:dateTime .
+
+:responseTimeMinutes a owl:DatatypeProperty ;
+    rdfs:label "response time minutes" ;
+    rdfs:domain :SLA ;
+    rdfs:range  xsd:integer .
+
+:resolutionTimeMinutes a owl:DatatypeProperty ;
+    rdfs:label "resolution time minutes" ;
+    rdfs:domain :SLA ;
+    rdfs:range  xsd:integer .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:ServiceDeskAgentRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Service Desk Agent" ;
+    skos:altLabel "Support Agent", "Help Desk Analyst" ;
+    skos:definition "Person role that logs incidents, diagnoses issues, links configuration items, and resolves and closes tickets. Bearer: person. Permissions: Incident:read, Incident:write, Service:read, ConfigurationItem:read, SLA:read." .
+
+:ChangeManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Change Manager" ;
+    skos:altLabel "Change Approver" ;
+    skos:definition "Person role that assesses change risk, approves change requests, and tracks problem root causes. Bearer: person. Permissions: ChangeRequest:read, ChangeRequest:write, ConfigurationItem:read, ConfigurationItem:write, Problem:read, Problem:write." .

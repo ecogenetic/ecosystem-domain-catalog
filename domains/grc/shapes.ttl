@@ -1,0 +1,77 @@
+@prefix :    <https://ecosystemcode.com/ontology/grc#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:PolicyShape a sh:NodeShape ;
+    sh:targetClass :Policy ;
+    sh:property [
+        sh:path :policyName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ControlShape a sh:NodeShape ;
+    sh:targetClass :Control ;
+    sh:property [
+        sh:path :mitigatesRisk ;
+        sh:class :Risk ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :controlName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RiskShape a sh:NodeShape ;
+    sh:targetClass :Risk ;
+    sh:property [
+        sh:path :riskName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :likelihood ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:AssessmentShape a sh:NodeShape ;
+    sh:targetClass :Assessment ;
+    sh:property [
+        sh:path :assessmentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AuditFindingShape a sh:NodeShape ;
+    sh:targetClass :AuditFinding ;
+    sh:property [
+        sh:path :raisedAgainstControl ;
+        sh:class :Control ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :findingReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :auditFindingStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "identified" "remediated" "verified" "closed" ) ;
+    ] .
+
+:EvidenceShape a sh:NodeShape ;
+    sh:targetClass :Evidence ;
+    sh:property [
+        sh:path :supportsAssessment ;
+        sh:class :Assessment ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :evidenceName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

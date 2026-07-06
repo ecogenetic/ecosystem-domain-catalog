@@ -1,0 +1,179 @@
+@prefix : <https://ecosystemcode.com/ontology/tms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/tms> a owl:Ontology ;
+    rdfs:label "TMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Transportation Management: carriers, routes, load plans, shipments, freight rates, and delivery stops." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Carrier a owl:Class ;
+    skos:prefLabel "Carrier" ;
+    skos:altLabel "Transport Provider", "Haulier" ;
+    skos:definition "A transport organisation assigned to move planned loads at contracted rates." .
+
+:Route a owl:Class ;
+    skos:prefLabel "Route" ;
+    skos:altLabel "Lane", "Itinerary" ;
+    skos:definition "A planned path that sequences delivery stops from origin to final destination." .
+
+:LoadPlan a owl:Class ;
+    skos:prefLabel "Load Plan" ;
+    skos:altLabel "Load", "Trip Plan" ;
+    skos:definition "A consolidation of shipments into a transportable load assigned to a carrier." .
+
+:Shipment a owl:Class ;
+    skos:prefLabel "Shipment" ;
+    skos:altLabel "Consignment", "Freight" ;
+    skos:definition "A consignment of goods planned, tracked, and confirmed through delivery." .
+
+:FreightRate a owl:Class ;
+    skos:prefLabel "Freight Rate" ;
+    skos:altLabel "Tariff", "Rate Card" ;
+    skos:definition "The price a carrier charges for moving a load on a lane or service level." .
+
+:DeliveryStop a owl:Class ;
+    skos:prefLabel "Delivery Stop" ;
+    skos:altLabel "Stop", "Drop Point" ;
+    skos:definition "A scheduled stop on a route where one or more shipments are delivered." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:groupsShipment a owl:ObjectProperty ;
+    rdfs:label "groups shipment" ;
+    rdfs:domain :LoadPlan ;
+    rdfs:range  :Shipment ;
+    skos:definition "The shipments consolidated into a load plan for transport." .
+
+:assignedToLoadPlan a owl:ObjectProperty ;
+    rdfs:label "assigned to load plan" ;
+    rdfs:domain :Carrier ;
+    rdfs:range  :LoadPlan ;
+    skos:definition "The load plans a carrier is assigned to execute." .
+
+:sequencesDeliveryStop a owl:ObjectProperty ;
+    rdfs:label "sequences delivery stop" ;
+    rdfs:domain :Route ;
+    rdfs:range  :DeliveryStop ;
+    skos:definition "The ordered delivery stops that make up a route." .
+
+:pricesCarrier a owl:ObjectProperty ;
+    rdfs:label "prices carrier" ;
+    rdfs:domain :FreightRate ;
+    rdfs:range  :Carrier ;
+    skos:definition "The carrier whose transport service a freight rate prices." .
+
+:followsRoute a owl:ObjectProperty ;
+    rdfs:label "follows route" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :Route ;
+    skos:definition "The route a shipment travels through its delivery stops." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:carrierName a owl:DatatypeProperty ;
+    rdfs:label "carrier name" ;
+    rdfs:domain :Carrier ;
+    rdfs:range  xsd:string .
+
+:scacCode a owl:DatatypeProperty ;
+    rdfs:label "scac code" ;
+    rdfs:domain :Carrier ;
+    rdfs:range  xsd:string .
+
+:routeName a owl:DatatypeProperty ;
+    rdfs:label "route name" ;
+    rdfs:domain :Route ;
+    rdfs:range  xsd:string .
+
+:totalDistanceKm a owl:DatatypeProperty ;
+    rdfs:label "total distance km" ;
+    rdfs:domain :Route ;
+    rdfs:range  xsd:decimal .
+
+:loadNumber a owl:DatatypeProperty ;
+    rdfs:label "load number" ;
+    rdfs:domain :LoadPlan ;
+    rdfs:range  xsd:string .
+
+:plannedDate a owl:DatatypeProperty ;
+    rdfs:label "planned date" ;
+    rdfs:domain :LoadPlan ;
+    rdfs:range  xsd:date .
+
+:totalWeightKg a owl:DatatypeProperty ;
+    rdfs:label "total weight kg" ;
+    rdfs:domain :LoadPlan ;
+    rdfs:range  xsd:decimal .
+
+:shipmentNumber a owl:DatatypeProperty ;
+    rdfs:label "shipment number" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string .
+
+:deliveryDeadline a owl:DatatypeProperty ;
+    rdfs:label "delivery deadline" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:dateTime .
+
+:shipmentStatus a owl:DatatypeProperty ;
+    rdfs:label "shipment status" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the shipment: planned, in transit, delivered, confirmed." .
+
+:ratePerKm a owl:DatatypeProperty ;
+    rdfs:label "rate per km" ;
+    rdfs:domain :FreightRate ;
+    rdfs:range  xsd:decimal .
+
+:currency a owl:DatatypeProperty ;
+    rdfs:label "currency" ;
+    rdfs:domain :FreightRate ;
+    rdfs:range  xsd:string .
+
+:validUntil a owl:DatatypeProperty ;
+    rdfs:label "valid until" ;
+    rdfs:domain :FreightRate ;
+    rdfs:range  xsd:date .
+
+:stopSequence a owl:DatatypeProperty ;
+    rdfs:label "stop sequence" ;
+    rdfs:domain :DeliveryStop ;
+    rdfs:range  xsd:integer .
+
+:scheduledArrival a owl:DatatypeProperty ;
+    rdfs:label "scheduled arrival" ;
+    rdfs:domain :DeliveryStop ;
+    rdfs:range  xsd:dateTime .
+
+:stopAddress a owl:DatatypeProperty ;
+    rdfs:label "stop address" ;
+    rdfs:domain :DeliveryStop ;
+    rdfs:range  xsd:string .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:DispatcherRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Dispatcher" ;
+    skos:altLabel "Transport Planner", "Logistics Coordinator" ;
+    skos:definition "Person role that builds load plans, assigns carriers, and tracks shipments through delivery stops. Bearer: person. Permissions: LoadPlan:read, LoadPlan:write, Shipment:read, Shipment:write, Route:read, Route:write, Carrier:read." .
+
+:CarrierRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Carrier" ;
+    skos:altLabel "Transport Operator" ;
+    skos:definition "Organisation role that accepts assigned load plans, executes routes, and confirms deliveries. Bearer: organisation. Permissions: LoadPlan:read, Shipment:read, Shipment:write, DeliveryStop:read." .

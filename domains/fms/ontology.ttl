@@ -1,0 +1,268 @@
+@prefix : <https://ecosystemcode.com/ontology/fms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/fms> a owl:Ontology ;
+    rdfs:label "FMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Financial Management: chart of accounts, general ledger, journal entries, AP/AR invoices, payments, subledgers, fiscal periods, and reconciliations." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ChartOfAccount a owl:Class ;
+    skos:prefLabel "Chart of Account" ;
+    skos:altLabel "Account Code", "COA" ;
+    skos:definition "The structured catalog of account codes that classifies every financial posting." .
+
+:JournalEntry a owl:Class ;
+    skos:prefLabel "Journal Entry" ;
+    skos:altLabel "GL Entry", "Journal Voucher" ;
+    skos:definition "A balanced set of debit and credit lines posted to the general ledger." .
+
+:GeneralLedger a owl:Class ;
+    skos:prefLabel "General Ledger" ;
+    skos:altLabel "GL", "Nominal Ledger" ;
+    skos:definition "The central book of record aggregating all postings by account and period." .
+
+:VendorInvoice a owl:Class ;
+    skos:prefLabel "Vendor Invoice" ;
+    skos:altLabel "Supplier Invoice", "AP Invoice" ;
+    skos:definition "A bill received from a supplier, recorded in the purchase ledger for payment." .
+
+:CustomerInvoice a owl:Class ;
+    skos:prefLabel "Customer Invoice" ;
+    skos:altLabel "Sales Invoice", "AR Invoice" ;
+    skos:definition "A bill issued to a customer, recorded in the sales ledger for collection." .
+
+:Payment a owl:Class ;
+    skos:prefLabel "Payment" ;
+    skos:altLabel "Remittance", "Disbursement" ;
+    skos:definition "A cash movement that settles a vendor invoice or applies a customer receipt." .
+
+:SalesLedger a owl:Class ;
+    skos:prefLabel "Sales Ledger" ;
+    skos:altLabel "Accounts Receivable Ledger", "AR Subledger" ;
+    skos:definition "The accounts receivable subledger tracking amounts owed by customers." .
+
+:PurchaseLedger a owl:Class ;
+    skos:prefLabel "Purchase Ledger" ;
+    skos:altLabel "Accounts Payable Ledger", "AP Subledger" ;
+    skos:definition "The accounts payable subledger tracking amounts owed to suppliers." .
+
+:FiscalPeriod a owl:Class ;
+    skos:prefLabel "Fiscal Period" ;
+    skos:altLabel "Accounting Period", "Posting Period" ;
+    skos:definition "A bounded accounting period within which entries are posted and then closed." .
+
+:Reconciliation a owl:Class ;
+    skos:prefLabel "Reconciliation" ;
+    skos:altLabel "Ledger Reconciliation", "Balance Tie-out" ;
+    skos:definition "A control that ties subledger and bank balances back to the general ledger." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:structuresGeneralLedger a owl:ObjectProperty ;
+    rdfs:label "structures general ledger" ;
+    rdfs:domain :ChartOfAccount ;
+    rdfs:range  :GeneralLedger ;
+    skos:definition "The general ledger whose postings the chart of accounts classifies." .
+
+:postedToGeneralLedger a owl:ObjectProperty ;
+    rdfs:label "posted to general ledger" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  :GeneralLedger ;
+    skos:definition "The general ledger the journal entry is posted into." .
+
+:withinFiscalPeriod a owl:ObjectProperty ;
+    rdfs:label "within fiscal period" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  :FiscalPeriod ;
+    skos:definition "The fiscal period the journal entry's posting date falls within." .
+
+:recordedInPurchaseLedger a owl:ObjectProperty ;
+    rdfs:label "recorded in purchase ledger" ;
+    rdfs:domain :VendorInvoice ;
+    rdfs:range  :PurchaseLedger ;
+    skos:definition "The purchase ledger where the vendor invoice is recorded." .
+
+:recordedInSalesLedger a owl:ObjectProperty ;
+    rdfs:label "recorded in sales ledger" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  :SalesLedger ;
+    skos:definition "The sales ledger where the customer invoice is recorded." .
+
+:settlesVendorInvoice a owl:ObjectProperty ;
+    rdfs:label "settles vendor invoice" ;
+    rdfs:domain :Payment ;
+    rdfs:range  :VendorInvoice ;
+    skos:definition "The vendor invoice the payment settles." .
+
+:tiesLedger a owl:ObjectProperty ;
+    rdfs:label "ties ledger" ;
+    rdfs:domain :Reconciliation ;
+    rdfs:range  :GeneralLedger ;
+    skos:definition "The general ledger the reconciliation ties subledger and bank balances back to." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:accountCode a owl:DatatypeProperty ;
+    rdfs:label "account code" ;
+    rdfs:domain :ChartOfAccount ;
+    rdfs:range  xsd:string .
+
+:accountName a owl:DatatypeProperty ;
+    rdfs:label "account name" ;
+    rdfs:domain :ChartOfAccount ;
+    rdfs:range  xsd:string .
+
+:accountType a owl:DatatypeProperty ;
+    rdfs:label "account type" ;
+    rdfs:domain :ChartOfAccount ;
+    rdfs:range  xsd:string .
+
+:entryNumber a owl:DatatypeProperty ;
+    rdfs:label "entry number" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:string .
+
+:postingDate a owl:DatatypeProperty ;
+    rdfs:label "posting date" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:date .
+
+:totalDebit a owl:DatatypeProperty ;
+    rdfs:label "total debit" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:decimal .
+
+:totalCredit a owl:DatatypeProperty ;
+    rdfs:label "total credit" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:decimal .
+
+:journalEntryStatus a owl:DatatypeProperty ;
+    rdfs:label "journal entry status" ;
+    rdfs:domain :JournalEntry ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the journal entry: draft, posted, reconciled, period closed." .
+
+:ledgerName a owl:DatatypeProperty ;
+    rdfs:label "ledger name" ;
+    rdfs:domain :GeneralLedger ;
+    rdfs:range  xsd:string .
+
+:currencyCode a owl:DatatypeProperty ;
+    rdfs:label "currency code" ;
+    rdfs:domain :GeneralLedger ;
+    rdfs:range  xsd:string .
+
+:invoiceNumber a owl:DatatypeProperty ;
+    rdfs:label "invoice number" ;
+    rdfs:domain :VendorInvoice ;
+    rdfs:range  xsd:string .
+
+:invoiceAmount a owl:DatatypeProperty ;
+    rdfs:label "invoice amount" ;
+    rdfs:domain :VendorInvoice ;
+    rdfs:range  xsd:decimal .
+
+:customerInvoiceNumber a owl:DatatypeProperty ;
+    rdfs:label "customer invoice number" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:string .
+
+:customerInvoiceAmount a owl:DatatypeProperty ;
+    rdfs:label "customer invoice amount" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:decimal .
+
+:dueDate a owl:DatatypeProperty ;
+    rdfs:label "due date" ;
+    rdfs:domain :CustomerInvoice ;
+    rdfs:range  xsd:date .
+
+:paymentAmount a owl:DatatypeProperty ;
+    rdfs:label "payment amount" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:decimal .
+
+:paymentDate a owl:DatatypeProperty ;
+    rdfs:label "payment date" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:date .
+
+:paymentMethod a owl:DatatypeProperty ;
+    rdfs:label "payment method" ;
+    rdfs:domain :Payment ;
+    rdfs:range  xsd:string .
+
+:openReceivableBalance a owl:DatatypeProperty ;
+    rdfs:label "open receivable balance" ;
+    rdfs:domain :SalesLedger ;
+    rdfs:range  xsd:decimal .
+
+:openPayableBalance a owl:DatatypeProperty ;
+    rdfs:label "open payable balance" ;
+    rdfs:domain :PurchaseLedger ;
+    rdfs:range  xsd:decimal .
+
+:periodName a owl:DatatypeProperty ;
+    rdfs:label "period name" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:string .
+
+:startDate a owl:DatatypeProperty ;
+    rdfs:label "start date" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:date .
+
+:endDate a owl:DatatypeProperty ;
+    rdfs:label "end date" ;
+    rdfs:domain :FiscalPeriod ;
+    rdfs:range  xsd:date .
+
+:reconciledAt a owl:DatatypeProperty ;
+    rdfs:label "reconciled at" ;
+    rdfs:domain :Reconciliation ;
+    rdfs:range  xsd:dateTime .
+
+:variance a owl:DatatypeProperty ;
+    rdfs:label "variance" ;
+    rdfs:domain :Reconciliation ;
+    rdfs:range  xsd:decimal .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:AccountantRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Accountant" ;
+    skos:altLabel "GL Accountant", "Staff Accountant" ;
+    skos:definition "Person role that creates and posts journal entries and maintains the chart of accounts. Bearer: person. Permissions: JournalEntry:read, JournalEntry:write, ChartOfAccount:read, ChartOfAccount:write, GeneralLedger:read." .
+
+:APClerkRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "AP Clerk" ;
+    skos:altLabel "Accounts Payable Clerk" ;
+    skos:definition "Person role that records vendor invoices and prepares supplier payments. Bearer: person. Permissions: VendorInvoice:read, VendorInvoice:write, Payment:read, Payment:write, PurchaseLedger:read." .
+
+:ARClerkRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "AR Clerk" ;
+    skos:altLabel "Accounts Receivable Clerk" ;
+    skos:definition "Person role that issues customer invoices and applies receipts to the sales ledger. Bearer: person. Permissions: CustomerInvoice:read, CustomerInvoice:write, Payment:read, Payment:write, SalesLedger:read." .
+
+:ControllerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Controller" ;
+    skos:altLabel "Financial Controller" ;
+    skos:definition "Person role that reviews reconciliations and closes fiscal periods. Bearer: person. Permissions: Reconciliation:read, Reconciliation:write, FiscalPeriod:read, FiscalPeriod:write, GeneralLedger:read." .

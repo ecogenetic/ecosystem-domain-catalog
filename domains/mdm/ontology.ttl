@@ -1,0 +1,164 @@
+@prefix : <https://ecosystemcode.com/ontology/mdm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/mdm> a owl:Ontology ;
+    rdfs:label "MDM Domain Ontology" ;
+    rdfs:comment "Seed ontology for Master Data Management: master records, data domains, match rules, hierarchies, stewards, and lineage." .
+
+#################################################################
+# Classes
+#################################################################
+
+:MasterRecord a owl:Class ;
+    skos:prefLabel "Master Record" ;
+    skos:altLabel "Golden Record", "Authoritative Record" ;
+    skos:definition "The authoritative golden record consolidated from source records for an entity." .
+
+:DataDomain a owl:Class ;
+    skos:prefLabel "Data Domain" ;
+    skos:altLabel "Subject Area", "Master Data Domain" ;
+    skos:definition "A governed subject area such as customer, product, or supplier that master records belong to." .
+
+:MatchRule a owl:Class ;
+    skos:prefLabel "Match Rule" ;
+    skos:altLabel "Matching Rule", "Merge Rule" ;
+    skos:definition "A configured rule that identifies and consolidates duplicate source records into a master record." .
+
+:Hierarchy a owl:Class ;
+    skos:prefLabel "Hierarchy" ;
+    skos:altLabel "Master Data Hierarchy", "Rollup Structure" ;
+    skos:definition "A governed structure that organizes master records into parent-child relationships." .
+
+:Steward a owl:Class ;
+    skos:prefLabel "Steward" ;
+    skos:altLabel "Data Steward", "Curator" ;
+    skos:definition "The accountable person who reviews, curates, and approves master records." .
+
+:Lineage a owl:Class ;
+    skos:prefLabel "Lineage" ;
+    skos:altLabel "Data Lineage", "Provenance" ;
+    skos:definition "The traceable history linking a master record back to its contributing source records." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:belongsToDataDomain a owl:ObjectProperty ;
+    rdfs:label "belongs to data domain" ;
+    rdfs:domain :MasterRecord ;
+    rdfs:range  :DataDomain ;
+    skos:definition "The governed subject area the master record belongs to." .
+
+:consolidatesMasterRecord a owl:ObjectProperty ;
+    rdfs:label "consolidates master record" ;
+    rdfs:domain :MatchRule ;
+    rdfs:range  :MasterRecord ;
+    skos:definition "The master record produced by consolidating duplicates under this match rule." .
+
+:organizesMasterRecord a owl:ObjectProperty ;
+    rdfs:label "organizes master record" ;
+    rdfs:domain :Hierarchy ;
+    rdfs:range  :MasterRecord ;
+    skos:definition "A master record placed within the hierarchy's parent-child structure." .
+
+:curatesMasterRecord a owl:ObjectProperty ;
+    rdfs:label "curates master record" ;
+    rdfs:domain :Steward ;
+    rdfs:range  :MasterRecord ;
+    skos:definition "The master record the steward reviews, curates, and approves." .
+
+:tracesMasterRecord a owl:ObjectProperty ;
+    rdfs:label "traces master record" ;
+    rdfs:domain :Lineage ;
+    rdfs:range  :MasterRecord ;
+    skos:definition "The master record whose source history is traced by this lineage entry." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:recordKey a owl:DatatypeProperty ;
+    rdfs:label "record key" ;
+    rdfs:domain :MasterRecord ;
+    rdfs:range  xsd:string .
+
+:sourceCount a owl:DatatypeProperty ;
+    rdfs:label "source count" ;
+    rdfs:domain :MasterRecord ;
+    rdfs:range  xsd:integer .
+
+:masterRecordStatus a owl:DatatypeProperty ;
+    rdfs:label "master record status" ;
+    rdfs:domain :MasterRecord ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the master record: ingested, matched, stewarded, published." .
+
+:domainName a owl:DatatypeProperty ;
+    rdfs:label "domain name" ;
+    rdfs:domain :DataDomain ;
+    rdfs:range  xsd:string .
+
+:domainDescription a owl:DatatypeProperty ;
+    rdfs:label "domain description" ;
+    rdfs:domain :DataDomain ;
+    rdfs:range  xsd:string .
+
+:ruleName a owl:DatatypeProperty ;
+    rdfs:label "rule name" ;
+    rdfs:domain :MatchRule ;
+    rdfs:range  xsd:string .
+
+:matchThreshold a owl:DatatypeProperty ;
+    rdfs:label "match threshold" ;
+    rdfs:domain :MatchRule ;
+    rdfs:range  xsd:decimal .
+
+:hierarchyName a owl:DatatypeProperty ;
+    rdfs:label "hierarchy name" ;
+    rdfs:domain :Hierarchy ;
+    rdfs:range  xsd:string .
+
+:levelCount a owl:DatatypeProperty ;
+    rdfs:label "level count" ;
+    rdfs:domain :Hierarchy ;
+    rdfs:range  xsd:integer .
+
+:stewardName a owl:DatatypeProperty ;
+    rdfs:label "steward name" ;
+    rdfs:domain :Steward ;
+    rdfs:range  xsd:string .
+
+:stewardEmail a owl:DatatypeProperty ;
+    rdfs:label "steward email" ;
+    rdfs:domain :Steward ;
+    rdfs:range  xsd:string .
+
+:sourceSystem a owl:DatatypeProperty ;
+    rdfs:label "source system" ;
+    rdfs:domain :Lineage ;
+    rdfs:range  xsd:string .
+
+:ingestedAt a owl:DatatypeProperty ;
+    rdfs:label "ingested at" ;
+    rdfs:domain :Lineage ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:DataStewardRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Data Steward" ;
+    skos:altLabel "Master Data Steward", "Record Curator" ;
+    skos:definition "Person role that reviews match results, curates golden records, and approves publication. Bearer: person. Permissions: MasterRecord:read, MasterRecord:write, MatchRule:read, Hierarchy:read, Lineage:read." .
+
+:DataOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Data Owner" ;
+    skos:altLabel "Domain Owner", "Data Domain Owner" ;
+    skos:definition "Person role that owns a data domain, defines match rules and hierarchies, and accepts accountability for data quality. Bearer: person. Permissions: DataDomain:read, DataDomain:write, MatchRule:read, MatchRule:write, Hierarchy:read, Hierarchy:write." .

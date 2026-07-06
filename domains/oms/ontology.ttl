@@ -1,0 +1,189 @@
+@prefix : <https://ecosystemcode.com/ontology/oms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/oms> a owl:Ontology ;
+    rdfs:label "OMS Domain Ontology" ;
+    rdfs:comment "Seed ontology for Order Management: orders, order lines, channels, allocations, fulfillments, and returns." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Order a owl:Class ;
+    skos:prefLabel "Order" ;
+    skos:altLabel "Customer Order", "Sales Order" ;
+    skos:definition "A customer's purchase request received via a channel and tracked through fulfillment." .
+
+:OrderLine a owl:Class ;
+    skos:prefLabel "Order Line" ;
+    skos:altLabel "Line Item", "Order Item" ;
+    skos:definition "A single product and quantity within an order, allocated and fulfilled individually." .
+
+:Channel a owl:Class ;
+    skos:prefLabel "Channel" ;
+    skos:altLabel "Sales Channel", "Touchpoint" ;
+    skos:definition "A sales touchpoint such as a web store, marketplace, or retail location through which orders are received." .
+
+:Allocation a owl:Class ;
+    skos:prefLabel "Allocation" ;
+    skos:altLabel "Inventory Reservation", "Stock Reservation" ;
+    skos:definition "A reservation of available inventory against an order line before fulfillment." .
+
+:Fulfillment a owl:Class ;
+    skos:prefLabel "Fulfillment" ;
+    skos:altLabel "Order Fulfillment", "Dispatch" ;
+    skos:definition "The pick, pack, and ship execution that dispatches an order to the customer." .
+
+:Return a owl:Class ;
+    skos:prefLabel "Return" ;
+    skos:altLabel "RMA", "Reverse Order" ;
+    skos:definition "A customer-initiated reversal of one or more order lines after delivery." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:receivedViaChannel a owl:ObjectProperty ;
+    rdfs:label "received via channel" ;
+    rdfs:domain :Order ;
+    rdfs:range  :Channel ;
+    skos:definition "The sales channel through which an order was received." .
+
+:composedOfOrderLine a owl:ObjectProperty ;
+    rdfs:label "composed of order line" ;
+    rdfs:domain :Order ;
+    rdfs:range  :OrderLine ;
+    skos:definition "The order lines that make up an order." .
+
+:reservesForOrderLine a owl:ObjectProperty ;
+    rdfs:label "reserves for order line" ;
+    rdfs:domain :Allocation ;
+    rdfs:range  :OrderLine ;
+    skos:definition "The order line an allocation reserves inventory for." .
+
+:shipsOrder a owl:ObjectProperty ;
+    rdfs:label "ships order" ;
+    rdfs:domain :Fulfillment ;
+    rdfs:range  :Order ;
+    skos:definition "The order a fulfillment picks, packs, and ships to the customer." .
+
+:reversesOrderLine a owl:ObjectProperty ;
+    rdfs:label "reverses order line" ;
+    rdfs:domain :Return ;
+    rdfs:range  :OrderLine ;
+    skos:definition "The order line a return reverses after delivery." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:orderNumber a owl:DatatypeProperty ;
+    rdfs:label "order number" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:string .
+
+:orderedAt a owl:DatatypeProperty ;
+    rdfs:label "ordered at" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:dateTime .
+
+:orderTotal a owl:DatatypeProperty ;
+    rdfs:label "order total" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:decimal .
+
+:orderStatus a owl:DatatypeProperty ;
+    rdfs:label "order status" ;
+    rdfs:domain :Order ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the order: received, allocated, fulfilled, shipped, returned." .
+
+:lineNumber a owl:DatatypeProperty ;
+    rdfs:label "line number" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:integer .
+
+:productSku a owl:DatatypeProperty ;
+    rdfs:label "product sku" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:string .
+
+:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:integer .
+
+:linePrice a owl:DatatypeProperty ;
+    rdfs:label "line price" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:decimal .
+
+:channelName a owl:DatatypeProperty ;
+    rdfs:label "channel name" ;
+    rdfs:domain :Channel ;
+    rdfs:range  xsd:string .
+
+:channelType a owl:DatatypeProperty ;
+    rdfs:label "channel type" ;
+    rdfs:domain :Channel ;
+    rdfs:range  xsd:string .
+
+:allocatedQuantity a owl:DatatypeProperty ;
+    rdfs:label "allocated quantity" ;
+    rdfs:domain :Allocation ;
+    rdfs:range  xsd:integer .
+
+:allocatedAt a owl:DatatypeProperty ;
+    rdfs:label "allocated at" ;
+    rdfs:domain :Allocation ;
+    rdfs:range  xsd:dateTime .
+
+:fulfillmentNumber a owl:DatatypeProperty ;
+    rdfs:label "fulfillment number" ;
+    rdfs:domain :Fulfillment ;
+    rdfs:range  xsd:string .
+
+:shippedAt a owl:DatatypeProperty ;
+    rdfs:label "shipped at" ;
+    rdfs:domain :Fulfillment ;
+    rdfs:range  xsd:dateTime .
+
+:trackingNumber a owl:DatatypeProperty ;
+    rdfs:label "tracking number" ;
+    rdfs:domain :Fulfillment ;
+    rdfs:range  xsd:string .
+
+:returnNumber a owl:DatatypeProperty ;
+    rdfs:label "return number" ;
+    rdfs:domain :Return ;
+    rdfs:range  xsd:string .
+
+:returnReason a owl:DatatypeProperty ;
+    rdfs:label "return reason" ;
+    rdfs:domain :Return ;
+    rdfs:range  xsd:string .
+
+:receivedBackAt a owl:DatatypeProperty ;
+    rdfs:label "received back at" ;
+    rdfs:domain :Return ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch — bearer and permissions in the definition)
+#################################################################
+
+:OrderManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Order Manager" ;
+    skos:altLabel "Fulfillment Coordinator", "Operations Analyst" ;
+    skos:definition "Person role that monitors incoming orders, resolves allocation exceptions, and releases fulfillments. Bearer: person. Permissions: Order:read, Order:write, OrderLine:read, OrderLine:write, Allocation:read, Allocation:write, Fulfillment:read, Fulfillment:write." .
+
+:CustomerServiceAgentRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Customer Service Agent" ;
+    skos:altLabel "Support Agent", "CS Representative" ;
+    skos:definition "Person role that answers order status inquiries and initiates returns on behalf of customers. Bearer: person. Permissions: Order:read, OrderLine:read, Fulfillment:read, Return:read, Return:write." .

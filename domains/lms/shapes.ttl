@@ -1,0 +1,82 @@
+@prefix :    <https://ecosystemcode.com/ontology/lms#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:CourseShape a sh:NodeShape ;
+    sh:targetClass :Course ;
+    sh:property [
+        sh:path :courseTitle ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:EnrollmentShape a sh:NodeShape ;
+    sh:targetClass :Enrollment ;
+    sh:property [
+        sh:path :joinsLearnerToCourse ;
+        sh:class :Course ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :forLearner ;
+        sh:class :Learner ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :enrollmentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "enrolled" "in progress" "completed" "certified" ) ;
+    ] .
+
+:LessonShape a sh:NodeShape ;
+    sh:targetClass :Lesson ;
+    sh:property [
+        sh:path :lessonTitle ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :sequenceNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:AssessmentShape a sh:NodeShape ;
+    sh:targetClass :Assessment ;
+    sh:property [
+        sh:path :assessmentType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :passingScore ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:CertificateShape a sh:NodeShape ;
+    sh:targetClass :Certificate ;
+    sh:property [
+        sh:path :awardedForEnrollment ;
+        sh:class :Enrollment ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :certificateNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LearnerShape a sh:NodeShape ;
+    sh:targetClass :Learner ;
+    sh:property [
+        sh:path :fullName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :email ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
