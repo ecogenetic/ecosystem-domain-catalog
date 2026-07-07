@@ -33,12 +33,14 @@
       "statefulEntity": "Opportunity (pipeline stages: lead → qualified → proposal → won/lost)",
       "industries": [
         "banking",
+        "gambling",
+        "healthcare",
         "telco"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "cvm",

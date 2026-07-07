@@ -1,0 +1,162 @@
+@prefix :     <https://ecosystemcode.com/ontology/crm/gambling#> .
+@prefix crm:  <https://ecosystemcode.com/ontology/crm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/crm/gambling> a owl:Ontology ;
+    rdfs:label "CRM Gambling Overlay" ;
+    rdfs:comment "Gaming & gambling specialization of the CRM base ontology: age-verified players, affiliate acquisition, VIP tiers, safer-gambling gated outreach, and regulatory complaints." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Player a owl:Class ;
+    rdfs:subClassOf crm:Contact ;
+    skos:prefLabel "Player" ;
+    skos:altLabel "Account Holder", "Punter" ;
+    skos:definition "A contact who is a registered, age-verified account holder; the primary relationship unit in gambling." .
+
+:AffiliatePartner a owl:Class ;
+    rdfs:subClassOf crm:Account ;
+    skos:prefLabel "Affiliate Partner" ;
+    skos:altLabel "Affiliate", "Media Partner" ;
+    skos:definition "An account representing an affiliate or media partner that refers new players for commission." .
+
+:VIPTier a owl:Class ;
+    skos:prefLabel "VIP Tier" ;
+    skos:altLabel "Loyalty Tier", "Player Tier" ;
+    skos:definition "A named level in the VIP programme that determines relationship treatment and host assignment." .
+
+:SaferGamblingStatus a owl:Class ;
+    skos:prefLabel "Safer Gambling Status" ;
+    skos:altLabel "RG Status", "Responsible Gambling State" ;
+    skos:definition "The player's current responsible-gambling state (clear, active limits, cool-off, self-excluded); gates all outreach and offers." .
+
+:PlayerComplaint a owl:Class ;
+    rdfs:subClassOf crm:Case ;
+    skos:prefLabel "Player Complaint" ;
+    skos:altLabel "Regulatory Complaint", "Dispute" ;
+    skos:definition "A case raised by a player, including regulatory complaints that carry statutory response deadlines." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:carriesSaferGamblingStatus a owl:ObjectProperty ;
+    rdfs:label "carries safer gambling status" ;
+    rdfs:domain :Player ;
+    rdfs:range  :SaferGamblingStatus ;
+    skos:definition "The player's current responsible-gambling state; outreach must check it before any treatment." .
+
+:assignedToVipTier a owl:ObjectProperty ;
+    rdfs:label "assigned to vip tier" ;
+    rdfs:domain :Player ;
+    rdfs:range  :VIPTier ;
+    skos:definition "The VIP tier the player is currently assigned to." .
+
+:referredByAffiliate a owl:ObjectProperty ;
+    rdfs:label "referred by affiliate" ;
+    rdfs:domain crm:Lead ;
+    rdfs:range  :AffiliatePartner ;
+    skos:definition "The affiliate partner credited with referring this lead, tracked from first touch for commission." .
+
+:raisedByPlayer a owl:ObjectProperty ;
+    rdfs:label "raised by player" ;
+    rdfs:domain :PlayerComplaint ;
+    rdfs:range  :Player ;
+    skos:definition "The player who raised the complaint." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:ageVerified a owl:DatatypeProperty ;
+    rdfs:label "age verified" ;
+    rdfs:domain :Player ;
+    rdfs:range  xsd:boolean ;
+    skos:definition "Whether age and identity verification completed; mandatory before real-money play or outreach." .
+
+:playerSince a owl:DatatypeProperty ;
+    rdfs:label "player since" ;
+    rdfs:domain :Player ;
+    rdfs:range  xsd:date .
+
+:tierName a owl:DatatypeProperty ;
+    rdfs:label "tier name" ;
+    rdfs:domain :VIPTier ;
+    rdfs:range  xsd:string .
+
+:tierLevel a owl:DatatypeProperty ;
+    rdfs:label "tier level" ;
+    rdfs:domain :VIPTier ;
+    rdfs:range  xsd:integer .
+
+:sgState a owl:DatatypeProperty ;
+    rdfs:label "sg state" ;
+    rdfs:domain :SaferGamblingStatus ;
+    rdfs:range  xsd:string ;
+    skos:definition "Responsible-gambling state: clear, active_limits, cool_off, self_excluded." .
+
+:sgStateChangedAt a owl:DatatypeProperty ;
+    rdfs:label "sg state changed at" ;
+    rdfs:domain :SaferGamblingStatus ;
+    rdfs:range  xsd:dateTime .
+
+:commissionModel a owl:DatatypeProperty ;
+    rdfs:label "commission model" ;
+    rdfs:domain :AffiliatePartner ;
+    rdfs:range  xsd:string ;
+    skos:definition "How the affiliate is compensated: revenue-share, CPA, hybrid." .
+
+:regulatoryComplaint a owl:DatatypeProperty ;
+    rdfs:label "regulatory complaint" ;
+    rdfs:domain :PlayerComplaint ;
+    rdfs:range  xsd:boolean ;
+    skos:definition "Whether the complaint is a regulatory complaint carrying a statutory response deadline." .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:VIPHostRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "VIP Host" ;
+    skos:altLabel "VIP Account Manager" ;
+    skos:definition "Person role that owns high-value player relationships: manages tier treatment, logs interactions, and opens reactivation opportunities. Bearer: person. Permissions: Player:read, Player:write, VIPTier:read, Opportunity:read, Opportunity:write, Activity:read, Activity:write, SaferGamblingStatus:read." .
+
+:SaferGamblingOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Safer Gambling Officer" ;
+    skos:altLabel "RG Officer", "Player Protection Officer" ;
+    skos:definition "Person role that reviews at-risk players, applies status changes, and audits that outreach respected suppression rules. Bearer: person. Permissions: SaferGamblingStatus:read, SaferGamblingStatus:write, Player:read, Campaign:read, Activity:read." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:PlayerShape a sh:NodeShape ;
+    sh:targetClass :Player ;
+    sh:property [
+        sh:path :ageVerified ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :carriesSaferGamblingStatus ;
+        sh:class :SaferGamblingStatus ;
+        sh:minCount 1 ;
+    ] .
+
+:SaferGamblingStatusShape a sh:NodeShape ;
+    sh:targetClass :SaferGamblingStatus ;
+    sh:property [
+        sh:path :sgState ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "clear" "active_limits" "cool_off" "self_excluded" ) ;
+    ] .

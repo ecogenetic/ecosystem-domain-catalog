@@ -1,0 +1,210 @@
+@prefix :     <https://ecosystemcode.com/ontology/crm/healthcare#> .
+@prefix crm:  <https://ecosystemcode.com/ontology/crm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/crm/healthcare> a owl:Ontology ;
+    rdfs:label "CRM Healthcare Overlay" ;
+    rdfs:comment "Healthcare specialization of the CRM base ontology: patients, provider organisations, referrals, appointments, consent-gated outreach programmes." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Patient a owl:Class ;
+    rdfs:subClassOf crm:Contact ;
+    skos:prefLabel "Patient" ;
+    skos:altLabel "Care Recipient", "Service User" ;
+    skos:definition "A contact receiving or seeking care, identified by a medical record number; may differ from the guarantor who pays." .
+
+:ProviderOrganization a owl:Class ;
+    rdfs:subClassOf crm:Account ;
+    skos:prefLabel "Provider Organization" ;
+    skos:altLabel "Practice", "Clinic", "Referring Provider" ;
+    skos:definition "An account representing a practice, clinic, hospital, or referring organisation." .
+
+:Referral a owl:Class ;
+    rdfs:subClassOf crm:Lead ;
+    skos:prefLabel "Referral" ;
+    skos:altLabel "Referral Request", "Intake Request" ;
+    skos:definition "A request from a referring provider (or self-referral) for a patient to receive a service; qualified and scheduled like a lead is converted." .
+
+:Appointment a owl:Class ;
+    rdfs:subClassOf crm:Activity ;
+    skos:prefLabel "Appointment" ;
+    skos:altLabel "Booking", "Visit Slot" ;
+    skos:definition "An activity that books a patient with a provider at a time; confirmations, reminders, and no-show follow-up are core CRM work." .
+
+:ConsentRecord a owl:Class ;
+    skos:prefLabel "Consent Record" ;
+    skos:altLabel "Communication Consent", "Data Sharing Consent" ;
+    skos:definition "The patient's explicit, scoped, revocable permission for communication and data sharing; every outreach checks it." .
+
+:OutreachProgram a owl:Class ;
+    rdfs:subClassOf crm:Campaign ;
+    skos:prefLabel "Outreach Program" ;
+    skos:altLabel "Care Outreach Campaign", "Screening Programme" ;
+    skos:definition "A campaign specialised for care outreach (screening reminders, vaccination drives, chronic-care follow-up) rather than selling." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:registeredWithProvider a owl:ObjectProperty ;
+    rdfs:label "registered with provider" ;
+    rdfs:domain :Patient ;
+    rdfs:range  :ProviderOrganization ;
+    skos:definition "The home practice or provider organisation anchoring the patient relationship." .
+
+:refersPatient a owl:ObjectProperty ;
+    rdfs:label "refers patient" ;
+    rdfs:domain :Referral ;
+    rdfs:range  :Patient ;
+    skos:definition "The patient the referral requests a service for." .
+
+:referredByProvider a owl:ObjectProperty ;
+    rdfs:label "referred by provider" ;
+    rdfs:domain :Referral ;
+    rdfs:range  :ProviderOrganization ;
+    skos:definition "The provider organisation that made the referral." .
+
+:bookedForPatient a owl:ObjectProperty ;
+    rdfs:label "booked for patient" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  :Patient ;
+    skos:definition "The patient the appointment is booked for." .
+
+:consentGivenByPatient a owl:ObjectProperty ;
+    rdfs:label "consent given by patient" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range  :Patient ;
+    skos:definition "The patient who granted this consent." .
+
+:enrollsPatient a owl:ObjectProperty ;
+    rdfs:label "enrolls patient" ;
+    rdfs:domain :OutreachProgram ;
+    rdfs:range  :Patient ;
+    skos:definition "The patients enrolled in the outreach programme, subject to consent scope." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:mrn a owl:DatatypeProperty ;
+    rdfs:label "mrn" ;
+    rdfs:domain :Patient ;
+    rdfs:range  xsd:string ;
+    skos:definition "Medical record number: the unique patient identifier within the organisation." .
+
+:referralSpecialty a owl:DatatypeProperty ;
+    rdfs:label "referral specialty" ;
+    rdfs:domain :Referral ;
+    rdfs:range  xsd:string .
+
+:referralUrgency a owl:DatatypeProperty ;
+    rdfs:label "referral urgency" ;
+    rdfs:domain :Referral ;
+    rdfs:range  xsd:string ;
+    skos:definition "Urgency of the referral: routine, urgent, emergency." .
+
+:appointmentAt a owl:DatatypeProperty ;
+    rdfs:label "appointment at" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  xsd:dateTime .
+
+:appointmentStatus a owl:DatatypeProperty ;
+    rdfs:label "appointment status" ;
+    rdfs:domain :Appointment ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the appointment: scheduled, confirmed, completed, no_show, cancelled." .
+
+:consentScope a owl:DatatypeProperty ;
+    rdfs:label "consent scope" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range  xsd:string ;
+    skos:definition "What the consent covers: care-communication, marketing, data-sharing." .
+
+:consentStatus a owl:DatatypeProperty ;
+    rdfs:label "consent status" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range  xsd:string ;
+    skos:definition "State of the consent: granted, revoked, expired." .
+
+:consentAt a owl:DatatypeProperty ;
+    rdfs:label "consent at" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range  xsd:dateTime .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:PatientAccessCoordinatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Patient Access Coordinator" ;
+    skos:altLabel "Intake Coordinator", "Referral Coordinator" ;
+    skos:definition "Person role that manages referral intake, verifies coverage, and schedules appointments. Bearer: person. Permissions: Referral:read, Referral:write, Appointment:read, Appointment:write, Patient:read, Patient:write, ProviderOrganization:read." .
+
+:OutreachCoordinatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Outreach Coordinator" ;
+    skos:altLabel "Population Health Coordinator" ;
+    skos:definition "Person role that runs consent-gated outreach programmes and follow-up activities. Bearer: person. Permissions: OutreachProgram:read, OutreachProgram:write, ConsentRecord:read, Patient:read, Activity:read, Activity:write." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:PatientShape a sh:NodeShape ;
+    sh:targetClass :Patient ;
+    sh:property [
+        sh:path :mrn ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ReferralShape a sh:NodeShape ;
+    sh:targetClass :Referral ;
+    sh:property [
+        sh:path :refersPatient ;
+        sh:class :Patient ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :referralUrgency ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "routine" "urgent" "emergency" ) ;
+    ] .
+
+:AppointmentShape a sh:NodeShape ;
+    sh:targetClass :Appointment ;
+    sh:property [
+        sh:path :bookedForPatient ;
+        sh:class :Patient ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :appointmentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "scheduled" "confirmed" "completed" "no_show" "cancelled" ) ;
+    ] .
+
+:ConsentRecordShape a sh:NodeShape ;
+    sh:targetClass :ConsentRecord ;
+    sh:property [
+        sh:path :consentGivenByPatient ;
+        sh:class :Patient ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :consentStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "granted" "revoked" "expired" ) ;
+    ] .

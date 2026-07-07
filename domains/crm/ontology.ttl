@@ -83,6 +83,11 @@
     skos:altLabel "Ticket", "Service Request", "Complaint" ;
     skos:definition "A post-sale service request or complaint raised by a contact, tracked to resolution." .
 
+:PipelineStage a owl:Class ;
+    skos:prefLabel "Pipeline Stage" ;
+    skos:altLabel "Sales Stage", "Deal Stage" ;
+    skos:definition "One named, ordered stage within a pipeline; an opportunity sits at exactly one stage at a time." .
+
 #################################################################
 # Object properties
 #################################################################
@@ -212,6 +217,36 @@
     rdfs:domain :Forecast ;
     rdfs:range  :Territory ;
     skos:definition "The territory whose expected revenue a forecast projects." .
+
+:convertsToContact a owl:ObjectProperty ;
+    rdfs:label "converts to contact" ;
+    rdfs:domain :Lead ;
+    rdfs:range  :Contact ;
+    skos:definition "The contact record created when a qualified lead is converted." .
+
+:convertsToAccount a owl:ObjectProperty ;
+    rdfs:label "converts to account" ;
+    rdfs:domain :Lead ;
+    rdfs:range  :Account ;
+    skos:definition "The new or matched account a converted lead is attached to." .
+
+:atPipelineStage a owl:ObjectProperty ;
+    rdfs:label "at pipeline stage" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range  :PipelineStage ;
+    skos:definition "The single pipeline stage the opportunity currently sits at." .
+
+:partOfPipeline a owl:ObjectProperty ;
+    rdfs:label "part of pipeline" ;
+    rdfs:domain :PipelineStage ;
+    rdfs:range  :Pipeline ;
+    skos:definition "The pipeline this stage belongs to, in stage order." .
+
+:renewsIntoOpportunity a owl:ObjectProperty ;
+    rdfs:label "renews into opportunity" ;
+    rdfs:domain :Contract ;
+    rdfs:range  :Opportunity ;
+    skos:definition "The renewal opportunity opened as the contract approaches its end date." .
 
 #################################################################
 # Datatype properties
@@ -522,6 +557,45 @@
     rdfs:domain :Case ;
     rdfs:range  xsd:string ;
     skos:definition "Lifecycle state of the case: new, in_progress, waiting_on_customer, resolved, closed." .
+
+:marketingOptIn a owl:DatatypeProperty ;
+    rdfs:label "marketing opt in" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:boolean ;
+    skos:definition "Whether the contact has consented to marketing outreach; gates campaign targeting." .
+
+:preferredChannel a owl:DatatypeProperty ;
+    rdfs:label "preferred channel" ;
+    rdfs:domain :Contact ;
+    rdfs:range  xsd:string ;
+    skos:definition "The contact's preferred outreach channel: email, phone, sms, none." .
+
+:stageName a owl:DatatypeProperty ;
+    rdfs:label "stage name" ;
+    rdfs:domain :PipelineStage ;
+    rdfs:range  xsd:string .
+
+:stageOrder a owl:DatatypeProperty ;
+    rdfs:label "stage order" ;
+    rdfs:domain :PipelineStage ;
+    rdfs:range  xsd:integer .
+
+:defaultProbability a owl:DatatypeProperty ;
+    rdfs:label "default probability" ;
+    rdfs:domain :PipelineStage ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "The default win probability assigned to opportunities entering this stage, used for forecasting." .
+
+:slaDueAt a owl:DatatypeProperty ;
+    rdfs:label "sla due at" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:dateTime ;
+    skos:definition "The deadline by which the case must be resolved under the applicable service-level agreement." .
+
+:escalated a owl:DatatypeProperty ;
+    rdfs:label "escalated" ;
+    rdfs:domain :Case ;
+    rdfs:range  xsd:boolean .
 
 #################################################################
 # Roles (BFO role branch — bearer and permissions in the definition)

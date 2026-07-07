@@ -23,6 +23,7 @@ from first touch to renewal.
 
 - **Opportunity** — a potential deal with monetary value, a probability, and an expected close date.
 - **Pipeline** — the ordered set of stages an Opportunity moves through toward close.
+- **PipelineStage** — one named, ordered stage within a pipeline; an opportunity sits at exactly one stage at a time.
 - **Product** — a sellable product or service in the catalog that opportunities and quotes reference.
 - **Quote** — a priced, time-limited proposal presented to the customer for an opportunity.
 - **QuoteLine** — a single product line on a quote with quantity, unit price, and discount.
@@ -50,9 +51,13 @@ from first touch to renewal.
 - Account assignedToTerritory Territory (many-to-one)
 - Campaign generatesLead Lead (one-to-many)
 - Lead convertsToOpportunity Opportunity (one-to-one)
+- Lead convertsToContact Contact (one-to-one)
+- Lead convertsToAccount Account (many-to-one)
 - Opportunity pursuedWithAccount Account (many-to-one)
 - Opportunity hasPrimaryContact Contact (many-to-one)
 - Opportunity progressesThroughPipeline Pipeline (many-to-one)
+- Opportunity atPipelineStage PipelineStage (many-to-one)
+- PipelineStage partOfPipeline Pipeline (many-to-one)
 - Opportunity influencedByCampaign Campaign (many-to-one)
 - Opportunity includesProduct Product (many-to-many)
 - Quote quotesOpportunity Opportunity (many-to-one)
@@ -60,6 +65,7 @@ from first touch to renewal.
 - QuoteLine forQuotedProduct Product (many-to-one)
 - Contract resultsFromOpportunity Opportunity (one-to-one)
 - Contract governsAccount Account (many-to-one)
+- Contract renewsIntoOpportunity Opportunity (many-to-one)
 - Case raisedByContact Contact (many-to-one)
 - Case filedAgainstAccount Account (many-to-one)
 - Case aboutProduct Product (many-to-one)
@@ -71,19 +77,20 @@ from first touch to renewal.
 ## Attributes
 
 - Account: accountName (string), industry (string), annualRevenue (decimal), website (string), accountType (string), employeeCount (integer)
-- Contact: fullName (string), email (string), phone (string), jobTitle (string), department (string)
+- Contact: fullName (string), email (string), phone (string), jobTitle (string), department (string), marketingOptIn (boolean), preferredChannel (string)
 - Territory: territoryName (string), region (string)
 - Campaign: campaignName (string), campaignType (string), campaignStartDate (date), campaignEndDate (date), budgetedCost (decimal), campaignStatus (string)
 - Lead: leadSource (string), capturedAt (dateTime), company (string), leadScore (integer), leadStatus (string)
 - Opportunity: opportunityName (string), amount (decimal), probability (decimal), closeDate (date), opportunityStatus (string)
 - Pipeline: pipelineName (string), stageCount (integer)
+- PipelineStage: stageName (string), stageOrder (integer), defaultProbability (decimal)
 - Product: productCode (string), productName (string), listPrice (decimal)
 - Quote: quoteNumber (string), quoteDate (date), validUntil (date), quoteTotal (decimal), quoteStatus (string)
 - QuoteLine: quotedQuantity (decimal), quotedUnitPrice (decimal), discountPercent (decimal)
 - Contract: contractNumber (string), contractStart (date), contractEnd (date), contractValue (decimal), contractStatus (string)
 - Forecast: forecastPeriod (string), forecastAmount (decimal), commitAmount (decimal), bestCaseAmount (decimal)
 - Activity: activityType (string), occurredAt (dateTime), summary (string)
-- Case: caseNumber (string), subject (string), priority (string), openedAt (dateTime), resolvedAt (dateTime), caseStatus (string)
+- Case: caseNumber (string), subject (string), priority (string), openedAt (dateTime), resolvedAt (dateTime), slaDueAt (dateTime), escalated (boolean), caseStatus (string)
 
 ## Lifecycle
 
