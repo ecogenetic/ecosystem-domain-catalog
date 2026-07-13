@@ -43,6 +43,26 @@
     skos:altLabel "Fulfillment", "Shipment" ;
     skos:definition "The picking, packing, shipping, and delivery of an order." .
 
+:Customer a owl:Class ;
+    skos:prefLabel "Customer" ;
+    skos:altLabel "Shopper", "Registered User" ;
+    skos:definition "The registered shopper who owns carts, places orders, and writes reviews." .
+
+:Category a owl:Class ;
+    skos:prefLabel "Category" ;
+    skos:altLabel "Product Category", "Collection" ;
+    skos:definition "A named grouping that organises the catalog for browsing; categories can nest." .
+
+:OrderLine a owl:Class ;
+    skos:prefLabel "Order Line" ;
+    skos:altLabel "Line Item", "Order Item" ;
+    skos:definition "One product within an order with its quantity, unit price, and line total." .
+
+:Promotion a owl:Class ;
+    skos:prefLabel "Promotion" ;
+    skos:altLabel "Discount", "Promo Code", "Offer" ;
+    skos:definition "A discount or promotional offer applied to an order at checkout via a code or rule." .
+
 #################################################################
 # Object properties
 #################################################################
@@ -76,6 +96,48 @@
     rdfs:domain :Review ;
     rdfs:range  :Product ;
     skos:definition "The product the review describes." .
+
+:ownedByCustomer a owl:ObjectProperty ;
+    rdfs:label "owned by customer" ;
+    rdfs:domain :Cart ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer whose working cart this is." .
+
+:placedByCustomer a owl:ObjectProperty ;
+    rdfs:label "placed by customer" ;
+    rdfs:domain :Order ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer who placed the order." .
+
+:partOfOrder a owl:ObjectProperty ;
+    rdfs:label "part of order" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  :Order ;
+    skos:definition "The order this line belongs to." .
+
+:forProduct a owl:ObjectProperty ;
+    rdfs:label "for product" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  :Product ;
+    skos:definition "The product this order line purchases." .
+
+:inCategory a owl:ObjectProperty ;
+    rdfs:label "in category" ;
+    rdfs:domain :Product ;
+    rdfs:range  :Category ;
+    skos:definition "A category the product is listed under for browsing." .
+
+:appliedToOrder a owl:ObjectProperty ;
+    rdfs:label "applied to order" ;
+    rdfs:domain :Promotion ;
+    rdfs:range  :Order ;
+    skos:definition "An order this promotion discounted at checkout." .
+
+:writtenByCustomer a owl:ObjectProperty ;
+    rdfs:label "written by customer" ;
+    rdfs:domain :Review ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer who wrote the review." .
 
 #################################################################
 # Datatype properties
@@ -136,6 +198,58 @@
     rdfs:label "tracking number" ;
     rdfs:domain :Fulfilment ;
     rdfs:range  xsd:string .
+
+:customerName a owl:DatatypeProperty ;
+    rdfs:label "customer name" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:string .
+
+:email a owl:DatatypeProperty ;
+    rdfs:label "email" ;
+    rdfs:domain :Customer ;
+    rdfs:range  xsd:string .
+
+:productType a owl:DatatypeProperty ;
+    rdfs:label "product type" ;
+    rdfs:domain :Product ;
+    rdfs:range  xsd:string ;
+    skos:definition "The kind of sellable: physical, digital, service, subscription." .
+
+:categoryName a owl:DatatypeProperty ;
+    rdfs:label "category name" ;
+    rdfs:domain :Category ;
+    rdfs:range  xsd:string .
+
+:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:integer .
+
+:unitPrice a owl:DatatypeProperty ;
+    rdfs:label "unit price" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:decimal .
+
+:lineTotal a owl:DatatypeProperty ;
+    rdfs:label "line total" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  xsd:decimal .
+
+:promoCode a owl:DatatypeProperty ;
+    rdfs:label "promo code" ;
+    rdfs:domain :Promotion ;
+    rdfs:range  xsd:string .
+
+:discountValue a owl:DatatypeProperty ;
+    rdfs:label "discount value" ;
+    rdfs:domain :Promotion ;
+    rdfs:range  xsd:decimal .
+
+:fulfilmentType a owl:DatatypeProperty ;
+    rdfs:label "fulfilment type" ;
+    rdfs:domain :Fulfilment ;
+    rdfs:range  xsd:string ;
+    skos:definition "How the order is delivered: shipping, digital-delivery, provisioning, pickup." .
 
 #################################################################
 # Roles (BFO role branch)

@@ -1,0 +1,250 @@
+@prefix :     <https://ecosystemcode.com/ontology/ecom/banking#> .
+@prefix ecom: <https://ecosystemcode.com/ontology/ecom#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/ecom/banking> a owl:Ontology ;
+    rdfs:label "E-Commerce Banking Overlay" ;
+    rdfs:comment "Banking specialization of the e-commerce base ontology: loan products, affordability-gated applications, disbursements, and prepaid value-added services (electricity, airtime, vouchers)." .
+
+#################################################################
+# Classes
+#################################################################
+
+:LoanProduct a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Loan Product" ;
+    skos:altLabel "Credit Product", "Personal Loan", "Credit Offering" ;
+    skos:definition "A product representing a credit offering (personal loan, overdraft, credit card) with an amount range, term range, and interest rate; buying one is applying for it." .
+
+:LoanApplication a owl:Class ;
+    rdfs:subClassOf ecom:Order ;
+    skos:prefLabel "Loan Application" ;
+    skos:altLabel "Credit Application" ;
+    skos:definition "An order specialised for credit: it carries the requested amount and term and moves through affordability assessment to approval and disbursement." .
+
+:AffordabilityCheck a owl:Class ;
+    skos:prefLabel "Affordability Check" ;
+    skos:altLabel "Affordability Assessment", "Credit Assessment" ;
+    skos:definition "The mandated assessment of income, expenses, and credit record that gates every loan approval." .
+
+:Disbursement a owl:Class ;
+    rdfs:subClassOf ecom:Fulfilment ;
+    skos:prefLabel "Disbursement" ;
+    skos:altLabel "Loan Payout", "Drawdown" ;
+    skos:definition "A fulfilment that pays an approved loan amount into the customer's account; the delivery of a loan." .
+
+:ValueAddedService a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Value Added Service" ;
+    skos:altLabel "VAS", "Prepaid Service" ;
+    skos:definition "A product for a prepaid third-party service sold through the banking channel: electricity tokens, airtime, data, vouchers, bill payments." .
+
+:ElectricityToken a owl:Class ;
+    skos:prefLabel "Electricity Token" ;
+    skos:altLabel "Prepaid Electricity Voucher", "Utility Token" ;
+    skos:definition "The prepaid utility token issued for an electricity VAS purchase, keyed to the customer's meter number." .
+
+:InsuranceAddOn a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Insurance Add-On" ;
+    skos:altLabel "Credit Life Cover", "Embedded Insurance" ;
+    skos:definition "A product attaching optional cover (credit life, device, funeral) to a loan or standalone purchase." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:appliesForProduct a owl:ObjectProperty ;
+    rdfs:label "applies for product" ;
+    rdfs:domain :LoanApplication ;
+    rdfs:range  :LoanProduct ;
+    skos:definition "The credit offering this application requests." .
+
+:assessesApplication a owl:ObjectProperty ;
+    rdfs:label "assesses application" ;
+    rdfs:domain :AffordabilityCheck ;
+    rdfs:range  :LoanApplication ;
+    skos:definition "The loan application this affordability check gates (exactly one)." .
+
+:paysOutApplication a owl:ObjectProperty ;
+    rdfs:label "pays out application" ;
+    rdfs:domain :Disbursement ;
+    rdfs:range  :LoanApplication ;
+    skos:definition "The approved application this disbursement pays into the customer's account." .
+
+:issuedForOrder a owl:ObjectProperty ;
+    rdfs:label "issued for order" ;
+    rdfs:domain :ElectricityToken ;
+    rdfs:range  ecom:Order ;
+    skos:definition "The VAS order this utility token was generated for." .
+
+:attachedToApplication a owl:ObjectProperty ;
+    rdfs:label "attached to application" ;
+    rdfs:domain :InsuranceAddOn ;
+    rdfs:range  :LoanApplication ;
+    skos:definition "The loan application this optional cover is priced into." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:interestRate a owl:DatatypeProperty ;
+    rdfs:label "interest rate" ;
+    rdfs:domain :LoanProduct ;
+    rdfs:range  xsd:decimal ;
+    skos:definition "The annual interest rate; must be disclosed before application." .
+
+:minAmount a owl:DatatypeProperty ;
+    rdfs:label "min amount" ;
+    rdfs:domain :LoanProduct ;
+    rdfs:range  xsd:decimal .
+
+:maxAmount a owl:DatatypeProperty ;
+    rdfs:label "max amount" ;
+    rdfs:domain :LoanProduct ;
+    rdfs:range  xsd:decimal .
+
+:requestedAmount a owl:DatatypeProperty ;
+    rdfs:label "requested amount" ;
+    rdfs:domain :LoanApplication ;
+    rdfs:range  xsd:decimal .
+
+:termMonths a owl:DatatypeProperty ;
+    rdfs:label "term months" ;
+    rdfs:domain :LoanApplication ;
+    rdfs:range  xsd:integer .
+
+:applicationStatus a owl:DatatypeProperty ;
+    rdfs:label "application status" ;
+    rdfs:domain :LoanApplication ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of the application: submitted, under_assessment, approved, declined, disbursed." .
+
+:affordabilityOutcome a owl:DatatypeProperty ;
+    rdfs:label "affordability outcome" ;
+    rdfs:domain :AffordabilityCheck ;
+    rdfs:range  xsd:string ;
+    skos:definition "Result of the assessment: pending, passed, failed, referred." .
+
+:declaredMonthlyIncome a owl:DatatypeProperty ;
+    rdfs:label "declared monthly income" ;
+    rdfs:domain :AffordabilityCheck ;
+    rdfs:range  xsd:decimal .
+
+:disbursedAmount a owl:DatatypeProperty ;
+    rdfs:label "disbursed amount" ;
+    rdfs:domain :Disbursement ;
+    rdfs:range  xsd:decimal .
+
+:disbursedAt a owl:DatatypeProperty ;
+    rdfs:label "disbursed at" ;
+    rdfs:domain :Disbursement ;
+    rdfs:range  xsd:dateTime .
+
+:vasProvider a owl:DatatypeProperty ;
+    rdfs:label "vas provider" ;
+    rdfs:domain :ValueAddedService ;
+    rdfs:range  xsd:string ;
+    skos:definition "The third-party provider fulfilling the service: utility, mobile operator, voucher issuer." .
+
+:vasType a owl:DatatypeProperty ;
+    rdfs:label "vas type" ;
+    rdfs:domain :ValueAddedService ;
+    rdfs:range  xsd:string ;
+    skos:definition "The kind of prepaid service: electricity, airtime, data, voucher, bill-payment." .
+
+:tokenNumber a owl:DatatypeProperty ;
+    rdfs:label "token number" ;
+    rdfs:domain :ElectricityToken ;
+    rdfs:range  xsd:string ;
+    skos:definition "The prepaid token code the customer enters into the meter." .
+
+:meterNumber a owl:DatatypeProperty ;
+    rdfs:label "meter number" ;
+    rdfs:domain :ElectricityToken ;
+    rdfs:range  xsd:string .
+
+:coverType a owl:DatatypeProperty ;
+    rdfs:label "cover type" ;
+    rdfs:domain :InsuranceAddOn ;
+    rdfs:range  xsd:string ;
+    skos:definition "The kind of cover: credit-life, device, funeral." .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:LoanOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Loan Officer" ;
+    skos:altLabel "Credit Officer", "Lending Specialist" ;
+    skos:definition "Person role that reviews applications the automated affordability check refers for manual decision. Bearer: person. Permissions: LoanApplication:read, LoanApplication:write, AffordabilityCheck:read, LoanProduct:read, Disbursement:read." .
+
+:VASOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "VAS Operations" ;
+    skos:altLabel "VAS Support Agent" ;
+    skos:definition "Person role that monitors VAS provider integrations and re-issues failed tokens or top-ups. Bearer: person. Permissions: ValueAddedService:read, ElectricityToken:read, ElectricityToken:write, Order:read, Payment:read." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:LoanProductShape a sh:NodeShape ;
+    sh:targetClass :LoanProduct ;
+    sh:property [
+        sh:path :interestRate ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:LoanApplicationShape a sh:NodeShape ;
+    sh:targetClass :LoanApplication ;
+    sh:property [
+        sh:path :appliesForProduct ;
+        sh:class :LoanProduct ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :requestedAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :applicationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "submitted" "under_assessment" "approved" "declined" "disbursed" ) ;
+    ] .
+
+:AffordabilityCheckShape a sh:NodeShape ;
+    sh:targetClass :AffordabilityCheck ;
+    sh:property [
+        sh:path :assessesApplication ;
+        sh:class :LoanApplication ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :affordabilityOutcome ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "pending" "passed" "failed" "referred" ) ;
+    ] .
+
+:ElectricityTokenShape a sh:NodeShape ;
+    sh:targetClass :ElectricityToken ;
+    sh:property [
+        sh:path :tokenNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :meterNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

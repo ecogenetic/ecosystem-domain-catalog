@@ -5,34 +5,50 @@ track order fulfillment, so purchases complete smoothly with visibility into ord
 
 ## Concepts
 
-- **Product** — a sellable item with price, description, and stock availability.
+- **Customer** — the registered shopper who owns carts, places orders, and writes reviews.
+- **Product** — a sellable item with price, description, and stock availability; may be a physical good, a digital product, a service, or a subscription.
+- **Category** — a named grouping that organises the catalog for browsing; categories can nest.
 - **Cart** — the shopper's working collection of products before checkout.
 - **Order** — a confirmed purchase created from a cart at checkout.
+- **OrderLine** — one product within an order with its quantity, unit price, and line total.
+- **Promotion** — a discount or promotional offer applied to an order at checkout via a code or rule.
 - **Payment** — the settlement of an order through a payment method.
 - **Review** — a shopper's rating and commentary about a product.
-- **Fulfilment** — the picking, packing, shipping, and delivery of an order.
+- **Fulfilment** — the delivery of an order: shipping for physical goods, digital delivery or provisioning for digital products and services, or in-store pickup.
 
 ## Taxonomy
 
 - Cart is a kind of Container.
 - Order is a kind of CommercialTransaction.
+- OrderLine is a kind of TransactionLine.
 
 ## Relationships
 
+- Cart ownedByCustomer Customer (many-to-one)
 - Cart containsProduct Product (many-to-many)
 - Order createdFromCart Cart (one-to-one)
+- Order placedByCustomer Customer (many-to-one)
+- OrderLine partOfOrder Order (many-to-one)
+- OrderLine forProduct Product (many-to-one)
+- Product inCategory Category (many-to-many)
+- Promotion appliedToOrder Order (many-to-many)
 - Payment settlesOrder Order (many-to-one)
 - Fulfilment shipsOrder Order (one-to-one)
 - Review writtenAboutProduct Product (many-to-one)
+- Review writtenByCustomer Customer (many-to-one)
 
 ## Attributes
 
-- Product: productName (string), price (decimal), stockAvailable (integer)
+- Customer: customerName (string), email (string), registeredAt (dateTime)
+- Product: productName (string), price (decimal), stockAvailable (integer), productType (string)
+- Category: categoryName (string)
 - Cart: createdAt (dateTime), cartTotal (decimal)
 - Order: orderNumber (string), orderStatus (string), orderTotal (decimal)
+- OrderLine: quantity (integer), unitPrice (decimal), lineTotal (decimal)
+- Promotion: promoCode (string), discountValue (decimal), validFrom (date), validTo (date)
 - Payment: paymentMethod (string), paidAmount (decimal), paidAt (dateTime)
 - Review: rating (integer), comment (string)
-- Fulfilment: trackingNumber (string), shippedAt (dateTime), deliveredAt (dateTime)
+- Fulfilment: trackingNumber (string), fulfilmentType (string), shippedAt (dateTime), deliveredAt (dateTime)
 
 ## Lifecycle
 

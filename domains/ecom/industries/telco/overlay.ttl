@@ -1,0 +1,200 @@
+@prefix :     <https://ecosystemcode.com/ontology/ecom/telco#> .
+@prefix ecom: <https://ecosystemcode.com/ontology/ecom#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/ecom/telco> a owl:Ontology ;
+    rdfs:label "E-Commerce Telco Overlay" ;
+    rdfs:comment "Telco specialization of the e-commerce base ontology: devices, SIM cards, data bundles, airtime, contract plans, network provisioning, and credit checks." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Device a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Device" ;
+    skos:altLabel "Handset", "Router", "Accessory" ;
+    skos:definition "A product that is a physical handset, router, or accessory, tracked by IMEI and shipped like retail goods." .
+
+:SIMCard a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "SIM Card" ;
+    skos:altLabel "SIM", "eSIM" ;
+    skos:definition "A product (physical or eSIM) that carries an ICCID and must pass subscriber registration before activation." .
+
+:DataBundle a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Data Bundle" ;
+    skos:altLabel "Data Package", "Data Allowance" ;
+    skos:definition "A digital product of a data allowance with a validity period, provisioned to an MSISDN immediately after payment." .
+
+:AirtimeTopUp a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Airtime Top-Up" ;
+    skos:altLabel "Airtime", "Recharge", "Prepaid Credit" ;
+    skos:definition "A digital product crediting prepaid airtime to an MSISDN immediately after payment." .
+
+:ContractPlan a owl:Class ;
+    rdfs:subClassOf ecom:Product ;
+    skos:prefLabel "Contract Plan" ;
+    skos:altLabel "Postpaid Plan", "Monthly Plan", "Tariff" ;
+    skos:definition "A subscription product committing the customer to a monthly tariff over a term; requires a credit check before activation." .
+
+:ProvisioningRequest a owl:Class ;
+    rdfs:subClassOf ecom:Fulfilment ;
+    skos:prefLabel "Provisioning Request" ;
+    skos:altLabel "Network Activation", "Service Order" ;
+    skos:definition "A fulfilment that activates a digital product (bundle, airtime, plan, SIM) on the network against an MSISDN." .
+
+:CreditCheck a owl:Class ;
+    skos:prefLabel "Credit Check" ;
+    skos:altLabel "Credit Vetting", "Credit Assessment" ;
+    skos:definition "The credit assessment gating contract-plan and device-financing orders." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:assessesOrder a owl:ObjectProperty ;
+    rdfs:label "assesses order" ;
+    rdfs:domain :CreditCheck ;
+    rdfs:range  ecom:Order ;
+    skos:definition "The order whose contract-plan or financed lines this credit check gates." .
+
+:provisionsProduct a owl:ObjectProperty ;
+    rdfs:label "provisions product" ;
+    rdfs:domain :ProvisioningRequest ;
+    rdfs:range  ecom:Product ;
+    skos:definition "The digital product (bundle, airtime, plan, SIM) the request activates on the network." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:imei a owl:DatatypeProperty ;
+    rdfs:label "imei" ;
+    rdfs:domain :Device ;
+    rdfs:range  xsd:string ;
+    skos:definition "The device's unique equipment identity number." .
+
+:iccid a owl:DatatypeProperty ;
+    rdfs:label "iccid" ;
+    rdfs:domain :SIMCard ;
+    rdfs:range  xsd:string ;
+    skos:definition "The integrated circuit card identifier printed on or embedded in the SIM." .
+
+:simRegistered a owl:DatatypeProperty ;
+    rdfs:label "sim registered" ;
+    rdfs:domain :SIMCard ;
+    rdfs:range  xsd:boolean ;
+    skos:definition "Whether subscriber registration (RICA/KYC) completed; activation is blocked until true." .
+
+:dataAmountMb a owl:DatatypeProperty ;
+    rdfs:label "data amount mb" ;
+    rdfs:domain :DataBundle ;
+    rdfs:range  xsd:integer .
+
+:validityDays a owl:DatatypeProperty ;
+    rdfs:label "validity days" ;
+    rdfs:domain :DataBundle ;
+    rdfs:range  xsd:integer ;
+    skos:definition "How many days the data allowance stays usable after provisioning." .
+
+:airtimeValue a owl:DatatypeProperty ;
+    rdfs:label "airtime value" ;
+    rdfs:domain :AirtimeTopUp ;
+    rdfs:range  xsd:decimal .
+
+:contractTermMonths a owl:DatatypeProperty ;
+    rdfs:label "contract term months" ;
+    rdfs:domain :ContractPlan ;
+    rdfs:range  xsd:integer .
+
+:monthlyFee a owl:DatatypeProperty ;
+    rdfs:label "monthly fee" ;
+    rdfs:domain :ContractPlan ;
+    rdfs:range  xsd:decimal .
+
+:targetMsisdn a owl:DatatypeProperty ;
+    rdfs:label "target msisdn" ;
+    rdfs:domain :ProvisioningRequest ;
+    rdfs:range  xsd:string ;
+    skos:definition "The mobile number (E.164) the product is provisioned to." .
+
+:provisioningStatus a owl:DatatypeProperty ;
+    rdfs:label "provisioning status" ;
+    rdfs:domain :ProvisioningRequest ;
+    rdfs:range  xsd:string ;
+    skos:definition "State of the network activation: pending, provisioned, failed, refunded." .
+
+:creditCheckStatus a owl:DatatypeProperty ;
+    rdfs:label "credit check status" ;
+    rdfs:domain :CreditCheck ;
+    rdfs:range  xsd:string ;
+    skos:definition "Outcome of the credit assessment: pending, approved, declined." .
+
+#################################################################
+# Roles (BFO role branch)
+#################################################################
+
+:ProvisioningOperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Provisioning Operator" ;
+    skos:altLabel "Service Activation Agent" ;
+    skos:definition "Person role that monitors and retries failed network provisioning requests. Bearer: person. Permissions: ProvisioningRequest:read, ProvisioningRequest:write, Order:read, Product:read." .
+
+:TelcoStoreManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Telco Store Manager" ;
+    skos:altLabel "Digital Channel Manager" ;
+    skos:definition "Person role that manages the device, SIM, and bundle catalog, pricing, and promotions. Bearer: person. Permissions: Product:read, Product:write, Promotion:read, Promotion:write, Order:read, CreditCheck:read." .
+
+#################################################################
+# Shapes (additive)
+#################################################################
+
+:SIMCardShape a sh:NodeShape ;
+    sh:targetClass :SIMCard ;
+    sh:property [
+        sh:path :iccid ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :simRegistered ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+    ] .
+
+:ProvisioningRequestShape a sh:NodeShape ;
+    sh:targetClass :ProvisioningRequest ;
+    sh:property [
+        sh:path :targetMsisdn ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :provisioningStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "pending" "provisioned" "failed" "refunded" ) ;
+    ] .
+
+:CreditCheckShape a sh:NodeShape ;
+    sh:targetClass :CreditCheck ;
+    sh:property [
+        sh:path :assessesOrder ;
+        sh:class ecom:Order ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :creditCheckStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "pending" "approved" "declined" ) ;
+    ] .

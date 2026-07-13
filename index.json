@@ -790,22 +790,29 @@
         "Order"
       ],
       "entities": [
+        "Customer",
         "Product",
+        "Category",
         "Cart",
         "Order",
+        "OrderLine",
+        "Promotion",
         "Payment",
         "Review",
         "Fulfilment"
       ],
-      "capability": "browse products, manage carts, checkout, pay, and track order fulfillment",
-      "benefit": "shoppers complete purchases with visibility into order status",
-      "workflow": "Browse catalog → add to cart → checkout → pay → fulfill order → confirm delivery",
+      "capability": "browse a catalog of physical, digital, and service products, manage carts, checkout with promotions, pay, and track fulfilment from shipping to instant provisioning",
+      "benefit": "shoppers complete purchases of goods and services with visibility into order status",
+      "workflow": "Browse catalog → add to cart → checkout → apply promotion → pay → fulfill order → confirm delivery",
       "statefulEntity": "Order (cart → paid → fulfilled → delivered)",
-      "industries": [],
+      "industries": [
+        "banking",
+        "telco"
+      ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "pos",
