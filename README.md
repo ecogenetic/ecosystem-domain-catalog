@@ -65,6 +65,26 @@ and **at least one industry overlay per domain**.
 - [playbooks/add-industry.md](playbooks/add-industry.md)
 - [playbooks/add-industry-overlay.md](playbooks/add-industry-overlay.md)
 
+## Used by EcosystemCode
+
+This catalog is used by [EcosystemCode](https://ecosystemcode.com) to ground domain
+selection and seed ontologies when generating full enterprise systems. Contributors
+improve the shared domain language and OWL/SKOS/SHACL assets that product experiences
+can load at generation time.
+
+Learn more about ontology-driven modeling on EcosystemCode:
+**[Ontology & Semantic Modeling](https://ecosystemcode.com/features/ontology)**
+
+Domain selection in the project wizard — each catalog domain ships pre-loaded entities
+and relationships for the ontology:
+
+![EcosystemCode domain wizard — choose an enterprise domain](meta-data/images/ecosystemcode-domain-wizard.png)
+
+Domain detail — the seven-section domain language and seed concepts applied during
+system generation (user-provided text or ontologies still take precedence):
+
+![EcosystemCode CRM domain description and seed ontology](meta-data/images/ecosystemcode-domain-detail.png)
+
 ## License
 
 Copyright 2026 Ecogenetic LLC. Licensed under the Apache License, Version 2.0 —
