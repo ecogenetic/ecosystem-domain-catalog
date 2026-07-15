@@ -3,6 +3,8 @@
 A Master Data Management system governs golden records, hierarchies, match rules, and data
 stewardship tasks so the organization trusts one authoritative master for each data domain.
 
+Industry overlays specialize this domain for vertical terminology and regulatory constraints without forking the base model.
+
 ## Concepts
 
 - **MasterRecord** — the authoritative golden record consolidated from source records for an entity.

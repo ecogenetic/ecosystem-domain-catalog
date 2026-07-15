@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/cms/gambling#> .
+@prefix base: <https://ecosystemcode.com/ontology/cms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cms/gambling> a owl:Ontology ;
+    rdfs:label "CMS Gaming & Gambling Overlay" ;
+    rdfs:comment "Industry overlay specializing cms for gambling." .
+
+:PromotionContent a owl:Class ;
+    skos:prefLabel "Promotion Content" ;
+    skos:definition "Marketing or bonus content subject to responsible-gambling and license rules." .
+
+:JurisdictionContentFlag a owl:Class ;
+    skos:prefLabel "Jurisdiction Content Flag" ;
+    skos:definition "A flag restricting content publish to allowed license jurisdictions." .
+
+:SelfExclusionSuppression a owl:Class ;
+    skos:prefLabel "Self Exclusion Suppression" ;
+    skos:definition "A suppression rule preventing marketing content to self-excluded players." .
+
+:relatedToJurisdictionContentFlag a owl:ObjectProperty ;
+    rdfs:label "related to jurisdiction content flag" ;
+    rdfs:domain :PromotionContent ;
+    rdfs:range  :JurisdictionContentFlag ;
+    skos:definition "Associates PromotionContent with JurisdictionContentFlag in this industry overlay." .
+
+:promotionContentName a owl:DatatypeProperty ;
+    rdfs:label "promotion content name" ;
+    rdfs:domain :PromotionContent ;
+    rdfs:range  xsd:string .
+
+:jurisdictionContentFlagName a owl:DatatypeProperty ;
+    rdfs:label "jurisdiction content flag name" ;
+    rdfs:domain :JurisdictionContentFlag ;
+    rdfs:range  xsd:string .
+
+:selfExclusionSuppressionName a owl:DatatypeProperty ;
+    rdfs:label "self exclusion suppression name" ;
+    rdfs:domain :SelfExclusionSuppression ;
+    rdfs:range  xsd:string .
+
+:ComplianceContentEditorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Compliance Content Editor" ;
+    skos:definition "Person role. Publishes promotion content only after RG and jurisdiction checks. Bearer: person." .
+
+:PromotionContentShape a sh:NodeShape ;
+    sh:targetClass :PromotionContent ;
+    sh:property [
+        sh:path :promotionContentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:JurisdictionContentFlagShape a sh:NodeShape ;
+    sh:targetClass :JurisdictionContentFlag ;
+    sh:property [
+        sh:path :jurisdictionContentFlagName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

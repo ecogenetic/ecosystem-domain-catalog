@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/itsm/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/itsm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/itsm/telco> a owl:Ontology ;
+    rdfs:label "ITSM Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing itsm for telco." .
+
+:NetworkIncident a owl:Class ;
+    skos:prefLabel "Network Incident" ;
+    skos:definition "An ITSM incident affecting network or BSS/OSS services." .
+
+:ChangeWindow a owl:Class ;
+    skos:prefLabel "Change Window" ;
+    skos:definition "An approved maintenance window for network or BSS changes." .
+
+:ServiceImpactAssessment a owl:Class ;
+    skos:prefLabel "Service Impact Assessment" ;
+    skos:definition "Assessment of customer impact before a change is approved." .
+
+:relatedToChangeWindow a owl:ObjectProperty ;
+    rdfs:label "related to change window" ;
+    rdfs:domain :NetworkIncident ;
+    rdfs:range  :ChangeWindow ;
+    skos:definition "Associates NetworkIncident with ChangeWindow in this industry overlay." .
+
+:networkIncidentName a owl:DatatypeProperty ;
+    rdfs:label "network incident name" ;
+    rdfs:domain :NetworkIncident ;
+    rdfs:range  xsd:string .
+
+:changeWindowName a owl:DatatypeProperty ;
+    rdfs:label "change window name" ;
+    rdfs:domain :ChangeWindow ;
+    rdfs:range  xsd:string .
+
+:serviceImpactAssessmentName a owl:DatatypeProperty ;
+    rdfs:label "service impact assessment name" ;
+    rdfs:domain :ServiceImpactAssessment ;
+    rdfs:range  xsd:string .
+
+:NOCIncidentManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "NOC Incident Manager" ;
+    skos:definition "Person role. Coordinates network incidents and change windows with impact assessment. Bearer: person." .
+
+:NetworkIncidentShape a sh:NodeShape ;
+    sh:targetClass :NetworkIncident ;
+    sh:property [
+        sh:path :networkIncidentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ChangeWindowShape a sh:NodeShape ;
+    sh:targetClass :ChangeWindow ;
+    sh:property [
+        sh:path :changeWindowName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

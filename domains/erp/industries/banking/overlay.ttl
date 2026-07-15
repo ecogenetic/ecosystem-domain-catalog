@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/erp/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/erp#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/erp/banking> a owl:Ontology ;
+    rdfs:label "ERP Banking Overlay" ;
+    rdfs:comment "Industry overlay specializing erp for banking." .
+
+:CostCentre a owl:Class ;
+    skos:prefLabel "Cost Centre" ;
+    skos:definition "A bank GL cost centre used to allocate ERP journal postings to business units." .
+
+:RegulatoryReportLine a owl:Class ;
+    skos:prefLabel "Regulatory Report Line" ;
+    skos:definition "A mapped line for prudential or statutory reporting fed from ERP ledgers." .
+
+:IntercompanyLoan a owl:Class ;
+    skos:prefLabel "Intercompany Loan" ;
+    skos:definition "An internal funding arrangement between legal entities posted through ERP." .
+
+:relatedToRegulatoryReportLine a owl:ObjectProperty ;
+    rdfs:label "related to regulatory report line" ;
+    rdfs:domain :CostCentre ;
+    rdfs:range  :RegulatoryReportLine ;
+    skos:definition "Associates CostCentre with RegulatoryReportLine in this industry overlay." .
+
+:costCentreName a owl:DatatypeProperty ;
+    rdfs:label "cost centre name" ;
+    rdfs:domain :CostCentre ;
+    rdfs:range  xsd:string .
+
+:regulatoryReportLineName a owl:DatatypeProperty ;
+    rdfs:label "regulatory report line name" ;
+    rdfs:domain :RegulatoryReportLine ;
+    rdfs:range  xsd:string .
+
+:intercompanyLoanName a owl:DatatypeProperty ;
+    rdfs:label "intercompany loan name" ;
+    rdfs:domain :IntercompanyLoan ;
+    rdfs:range  xsd:string .
+
+:FinanceControllerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Finance Controller" ;
+    skos:definition "Person role. Owns chart of accounts integrity and regulatory report extracts from ERP. Bearer: person." .
+
+:CostCentreShape a sh:NodeShape ;
+    sh:targetClass :CostCentre ;
+    sh:property [
+        sh:path :costCentreName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RegulatoryReportLineShape a sh:NodeShape ;
+    sh:targetClass :RegulatoryReportLine ;
+    sh:property [
+        sh:path :regulatoryReportLineName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

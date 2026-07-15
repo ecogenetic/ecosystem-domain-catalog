@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/cpq/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/cpq#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cpq/telco> a owl:Ontology ;
+    rdfs:label "CPQ Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing cpq for telco." .
+
+:PlanConfiguration a owl:Class ;
+    skos:prefLabel "Plan Configuration" ;
+    skos:definition "A configured rate plan or bundle selected during quoting." .
+
+:DeviceSubsidyQuote a owl:Class ;
+    skos:prefLabel "Device Subsidy Quote" ;
+    skos:definition "A quote line for a device with subsidy or instalment terms." .
+
+:CreditVettedQuote a owl:Class ;
+    skos:prefLabel "Credit Vetted Quote" ;
+    skos:definition "A quote that may only convert after credit vetting for postpaid." .
+
+:relatedToDeviceSubsidyQuote a owl:ObjectProperty ;
+    rdfs:label "related to device subsidy quote" ;
+    rdfs:domain :PlanConfiguration ;
+    rdfs:range  :DeviceSubsidyQuote ;
+    skos:definition "Associates PlanConfiguration with DeviceSubsidyQuote in this industry overlay." .
+
+:planConfigurationName a owl:DatatypeProperty ;
+    rdfs:label "plan configuration name" ;
+    rdfs:domain :PlanConfiguration ;
+    rdfs:range  xsd:string .
+
+:deviceSubsidyQuoteName a owl:DatatypeProperty ;
+    rdfs:label "device subsidy quote name" ;
+    rdfs:domain :DeviceSubsidyQuote ;
+    rdfs:range  xsd:string .
+
+:creditVettedQuoteName a owl:DatatypeProperty ;
+    rdfs:label "credit vetted quote name" ;
+    rdfs:domain :CreditVettedQuote ;
+    rdfs:range  xsd:string .
+
+:TelcoQuoteSpecialistRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Telco Quote Specialist" ;
+    skos:definition "Person role. Configures plans and device subsidies and routes quotes for credit vetting. Bearer: person." .
+
+:PlanConfigurationShape a sh:NodeShape ;
+    sh:targetClass :PlanConfiguration ;
+    sh:property [
+        sh:path :planConfigurationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DeviceSubsidyQuoteShape a sh:NodeShape ;
+    sh:targetClass :DeviceSubsidyQuote ;
+    sh:property [
+        sh:path :deviceSubsidyQuoteName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

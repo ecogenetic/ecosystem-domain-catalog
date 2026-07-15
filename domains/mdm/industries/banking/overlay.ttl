@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/mdm/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/mdm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/mdm/banking> a owl:Ontology ;
+    rdfs:label "MDM Banking Overlay" ;
+    rdfs:comment "Industry overlay specializing mdm for banking." .
+
+:PartyMaster a owl:Class ;
+    skos:prefLabel "Party Master" ;
+    skos:definition "The golden party record for a banking customer or counterparty." .
+
+:KYCAttributeSet a owl:Class ;
+    skos:prefLabel "KYCAttribute Set" ;
+    skos:definition "Master-data attributes required for KYC classification of a party." .
+
+:GoldenRecordMerge a owl:Class ;
+    skos:prefLabel "Golden Record Merge" ;
+    skos:definition "A controlled merge of duplicate party records with audit of survivors." .
+
+:relatedToKYCAttributeSet a owl:ObjectProperty ;
+    rdfs:label "related to kycattribute set" ;
+    rdfs:domain :PartyMaster ;
+    rdfs:range  :KYCAttributeSet ;
+    skos:definition "Associates PartyMaster with KYCAttributeSet in this industry overlay." .
+
+:partyMasterName a owl:DatatypeProperty ;
+    rdfs:label "party master name" ;
+    rdfs:domain :PartyMaster ;
+    rdfs:range  xsd:string .
+
+:kYCAttributeSetName a owl:DatatypeProperty ;
+    rdfs:label "kycattribute set name" ;
+    rdfs:domain :KYCAttributeSet ;
+    rdfs:range  xsd:string .
+
+:goldenRecordMergeName a owl:DatatypeProperty ;
+    rdfs:label "golden record merge name" ;
+    rdfs:domain :GoldenRecordMerge ;
+    rdfs:range  xsd:string .
+
+:PartyDataStewardRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Party Data Steward" ;
+    skos:definition "Person role. Approves golden-record merges and KYC attribute quality. Bearer: person." .
+
+:PartyMasterShape a sh:NodeShape ;
+    sh:targetClass :PartyMaster ;
+    sh:property [
+        sh:path :partyMasterName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:KYCAttributeSetShape a sh:NodeShape ;
+    sh:targetClass :KYCAttributeSet ;
+    sh:property [
+        sh:path :kYCAttributeSetName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

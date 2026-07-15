@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/plm/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/plm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/plm/telco> a owl:Ontology ;
+    rdfs:label "PLM Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing plm for telco." .
+
+:DeviceSKURevision a owl:Class ;
+    skos:prefLabel "Device SKURevision" ;
+    skos:definition "A revision of a handset or CPE product definition through design and launch." .
+
+:FirmwareBaseline a owl:Class ;
+    skos:prefLabel "Firmware Baseline" ;
+    skos:definition "An approved firmware version associated with a device SKU revision." .
+
+:TypeApprovalRecord a owl:Class ;
+    skos:prefLabel "Type Approval Record" ;
+    skos:definition "Regulatory type-approval evidence required before commercial launch." .
+
+:relatedToFirmwareBaseline a owl:ObjectProperty ;
+    rdfs:label "related to firmware baseline" ;
+    rdfs:domain :DeviceSKURevision ;
+    rdfs:range  :FirmwareBaseline ;
+    skos:definition "Associates DeviceSKURevision with FirmwareBaseline in this industry overlay." .
+
+:deviceSKURevisionName a owl:DatatypeProperty ;
+    rdfs:label "device skurevision name" ;
+    rdfs:domain :DeviceSKURevision ;
+    rdfs:range  xsd:string .
+
+:firmwareBaselineName a owl:DatatypeProperty ;
+    rdfs:label "firmware baseline name" ;
+    rdfs:domain :FirmwareBaseline ;
+    rdfs:range  xsd:string .
+
+:typeApprovalRecordName a owl:DatatypeProperty ;
+    rdfs:label "type approval record name" ;
+    rdfs:domain :TypeApprovalRecord ;
+    rdfs:range  xsd:string .
+
+:DeviceProductManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Device Product Manager" ;
+    skos:definition "Person role. Owns device SKU revisions and launch readiness including type approval. Bearer: person." .
+
+:DeviceSKURevisionShape a sh:NodeShape ;
+    sh:targetClass :DeviceSKURevision ;
+    sh:property [
+        sh:path :deviceSKURevisionName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FirmwareBaselineShape a sh:NodeShape ;
+    sh:targetClass :FirmwareBaseline ;
+    sh:property [
+        sh:path :firmwareBaselineName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/scm/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/scm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/scm/telco> a owl:Ontology ;
+    rdfs:label "SCM Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing scm for telco." .
+
+:NetworkEquipmentSKU a owl:Class ;
+    skos:prefLabel "Network Equipment SKU" ;
+    skos:definition "A supply-chain SKU for RAN, core, or CPE equipment with vendor part identity." .
+
+:SiteDeliveryOrder a owl:Class ;
+    skos:prefLabel "Site Delivery Order" ;
+    skos:definition "A delivery order targeting a cell site or POP rather than a warehouse only." .
+
+:SerialisedAssetReceipt a owl:Class ;
+    skos:prefLabel "Serialised Asset Receipt" ;
+    skos:definition "Receipt of serialised network gear (IMEI/serial) into the supply chain." .
+
+:relatedToSiteDeliveryOrder a owl:ObjectProperty ;
+    rdfs:label "related to site delivery order" ;
+    rdfs:domain :NetworkEquipmentSKU ;
+    rdfs:range  :SiteDeliveryOrder ;
+    skos:definition "Associates NetworkEquipmentSKU with SiteDeliveryOrder in this industry overlay." .
+
+:networkEquipmentSKUName a owl:DatatypeProperty ;
+    rdfs:label "network equipment sku name" ;
+    rdfs:domain :NetworkEquipmentSKU ;
+    rdfs:range  xsd:string .
+
+:siteDeliveryOrderName a owl:DatatypeProperty ;
+    rdfs:label "site delivery order name" ;
+    rdfs:domain :SiteDeliveryOrder ;
+    rdfs:range  xsd:string .
+
+:serialisedAssetReceiptName a owl:DatatypeProperty ;
+    rdfs:label "serialised asset receipt name" ;
+    rdfs:domain :SerialisedAssetReceipt ;
+    rdfs:range  xsd:string .
+
+:NetworkSupplyPlannerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Network Supply Planner" ;
+    skos:definition "Person role. Plans equipment supply to sites and tracks serialised receipts. Bearer: person." .
+
+:NetworkEquipmentSKUShape a sh:NodeShape ;
+    sh:targetClass :NetworkEquipmentSKU ;
+    sh:property [
+        sh:path :networkEquipmentSKUName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SiteDeliveryOrderShape a sh:NodeShape ;
+    sh:targetClass :SiteDeliveryOrder ;
+    sh:property [
+        sh:path :siteDeliveryOrderName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

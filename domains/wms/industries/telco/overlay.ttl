@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/wms/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/wms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/wms/telco> a owl:Ontology ;
+    rdfs:label "WMS Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing wms for telco." .
+
+:SIMStockBin a owl:Class ;
+    skos:prefLabel "SIMStock Bin" ;
+    skos:definition "A warehouse bin holding physical SIM cards pending registration or dispatch." .
+
+:DeviceIMEITracking a owl:Class ;
+    skos:prefLabel "Device IMEITracking" ;
+    skos:definition "Warehouse tracking of handset/router stock by IMEI." .
+
+:DealerReplenishmentPick a owl:Class ;
+    skos:prefLabel "Dealer Replenishment Pick" ;
+    skos:definition "A pick wave replenishing dealer or retail channel stock." .
+
+:relatedToDeviceIMEITracking a owl:ObjectProperty ;
+    rdfs:label "related to device imeitracking" ;
+    rdfs:domain :SIMStockBin ;
+    rdfs:range  :DeviceIMEITracking ;
+    skos:definition "Associates SIMStockBin with DeviceIMEITracking in this industry overlay." .
+
+:sIMStockBinName a owl:DatatypeProperty ;
+    rdfs:label "simstock bin name" ;
+    rdfs:domain :SIMStockBin ;
+    rdfs:range  xsd:string .
+
+:deviceIMEITrackingName a owl:DatatypeProperty ;
+    rdfs:label "device imeitracking name" ;
+    rdfs:domain :DeviceIMEITracking ;
+    rdfs:range  xsd:string .
+
+:dealerReplenishmentPickName a owl:DatatypeProperty ;
+    rdfs:label "dealer replenishment pick name" ;
+    rdfs:domain :DealerReplenishmentPick ;
+    rdfs:range  xsd:string .
+
+:SIMWarehouseOperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "SIM Warehouse Operator" ;
+    skos:definition "Person role. Picks, packs, and stages SIM and device stock for channels. Bearer: person." .
+
+:SIMStockBinShape a sh:NodeShape ;
+    sh:targetClass :SIMStockBin ;
+    sh:property [
+        sh:path :sIMStockBinName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DeviceIMEITrackingShape a sh:NodeShape ;
+    sh:targetClass :DeviceIMEITracking ;
+    sh:property [
+        sh:path :deviceIMEITrackingName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

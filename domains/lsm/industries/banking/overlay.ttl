@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/lsm/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/lsm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/lsm/banking> a owl:Ontology ;
+    rdfs:label "LSM Banking Overlay" ;
+    rdfs:comment "Industry overlay specializing lsm for banking." .
+
+:AssetFinanceLease a owl:Class ;
+    skos:prefLabel "Asset Finance Lease" ;
+    skos:definition "A lease financing a customer asset (vehicle, equipment) on bank books." .
+
+:ResidualValueSchedule a owl:Class ;
+    skos:prefLabel "Residual Value Schedule" ;
+    skos:definition "The scheduled residual value used in lease pricing and end-of-term options." .
+
+:LeaseAffordabilityCheck a owl:Class ;
+    skos:prefLabel "Lease Affordability Check" ;
+    skos:definition "Affordability assessment gating lease approval." .
+
+:relatedToResidualValueSchedule a owl:ObjectProperty ;
+    rdfs:label "related to residual value schedule" ;
+    rdfs:domain :AssetFinanceLease ;
+    rdfs:range  :ResidualValueSchedule ;
+    skos:definition "Associates AssetFinanceLease with ResidualValueSchedule in this industry overlay." .
+
+:assetFinanceLeaseName a owl:DatatypeProperty ;
+    rdfs:label "asset finance lease name" ;
+    rdfs:domain :AssetFinanceLease ;
+    rdfs:range  xsd:string .
+
+:residualValueScheduleName a owl:DatatypeProperty ;
+    rdfs:label "residual value schedule name" ;
+    rdfs:domain :ResidualValueSchedule ;
+    rdfs:range  xsd:string .
+
+:leaseAffordabilityCheckName a owl:DatatypeProperty ;
+    rdfs:label "lease affordability check name" ;
+    rdfs:domain :LeaseAffordabilityCheck ;
+    rdfs:range  xsd:string .
+
+:LeaseCreditOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Lease Credit Officer" ;
+    skos:definition "Person role. Reviews lease affordability and residual risk before activation. Bearer: person." .
+
+:AssetFinanceLeaseShape a sh:NodeShape ;
+    sh:targetClass :AssetFinanceLease ;
+    sh:property [
+        sh:path :assetFinanceLeaseName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ResidualValueScheduleShape a sh:NodeShape ;
+    sh:targetClass :ResidualValueSchedule ;
+    sh:property [
+        sh:path :residualValueScheduleName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

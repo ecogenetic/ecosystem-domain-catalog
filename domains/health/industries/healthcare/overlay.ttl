@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/health/healthcare#> .
+@prefix base: <https://ecosystemcode.com/ontology/health#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/health/healthcare> a owl:Ontology ;
+    rdfs:label "HEALTH Healthcare Overlay" ;
+    rdfs:comment "Industry overlay specializing health for healthcare." .
+
+:EncounterRecord a owl:Class ;
+    skos:prefLabel "Encounter Record" ;
+    skos:definition "A clinical encounter (visit, admission, telehealth) in the EHR." .
+
+:ConsentDirective a owl:Class ;
+    skos:prefLabel "Consent Directive" ;
+    skos:definition "Patient consent for treatment or data sharing, scoped and revocable." .
+
+:ProblemListEntry a owl:Class ;
+    skos:prefLabel "Problem List Entry" ;
+    skos:definition "An active or historical problem on the patient problem list." .
+
+:relatedToConsentDirective a owl:ObjectProperty ;
+    rdfs:label "related to consent directive" ;
+    rdfs:domain :EncounterRecord ;
+    rdfs:range  :ConsentDirective ;
+    skos:definition "Associates EncounterRecord with ConsentDirective in this industry overlay." .
+
+:encounterRecordName a owl:DatatypeProperty ;
+    rdfs:label "encounter record name" ;
+    rdfs:domain :EncounterRecord ;
+    rdfs:range  xsd:string .
+
+:consentDirectiveName a owl:DatatypeProperty ;
+    rdfs:label "consent directive name" ;
+    rdfs:domain :ConsentDirective ;
+    rdfs:range  xsd:string .
+
+:problemListEntryName a owl:DatatypeProperty ;
+    rdfs:label "problem list entry name" ;
+    rdfs:domain :ProblemListEntry ;
+    rdfs:range  xsd:string .
+
+:HealthRecordsOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Health Records Officer" ;
+    skos:definition "Person role. Maintains encounter documentation integrity and consent directives. Bearer: person." .
+
+:EncounterRecordShape a sh:NodeShape ;
+    sh:targetClass :EncounterRecord ;
+    sh:property [
+        sh:path :encounterRecordName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ConsentDirectiveShape a sh:NodeShape ;
+    sh:targetClass :ConsentDirective ;
+    sh:property [
+        sh:path :consentDirectiveName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

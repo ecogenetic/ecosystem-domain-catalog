@@ -3,6 +3,8 @@
 A Product Information Management system maintains product attributes, categories, catalogs, and
 channel publications so merchandising teams publish accurate product data everywhere it is sold.
 
+Industry overlays specialize this domain for vertical terminology and regulatory constraints without forking the base model.
+
 ## Concepts
 
 - **Product** — a sellable item whose descriptive information is enriched and published to channels.

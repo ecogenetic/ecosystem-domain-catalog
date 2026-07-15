@@ -1,0 +1,18 @@
+name: Ontology quality
+description: Synonym, definition, shape, or completeness gap
+title: "fix(ontology): "
+labels: ["ontology-quality"]
+body:
+  - type: input
+    id: domain_id
+    attributes:
+      label: Domain id
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Gap
+      description: Missing altLabel, unclear definition, SHACL hole, etc.
+    validations:
+      required: true
