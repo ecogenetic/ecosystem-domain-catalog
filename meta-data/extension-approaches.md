@@ -30,5 +30,4 @@
 
 ## After merge
 
-Catalog CI validates. Maintainers sync the snapshot into consuming products (e.g. ecosystem-server).
-Catalog-only contributors do not need access to sibling product repos.
+Catalog CI validates. Downstream products refresh their snapshots in **their** build pipelines.

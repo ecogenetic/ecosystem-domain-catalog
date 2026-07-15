@@ -33,10 +33,4 @@ Design rules for external products: [meta-data/](../meta-data/).
    `industries: ["{industry}"]` with length ≥ 1, all three `has*` flags true, `version: "1.0.0"`).
 4. Run `./tools/validate-catalog.sh`. Fix every reported issue and re-run until it exits 0.
 5. Commit on a branch, open a PR. Title: `feat(domain): add {ACRONYM} — {Full Name}`.
-6. After merge, maintainers sync into consuming products (e.g. ecosystem-server). Catalog-only
-   contributors stop after a green validate PR.
-
-### Maintainer follow-up (optional)
-
-- Sync snapshot: `cd ../ecosystem-server && ./scripts/sync-domain-catalog.sh`
-- Static UI seed (if needed): mirror id/entities in the modeling app wizard config
+6. Catalog-only contributors stop after a green validate PR.

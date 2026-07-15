@@ -17,3 +17,5 @@ All notable catalog-wide changes are recorded here. Per-domain SemVer lives in `
 - README repositioned for ontology / taxonomy / KG specialists
 - AGENTS.md and playbooks updated for manifest SemVer policy and public PR titles
 - All domain `index.json` entries refreshed (version and/or industries / seed fields)
+- Removed downstream consumer / server-sync instructions from this repo (sync is owned by
+  consuming product build pipelines)

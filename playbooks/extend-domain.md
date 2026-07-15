@@ -25,4 +25,4 @@ Read [AGENTS.md](../AGENTS.md) section 2 (invariants) and [meta-data/manifest-sc
 4. Update `index.json`: bump `version` (MINOR for additive; MAJOR if breaking shapes/entities);
    append to `entities` / refresh `chips` / `capability` / `benefit` / `workflow` as needed.
 5. Run `./tools/validate-catalog.sh` until it exits 0.
-6. PR titled `feat(domain): extend {id} — {summary}`. After merge, maintainers sync consumers.
+6. PR titled `feat(domain): extend {id} — {summary}`.

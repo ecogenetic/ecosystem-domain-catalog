@@ -55,8 +55,8 @@ See [meta-data/extension-approaches.md](meta-data/extension-approaches.md). Exam
 
 ## After merge
 
-Maintainers sync snapshots into consuming products. You do not need access to
-sibling application repositories for a catalog-only contribution.
+Catalog CI validates on every PR. Downstream product builds pull this catalog on their own
+schedules — catalog contributors do not need access to sibling application repositories.
 
 ## License
 

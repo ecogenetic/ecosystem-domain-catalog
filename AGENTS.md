@@ -6,8 +6,8 @@ design package in [meta-data/](meta-data/). **This file is the normative schema*
 
 This repository is the **ecosystem-domain-catalog**: the source of truth for business-domain
 descriptions and seed ontologies. It is a **living catalog** — domains, concepts, and
-industries are extended over time via PR. One consumer is EcosystemCode (ecosystem-server);
-external products consume the same structure via `meta-data/` and the domain assets.
+industries are extended over time via PR. Downstream products consume this catalog through
+their own build pipelines (not documented here).
 
 `tools/validate-catalog.sh` MUST pass before every commit.
 If you change the contract here, change the validator in the same commit — they must not diverge.
@@ -64,8 +64,6 @@ an entry in `index.json`.
 6. **Manifest sync**: any change under `domains/{id}/` MUST update that domain’s `index.json`
    entry in the same commit (SemVer bump + seed fields). See section 6 and `meta-data/manifest-schema.md`.
 7. **≥1 industry per domain**: `industries` array length ≥ 1; overlay folders must match.
-8. **Sync after merge** (maintainers): run `scripts/sync-domain-catalog.sh` in ecosystem-server
-   and commit the snapshot there (see README).
 
 ## 3. `description.md` skeleton (all seven sections required, non-empty)
 
@@ -269,4 +267,3 @@ Roles / regulatory notes) appended after the base description at generation time
 3. Add/update the manifest entry (`index.json` or `industries.json`) including SemVer bump.
 4. Run `./tools/validate-catalog.sh` — fix everything it reports.
 5. Commit via PR using public title conventions (`feat(domain): …`, `feat(overlay): …`, `docs: …`).
-   After merge, maintainers sync into ecosystem-server per README.

@@ -65,17 +65,6 @@ and **at least one industry overlay per domain**.
 - [playbooks/add-industry.md](playbooks/add-industry.md)
 - [playbooks/add-industry-overlay.md](playbooks/add-industry-overlay.md)
 
-## Downstream consumers (secondary)
-
-One consumer is [EcosystemCode](https://ecosystemcode.com): after merge to `main`, maintainers
-sync a snapshot into `ecosystem-server` (see CI workflow `sync-to-server.yml`). Catalog
-contributors do not need that repo for catalog-only PRs.
-
-```bash
-# Maintainer sync (after merge)
-cd ../ecosystem-server && ./scripts/sync-domain-catalog.sh
-```
-
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE).
