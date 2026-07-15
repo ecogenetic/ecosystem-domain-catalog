@@ -32,18 +32,32 @@ except Exception as e:
 
 # ---------- manifest field completeness ----------
 python3 - "$ROOT" <<'PYEOF'
-import json, sys
+import json, sys, re
 root = sys.argv[1]
 required = ["id","acronym","name","description","icon","chips","entities",
             "capability","benefit","workflow","statefulEntity","industries",
             "hasDescription","hasOntology","hasShapes","version"]
+semver = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
 m = json.load(open(f"{root}/index.json"))
 bad = 0
 for d in m["domains"]:
+    did = d.get("id", "?")
     for f in required:
         if f not in d or d[f] in ("", None) or (isinstance(d[f], list) and f in ("chips","entities") and len(d[f]) == 0):
-            print(f"FAIL: index.json domain '{d.get('id','?')}' missing/empty field '{f}'")
+            print(f"FAIL: index.json domain '{did}' missing/empty field '{f}'")
             bad += 1
+    ver = d.get("version", "")
+    if ver and not semver.match(str(ver)):
+        print(f"FAIL: index.json domain '{did}' version '{ver}' must match MAJOR.MINOR.PATCH")
+        bad += 1
+    inds = d.get("industries")
+    if not isinstance(inds, list) or len(inds) < 1:
+        print(f"FAIL: index.json domain '{did}' must list at least one industry")
+        bad += 1
+    ents = d.get("entities") or []
+    if len(ents) != len(set(ents)):
+        print(f"FAIL: index.json domain '{did}' has duplicate entities")
+        bad += 1
 sys.exit(1 if bad else 0)
 PYEOF
 [ $? -ne 0 ] && ERRORS=$((ERRORS + 1))

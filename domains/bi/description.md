@@ -3,6 +3,8 @@
 A Business Intelligence & Analytics system defines datasets, metrics, dashboards, and reports
 for decision-makers so leaders monitor KPIs continuously instead of waiting for ad hoc analysis.
 
+Industry overlays specialize this domain for vertical terminology and regulatory constraints without forking the base model.
+
 ## Concepts
 
 - **Dashboard** — an interactive collection of visualizations that presents metrics at a glance.

@@ -1,7 +1,7 @@
 # Playbook: Extend an existing domain (add concepts / relationships / attributes)
 
 Prompt-style procedure for adding to a domain **without breaking published structure**.
-Read [AGENTS.md](../AGENTS.md) section 2 (invariants) before starting.
+Read [AGENTS.md](../AGENTS.md) section 2 (invariants) and [meta-data/manifest-schema.md](../meta-data/manifest-schema.md) before starting.
 
 ## Rules
 
@@ -10,6 +10,7 @@ Read [AGENTS.md](../AGENTS.md) section 2 (invariants) before starting.
 - New concepts/properties follow the exact templates in AGENTS.md sections 4–5.
 - Keep `description.md` and `ontology.ttl` in step: every new class gets a Concepts bullet;
   every new object property gets a Relationships line (`Subject verb Object (cardinality)`).
+- Update `index.json` in the **same PR** (SemVer + seed fields).
 
 ## Steps
 
@@ -19,10 +20,9 @@ Read [AGENTS.md](../AGENTS.md) section 2 (invariants) before starting.
    `owl:ObjectProperty`/`owl:DatatypeProperty` declarations to `ontology.ttl`.
 3. If the new concept is required for a complete model, add or extend a `sh:NodeShape`
    in `shapes.ttl`. Only strengthen shapes for NEW concepts — do not add new constraints
-   to existing concepts unless the domain owner agrees (it changes completeness reports
-   for existing projects).
-4. If the concept should be a wizard seed entity, append it to the domain's `entities`
-   in `index.json` and bump the entry's `version` (minor bump, e.g. 1.0.0 → 1.1.0).
+   to existing concepts unless maintainers agree (MAJOR bump; changes completeness for
+   existing consumers).
+4. Update `index.json`: bump `version` (MINOR for additive; MAJOR if breaking shapes/entities);
+   append to `entities` / refresh `chips` / `capability` / `benefit` / `workflow` as needed.
 5. Run `./tools/validate-catalog.sh` until it exits 0.
-6. PR titled `Extend domain: {ACRONYM} — {summary}`. After merge, sync into
-   ecosystem-server per the README.
+6. PR titled `feat(domain): extend {id} — {summary}`. After merge, maintainers sync consumers.

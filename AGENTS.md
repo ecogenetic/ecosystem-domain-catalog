@@ -1,12 +1,15 @@
 # AGENTS.md — Canonical Structural Contract
 
-This repository is the **ecosystem-domain-catalog**: the source of truth for business-domain
-descriptions and seed ontologies consumed by EcosystemCode (ecosystem-server) for model and
-code generation. It is a **living catalog** — domains, concepts, and industries are extended
-over time via PR.
+Humans contributing publicly: start at [CONTRIBUTING.md](CONTRIBUTING.md) and the published
+design package in [meta-data/](meta-data/). **This file is the normative schema** enforced by
+`tools/validate-catalog.sh` — agents and CI must follow it exactly.
 
-Any agent or human extending this catalog MUST follow the structures below exactly.
-`tools/validate-catalog.sh` enforces this same contract and MUST pass before every commit.
+This repository is the **ecosystem-domain-catalog**: the source of truth for business-domain
+descriptions and seed ontologies. It is a **living catalog** — domains, concepts, and
+industries are extended over time via PR. One consumer is EcosystemCode (ecosystem-server);
+external products consume the same structure via `meta-data/` and the domain assets.
+
+`tools/validate-catalog.sh` MUST pass before every commit.
 If you change the contract here, change the validator in the same commit — they must not diverge.
 
 ---
@@ -15,9 +18,11 @@ If you change the contract here, change the validator in the same commit — the
 
 ```text
 ecosystem-domain-catalog/
-  README.md                # human authoring guide
+  README.md                # public specialist landing
+  CONTRIBUTING.md          # human contribution guide
   AGENTS.md                # this file — canonical structural contract
-  CLAUDE.md                # pointer to AGENTS.md
+  CLAUDE.md                # pointer to AGENTS.md / CONTRIBUTING.md
+  meta-data/               # published design rules for external products
   index.json               # domain manifest (schema in section 6)
   industries.json          # industry registry (schema in section 7)
   playbooks/               # step-by-step extension procedures
@@ -36,15 +41,16 @@ ecosystem-domain-catalog/
       description.md       # domain language (section 3)
       ontology.ttl         # OWL + SKOS Turtle (section 4)
       shapes.ttl           # SHACL shapes (section 5)
-      industries/          # OPTIONAL industry overlays
+      industries/          # REQUIRED — at least one industry overlay
         {industryId}/
           overlay.md       # description addendum appended after the base description
           overlay.ttl      # extends the base ontology — add-only (section 8)
 ```
 
 Required files per domain: `description.md`, `ontology.ttl`, `shapes.ttl` — no exceptions.
-Domain ids are lowercase (e.g. `crm`, `fms`) and MUST match the wizard's `WIZARD_DOMAINS` ids
-and an entry in `index.json`.
+Every domain MUST have **≥1** industry overlay under `domains/{id}/industries/` listed in
+`index.json` `industries[]`. Domain ids are lowercase (e.g. `crm`, `fms`) and MUST match
+an entry in `index.json`.
 
 ## 2. Invariants (never break these)
 
@@ -55,8 +61,11 @@ and an entry in `index.json`.
 3. **No placeholders**: `TODO`, `TBD`, `PLACEHOLDER`, `FIXME`, or empty sections fail validation.
 4. **Overlays are add-only** (section 8): they never redefine or remove base terms.
 5. **Validate before commit**: `./tools/validate-catalog.sh` must exit 0.
-6. **Sync after merge**: run `scripts/sync-domain-catalog.sh` in ecosystem-server and commit
-   the snapshot there (see README "Sync workflow").
+6. **Manifest sync**: any change under `domains/{id}/` MUST update that domain’s `index.json`
+   entry in the same commit (SemVer bump + seed fields). See section 6 and `meta-data/manifest-schema.md`.
+7. **≥1 industry per domain**: `industries` array length ≥ 1; overlay folders must match.
+8. **Sync after merge** (maintainers): run `scripts/sync-domain-catalog.sh` in ecosystem-server
+   and commit the snapshot there (see README).
 
 ## 3. `description.md` skeleton (all seven sections required, non-empty)
 
@@ -96,6 +105,8 @@ One-paragraph summary of what this system does and for whom.
 ```
 
 Relationship lines MUST follow `Subject verb Object (cardinality)` so they can be parsed.
+Language must be **complete** for the domain: substantive concepts, relationships, attributes,
+roles, and workflow — not marketing stubs. See `meta-data/domain-language.md`.
 
 ## 4. `ontology.ttl` template (OWL + SKOS)
 
@@ -150,7 +161,7 @@ Stateful entities get a `...Status` datatype property (`xsd:string`); the allowe
 constrained in `shapes.ttl`, not in the ontology.
 
 Role pattern — role classes are named `{Something}Role` AND subclassed under the BFO role
-branch so the server's `semanticKind=role` detection and rolePolicies extraction work:
+branch so consumers can detect `semanticKind=role` and extract role policies:
 
 ```turtle
 :SalesRepRole a owl:Class ;
@@ -197,13 +208,13 @@ Minimum content per domain: at least one `sh:NodeShape` per core concept, at lea
   "name": "Customer Relationship Management",
   "description": "Customer Relationship Management",
   "icon": "Users",
-  "chips": ["Contact", "Account", "Opportunity"],
-  "entities": ["Contact", "Account", "Opportunity", "Pipeline", "Activity", "Lead"],
-  "capability": "capture leads, manage accounts and contacts, and progress opportunities through pipeline stages",
-  "benefit": "sales teams share one forecastable view of every customer relationship",
-  "workflow": "Capture lead → qualify → open opportunity → log activities → close won or lost",
-  "statefulEntity": "Opportunity (pipeline stages: lead → qualified → proposal → won/lost)",
-  "industries": [],
+  "chips": ["Account", "Opportunity", "Case"],
+  "entities": ["Account", "Contact", "Opportunity", "Pipeline", "Activity", "Lead"],
+  "capability": "…",
+  "benefit": "…",
+  "workflow": "…",
+  "statefulEntity": "Opportunity (…)",
+  "industries": ["banking"],
   "hasDescription": true,
   "hasOntology": true,
   "hasShapes": true,
@@ -211,9 +222,18 @@ Minimum content per domain: at least one `sh:NodeShape` per core concept, at lea
 }
 ```
 
-`icon` is a lucide-react icon component name. `industries` lists industry ids that have an
-overlay folder for this domain. Every `domains/{id}/` folder must have a manifest entry and
-vice versa.
+### SemVer for `version` (required format `MAJOR.MINOR.PATCH`)
+
+| Change | Bump |
+|--------|------|
+| New domain | `1.0.0` |
+| Additive concepts / overlays / richer language | MINOR |
+| Breaking SHACL / remove seed entity | MAJOR |
+| Wording-only | PATCH |
+
+`industries` MUST contain ≥1 industry id that has an overlay folder for this domain.
+`icon` is a lucide-react icon component name (UI consumers). Every `domains/{id}/` folder
+must have a manifest entry and vice versa. Full field meanings: `meta-data/manifest-schema.md`.
 
 ## 7. `industries.json` entry schema
 
@@ -244,8 +264,9 @@ Roles / regulatory notes) appended after the base description at generation time
 
 ## 9. Workflow for any extension
 
-1. Read the relevant playbook in `playbooks/`.
+1. Read the relevant playbook in `playbooks/` and `meta-data/extension-approaches.md`.
 2. Author files exactly per the templates above.
-3. Add/update the manifest entry (`index.json` or `industries.json`).
+3. Add/update the manifest entry (`index.json` or `industries.json`) including SemVer bump.
 4. Run `./tools/validate-catalog.sh` — fix everything it reports.
-5. Commit via PR. After merge, sync into ecosystem-server per README.
+5. Commit via PR using public title conventions (`feat(domain): …`, `feat(overlay): …`, `docs: …`).
+   After merge, maintainers sync into ecosystem-server per README.

@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/pos/gambling#> .
+@prefix base: <https://ecosystemcode.com/ontology/pos#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/pos/gambling> a owl:Ontology ;
+    rdfs:label "POS Gaming & Gambling Overlay" ;
+    rdfs:comment "Industry overlay specializing pos for gambling." .
+
+:VenueTill a owl:Class ;
+    skos:prefLabel "Venue Till" ;
+    skos:definition "A point-of-sale till at a licensed gambling venue." .
+
+:AgeVerificationEvent a owl:Class ;
+    skos:prefLabel "Age Verification Event" ;
+    skos:definition "A till event recording age verification before a sale or payout." .
+
+:CashDeskPayout a owl:Class ;
+    skos:prefLabel "Cash Desk Payout" ;
+    skos:definition "A cash payout at the till subject to AML thresholds." .
+
+:relatedToAgeVerificationEvent a owl:ObjectProperty ;
+    rdfs:label "related to age verification event" ;
+    rdfs:domain :VenueTill ;
+    rdfs:range  :AgeVerificationEvent ;
+    skos:definition "Associates VenueTill with AgeVerificationEvent in this industry overlay." .
+
+:venueTillName a owl:DatatypeProperty ;
+    rdfs:label "venue till name" ;
+    rdfs:domain :VenueTill ;
+    rdfs:range  xsd:string .
+
+:ageVerificationEventName a owl:DatatypeProperty ;
+    rdfs:label "age verification event name" ;
+    rdfs:domain :AgeVerificationEvent ;
+    rdfs:range  xsd:string .
+
+:cashDeskPayoutName a owl:DatatypeProperty ;
+    rdfs:label "cash desk payout name" ;
+    rdfs:domain :CashDeskPayout ;
+    rdfs:range  xsd:string .
+
+:VenueCashierRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Venue Cashier" ;
+    skos:definition "Person role. Operates venue tills with mandatory age verification and payout limits. Bearer: person." .
+
+:VenueTillShape a sh:NodeShape ;
+    sh:targetClass :VenueTill ;
+    sh:property [
+        sh:path :venueTillName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AgeVerificationEventShape a sh:NodeShape ;
+    sh:targetClass :AgeVerificationEvent ;
+    sh:property [
+        sh:path :ageVerificationEventName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

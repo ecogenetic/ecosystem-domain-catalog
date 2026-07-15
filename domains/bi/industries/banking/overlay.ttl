@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/bi/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/bi#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bi/banking> a owl:Ontology ;
+    rdfs:label "BI Banking Overlay" ;
+    rdfs:comment "Industry overlay specializing bi for banking." .
+
+:RiskMetricCube a owl:Class ;
+    skos:prefLabel "Risk Metric Cube" ;
+    skos:definition "An analytical cube or dataset of risk metrics for regulatory or management reporting." .
+
+:LiquidityDashboard a owl:Class ;
+    skos:prefLabel "Liquidity Dashboard" ;
+    skos:definition "A curated dashboard of liquidity and funding indicators." .
+
+:ModelValidationReport a owl:Class ;
+    skos:prefLabel "Model Validation Report" ;
+    skos:definition "A report documenting validation of a credit or risk model used in BI." .
+
+:relatedToLiquidityDashboard a owl:ObjectProperty ;
+    rdfs:label "related to liquidity dashboard" ;
+    rdfs:domain :RiskMetricCube ;
+    rdfs:range  :LiquidityDashboard ;
+    skos:definition "Associates RiskMetricCube with LiquidityDashboard in this industry overlay." .
+
+:riskMetricCubeName a owl:DatatypeProperty ;
+    rdfs:label "risk metric cube name" ;
+    rdfs:domain :RiskMetricCube ;
+    rdfs:range  xsd:string .
+
+:liquidityDashboardName a owl:DatatypeProperty ;
+    rdfs:label "liquidity dashboard name" ;
+    rdfs:domain :LiquidityDashboard ;
+    rdfs:range  xsd:string .
+
+:modelValidationReportName a owl:DatatypeProperty ;
+    rdfs:label "model validation report name" ;
+    rdfs:domain :ModelValidationReport ;
+    rdfs:range  xsd:string .
+
+:RiskReportingAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Risk Reporting Analyst" ;
+    skos:definition "Person role. Publishes risk metrics and validates dashboard figures against source systems. Bearer: person." .
+
+:RiskMetricCubeShape a sh:NodeShape ;
+    sh:targetClass :RiskMetricCube ;
+    sh:property [
+        sh:path :riskMetricCubeName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LiquidityDashboardShape a sh:NodeShape ;
+    sh:targetClass :LiquidityDashboard ;
+    sh:property [
+        sh:path :liquidityDashboardName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,3 +1,4 @@
 # CLAUDE.md
 
-All agent instructions for this repository live in [AGENTS.md](AGENTS.md). Read and follow that file.
+Humans: start at [CONTRIBUTING.md](CONTRIBUTING.md) and [meta-data/](meta-data/).
+Agents: follow [AGENTS.md](AGENTS.md) exactly (structural contract enforced by CI).

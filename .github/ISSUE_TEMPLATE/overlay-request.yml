@@ -1,0 +1,30 @@
+name: Industry overlay request
+description: Propose specializing a domain for an industry
+title: "feat(overlay): "
+labels: ["overlay", "industry"]
+body:
+  - type: input
+    id: domain_id
+    attributes:
+      label: Domain id
+    validations:
+      required: true
+  - type: dropdown
+    id: industry_id
+    attributes:
+      label: Industry
+      options:
+        - banking
+        - insurance
+        - telco
+        - healthcare
+        - gambling
+        - other (describe)
+    validations:
+      required: true
+  - type: textarea
+    id: concepts
+    attributes:
+      label: Additional concepts and regulatory notes
+    validations:
+      required: true

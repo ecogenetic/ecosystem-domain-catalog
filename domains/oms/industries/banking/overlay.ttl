@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/oms/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/oms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/oms/banking> a owl:Ontology ;
+    rdfs:label "OMS Banking Overlay" ;
+    rdfs:comment "Industry overlay specializing oms for banking." .
+
+:ChannelOrder a owl:Class ;
+    skos:prefLabel "Channel Order" ;
+    skos:definition "An order placed via a banking digital or branch channel for a product or VAS." .
+
+:FulfilmentHold a owl:Class ;
+    skos:prefLabel "Fulfilment Hold" ;
+    skos:definition "A hold preventing fulfilment until KYC or risk checks clear." .
+
+:AccountCreditFulfilment a owl:Class ;
+    skos:prefLabel "Account Credit Fulfilment" ;
+    skos:definition "Fulfilment that credits a customer account rather than shipping goods." .
+
+:relatedToFulfilmentHold a owl:ObjectProperty ;
+    rdfs:label "related to fulfilment hold" ;
+    rdfs:domain :ChannelOrder ;
+    rdfs:range  :FulfilmentHold ;
+    skos:definition "Associates ChannelOrder with FulfilmentHold in this industry overlay." .
+
+:channelOrderName a owl:DatatypeProperty ;
+    rdfs:label "channel order name" ;
+    rdfs:domain :ChannelOrder ;
+    rdfs:range  xsd:string .
+
+:fulfilmentHoldName a owl:DatatypeProperty ;
+    rdfs:label "fulfilment hold name" ;
+    rdfs:domain :FulfilmentHold ;
+    rdfs:range  xsd:string .
+
+:accountCreditFulfilmentName a owl:DatatypeProperty ;
+    rdfs:label "account credit fulfilment name" ;
+    rdfs:domain :AccountCreditFulfilment ;
+    rdfs:range  xsd:string .
+
+:ChannelOrderOpsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Channel Order Operations" ;
+    skos:definition "Person role. Clears fulfilment holds and monitors channel order SLAs. Bearer: person." .
+
+:ChannelOrderShape a sh:NodeShape ;
+    sh:targetClass :ChannelOrder ;
+    sh:property [
+        sh:path :channelOrderName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FulfilmentHoldShape a sh:NodeShape ;
+    sh:targetClass :FulfilmentHold ;
+    sh:property [
+        sh:path :fulfilmentHoldName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,28 @@
+name: Domain request or extension
+description: Propose a new domain or extend an existing one
+title: "feat(domain): "
+labels: ["domain"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - New domain
+        - Extend existing domain
+    validations:
+      required: true
+  - type: input
+    id: domain_id
+    attributes:
+      label: Domain id (lowercase)
+      placeholder: crm
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Concepts, workflow, and why this belongs in the catalog
+    validations:
+      required: true

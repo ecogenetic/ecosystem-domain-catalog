@@ -3,6 +3,8 @@
 A Financial Technology Platform processes transactions, maintains ledgers, and enforces financial
 controls so stakeholders trust balances and audit trails in real time.
 
+Industry overlays specialize this domain for vertical terminology and regulatory constraints without forking the base model.
+
 ## Concepts
 
 - **Account** — a balance-holding record for a customer or internal party on the platform.

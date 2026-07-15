@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/hcm/healthcare#> .
+@prefix base: <https://ecosystemcode.com/ontology/hcm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/hcm/healthcare> a owl:Ontology ;
+    rdfs:label "HCM Healthcare Overlay" ;
+    rdfs:comment "Industry overlay specializing hcm for healthcare." .
+
+:ClinicianCredential a owl:Class ;
+    skos:prefLabel "Clinician Credential" ;
+    skos:definition "A verified license or board certification required before clinical rostering." .
+
+:ShiftRoster a owl:Class ;
+    skos:prefLabel "Shift Roster" ;
+    skos:definition "A scheduled set of clinical shifts for a ward or unit." .
+
+:MandatoryTrainingRecord a owl:Class ;
+    skos:prefLabel "Mandatory Training Record" ;
+    skos:definition "Proof of completed compliance or clinical training tied to an employee." .
+
+:relatedToShiftRoster a owl:ObjectProperty ;
+    rdfs:label "related to shift roster" ;
+    rdfs:domain :ClinicianCredential ;
+    rdfs:range  :ShiftRoster ;
+    skos:definition "Associates ClinicianCredential with ShiftRoster in this industry overlay." .
+
+:clinicianCredentialName a owl:DatatypeProperty ;
+    rdfs:label "clinician credential name" ;
+    rdfs:domain :ClinicianCredential ;
+    rdfs:range  xsd:string .
+
+:shiftRosterName a owl:DatatypeProperty ;
+    rdfs:label "shift roster name" ;
+    rdfs:domain :ShiftRoster ;
+    rdfs:range  xsd:string .
+
+:mandatoryTrainingRecordName a owl:DatatypeProperty ;
+    rdfs:label "mandatory training record name" ;
+    rdfs:domain :MandatoryTrainingRecord ;
+    rdfs:range  xsd:string .
+
+:ClinicalWorkforceLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Clinical Workforce Lead" ;
+    skos:definition "Person role. Approves rosters and verifies credentials before shifts go live. Bearer: person." .
+
+:ClinicianCredentialShape a sh:NodeShape ;
+    sh:targetClass :ClinicianCredential ;
+    sh:property [
+        sh:path :clinicianCredentialName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ShiftRosterShape a sh:NodeShape ;
+    sh:targetClass :ShiftRoster ;
+    sh:property [
+        sh:path :shiftRosterName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

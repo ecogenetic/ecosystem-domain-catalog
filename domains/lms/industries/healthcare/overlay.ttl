@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/lms/healthcare#> .
+@prefix base: <https://ecosystemcode.com/ontology/lms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/lms/healthcare> a owl:Ontology ;
+    rdfs:label "LMS Healthcare Overlay" ;
+    rdfs:comment "Industry overlay specializing lms for healthcare." .
+
+:ClinicalCompetencyCourse a owl:Class ;
+    skos:prefLabel "Clinical Competency Course" ;
+    skos:definition "A learning course required for clinical competency or privilege." .
+
+:ComplianceCertificate a owl:Class ;
+    skos:prefLabel "Compliance Certificate" ;
+    skos:definition "A certificate evidencing completion of mandatory compliance training." .
+
+:PrivilegeLinkedCurriculum a owl:Class ;
+    skos:prefLabel "Privilege Linked Curriculum" ;
+    skos:definition "A curriculum linked to clinical privileges that must stay current." .
+
+:relatedToComplianceCertificate a owl:ObjectProperty ;
+    rdfs:label "related to compliance certificate" ;
+    rdfs:domain :ClinicalCompetencyCourse ;
+    rdfs:range  :ComplianceCertificate ;
+    skos:definition "Associates ClinicalCompetencyCourse with ComplianceCertificate in this industry overlay." .
+
+:clinicalCompetencyCourseName a owl:DatatypeProperty ;
+    rdfs:label "clinical competency course name" ;
+    rdfs:domain :ClinicalCompetencyCourse ;
+    rdfs:range  xsd:string .
+
+:complianceCertificateName a owl:DatatypeProperty ;
+    rdfs:label "compliance certificate name" ;
+    rdfs:domain :ComplianceCertificate ;
+    rdfs:range  xsd:string .
+
+:privilegeLinkedCurriculumName a owl:DatatypeProperty ;
+    rdfs:label "privilege linked curriculum name" ;
+    rdfs:domain :PrivilegeLinkedCurriculum ;
+    rdfs:range  xsd:string .
+
+:ClinicalEducationCoordinatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Clinical Education Coordinator" ;
+    skos:definition "Person role. Assigns competency curricula and tracks certificate expiry. Bearer: person." .
+
+:ClinicalCompetencyCourseShape a sh:NodeShape ;
+    sh:targetClass :ClinicalCompetencyCourse ;
+    sh:property [
+        sh:path :clinicalCompetencyCourseName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ComplianceCertificateShape a sh:NodeShape ;
+    sh:targetClass :ComplianceCertificate ;
+    sh:property [
+        sh:path :complianceCertificateName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

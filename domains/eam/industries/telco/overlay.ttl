@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/eam/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/eam#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/eam/telco> a owl:Ontology ;
+    rdfs:label "EAM Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing eam for telco." .
+
+:CellSiteAsset a owl:Class ;
+    skos:prefLabel "Cell Site Asset" ;
+    skos:definition "A network asset located at a cell site (antenna, radio, power, shelter)." .
+
+:NetworkWorkOrder a owl:Class ;
+    skos:prefLabel "Network Work Order" ;
+    skos:definition "A maintenance or install work order against network assets." .
+
+:AssetLifecycleState a owl:Class ;
+    skos:prefLabel "Asset Lifecycle State" ;
+    skos:definition "Lifecycle state of a network asset from deployed to decommissioned." .
+
+:relatedToNetworkWorkOrder a owl:ObjectProperty ;
+    rdfs:label "related to network work order" ;
+    rdfs:domain :CellSiteAsset ;
+    rdfs:range  :NetworkWorkOrder ;
+    skos:definition "Associates CellSiteAsset with NetworkWorkOrder in this industry overlay." .
+
+:cellSiteAssetName a owl:DatatypeProperty ;
+    rdfs:label "cell site asset name" ;
+    rdfs:domain :CellSiteAsset ;
+    rdfs:range  xsd:string .
+
+:networkWorkOrderName a owl:DatatypeProperty ;
+    rdfs:label "network work order name" ;
+    rdfs:domain :NetworkWorkOrder ;
+    rdfs:range  xsd:string .
+
+:assetLifecycleStateName a owl:DatatypeProperty ;
+    rdfs:label "asset lifecycle state name" ;
+    rdfs:domain :AssetLifecycleState ;
+    rdfs:range  xsd:string .
+
+:NetworkAssetManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Network Asset Manager" ;
+    skos:definition "Person role. Owns cell-site asset registry and work-order prioritisation. Bearer: person." .
+
+:CellSiteAssetShape a sh:NodeShape ;
+    sh:targetClass :CellSiteAsset ;
+    sh:property [
+        sh:path :cellSiteAssetName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:NetworkWorkOrderShape a sh:NodeShape ;
+    sh:targetClass :NetworkWorkOrder ;
+    sh:property [
+        sh:path :networkWorkOrderName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

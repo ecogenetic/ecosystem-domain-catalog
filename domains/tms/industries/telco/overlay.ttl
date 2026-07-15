@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/tms/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/tms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/tms/telco> a owl:Ontology ;
+    rdfs:label "TMS Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing tms for telco." .
+
+:FieldTechnicianStop a owl:Class ;
+    skos:prefLabel "Field Technician Stop" ;
+    skos:definition "A planned stop on a route for installing or maintaining network equipment." .
+
+:SparePartLoad a owl:Class ;
+    skos:prefLabel "Spare Part Load" ;
+    skos:definition "Spares loaded onto a technician vehicle for a work order." .
+
+:SiteAccessWindow a owl:Class ;
+    skos:prefLabel "Site Access Window" ;
+    skos:definition "An approved time window for accessing a restricted cell site or facility." .
+
+:relatedToSparePartLoad a owl:ObjectProperty ;
+    rdfs:label "related to spare part load" ;
+    rdfs:domain :FieldTechnicianStop ;
+    rdfs:range  :SparePartLoad ;
+    skos:definition "Associates FieldTechnicianStop with SparePartLoad in this industry overlay." .
+
+:fieldTechnicianStopName a owl:DatatypeProperty ;
+    rdfs:label "field technician stop name" ;
+    rdfs:domain :FieldTechnicianStop ;
+    rdfs:range  xsd:string .
+
+:sparePartLoadName a owl:DatatypeProperty ;
+    rdfs:label "spare part load name" ;
+    rdfs:domain :SparePartLoad ;
+    rdfs:range  xsd:string .
+
+:siteAccessWindowName a owl:DatatypeProperty ;
+    rdfs:label "site access window name" ;
+    rdfs:domain :SiteAccessWindow ;
+    rdfs:range  xsd:string .
+
+:FieldLogisticsDispatcherRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Field Logistics Dispatcher" ;
+    skos:definition "Person role. Plans technician routes, loads, and site access windows. Bearer: person." .
+
+:FieldTechnicianStopShape a sh:NodeShape ;
+    sh:targetClass :FieldTechnicianStop ;
+    sh:property [
+        sh:path :fieldTechnicianStopName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SparePartLoadShape a sh:NodeShape ;
+    sh:targetClass :SparePartLoad ;
+    sh:property [
+        sh:path :sparePartLoadName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

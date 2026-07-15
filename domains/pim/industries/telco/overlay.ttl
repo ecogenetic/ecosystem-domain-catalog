@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/pim/telco#> .
+@prefix base: <https://ecosystemcode.com/ontology/pim#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/pim/telco> a owl:Ontology ;
+    rdfs:label "PIM Telco Overlay" ;
+    rdfs:comment "Industry overlay specializing pim for telco." .
+
+:RatePlanOffering a owl:Class ;
+    skos:prefLabel "Rate Plan Offering" ;
+    skos:definition "A commercial rate-plan product record in the catalog with allowances and fees." .
+
+:BundleComposition a owl:Class ;
+    skos:prefLabel "Bundle Composition" ;
+    skos:definition "How devices, SIMs, and plans are composed into a sellable bundle." .
+
+:ChannelCatalogPublish a owl:Class ;
+    skos:prefLabel "Channel Catalog Publish" ;
+    skos:definition "A publish event releasing catalog entries to a sales channel." .
+
+:relatedToBundleComposition a owl:ObjectProperty ;
+    rdfs:label "related to bundle composition" ;
+    rdfs:domain :RatePlanOffering ;
+    rdfs:range  :BundleComposition ;
+    skos:definition "Associates RatePlanOffering with BundleComposition in this industry overlay." .
+
+:ratePlanOfferingName a owl:DatatypeProperty ;
+    rdfs:label "rate plan offering name" ;
+    rdfs:domain :RatePlanOffering ;
+    rdfs:range  xsd:string .
+
+:bundleCompositionName a owl:DatatypeProperty ;
+    rdfs:label "bundle composition name" ;
+    rdfs:domain :BundleComposition ;
+    rdfs:range  xsd:string .
+
+:channelCatalogPublishName a owl:DatatypeProperty ;
+    rdfs:label "channel catalog publish name" ;
+    rdfs:domain :ChannelCatalogPublish ;
+    rdfs:range  xsd:string .
+
+:CatalogMerchandiserRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Catalog Merchandiser" ;
+    skos:definition "Person role. Maintains rate plans, bundles, and channel publish status. Bearer: person." .
+
+:RatePlanOfferingShape a sh:NodeShape ;
+    sh:targetClass :RatePlanOffering ;
+    sh:property [
+        sh:path :ratePlanOfferingName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BundleCompositionShape a sh:NodeShape ;
+    sh:targetClass :BundleComposition ;
+    sh:property [
+        sh:path :bundleCompositionName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

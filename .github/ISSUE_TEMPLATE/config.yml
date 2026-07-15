@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Design rules (meta-data)
+    url: https://github.com/ecogenetic/ecosystem-domain-catalog/tree/main/meta-data
+    about: Published ontology and domain-language contracts for external products

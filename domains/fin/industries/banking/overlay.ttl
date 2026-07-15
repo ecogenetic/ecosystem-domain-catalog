@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/fin/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/fin#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/fin/banking> a owl:Ontology ;
+    rdfs:label "FIN Banking Overlay" ;
+    rdfs:comment "Industry overlay specializing fin for banking." .
+
+:PaymentRailInstruction a owl:Class ;
+    skos:prefLabel "Payment Rail Instruction" ;
+    skos:definition "An instruction to move funds over a payment rail (instant, RTGS, card)." .
+
+:WalletLedgerEntry a owl:Class ;
+    skos:prefLabel "Wallet Ledger Entry" ;
+    skos:definition "A ledger entry in a customer wallet or payment account." .
+
+:AMLAlert a owl:Class ;
+    skos:prefLabel "AMLAlert" ;
+    skos:definition "An alert raised by transaction monitoring for investigation." .
+
+:relatedToWalletLedgerEntry a owl:ObjectProperty ;
+    rdfs:label "related to wallet ledger entry" ;
+    rdfs:domain :PaymentRailInstruction ;
+    rdfs:range  :WalletLedgerEntry ;
+    skos:definition "Associates PaymentRailInstruction with WalletLedgerEntry in this industry overlay." .
+
+:paymentRailInstructionName a owl:DatatypeProperty ;
+    rdfs:label "payment rail instruction name" ;
+    rdfs:domain :PaymentRailInstruction ;
+    rdfs:range  xsd:string .
+
+:walletLedgerEntryName a owl:DatatypeProperty ;
+    rdfs:label "wallet ledger entry name" ;
+    rdfs:domain :WalletLedgerEntry ;
+    rdfs:range  xsd:string .
+
+:aMLAlertName a owl:DatatypeProperty ;
+    rdfs:label "amlalert name" ;
+    rdfs:domain :AMLAlert ;
+    rdfs:range  xsd:string .
+
+:PaymentsOpsAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Payments Operations Analyst" ;
+    skos:definition "Person role. Monitors rails, investigates AML alerts, and reconciles wallet ledgers. Bearer: person." .
+
+:PaymentRailInstructionShape a sh:NodeShape ;
+    sh:targetClass :PaymentRailInstruction ;
+    sh:property [
+        sh:path :paymentRailInstructionName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:WalletLedgerEntryShape a sh:NodeShape ;
+    sh:targetClass :WalletLedgerEntry ;
+    sh:property [
+        sh:path :walletLedgerEntryName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

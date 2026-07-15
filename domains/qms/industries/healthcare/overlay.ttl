@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/qms/healthcare#> .
+@prefix base: <https://ecosystemcode.com/ontology/qms#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/qms/healthcare> a owl:Ontology ;
+    rdfs:label "QMS Healthcare Overlay" ;
+    rdfs:comment "Industry overlay specializing qms for healthcare." .
+
+:ClinicalCAPA a owl:Class ;
+    skos:prefLabel "Clinical CAPA" ;
+    skos:definition "A corrective and preventive action raised from a clinical quality event." .
+
+:DocumentedProcedure a owl:Class ;
+    skos:prefLabel "Documented Procedure" ;
+    skos:definition "A controlled quality procedure or SOP under document control." .
+
+:AuditFinding a owl:Class ;
+    skos:prefLabel "Audit Finding" ;
+    skos:definition "A finding from an internal or external quality audit." .
+
+:relatedToDocumentedProcedure a owl:ObjectProperty ;
+    rdfs:label "related to documented procedure" ;
+    rdfs:domain :ClinicalCAPA ;
+    rdfs:range  :DocumentedProcedure ;
+    skos:definition "Associates ClinicalCAPA with DocumentedProcedure in this industry overlay." .
+
+:clinicalCAPAName a owl:DatatypeProperty ;
+    rdfs:label "clinical capa name" ;
+    rdfs:domain :ClinicalCAPA ;
+    rdfs:range  xsd:string .
+
+:documentedProcedureName a owl:DatatypeProperty ;
+    rdfs:label "documented procedure name" ;
+    rdfs:domain :DocumentedProcedure ;
+    rdfs:range  xsd:string .
+
+:auditFindingName a owl:DatatypeProperty ;
+    rdfs:label "audit finding name" ;
+    rdfs:domain :AuditFinding ;
+    rdfs:range  xsd:string .
+
+:QualityAssuranceLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Quality Assurance Lead" ;
+    skos:definition "Person role. Owns CAPA closure and controlled document approvals. Bearer: person." .
+
+:ClinicalCAPAShape a sh:NodeShape ;
+    sh:targetClass :ClinicalCAPA ;
+    sh:property [
+        sh:path :clinicalCAPAName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DocumentedProcedureShape a sh:NodeShape ;
+    sh:targetClass :DocumentedProcedure ;
+    sh:property [
+        sh:path :documentedProcedureName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

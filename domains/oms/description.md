@@ -3,6 +3,8 @@
 An Order Management System ingests orders from channels, allocates inventory, fulfills, and
 handles returns so operations teams fulfill omnichannel orders without manual reconciliation.
 
+Industry overlays specialize this domain for vertical terminology and regulatory constraints without forking the base model.
+
 ## Concepts
 
 - **Order** — a customer's purchase request received via a channel and tracked through fulfillment.

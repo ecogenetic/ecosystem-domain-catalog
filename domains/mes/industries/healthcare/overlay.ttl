@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/mes/healthcare#> .
+@prefix base: <https://ecosystemcode.com/ontology/mes#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/mes/healthcare> a owl:Ontology ;
+    rdfs:label "MES Healthcare Overlay" ;
+    rdfs:comment "Industry overlay specializing mes for healthcare." .
+
+:ValidatedBatch a owl:Class ;
+    skos:prefLabel "Validated Batch" ;
+    skos:definition "A production batch under validated process control for a regulated product." .
+
+:ElectronicBatchRecord a owl:Class ;
+    skos:prefLabel "Electronic Batch Record" ;
+    skos:definition "The electronic record of process steps, deviations, and releases for a batch." .
+
+:InProcessQualityCheck a owl:Class ;
+    skos:prefLabel "In Process Quality Check" ;
+    skos:definition "A quality check performed during manufacturing before batch release." .
+
+:relatedToElectronicBatchRecord a owl:ObjectProperty ;
+    rdfs:label "related to electronic batch record" ;
+    rdfs:domain :ValidatedBatch ;
+    rdfs:range  :ElectronicBatchRecord ;
+    skos:definition "Associates ValidatedBatch with ElectronicBatchRecord in this industry overlay." .
+
+:validatedBatchName a owl:DatatypeProperty ;
+    rdfs:label "validated batch name" ;
+    rdfs:domain :ValidatedBatch ;
+    rdfs:range  xsd:string .
+
+:electronicBatchRecordName a owl:DatatypeProperty ;
+    rdfs:label "electronic batch record name" ;
+    rdfs:domain :ElectronicBatchRecord ;
+    rdfs:range  xsd:string .
+
+:inProcessQualityCheckName a owl:DatatypeProperty ;
+    rdfs:label "in process quality check name" ;
+    rdfs:domain :InProcessQualityCheck ;
+    rdfs:range  xsd:string .
+
+:BatchReleaseOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Batch Release Officer" ;
+    skos:definition "Person role. Reviews electronic batch records and releases or rejects batches. Bearer: person." .
+
+:ValidatedBatchShape a sh:NodeShape ;
+    sh:targetClass :ValidatedBatch ;
+    sh:property [
+        sh:path :validatedBatchName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ElectronicBatchRecordShape a sh:NodeShape ;
+    sh:targetClass :ElectronicBatchRecord ;
+    sh:property [
+        sh:path :electronicBatchRecordName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
