@@ -41,7 +41,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.3.0"
+      "version": "1.1.0"
     },
     {
       "id": "cvm",
@@ -85,7 +85,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.1"
+      "version": "1.1.0"
     },
     {
       "id": "erp",
@@ -126,7 +126,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.1.0"
     },
     {
       "id": "hcm",
@@ -405,7 +405,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
     {
       "id": "grc",
@@ -436,7 +436,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
     {
       "id": "eam",
@@ -722,7 +722,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
     {
       "id": "ccm",
@@ -753,7 +753,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
     {
       "id": "lsm",
@@ -851,7 +851,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.1.0"
     },
     {
       "id": "pos",
