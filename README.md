@@ -67,4 +67,5 @@ and **at least one industry overlay per domain**.
 
 ## License
 
-Apache License 2.0 — see [LICENSE](LICENSE).
+Copyright 2026 Ecogenetic LLC. Licensed under the Apache License, Version 2.0 —
+see [LICENSE](LICENSE).
