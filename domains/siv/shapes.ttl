@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/siv#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ServiceSpecificationShape a sh:NodeShape ;
+    sh:targetClass :ServiceSpecification ;
+    sh:property [
+        sh:path :serviceSpecificationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceOfferingShape a sh:NodeShape ;
+    sh:targetClass :ServiceOffering ;
+    sh:property [
+        sh:path :serviceOfferingId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceInstanceShape a sh:NodeShape ;
+    sh:targetClass :ServiceInstance ;
+    sh:property [
+        sh:path :serviceInstanceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :serviceInstanceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "designed" "reserved" "active" "suspended" "retired" )
+    ] .
+
+:ServiceComponentShape a sh:NodeShape ;
+    sh:targetClass :ServiceComponent ;
+    sh:property [
+        sh:path :serviceComponentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceDependencyShape a sh:NodeShape ;
+    sh:targetClass :ServiceDependency ;
+    sh:property [
+        sh:path :serviceDependencyId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ResourceReferenceShape a sh:NodeShape ;
+    sh:targetClass :ResourceReference ;
+    sh:property [
+        sh:path :resourceReferenceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ProductServiceMappingShape a sh:NodeShape ;
+    sh:targetClass :ProductServiceMapping ;
+    sh:property [
+        sh:path :productServiceMappingId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceInventoryShape a sh:NodeShape ;
+    sh:targetClass :ServiceInventory ;
+    sh:property [
+        sh:path :serviceInventoryId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

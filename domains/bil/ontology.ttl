@@ -1,0 +1,161 @@
+@prefix : <https://ecosystemcode.com/ontology/bil#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/bil> a owl:Ontology ;
+    rdfs:label "BIL Domain Ontology" ;
+    rdfs:comment "Manages billing accounts, cycles, bill runs, invoices, usage and recurring lines, adjustments, credits, and taxes." .
+
+#################################################################
+# Classes
+#################################################################
+
+:BillingAccount a owl:Class ;
+    skos:prefLabel "Billing Account" ;
+    skos:definition "An account grouping charges, payment terms, and invoice delivery preferences." .
+
+:BillingProfile a owl:Class ;
+    skos:prefLabel "Billing Profile" ;
+    skos:definition "The invoicing, tax, currency, and delivery configuration for a billing account." .
+
+:BillingCycle a owl:Class ;
+    skos:prefLabel "Billing Cycle" ;
+    skos:definition "A recurring period over which charges are collected for billing." .
+
+:BillRun a owl:Class ;
+    skos:prefLabel "Bill Run" ;
+    skos:definition "A controlled execution that calculates invoices for a billing cycle." .
+
+:Invoice a owl:Class ;
+    skos:prefLabel "Invoice" ;
+    skos:definition "A statement of amounts due for supplied products and services." .
+
+:InvoiceLine a owl:Class ;
+    skos:prefLabel "Invoice Line" ;
+    skos:definition "A detailed recurring, one-time, or usage-based amount on an invoice." .
+
+:Adjustment a owl:Class ;
+    skos:prefLabel "Adjustment" ;
+    skos:definition "A controlled correction increasing or decreasing a billed amount." .
+
+:CreditNote a owl:Class ;
+    skos:prefLabel "Credit Note" ;
+    skos:definition "A document reducing an amount previously invoiced." .
+
+:TaxCharge a owl:Class ;
+    skos:prefLabel "Tax Charge" ;
+    skos:definition "A tax amount calculated for an invoice or invoice line." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:usesBillingProfile a owl:ObjectProperty ;
+    rdfs:label "uses billing profile" ;
+    rdfs:domain :BillingAccount ;
+    rdfs:range  :BillingProfile ;
+    skos:definition "Associates billing account with billing profile for telecom billing management." .
+
+:initiatesBillRun a owl:ObjectProperty ;
+    rdfs:label "initiates bill run" ;
+    rdfs:domain :BillingCycle ;
+    rdfs:range  :BillRun ;
+    skos:definition "Associates billing cycle with bill run for telecom billing management." .
+
+:producesInvoice a owl:ObjectProperty ;
+    rdfs:label "produces invoice" ;
+    rdfs:domain :BillRun ;
+    rdfs:range  :Invoice ;
+    skos:definition "Associates bill run with invoice for telecom billing management." .
+
+:containsInvoiceLine a owl:ObjectProperty ;
+    rdfs:label "contains invoice line" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  :InvoiceLine ;
+    skos:definition "Associates invoice with invoice line for telecom billing management." .
+
+:changesInvoiceLine a owl:ObjectProperty ;
+    rdfs:label "changes invoice line" ;
+    rdfs:domain :Adjustment ;
+    rdfs:range  :InvoiceLine ;
+    skos:definition "Associates adjustment with invoice line for telecom billing management." .
+
+:creditsInvoice a owl:ObjectProperty ;
+    rdfs:label "credits invoice" ;
+    rdfs:domain :CreditNote ;
+    rdfs:range  :Invoice ;
+    skos:definition "Associates credit note with invoice for telecom billing management." .
+
+:appliesToInvoiceLine a owl:ObjectProperty ;
+    rdfs:label "applies to invoice line" ;
+    rdfs:domain :TaxCharge ;
+    rdfs:range  :InvoiceLine ;
+    skos:definition "Associates tax charge with invoice line for telecom billing management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:billingAccountId a owl:DatatypeProperty ;
+    rdfs:label "billing account id" ;
+    rdfs:domain :BillingAccount ;
+    rdfs:range  xsd:string .
+
+:billingProfileId a owl:DatatypeProperty ;
+    rdfs:label "billing profile id" ;
+    rdfs:domain :BillingProfile ;
+    rdfs:range  xsd:string .
+
+:billingCycleId a owl:DatatypeProperty ;
+    rdfs:label "billing cycle id" ;
+    rdfs:domain :BillingCycle ;
+    rdfs:range  xsd:string .
+
+:billRunId a owl:DatatypeProperty ;
+    rdfs:label "bill run id" ;
+    rdfs:domain :BillRun ;
+    rdfs:range  xsd:string .
+
+:invoiceId a owl:DatatypeProperty ;
+    rdfs:label "invoice id" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:string .
+
+:invoiceLineId a owl:DatatypeProperty ;
+    rdfs:label "invoice line id" ;
+    rdfs:domain :InvoiceLine ;
+    rdfs:range  xsd:string .
+
+:adjustmentId a owl:DatatypeProperty ;
+    rdfs:label "adjustment id" ;
+    rdfs:domain :Adjustment ;
+    rdfs:range  xsd:string .
+
+:creditNoteId a owl:DatatypeProperty ;
+    rdfs:label "credit note id" ;
+    rdfs:domain :CreditNote ;
+    rdfs:range  xsd:string .
+
+:taxChargeId a owl:DatatypeProperty ;
+    rdfs:label "tax charge id" ;
+    rdfs:domain :TaxCharge ;
+    rdfs:range  xsd:string .
+
+:invoiceStatus a owl:DatatypeProperty ;
+    rdfs:label "invoice status" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of invoice: draft, calculated, issued, due, paid, overdue, cancelled." .
+
+#################################################################
+# Roles
+#################################################################
+
+:BillingOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Billing Operations" ;
+    skos:altLabel "Billing Operations Role" ;
+    skos:definition "Runs billing cycles and resolves invoice calculation exceptions. Bearer: person. Permissions: BillingAccount:read, BillRun:read, BillRun:write, Invoice:read, Invoice:write, Adjustment:write." .

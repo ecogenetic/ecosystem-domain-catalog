@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/prv#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ServiceOrderShape a sh:NodeShape ;
+    sh:targetClass :ServiceOrder ;
+    sh:property [
+        sh:path :serviceOrderId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ProvisioningRequestShape a sh:NodeShape ;
+    sh:targetClass :ProvisioningRequest ;
+    sh:property [
+        sh:path :provisioningRequestId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :provisioningRequestStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "received" "validated" "in_progress" "completed" "failed" "cancelled" )
+    ] .
+
+:ProvisioningTaskShape a sh:NodeShape ;
+    sh:targetClass :ProvisioningTask ;
+    sh:property [
+        sh:path :provisioningTaskId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ActivationShape a sh:NodeShape ;
+    sh:targetClass :Activation ;
+    sh:property [
+        sh:path :activationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ConfigurationChangeShape a sh:NodeShape ;
+    sh:targetClass :ConfigurationChange ;
+    sh:property [
+        sh:path :configurationChangeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:NetworkAdapterShape a sh:NodeShape ;
+    sh:targetClass :NetworkAdapter ;
+    sh:property [
+        sh:path :networkAdapterId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ProvisioningErrorShape a sh:NodeShape ;
+    sh:targetClass :ProvisioningError ;
+    sh:property [
+        sh:path :provisioningErrorId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FalloutCaseShape a sh:NodeShape ;
+    sh:targetClass :FalloutCase ;
+    sh:property [
+        sh:path :falloutCaseId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

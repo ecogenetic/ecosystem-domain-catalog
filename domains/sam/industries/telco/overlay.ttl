@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/sam/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/sam#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/sam/telco> a owl:Ontology ;
+    rdfs:label "SAM Telco Overlay" ;
+    rdfs:comment "Telco specialization of Service Assurance Management for MVNO operations." .
+
+:NetworkAlarm a owl:Class ;
+    rdfs:subClassOf base:ServiceAlarm ;
+    skos:prefLabel "Network Alarm" ;
+    skos:definition "A service alarm originating from a mobile network or host-MNO feed." .
+
+:SubscriberImpact a owl:Class ;
+    rdfs:subClassOf base:CustomerImpact ;
+    skos:prefLabel "Subscriber Impact" ;
+    skos:definition "A customer-impact assessment expressed in affected mobile service identities." .
+
+:affectsSubscriber a owl:ObjectProperty ;
+    rdfs:label "affects subscriber" ;
+    rdfs:domain :SubscriberImpact ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a service-impact assessment with an affected telco subscriber identity." .
+
+:NetworkAssuranceRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Network Assurance Analyst" ;
+    skos:altLabel "Network Assurance Analyst Role" ;
+    skos:definition "Person role that correlates host-network alarms with MVNO subscriber impact. Bearer: person. Permissions: ServiceAlarm:read, CustomerImpact:read, CustomerImpact:write, AssuranceCase:read, AssuranceCase:write." .
+
+:SubscriberImpactShape a sh:NodeShape ;
+    sh:targetClass :SubscriberImpact ;
+    sh:property [
+        sh:path :affectsSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

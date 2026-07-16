@@ -1,0 +1,152 @@
+@prefix : <https://ecosystemcode.com/ontology/siv#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/siv> a owl:Ontology ;
+    rdfs:label "SIV Domain Ontology" ;
+    rdfs:comment "Defines technical service specifications and records live service instances, components, dependencies, resources, and product mappings." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ServiceSpecification a owl:Class ;
+    skos:prefLabel "Service Specification" ;
+    skos:definition "A reusable technical definition of how a service is realized." .
+
+:ServiceOffering a owl:Class ;
+    skos:prefLabel "Service Offering" ;
+    skos:definition "A service specification made available for operational fulfilment." .
+
+:ServiceInstance a owl:Class ;
+    skos:prefLabel "Service Instance" ;
+    skos:definition "A deployed occurrence of a service delivered to a customer or service line." .
+
+:ServiceComponent a owl:Class ;
+    skos:prefLabel "Service Component" ;
+    skos:definition "A constituent functional part of a service instance." .
+
+:ServiceDependency a owl:Class ;
+    skos:prefLabel "Service Dependency" ;
+    skos:definition "A directed dependency between service specifications or instances." .
+
+:ResourceReference a owl:Class ;
+    skos:prefLabel "Resource Reference" ;
+    skos:definition "A reference to a logical or physical resource used by a service." .
+
+:ProductServiceMapping a owl:Class ;
+    skos:prefLabel "Product Service Mapping" ;
+    skos:definition "A mapping from a commercial product to one or more technical services." .
+
+:ServiceInventory a owl:Class ;
+    skos:prefLabel "Service Inventory" ;
+    skos:definition "The governed collection of current and historical service instances." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:basedOnSpecification a owl:ObjectProperty ;
+    rdfs:label "based on specification" ;
+    rdfs:domain :ServiceOffering ;
+    rdfs:range  :ServiceSpecification ;
+    skos:definition "Associates service offering with service specification for service catalog and inventory management." .
+
+:realizesSpecification a owl:ObjectProperty ;
+    rdfs:label "realizes specification" ;
+    rdfs:domain :ServiceInstance ;
+    rdfs:range  :ServiceSpecification ;
+    skos:definition "Associates service instance with service specification for service catalog and inventory management." .
+
+:containsServiceComponent a owl:ObjectProperty ;
+    rdfs:label "contains service component" ;
+    rdfs:domain :ServiceInstance ;
+    rdfs:range  :ServiceComponent ;
+    skos:definition "Associates service instance with service component for service catalog and inventory management." .
+
+:dependsOnServiceInstance a owl:ObjectProperty ;
+    rdfs:label "depends on service instance" ;
+    rdfs:domain :ServiceDependency ;
+    rdfs:range  :ServiceInstance ;
+    skos:definition "Associates service dependency with service instance for service catalog and inventory management." .
+
+:usesResourceReference a owl:ObjectProperty ;
+    rdfs:label "uses resource reference" ;
+    rdfs:domain :ServiceInstance ;
+    rdfs:range  :ResourceReference ;
+    skos:definition "Associates service instance with resource reference for service catalog and inventory management." .
+
+:mapsToServiceSpecification a owl:ObjectProperty ;
+    rdfs:label "maps to service specification" ;
+    rdfs:domain :ProductServiceMapping ;
+    rdfs:range  :ServiceSpecification ;
+    skos:definition "Associates product service mapping with service specification for service catalog and inventory management." .
+
+:recordsServiceInstance a owl:ObjectProperty ;
+    rdfs:label "records service instance" ;
+    rdfs:domain :ServiceInventory ;
+    rdfs:range  :ServiceInstance ;
+    skos:definition "Associates service inventory with service instance for service catalog and inventory management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:serviceSpecificationId a owl:DatatypeProperty ;
+    rdfs:label "service specification id" ;
+    rdfs:domain :ServiceSpecification ;
+    rdfs:range  xsd:string .
+
+:serviceOfferingId a owl:DatatypeProperty ;
+    rdfs:label "service offering id" ;
+    rdfs:domain :ServiceOffering ;
+    rdfs:range  xsd:string .
+
+:serviceInstanceId a owl:DatatypeProperty ;
+    rdfs:label "service instance id" ;
+    rdfs:domain :ServiceInstance ;
+    rdfs:range  xsd:string .
+
+:serviceComponentId a owl:DatatypeProperty ;
+    rdfs:label "service component id" ;
+    rdfs:domain :ServiceComponent ;
+    rdfs:range  xsd:string .
+
+:serviceDependencyId a owl:DatatypeProperty ;
+    rdfs:label "service dependency id" ;
+    rdfs:domain :ServiceDependency ;
+    rdfs:range  xsd:string .
+
+:resourceReferenceId a owl:DatatypeProperty ;
+    rdfs:label "resource reference id" ;
+    rdfs:domain :ResourceReference ;
+    rdfs:range  xsd:string .
+
+:productServiceMappingId a owl:DatatypeProperty ;
+    rdfs:label "product service mapping id" ;
+    rdfs:domain :ProductServiceMapping ;
+    rdfs:range  xsd:string .
+
+:serviceInventoryId a owl:DatatypeProperty ;
+    rdfs:label "service inventory id" ;
+    rdfs:domain :ServiceInventory ;
+    rdfs:range  xsd:string .
+
+:serviceInstanceStatus a owl:DatatypeProperty ;
+    rdfs:label "service instance status" ;
+    rdfs:domain :ServiceInstance ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of service instance: designed, reserved, active, suspended, retired." .
+
+#################################################################
+# Roles
+#################################################################
+
+:ServiceInventoryManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Service Inventory Manager" ;
+    skos:altLabel "Service Inventory Manager Role" ;
+    skos:definition "Curates service definitions and governs deployed service records. Bearer: person. Permissions: ServiceSpecification:read, ServiceSpecification:write, ServiceInstance:read, ServiceInstance:write, ServiceInventory:read." .

@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/sub/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/sub#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/sub/telco> a owl:Ontology ;
+    rdfs:label "SUB Telco Overlay" ;
+    rdfs:comment "Telco specialization of Subscriber and Subscription Management for MVNO operations." .
+
+:PrepaidSubscription a owl:Class ;
+    rdfs:subClassOf base:Subscription ;
+    skos:prefLabel "Prepaid Subscription" ;
+    skos:definition "A subscription funded before service consumption." .
+
+:PostpaidSubscription a owl:Class ;
+    rdfs:subClassOf base:Subscription ;
+    skos:prefLabel "Postpaid Subscription" ;
+    skos:definition "A subscription billed after a defined billing period." .
+
+:representedBySubscriber a owl:ObjectProperty ;
+    rdfs:label "represented by subscriber" ;
+    rdfs:domain :PrepaidSubscription ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a prepaid subscription with the telco service identity that consumes network services." .
+
+:SubscriberOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Subscriber Operations" ;
+    skos:altLabel "Subscriber Operations Role" ;
+    skos:definition "Person role that manages MVNO subscriber activation and lifecycle exceptions. Bearer: person. Permissions: Subscription:read, Subscription:write, ServiceLine:read, ServiceLine:write." .
+
+:PrepaidSubscriptionShape a sh:NodeShape ;
+    sh:targetClass :PrepaidSubscription ;
+    sh:property [
+        sh:path :representedBySubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,152 @@
+@prefix : <https://ecosystemcode.com/ontology/raf#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/raf> a owl:Ontology ;
+    rdfs:label "RAF Domain Ontology" ;
+    rdfs:comment "Defines assurance controls, reconciliations, leakage and anomaly detection, fraud alerts, investigations, and recovery actions." .
+
+#################################################################
+# Classes
+#################################################################
+
+:AssuranceControl a owl:Class ;
+    skos:prefLabel "Assurance Control" ;
+    skos:definition "A preventive or detective control applied to a revenue-bearing process." .
+
+:ReconciliationRule a owl:Class ;
+    skos:prefLabel "Reconciliation Rule" ;
+    skos:definition "A rule comparing records, quantities, or monetary values across sources." .
+
+:RevenueLeakage a owl:Class ;
+    skos:prefLabel "Revenue Leakage" ;
+    skos:definition "A confirmed loss or unbilled amount caused by a process or system failure." .
+
+:UsageAnomaly a owl:Class ;
+    skos:prefLabel "Usage Anomaly" ;
+    skos:definition "A usage pattern that differs materially from expected behavior." .
+
+:FraudAlert a owl:Class ;
+    skos:prefLabel "Fraud Alert" ;
+    skos:definition "A risk signal indicating suspected deliberate abuse or deception." .
+
+:Investigation a owl:Class ;
+    skos:prefLabel "Investigation" ;
+    skos:definition "A managed assessment of assurance exceptions or fraud alerts." .
+
+:RecoveryAction a owl:Class ;
+    skos:prefLabel "Recovery Action" ;
+    skos:definition "An action taken to recover value or prevent further loss." .
+
+:ControlResult a owl:Class ;
+    skos:prefLabel "Control Result" ;
+    skos:definition "The recorded outcome and evidence produced by an assurance control." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:usesReconciliationRule a owl:ObjectProperty ;
+    rdfs:label "uses reconciliation rule" ;
+    rdfs:domain :AssuranceControl ;
+    rdfs:range  :ReconciliationRule ;
+    skos:definition "Associates assurance control with reconciliation rule for revenue assurance and fraud management." .
+
+:producesControlResult a owl:ObjectProperty ;
+    rdfs:label "produces control result" ;
+    rdfs:domain :AssuranceControl ;
+    rdfs:range  :ControlResult ;
+    skos:definition "Associates assurance control with control result for revenue assurance and fraud management." .
+
+:identifiesRevenueLeakage a owl:ObjectProperty ;
+    rdfs:label "identifies revenue leakage" ;
+    rdfs:domain :ControlResult ;
+    rdfs:range  :RevenueLeakage ;
+    skos:definition "Associates control result with revenue leakage for revenue assurance and fraud management." .
+
+:raisesFraudAlert a owl:ObjectProperty ;
+    rdfs:label "raises fraud alert" ;
+    rdfs:domain :UsageAnomaly ;
+    rdfs:range  :FraudAlert ;
+    skos:definition "Associates usage anomaly with fraud alert for revenue assurance and fraud management." .
+
+:examinesFraudAlert a owl:ObjectProperty ;
+    rdfs:label "examines fraud alert" ;
+    rdfs:domain :Investigation ;
+    rdfs:range  :FraudAlert ;
+    skos:definition "Associates investigation with fraud alert for revenue assurance and fraud management." .
+
+:examinesRevenueLeakage a owl:ObjectProperty ;
+    rdfs:label "examines revenue leakage" ;
+    rdfs:domain :Investigation ;
+    rdfs:range  :RevenueLeakage ;
+    skos:definition "Associates investigation with revenue leakage for revenue assurance and fraud management." .
+
+:resolvesInvestigation a owl:ObjectProperty ;
+    rdfs:label "resolves investigation" ;
+    rdfs:domain :RecoveryAction ;
+    rdfs:range  :Investigation ;
+    skos:definition "Associates recovery action with investigation for revenue assurance and fraud management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:assuranceControlId a owl:DatatypeProperty ;
+    rdfs:label "assurance control id" ;
+    rdfs:domain :AssuranceControl ;
+    rdfs:range  xsd:string .
+
+:reconciliationRuleId a owl:DatatypeProperty ;
+    rdfs:label "reconciliation rule id" ;
+    rdfs:domain :ReconciliationRule ;
+    rdfs:range  xsd:string .
+
+:revenueLeakageId a owl:DatatypeProperty ;
+    rdfs:label "revenue leakage id" ;
+    rdfs:domain :RevenueLeakage ;
+    rdfs:range  xsd:string .
+
+:usageAnomalyId a owl:DatatypeProperty ;
+    rdfs:label "usage anomaly id" ;
+    rdfs:domain :UsageAnomaly ;
+    rdfs:range  xsd:string .
+
+:fraudAlertId a owl:DatatypeProperty ;
+    rdfs:label "fraud alert id" ;
+    rdfs:domain :FraudAlert ;
+    rdfs:range  xsd:string .
+
+:investigationId a owl:DatatypeProperty ;
+    rdfs:label "investigation id" ;
+    rdfs:domain :Investigation ;
+    rdfs:range  xsd:string .
+
+:recoveryActionId a owl:DatatypeProperty ;
+    rdfs:label "recovery action id" ;
+    rdfs:domain :RecoveryAction ;
+    rdfs:range  xsd:string .
+
+:controlResultId a owl:DatatypeProperty ;
+    rdfs:label "control result id" ;
+    rdfs:domain :ControlResult ;
+    rdfs:range  xsd:string .
+
+:investigationStatus a owl:DatatypeProperty ;
+    rdfs:label "investigation status" ;
+    rdfs:domain :Investigation ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of investigation: opened, triaged, investigating, confirmed, dismissed, closed." .
+
+#################################################################
+# Roles
+#################################################################
+
+:RevenueAssuranceAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Revenue Assurance Analyst" ;
+    skos:altLabel "Revenue Assurance Analyst Role" ;
+    skos:definition "Runs reconciliations and investigates revenue loss and fraud. Bearer: person. Permissions: AssuranceControl:read, ControlResult:read, RevenueLeakage:read, Investigation:read, Investigation:write, RecoveryAction:write." .

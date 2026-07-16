@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/chg/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/chg#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/chg/telco> a owl:Ontology ;
+    rdfs:label "CHG Telco Overlay" ;
+    rdfs:comment "Telco specialization of Charging and Balance Management for MVNO operations." .
+
+:PrepaidBalance a owl:Class ;
+    rdfs:subClassOf base:Balance ;
+    skos:prefLabel "Prepaid Balance" ;
+    skos:definition "A real-time balance funded before the subscriber consumes service." .
+
+:RealTimeCharge a owl:Class ;
+    rdfs:subClassOf base:Charge ;
+    skos:prefLabel "Real Time Charge" ;
+    skos:definition "A charge authorized and applied during an active network session." .
+
+:chargedSubscriber a owl:ObjectProperty ;
+    rdfs:label "charged subscriber" ;
+    rdfs:domain :RealTimeCharge ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a real-time charge with the telco subscriber whose usage caused it." .
+
+:PrepaidOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Prepaid Operations" ;
+    skos:altLabel "Prepaid Operations Role" ;
+    skos:definition "Person role that monitors online charging, reservations, and subscriber balances. Bearer: person. Permissions: ChargingAccount:read, Balance:read, BalanceReservation:read, Charge:read." .
+
+:RealTimeChargeShape a sh:NodeShape ;
+    sh:targetClass :RealTimeCharge ;
+    sh:property [
+        sh:path :chargedSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

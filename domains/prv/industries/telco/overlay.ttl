@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/prv/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/prv#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/prv/telco> a owl:Ontology ;
+    rdfs:label "PRV Telco Overlay" ;
+    rdfs:comment "Telco specialization of Provisioning and Activation Management for MVNO operations." .
+
+:NetworkActivation a owl:Class ;
+    rdfs:subClassOf base:Activation ;
+    skos:prefLabel "Network Activation" ;
+    skos:definition "An activation executed against an MVNO or host-MNO network capability." .
+
+:HostMNOAdapter a owl:Class ;
+    rdfs:subClassOf base:NetworkAdapter ;
+    skos:prefLabel "Host MNO Adapter" ;
+    skos:definition "A network adapter integrating with the host mobile network operator." .
+
+:activatesSubscriber a owl:ObjectProperty ;
+    rdfs:label "activates subscriber" ;
+    rdfs:domain :NetworkActivation ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a network activation with the telco subscriber identity enabled by it." .
+
+:ActivationSupportRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Activation Support" ;
+    skos:altLabel "Activation Support Role" ;
+    skos:definition "Person role that resolves MVNO activation failures with the host network operator. Bearer: person. Permissions: ProvisioningRequest:read, ProvisioningTask:read, ProvisioningTask:write, FalloutCase:read, FalloutCase:write." .
+
+:NetworkActivationShape a sh:NodeShape ;
+    sh:targetClass :NetworkActivation ;
+    sh:property [
+        sh:path :activatesSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

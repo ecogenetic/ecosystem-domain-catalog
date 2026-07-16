@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/med/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/med#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/med/telco> a owl:Ontology ;
+    rdfs:label "MED Telco Overlay" ;
+    rdfs:comment "Telco specialization of Usage Mediation Management for MVNO operations." .
+
+:ChargingDataRecord a owl:Class ;
+    rdfs:subClassOf base:MediatedUsageRecord ;
+    skos:prefLabel "Charging Data Record" ;
+    skos:definition "A mediated voice, messaging, or data record received from a network source." .
+
+:NetworkUsageBatch a owl:Class ;
+    rdfs:subClassOf base:UsageBatch ;
+    skos:prefLabel "Network Usage Batch" ;
+    skos:definition "A batch of network-originated usage records for an MVNO." .
+
+:usageBySubscriber a owl:ObjectProperty ;
+    rdfs:label "usage by subscriber" ;
+    rdfs:domain :ChargingDataRecord ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Attributes a mediated charging-data record to the subscriber that generated the usage." .
+
+:CDROperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "CDR Operations" ;
+    skos:altLabel "CDR Operations Role" ;
+    skos:definition "Person role that reconciles MVNO charging-data files and rejected network usage. Bearer: person. Permissions: UsageBatch:read, UsageBatch:write, MediatedUsageRecord:read, RejectedUsageRecord:read." .
+
+:ChargingDataRecordShape a sh:NodeShape ;
+    sh:targetClass :ChargingDataRecord ;
+    sh:property [
+        sh:path :usageBySubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

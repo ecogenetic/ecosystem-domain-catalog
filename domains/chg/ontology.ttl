@@ -1,0 +1,137 @@
+@prefix : <https://ecosystemcode.com/ontology/chg#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/chg> a owl:Ontology ;
+    rdfs:label "CHG Domain Ontology" ;
+    rdfs:comment "Rates service usage, applies charges, consumes allowances, and maintains real-time and periodic balances." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ChargingAccount a owl:Class ;
+    skos:prefLabel "Charging Account" ;
+    skos:definition "An account that holds monetary and non-monetary balances for charging." .
+
+:Balance a owl:Class ;
+    skos:prefLabel "Balance" ;
+    skos:definition "A quantity of value available to or owed by a charging account." .
+
+:Allowance a owl:Class ;
+    skos:prefLabel "Allowance" ;
+    skos:definition "A non-cash entitlement to consume a defined quantity of service." .
+
+:RatingRule a owl:Class ;
+    skos:prefLabel "Rating Rule" ;
+    skos:definition "A tariff rule converting measured usage into a rated amount." .
+
+:RatedUsage a owl:Class ;
+    skos:prefLabel "Rated Usage" ;
+    skos:definition "The result of applying a rating rule to a usage record." .
+
+:Charge a owl:Class ;
+    skos:prefLabel "Charge" ;
+    skos:definition "A monetary or entitlement impact applied to a charging account." .
+
+:BalanceReservation a owl:Class ;
+    skos:prefLabel "Balance Reservation" ;
+    skos:definition "A temporary hold on balance while a service session is in progress." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:holdsBalance a owl:ObjectProperty ;
+    rdfs:label "holds balance" ;
+    rdfs:domain :ChargingAccount ;
+    rdfs:range  :Balance ;
+    skos:definition "Associates charging account with balance for charging and balance management." .
+
+:grantsAllowance a owl:ObjectProperty ;
+    rdfs:label "grants allowance" ;
+    rdfs:domain :ChargingAccount ;
+    rdfs:range  :Allowance ;
+    skos:definition "Associates charging account with allowance for charging and balance management." .
+
+:producesRatedUsage a owl:ObjectProperty ;
+    rdfs:label "produces rated usage" ;
+    rdfs:domain :RatingRule ;
+    rdfs:range  :RatedUsage ;
+    skos:definition "Associates rating rule with rated usage for charging and balance management." .
+
+:producesCharge a owl:ObjectProperty ;
+    rdfs:label "produces charge" ;
+    rdfs:domain :RatedUsage ;
+    rdfs:range  :Charge ;
+    skos:definition "Associates rated usage with charge for charging and balance management." .
+
+:appliesToChargingAccount a owl:ObjectProperty ;
+    rdfs:label "applies to charging account" ;
+    rdfs:domain :Charge ;
+    rdfs:range  :ChargingAccount ;
+    skos:definition "Associates charge with charging account for charging and balance management." .
+
+:reservesBalance a owl:ObjectProperty ;
+    rdfs:label "reserves balance" ;
+    rdfs:domain :BalanceReservation ;
+    rdfs:range  :Balance ;
+    skos:definition "Associates balance reservation with balance for charging and balance management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:chargingAccountId a owl:DatatypeProperty ;
+    rdfs:label "charging account id" ;
+    rdfs:domain :ChargingAccount ;
+    rdfs:range  xsd:string .
+
+:balanceId a owl:DatatypeProperty ;
+    rdfs:label "balance id" ;
+    rdfs:domain :Balance ;
+    rdfs:range  xsd:string .
+
+:allowanceId a owl:DatatypeProperty ;
+    rdfs:label "allowance id" ;
+    rdfs:domain :Allowance ;
+    rdfs:range  xsd:string .
+
+:ratingRuleId a owl:DatatypeProperty ;
+    rdfs:label "rating rule id" ;
+    rdfs:domain :RatingRule ;
+    rdfs:range  xsd:string .
+
+:ratedUsageId a owl:DatatypeProperty ;
+    rdfs:label "rated usage id" ;
+    rdfs:domain :RatedUsage ;
+    rdfs:range  xsd:string .
+
+:chargeId a owl:DatatypeProperty ;
+    rdfs:label "charge id" ;
+    rdfs:domain :Charge ;
+    rdfs:range  xsd:string .
+
+:balanceReservationId a owl:DatatypeProperty ;
+    rdfs:label "balance reservation id" ;
+    rdfs:domain :BalanceReservation ;
+    rdfs:range  xsd:string .
+
+:chargeStatus a owl:DatatypeProperty ;
+    rdfs:label "charge status" ;
+    rdfs:domain :Charge ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of charge: received, rated, applied, rejected, reversed." .
+
+#################################################################
+# Roles
+#################################################################
+
+:ChargingOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Charging Operations" ;
+    skos:altLabel "Charging Operations Role" ;
+    skos:definition "Maintains rating rules and resolves charging exceptions. Bearer: person. Permissions: ChargingAccount:read, Balance:read, RatingRule:read, RatingRule:write, Charge:read, Charge:write." .

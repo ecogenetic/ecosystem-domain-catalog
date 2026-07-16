@@ -1,0 +1,152 @@
+@prefix : <https://ecosystemcode.com/ontology/sam#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/sam> a owl:Ontology ;
+    rdfs:label "SAM Domain Ontology" ;
+    rdfs:comment "Monitors service alarms and performance, detects degradation and outages, assesses customer impact, and records SLA violations." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ServiceAlarm a owl:Class ;
+    skos:prefLabel "Service Alarm" ;
+    skos:definition "A notification that a monitored service condition requires attention." .
+
+:PerformanceMetric a owl:Class ;
+    skos:prefLabel "Performance Metric" ;
+    skos:definition "A measured value describing service behavior or quality." .
+
+:Threshold a owl:Class ;
+    skos:prefLabel "Threshold" ;
+    skos:definition "A boundary that determines when a metric indicates an abnormal condition." .
+
+:ServiceDegradation a owl:Class ;
+    skos:prefLabel "Service Degradation" ;
+    skos:definition "A reduction in service quality that does not necessarily constitute a total outage." .
+
+:Outage a owl:Class ;
+    skos:prefLabel "Outage" ;
+    skos:definition "A period during which a service is unavailable." .
+
+:CustomerImpact a owl:Class ;
+    skos:prefLabel "Customer Impact" ;
+    skos:definition "An assessment of customers or services affected by degradation or outage." .
+
+:SLAViolation a owl:Class ;
+    skos:prefLabel "SLA Violation" ;
+    skos:definition "A failure to meet a committed service-level target." .
+
+:AssuranceCase a owl:Class ;
+    skos:prefLabel "Assurance Case" ;
+    skos:definition "A managed operational case grouping assurance observations and actions." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:evaluatedAgainstThreshold a owl:ObjectProperty ;
+    rdfs:label "evaluated against threshold" ;
+    rdfs:domain :PerformanceMetric ;
+    rdfs:range  :Threshold ;
+    skos:definition "Associates performance metric with threshold for service assurance management." .
+
+:raisesServiceAlarm a owl:ObjectProperty ;
+    rdfs:label "raises service alarm" ;
+    rdfs:domain :Threshold ;
+    rdfs:range  :ServiceAlarm ;
+    skos:definition "Associates threshold with service alarm for service assurance management." .
+
+:indicatesServiceDegradation a owl:ObjectProperty ;
+    rdfs:label "indicates service degradation" ;
+    rdfs:domain :ServiceAlarm ;
+    rdfs:range  :ServiceDegradation ;
+    skos:definition "Associates service alarm with service degradation for service assurance management." .
+
+:causesCustomerImpact a owl:ObjectProperty ;
+    rdfs:label "causes customer impact" ;
+    rdfs:domain :Outage ;
+    rdfs:range  :CustomerImpact ;
+    skos:definition "Associates outage with customer impact for service assurance management." .
+
+:causesCustomerImpact a owl:ObjectProperty ;
+    rdfs:label "causes customer impact" ;
+    rdfs:domain :ServiceDegradation ;
+    rdfs:range  :CustomerImpact ;
+    skos:definition "Associates service degradation with customer impact for service assurance management." .
+
+:resultsFromOutage a owl:ObjectProperty ;
+    rdfs:label "results from outage" ;
+    rdfs:domain :SLAViolation ;
+    rdfs:range  :Outage ;
+    skos:definition "Associates sla violation with outage for service assurance management." .
+
+:groupsServiceAlarm a owl:ObjectProperty ;
+    rdfs:label "groups service alarm" ;
+    rdfs:domain :AssuranceCase ;
+    rdfs:range  :ServiceAlarm ;
+    skos:definition "Associates assurance case with service alarm for service assurance management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:serviceAlarmId a owl:DatatypeProperty ;
+    rdfs:label "service alarm id" ;
+    rdfs:domain :ServiceAlarm ;
+    rdfs:range  xsd:string .
+
+:performanceMetricId a owl:DatatypeProperty ;
+    rdfs:label "performance metric id" ;
+    rdfs:domain :PerformanceMetric ;
+    rdfs:range  xsd:string .
+
+:thresholdId a owl:DatatypeProperty ;
+    rdfs:label "threshold id" ;
+    rdfs:domain :Threshold ;
+    rdfs:range  xsd:string .
+
+:serviceDegradationId a owl:DatatypeProperty ;
+    rdfs:label "service degradation id" ;
+    rdfs:domain :ServiceDegradation ;
+    rdfs:range  xsd:string .
+
+:outageId a owl:DatatypeProperty ;
+    rdfs:label "outage id" ;
+    rdfs:domain :Outage ;
+    rdfs:range  xsd:string .
+
+:customerImpactId a owl:DatatypeProperty ;
+    rdfs:label "customer impact id" ;
+    rdfs:domain :CustomerImpact ;
+    rdfs:range  xsd:string .
+
+:sLAViolationId a owl:DatatypeProperty ;
+    rdfs:label "s la violation id" ;
+    rdfs:domain :SLAViolation ;
+    rdfs:range  xsd:string .
+
+:assuranceCaseId a owl:DatatypeProperty ;
+    rdfs:label "assurance case id" ;
+    rdfs:domain :AssuranceCase ;
+    rdfs:range  xsd:string .
+
+:serviceAlarmStatus a owl:DatatypeProperty ;
+    rdfs:label "service alarm status" ;
+    rdfs:domain :ServiceAlarm ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of service alarm: raised, acknowledged, correlated, cleared, escalated." .
+
+#################################################################
+# Roles
+#################################################################
+
+:ServiceAssuranceAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Service Assurance Analyst" ;
+    skos:altLabel "Service Assurance Analyst Role" ;
+    skos:definition "Monitors service quality and correlates alarms into customer impact. Bearer: person. Permissions: ServiceAlarm:read, ServiceAlarm:write, PerformanceMetric:read, CustomerImpact:read, AssuranceCase:write." .

@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/med#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:RawUsageEventShape a sh:NodeShape ;
+    sh:targetClass :RawUsageEvent ;
+    sh:property [
+        sh:path :rawUsageEventId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:UsageBatchShape a sh:NodeShape ;
+    sh:targetClass :UsageBatch ;
+    sh:property [
+        sh:path :usageBatchId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :usageBatchStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "received" "validating" "mediated" "distributed" "rejected" )
+    ] .
+
+:MediatedUsageRecordShape a sh:NodeShape ;
+    sh:targetClass :MediatedUsageRecord ;
+    sh:property [
+        sh:path :mediatedUsageRecordId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ValidationRuleShape a sh:NodeShape ;
+    sh:targetClass :ValidationRule ;
+    sh:property [
+        sh:path :validationRuleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:EnrichmentRuleShape a sh:NodeShape ;
+    sh:targetClass :EnrichmentRule ;
+    sh:property [
+        sh:path :enrichmentRuleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DuplicateRecordShape a sh:NodeShape ;
+    sh:targetClass :DuplicateRecord ;
+    sh:property [
+        sh:path :duplicateRecordId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RejectedUsageRecordShape a sh:NodeShape ;
+    sh:targetClass :RejectedUsageRecord ;
+    sh:property [
+        sh:path :rejectedUsageRecordId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:UsageRouteShape a sh:NodeShape ;
+    sh:targetClass :UsageRoute ;
+    sh:property [
+        sh:path :usageRouteId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

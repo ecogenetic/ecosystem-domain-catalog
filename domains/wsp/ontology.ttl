@@ -1,0 +1,152 @@
+@prefix : <https://ecosystemcode.com/ontology/wsp#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/wsp> a owl:Ontology ;
+    rdfs:label "WSP Domain Ontology" ;
+    rdfs:comment "Manages wholesale partners, host-MNO agreements, service rate cards, settlement periods, statements, reconciliation, and disputes." .
+
+#################################################################
+# Classes
+#################################################################
+
+:WholesalePartner a owl:Class ;
+    skos:prefLabel "Wholesale Partner" ;
+    skos:definition "An organization supplying or consuming services under a wholesale arrangement." .
+
+:HostMNO a owl:Class ;
+    skos:prefLabel "Host MNO" ;
+    skos:definition "The mobile network operator providing network access to an MVNO." .
+
+:WholesaleAgreement a owl:Class ;
+    skos:prefLabel "Wholesale Agreement" ;
+    skos:definition "A contract defining wholesale services, commercial terms, and obligations." .
+
+:WholesaleService a owl:Class ;
+    skos:prefLabel "Wholesale Service" ;
+    skos:definition "A network or platform service supplied under a wholesale agreement." .
+
+:WholesaleRate a owl:Class ;
+    skos:prefLabel "Wholesale Rate" ;
+    skos:definition "A price applicable to a measured unit of wholesale service." .
+
+:SettlementPeriod a owl:Class ;
+    skos:prefLabel "Settlement Period" ;
+    skos:definition "The time interval covered by a wholesale reconciliation and settlement." .
+
+:SettlementStatement a owl:Class ;
+    skos:prefLabel "Settlement Statement" ;
+    skos:definition "A partner statement of wholesale usage, charges, credits, and amounts due." .
+
+:SettlementDispute a owl:Class ;
+    skos:prefLabel "Settlement Dispute" ;
+    skos:definition "A documented disagreement over a settlement statement or its underlying records." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:actsAsWholesalePartner a owl:ObjectProperty ;
+    rdfs:label "acts as wholesale partner" ;
+    rdfs:domain :HostMNO ;
+    rdfs:range  :WholesalePartner ;
+    skos:definition "Associates host mno with wholesale partner for wholesale partner and settlement management." .
+
+:governsWholesalePartner a owl:ObjectProperty ;
+    rdfs:label "governs wholesale partner" ;
+    rdfs:domain :WholesaleAgreement ;
+    rdfs:range  :WholesalePartner ;
+    skos:definition "Associates wholesale agreement with wholesale partner for wholesale partner and settlement management." .
+
+:includesWholesaleService a owl:ObjectProperty ;
+    rdfs:label "includes wholesale service" ;
+    rdfs:domain :WholesaleAgreement ;
+    rdfs:range  :WholesaleService ;
+    skos:definition "Associates wholesale agreement with wholesale service for wholesale partner and settlement management." .
+
+:pricesWholesaleService a owl:ObjectProperty ;
+    rdfs:label "prices wholesale service" ;
+    rdfs:domain :WholesaleRate ;
+    rdfs:range  :WholesaleService ;
+    skos:definition "Associates wholesale rate with wholesale service for wholesale partner and settlement management." .
+
+:coversSettlementPeriod a owl:ObjectProperty ;
+    rdfs:label "covers settlement period" ;
+    rdfs:domain :SettlementStatement ;
+    rdfs:range  :SettlementPeriod ;
+    skos:definition "Associates settlement statement with settlement period for wholesale partner and settlement management." .
+
+:settlesWholesaleAgreement a owl:ObjectProperty ;
+    rdfs:label "settles wholesale agreement" ;
+    rdfs:domain :SettlementStatement ;
+    rdfs:range  :WholesaleAgreement ;
+    skos:definition "Associates settlement statement with wholesale agreement for wholesale partner and settlement management." .
+
+:disputesSettlementStatement a owl:ObjectProperty ;
+    rdfs:label "disputes settlement statement" ;
+    rdfs:domain :SettlementDispute ;
+    rdfs:range  :SettlementStatement ;
+    skos:definition "Associates settlement dispute with settlement statement for wholesale partner and settlement management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:wholesalePartnerId a owl:DatatypeProperty ;
+    rdfs:label "wholesale partner id" ;
+    rdfs:domain :WholesalePartner ;
+    rdfs:range  xsd:string .
+
+:hostMNOId a owl:DatatypeProperty ;
+    rdfs:label "host mno id" ;
+    rdfs:domain :HostMNO ;
+    rdfs:range  xsd:string .
+
+:wholesaleAgreementId a owl:DatatypeProperty ;
+    rdfs:label "wholesale agreement id" ;
+    rdfs:domain :WholesaleAgreement ;
+    rdfs:range  xsd:string .
+
+:wholesaleServiceId a owl:DatatypeProperty ;
+    rdfs:label "wholesale service id" ;
+    rdfs:domain :WholesaleService ;
+    rdfs:range  xsd:string .
+
+:wholesaleRateId a owl:DatatypeProperty ;
+    rdfs:label "wholesale rate id" ;
+    rdfs:domain :WholesaleRate ;
+    rdfs:range  xsd:string .
+
+:settlementPeriodId a owl:DatatypeProperty ;
+    rdfs:label "settlement period id" ;
+    rdfs:domain :SettlementPeriod ;
+    rdfs:range  xsd:string .
+
+:settlementStatementId a owl:DatatypeProperty ;
+    rdfs:label "settlement statement id" ;
+    rdfs:domain :SettlementStatement ;
+    rdfs:range  xsd:string .
+
+:settlementDisputeId a owl:DatatypeProperty ;
+    rdfs:label "settlement dispute id" ;
+    rdfs:domain :SettlementDispute ;
+    rdfs:range  xsd:string .
+
+:settlementStatementStatus a owl:DatatypeProperty ;
+    rdfs:label "settlement statement status" ;
+    rdfs:domain :SettlementStatement ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of settlement statement: received, reconciled, disputed, approved, settled." .
+
+#################################################################
+# Roles
+#################################################################
+
+:WholesaleSettlementAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Wholesale Settlement Analyst" ;
+    skos:altLabel "Wholesale Settlement Analyst Role" ;
+    skos:definition "Reconciles partner statements and manages settlement disputes. Bearer: person. Permissions: WholesaleAgreement:read, WholesaleRate:read, SettlementStatement:read, SettlementStatement:write, SettlementDispute:write." .

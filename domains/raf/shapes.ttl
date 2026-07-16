@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/raf#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:AssuranceControlShape a sh:NodeShape ;
+    sh:targetClass :AssuranceControl ;
+    sh:property [
+        sh:path :assuranceControlId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ReconciliationRuleShape a sh:NodeShape ;
+    sh:targetClass :ReconciliationRule ;
+    sh:property [
+        sh:path :reconciliationRuleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RevenueLeakageShape a sh:NodeShape ;
+    sh:targetClass :RevenueLeakage ;
+    sh:property [
+        sh:path :revenueLeakageId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:UsageAnomalyShape a sh:NodeShape ;
+    sh:targetClass :UsageAnomaly ;
+    sh:property [
+        sh:path :usageAnomalyId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FraudAlertShape a sh:NodeShape ;
+    sh:targetClass :FraudAlert ;
+    sh:property [
+        sh:path :fraudAlertId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:InvestigationShape a sh:NodeShape ;
+    sh:targetClass :Investigation ;
+    sh:property [
+        sh:path :investigationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :investigationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "opened" "triaged" "investigating" "confirmed" "dismissed" "closed" )
+    ] .
+
+:RecoveryActionShape a sh:NodeShape ;
+    sh:targetClass :RecoveryAction ;
+    sh:property [
+        sh:path :recoveryActionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ControlResultShape a sh:NodeShape ;
+    sh:targetClass :ControlResult ;
+    sh:property [
+        sh:path :controlResultId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

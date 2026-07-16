@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/siv/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/siv#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/siv/telco> a owl:Ontology ;
+    rdfs:label "SIV Telco Overlay" ;
+    rdfs:comment "Telco specialization of Service Catalog and Inventory Management for MVNO operations." .
+
+:MobileServiceInstance a owl:Class ;
+    rdfs:subClassOf base:ServiceInstance ;
+    skos:prefLabel "Mobile Service Instance" ;
+    skos:definition "A live voice, messaging, or data service delivered over a mobile network." .
+
+:NetworkServiceComponent a owl:Class ;
+    rdfs:subClassOf base:ServiceComponent ;
+    skos:prefLabel "Network Service Component" ;
+    skos:definition "A mobile-network capability forming part of a delivered service." .
+
+:deliveredToSubscriber a owl:ObjectProperty ;
+    rdfs:label "delivered to subscriber" ;
+    rdfs:domain :MobileServiceInstance ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a mobile service instance with the subscriber identity receiving it." .
+
+:MobileServiceDesignerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Mobile Service Designer" ;
+    skos:altLabel "Mobile Service Designer Role" ;
+    skos:definition "Person role that maps MVNO products to host-network service capabilities. Bearer: person. Permissions: ServiceSpecification:read, ServiceSpecification:write, ProductServiceMapping:read, ProductServiceMapping:write." .
+
+:MobileServiceInstanceShape a sh:NodeShape ;
+    sh:targetClass :MobileServiceInstance ;
+    sh:property [
+        sh:path :deliveredToSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

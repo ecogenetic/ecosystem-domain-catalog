@@ -1,0 +1,137 @@
+@prefix : <https://ecosystemcode.com/ontology/sub#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/sub> a owl:Ontology ;
+    rdfs:label "SUB Domain Ontology" ;
+    rdfs:comment "Manages customer accounts, mobile subscriptions, service lines, plan assignments, changes, suspensions, and terminations." .
+
+#################################################################
+# Classes
+#################################################################
+
+:CustomerAccount a owl:Class ;
+    skos:prefLabel "Customer Account" ;
+    skos:definition "A commercial account that owns and pays for one or more subscriptions." .
+
+:Subscription a owl:Class ;
+    skos:prefLabel "Subscription" ;
+    skos:definition "A contracted service relationship governed by a plan and lifecycle." .
+
+:ServiceLine a owl:Class ;
+    skos:prefLabel "Service Line" ;
+    skos:definition "An operational mobile service identity activated by a subscription." .
+
+:SubscriptionPlan a owl:Class ;
+    skos:prefLabel "Subscription Plan" ;
+    skos:definition "The commercial plan governing recurring service terms and entitlements." .
+
+:SubscriptionChange a owl:Class ;
+    skos:prefLabel "Subscription Change" ;
+    skos:definition "A requested or completed modification to a subscription." .
+
+:Suspension a owl:Class ;
+    skos:prefLabel "Suspension" ;
+    skos:definition "A temporary restriction of an active subscription or service line." .
+
+:Termination a owl:Class ;
+    skos:prefLabel "Termination" ;
+    skos:definition "The permanent closure of a subscription and its active services." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:holdsSubscription a owl:ObjectProperty ;
+    rdfs:label "holds subscription" ;
+    rdfs:domain :CustomerAccount ;
+    rdfs:range  :Subscription ;
+    skos:definition "Associates customer account with subscription for subscriber and subscription management." .
+
+:activatesServiceLine a owl:ObjectProperty ;
+    rdfs:label "activates service line" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  :ServiceLine ;
+    skos:definition "Associates subscription with service line for subscriber and subscription management." .
+
+:usesSubscriptionPlan a owl:ObjectProperty ;
+    rdfs:label "uses subscription plan" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  :SubscriptionPlan ;
+    skos:definition "Associates subscription with subscription plan for subscriber and subscription management." .
+
+:recordsSubscriptionChange a owl:ObjectProperty ;
+    rdfs:label "records subscription change" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  :SubscriptionChange ;
+    skos:definition "Associates subscription with subscription change for subscriber and subscription management." .
+
+:affectsSubscription a owl:ObjectProperty ;
+    rdfs:label "affects subscription" ;
+    rdfs:domain :Suspension ;
+    rdfs:range  :Subscription ;
+    skos:definition "Associates suspension with subscription for subscriber and subscription management." .
+
+:closesSubscription a owl:ObjectProperty ;
+    rdfs:label "closes subscription" ;
+    rdfs:domain :Termination ;
+    rdfs:range  :Subscription ;
+    skos:definition "Associates termination with subscription for subscriber and subscription management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:customerAccountId a owl:DatatypeProperty ;
+    rdfs:label "customer account id" ;
+    rdfs:domain :CustomerAccount ;
+    rdfs:range  xsd:string .
+
+:subscriptionId a owl:DatatypeProperty ;
+    rdfs:label "subscription id" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  xsd:string .
+
+:serviceLineId a owl:DatatypeProperty ;
+    rdfs:label "service line id" ;
+    rdfs:domain :ServiceLine ;
+    rdfs:range  xsd:string .
+
+:subscriptionPlanId a owl:DatatypeProperty ;
+    rdfs:label "subscription plan id" ;
+    rdfs:domain :SubscriptionPlan ;
+    rdfs:range  xsd:string .
+
+:subscriptionChangeId a owl:DatatypeProperty ;
+    rdfs:label "subscription change id" ;
+    rdfs:domain :SubscriptionChange ;
+    rdfs:range  xsd:string .
+
+:suspensionId a owl:DatatypeProperty ;
+    rdfs:label "suspension id" ;
+    rdfs:domain :Suspension ;
+    rdfs:range  xsd:string .
+
+:terminationId a owl:DatatypeProperty ;
+    rdfs:label "termination id" ;
+    rdfs:domain :Termination ;
+    rdfs:range  xsd:string .
+
+:subscriptionStatus a owl:DatatypeProperty ;
+    rdfs:label "subscription status" ;
+    rdfs:domain :Subscription ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of subscription: pending, active, suspended, terminated." .
+
+#################################################################
+# Roles
+#################################################################
+
+:SubscriptionManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Subscription Manager" ;
+    skos:altLabel "Subscription Manager Role" ;
+    skos:definition "Manages subscription lifecycles and service-line changes. Bearer: person. Permissions: CustomerAccount:read, Subscription:read, Subscription:write, ServiceLine:read, ServiceLine:write." .

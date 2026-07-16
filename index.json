@@ -914,6 +914,368 @@
       "hasOntology": true,
       "hasShapes": true,
       "version": "1.1.0"
+    },
+    {
+      "id": "sub",
+      "acronym": "SUB",
+      "name": "Subscriber and Subscription Management",
+      "description": "Subscriber and Subscription Management.",
+      "icon": "Users",
+      "chips": [
+        "CustomerAccount",
+        "Subscription",
+        "ServiceLine"
+      ],
+      "entities": [
+        "CustomerAccount",
+        "Subscription",
+        "ServiceLine",
+        "SubscriptionPlan",
+        "SubscriptionChange",
+        "Suspension",
+        "Termination"
+      ],
+      "capability": "manage customer accounts, subscriptions, service lines, plan changes, suspensions, reactivations, and terminations",
+      "benefit": "commercial and operational teams share a traceable view of every subscribed mobile service",
+      "workflow": "Capture customer account → create subscription → assign plan → activate service line → manage changes → terminate",
+      "statefulEntity": "Subscription (pending → active → suspended → terminated)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "num",
+      "acronym": "NUM",
+      "name": "Number, SIM and Portability Management",
+      "description": "Number, SIM and Portability Management.",
+      "icon": "Hash",
+      "chips": [
+        "NumberPool",
+        "MobileNumber",
+        "SIMProfile"
+      ],
+      "entities": [
+        "NumberPool",
+        "MobileNumber",
+        "SIMProfile",
+        "PhysicalSIM",
+        "ESIMProfile",
+        "IdentifierAssignment",
+        "PortingRequest",
+        "PortingEvent"
+      ],
+      "capability": "control mobile-number pools, SIM and eSIM identities, assignments, and port-in and port-out requests",
+      "benefit": "operations teams retain complete identifier history through activation, SIM swap, reuse, and portability",
+      "workflow": "Load number pool → register SIM profile → assign identifiers → validate port request → schedule transfer → complete port",
+      "statefulEntity": "PortingRequest (requested → validated → scheduled → completed → rejected → cancelled)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "siv",
+      "acronym": "SIV",
+      "name": "Service Catalog and Inventory Management",
+      "description": "Service Catalog and Inventory Management.",
+      "icon": "Network",
+      "chips": [
+        "ServiceSpecification",
+        "ServiceOffering",
+        "ServiceInstance"
+      ],
+      "entities": [
+        "ServiceSpecification",
+        "ServiceOffering",
+        "ServiceInstance",
+        "ServiceComponent",
+        "ServiceDependency",
+        "ResourceReference",
+        "ProductServiceMapping",
+        "ServiceInventory"
+      ],
+      "capability": "define provisionable services and maintain an inventory of active service instances, components, dependencies, and resources",
+      "benefit": "commercial products remain aligned with the operational services actually delivered to customers",
+      "workflow": "Define service specification → publish service offering → map product → reserve resources → activate service instance → retire",
+      "statefulEntity": "ServiceInstance (designed → reserved → active → suspended → retired)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "prv",
+      "acronym": "PRV",
+      "name": "Provisioning and Activation Management",
+      "description": "Provisioning and Activation Management.",
+      "icon": "Power",
+      "chips": [
+        "ServiceOrder",
+        "ProvisioningRequest",
+        "ProvisioningTask"
+      ],
+      "entities": [
+        "ServiceOrder",
+        "ProvisioningRequest",
+        "ProvisioningTask",
+        "Activation",
+        "ConfigurationChange",
+        "NetworkAdapter",
+        "ProvisioningError",
+        "FalloutCase"
+      ],
+      "capability": "orchestrate service orders, provisioning tasks, activations, configuration changes, retries, and fallout resolution",
+      "benefit": "approved orders become active services through a traceable and recoverable fulfilment process",
+      "workflow": "Receive service order → validate request → create tasks → execute adapters → confirm activation → resolve fallout",
+      "statefulEntity": "ProvisioningRequest (received → validated → in_progress → completed → failed → cancelled)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "med",
+      "acronym": "MED",
+      "name": "Usage Mediation Management",
+      "description": "Usage Mediation Management.",
+      "icon": "Radio",
+      "chips": [
+        "RawUsageEvent",
+        "UsageBatch",
+        "MediatedUsageRecord"
+      ],
+      "entities": [
+        "RawUsageEvent",
+        "UsageBatch",
+        "MediatedUsageRecord",
+        "ValidationRule",
+        "EnrichmentRule",
+        "DuplicateRecord",
+        "RejectedUsageRecord",
+        "UsageRoute"
+      ],
+      "capability": "ingest raw usage, validate and normalize records, remove duplicates, enrich subscriber context, and route mediated usage",
+      "benefit": "charging, billing, wholesale, and assurance processes consume consistent and traceable usage records",
+      "workflow": "Receive usage batch → validate events → remove duplicates → enrich context → create mediated records → distribute",
+      "statefulEntity": "UsageBatch (received → validating → mediated → distributed → rejected)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "chg",
+      "acronym": "CHG",
+      "name": "Charging and Balance Management",
+      "description": "Charging and Balance Management.",
+      "icon": "Gauge",
+      "chips": [
+        "ChargingAccount",
+        "Balance",
+        "Allowance"
+      ],
+      "entities": [
+        "ChargingAccount",
+        "Balance",
+        "Allowance",
+        "RatingRule",
+        "RatedUsage",
+        "Charge",
+        "BalanceReservation"
+      ],
+      "capability": "rate usage, apply tariff rules, reserve and consume balances, manage allowances, and reverse incorrect charges",
+      "benefit": "prepaid and postpaid services apply consistent prices and maintain accurate customer entitlements",
+      "workflow": "Receive mediated usage → select rating rule → calculate rated usage → reserve balance → apply charge → update allowance",
+      "statefulEntity": "Charge (received → rated → applied → rejected → reversed)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "bil",
+      "acronym": "BIL",
+      "name": "Telecom Billing Management",
+      "description": "Telecom Billing Management.",
+      "icon": "Receipt",
+      "chips": [
+        "BillingAccount",
+        "BillingProfile",
+        "BillingCycle"
+      ],
+      "entities": [
+        "BillingAccount",
+        "BillingProfile",
+        "BillingCycle",
+        "BillRun",
+        "Invoice",
+        "InvoiceLine",
+        "Adjustment",
+        "CreditNote",
+        "TaxCharge"
+      ],
+      "capability": "calculate periodic bills, aggregate recurring and usage charges, issue invoices, and manage adjustments, credits, and taxes",
+      "benefit": "customers receive explainable bills while finance receives traceable receivable and posting references",
+      "workflow": "Open billing cycle → execute bill run → calculate invoice lines → apply tax and adjustments → issue invoice → settle",
+      "statefulEntity": "Invoice (draft → calculated → issued → due → paid → overdue → cancelled)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "wsp",
+      "acronym": "WSP",
+      "name": "Wholesale Partner and Settlement Management",
+      "description": "Wholesale Partner and Settlement Management.",
+      "icon": "Handshake",
+      "chips": [
+        "WholesalePartner",
+        "HostMNO",
+        "WholesaleAgreement"
+      ],
+      "entities": [
+        "WholesalePartner",
+        "HostMNO",
+        "WholesaleAgreement",
+        "WholesaleService",
+        "WholesaleRate",
+        "SettlementPeriod",
+        "SettlementStatement",
+        "SettlementDispute"
+      ],
+      "capability": "govern wholesale agreements and rates, reconcile partner usage statements, approve settlements, and resolve disputes",
+      "benefit": "commercial and finance teams control host-network cost and preserve evidence for every settlement",
+      "workflow": "Contract partner → publish wholesale rates → receive statement → reconcile usage → raise dispute or approve → settle",
+      "statefulEntity": "SettlementStatement (received → reconciled → disputed → approved → settled)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "raf",
+      "acronym": "RAF",
+      "name": "Revenue Assurance and Fraud Management",
+      "description": "Revenue Assurance and Fraud Management.",
+      "icon": "Shield",
+      "chips": [
+        "AssuranceControl",
+        "ReconciliationRule",
+        "RevenueLeakage"
+      ],
+      "entities": [
+        "AssuranceControl",
+        "ReconciliationRule",
+        "RevenueLeakage",
+        "UsageAnomaly",
+        "FraudAlert",
+        "Investigation",
+        "RecoveryAction",
+        "ControlResult"
+      ],
+      "capability": "reconcile revenue flows, detect leakage and suspicious usage, investigate alerts, and track recovery actions",
+      "benefit": "finance, risk, and operations identify preventable loss and fraud across order-to-cash processes",
+      "workflow": "Execute assurance control → detect exception → raise alert → triage investigation → confirm or dismiss → recover and close",
+      "statefulEntity": "Investigation (opened → triaged → investigating → confirmed → dismissed → closed)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "sam",
+      "acronym": "SAM",
+      "name": "Service Assurance Management",
+      "description": "Service Assurance Management.",
+      "icon": "Activity",
+      "chips": [
+        "ServiceAlarm",
+        "PerformanceMetric",
+        "Threshold"
+      ],
+      "entities": [
+        "ServiceAlarm",
+        "PerformanceMetric",
+        "Threshold",
+        "ServiceDegradation",
+        "Outage",
+        "CustomerImpact",
+        "SLAViolation",
+        "AssuranceCase"
+      ],
+      "capability": "monitor service quality, correlate alarms, detect degradation and outages, calculate customer impact, and identify SLA violations",
+      "benefit": "operations teams understand service impact early and provide ITSM with actionable incident context",
+      "workflow": "Collect metric → evaluate threshold → raise alarm → correlate degradation → assess customer impact → clear or escalate",
+      "statefulEntity": "ServiceAlarm (raised → acknowledged → correlated → cleared → escalated)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "prm",
+      "acronym": "PRM",
+      "name": "Partner and Dealer Management",
+      "description": "Partner and Dealer Management.",
+      "icon": "Store",
+      "chips": [
+        "Partner",
+        "Dealer",
+        "PartnerAgreement"
+      ],
+      "entities": [
+        "Partner",
+        "Dealer",
+        "PartnerAgreement",
+        "PartnerRole",
+        "Territory",
+        "CommissionPlan",
+        "CommissionStatement",
+        "PartnerCredential"
+      ],
+      "capability": "onboard dealers and partners, govern agreements and territories, manage credentials, and calculate commission statements",
+      "benefit": "channel teams operate a controlled partner network with transparent performance and remuneration",
+      "workflow": "Register partner → complete onboarding → sign agreement → assign role and territory → transact → calculate commission",
+      "statefulEntity": "Partner (prospective → onboarding → active → suspended → terminated)",
+      "industries": [
+        "telco"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
     }
   ]
 }
