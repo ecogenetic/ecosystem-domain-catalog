@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/num/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/num#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/num/telco> a owl:Ontology ;
+    rdfs:label "NUM Telco Overlay" ;
+    rdfs:comment "Telco specialization of Number, SIM and Portability Management for MVNO operations." .
+
+:TelcoNumberAssignment a owl:Class ;
+    rdfs:subClassOf base:IdentifierAssignment ;
+    skos:prefLabel "Telco Number Assignment" ;
+    skos:definition "An assignment connecting MVNO identifiers to a telco service identity." .
+
+:DonorNetworkRecord a owl:Class ;
+    rdfs:subClassOf base:PortingEvent ;
+    skos:prefLabel "Donor Network Record" ;
+    skos:definition "A record of the network donating a number during a port-in." .
+
+:assignedToSubscriber a owl:ObjectProperty ;
+    rdfs:label "assigned to subscriber" ;
+    rdfs:domain :TelcoNumberAssignment ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates an identifier assignment with the telco subscriber service identity." .
+
+:PortingDeskRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Porting Desk" ;
+    skos:altLabel "Porting Desk Role" ;
+    skos:definition "Person role that coordinates MVNO port-in and port-out cases with network operators. Bearer: person. Permissions: PortingRequest:read, PortingRequest:write, MobileNumber:read." .
+
+:TelcoNumberAssignmentShape a sh:NodeShape ;
+    sh:targetClass :TelcoNumberAssignment ;
+    sh:property [
+        sh:path :assignedToSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

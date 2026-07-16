@@ -1,0 +1,152 @@
+@prefix : <https://ecosystemcode.com/ontology/prv#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/prv> a owl:Ontology ;
+    rdfs:label "PRV Domain Ontology" ;
+    rdfs:comment "Converts approved service orders into validated activation, configuration, modification, and deactivation tasks across delivery systems." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ServiceOrder a owl:Class ;
+    skos:prefLabel "Service Order" ;
+    skos:definition "An approved instruction to create, modify, suspend, or cease a service." .
+
+:ProvisioningRequest a owl:Class ;
+    skos:prefLabel "Provisioning Request" ;
+    skos:definition "A request to execute a defined service configuration change." .
+
+:ProvisioningTask a owl:Class ;
+    skos:prefLabel "Provisioning Task" ;
+    skos:definition "An atomic unit of provisioning work assigned to a system or operator." .
+
+:Activation a owl:Class ;
+    skos:prefLabel "Activation" ;
+    skos:definition "The successful enablement of a requested service capability." .
+
+:ConfigurationChange a owl:Class ;
+    skos:prefLabel "Configuration Change" ;
+    skos:definition "A controlled modification to an existing service configuration." .
+
+:NetworkAdapter a owl:Class ;
+    skos:prefLabel "Network Adapter" ;
+    skos:definition "An integration endpoint that translates provisioning tasks for a target platform." .
+
+:ProvisioningError a owl:Class ;
+    skos:prefLabel "Provisioning Error" ;
+    skos:definition "A recorded technical or business failure during provisioning." .
+
+:FalloutCase a owl:Class ;
+    skos:prefLabel "Fallout Case" ;
+    skos:definition "A managed case grouping failed tasks requiring recovery or manual intervention." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:containsProvisioningRequest a owl:ObjectProperty ;
+    rdfs:label "contains provisioning request" ;
+    rdfs:domain :ServiceOrder ;
+    rdfs:range  :ProvisioningRequest ;
+    skos:definition "Associates service order with provisioning request for provisioning and activation management." .
+
+:createsProvisioningTask a owl:ObjectProperty ;
+    rdfs:label "creates provisioning task" ;
+    rdfs:domain :ProvisioningRequest ;
+    rdfs:range  :ProvisioningTask ;
+    skos:definition "Associates provisioning request with provisioning task for provisioning and activation management." .
+
+:usesNetworkAdapter a owl:ObjectProperty ;
+    rdfs:label "uses network adapter" ;
+    rdfs:domain :ProvisioningTask ;
+    rdfs:range  :NetworkAdapter ;
+    skos:definition "Associates provisioning task with network adapter for provisioning and activation management." .
+
+:completesProvisioningRequest a owl:ObjectProperty ;
+    rdfs:label "completes provisioning request" ;
+    rdfs:domain :Activation ;
+    rdfs:range  :ProvisioningRequest ;
+    skos:definition "Associates activation with provisioning request for provisioning and activation management." .
+
+:implementsProvisioningRequest a owl:ObjectProperty ;
+    rdfs:label "implements provisioning request" ;
+    rdfs:domain :ConfigurationChange ;
+    rdfs:range  :ProvisioningRequest ;
+    skos:definition "Associates configuration change with provisioning request for provisioning and activation management." .
+
+:failsProvisioningTask a owl:ObjectProperty ;
+    rdfs:label "fails provisioning task" ;
+    rdfs:domain :ProvisioningError ;
+    rdfs:range  :ProvisioningTask ;
+    skos:definition "Associates provisioning error with provisioning task for provisioning and activation management." .
+
+:groupsProvisioningError a owl:ObjectProperty ;
+    rdfs:label "groups provisioning error" ;
+    rdfs:domain :FalloutCase ;
+    rdfs:range  :ProvisioningError ;
+    skos:definition "Associates fallout case with provisioning error for provisioning and activation management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:serviceOrderId a owl:DatatypeProperty ;
+    rdfs:label "service order id" ;
+    rdfs:domain :ServiceOrder ;
+    rdfs:range  xsd:string .
+
+:provisioningRequestId a owl:DatatypeProperty ;
+    rdfs:label "provisioning request id" ;
+    rdfs:domain :ProvisioningRequest ;
+    rdfs:range  xsd:string .
+
+:provisioningTaskId a owl:DatatypeProperty ;
+    rdfs:label "provisioning task id" ;
+    rdfs:domain :ProvisioningTask ;
+    rdfs:range  xsd:string .
+
+:activationId a owl:DatatypeProperty ;
+    rdfs:label "activation id" ;
+    rdfs:domain :Activation ;
+    rdfs:range  xsd:string .
+
+:configurationChangeId a owl:DatatypeProperty ;
+    rdfs:label "configuration change id" ;
+    rdfs:domain :ConfigurationChange ;
+    rdfs:range  xsd:string .
+
+:networkAdapterId a owl:DatatypeProperty ;
+    rdfs:label "network adapter id" ;
+    rdfs:domain :NetworkAdapter ;
+    rdfs:range  xsd:string .
+
+:provisioningErrorId a owl:DatatypeProperty ;
+    rdfs:label "provisioning error id" ;
+    rdfs:domain :ProvisioningError ;
+    rdfs:range  xsd:string .
+
+:falloutCaseId a owl:DatatypeProperty ;
+    rdfs:label "fallout case id" ;
+    rdfs:domain :FalloutCase ;
+    rdfs:range  xsd:string .
+
+:provisioningRequestStatus a owl:DatatypeProperty ;
+    rdfs:label "provisioning request status" ;
+    rdfs:domain :ProvisioningRequest ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of provisioning request: received, validated, in_progress, completed, failed, cancelled." .
+
+#################################################################
+# Roles
+#################################################################
+
+:ProvisioningOperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Provisioning Operator" ;
+    skos:altLabel "Provisioning Operator Role" ;
+    skos:definition "Monitors provisioning tasks and recovers failed requests. Bearer: person. Permissions: ServiceOrder:read, ProvisioningRequest:read, ProvisioningRequest:write, ProvisioningTask:read, FalloutCase:write." .

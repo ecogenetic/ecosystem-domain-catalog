@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/num#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:NumberPoolShape a sh:NodeShape ;
+    sh:targetClass :NumberPool ;
+    sh:property [
+        sh:path :numberPoolId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:MobileNumberShape a sh:NodeShape ;
+    sh:targetClass :MobileNumber ;
+    sh:property [
+        sh:path :mobileNumberId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SIMProfileShape a sh:NodeShape ;
+    sh:targetClass :SIMProfile ;
+    sh:property [
+        sh:path :sIMProfileId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PhysicalSIMShape a sh:NodeShape ;
+    sh:targetClass :PhysicalSIM ;
+    sh:property [
+        sh:path :physicalSIMId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ESIMProfileShape a sh:NodeShape ;
+    sh:targetClass :ESIMProfile ;
+    sh:property [
+        sh:path :eSIMProfileId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:IdentifierAssignmentShape a sh:NodeShape ;
+    sh:targetClass :IdentifierAssignment ;
+    sh:property [
+        sh:path :identifierAssignmentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PortingRequestShape a sh:NodeShape ;
+    sh:targetClass :PortingRequest ;
+    sh:property [
+        sh:path :portingRequestId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :portingRequestStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "requested" "validated" "scheduled" "completed" "rejected" "cancelled" )
+    ] .
+
+:PortingEventShape a sh:NodeShape ;
+    sh:targetClass :PortingEvent ;
+    sh:property [
+        sh:path :portingEventId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

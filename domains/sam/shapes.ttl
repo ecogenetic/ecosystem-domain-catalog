@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/sam#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ServiceAlarmShape a sh:NodeShape ;
+    sh:targetClass :ServiceAlarm ;
+    sh:property [
+        sh:path :serviceAlarmId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :serviceAlarmStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "raised" "acknowledged" "correlated" "cleared" "escalated" )
+    ] .
+
+:PerformanceMetricShape a sh:NodeShape ;
+    sh:targetClass :PerformanceMetric ;
+    sh:property [
+        sh:path :performanceMetricId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ThresholdShape a sh:NodeShape ;
+    sh:targetClass :Threshold ;
+    sh:property [
+        sh:path :thresholdId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceDegradationShape a sh:NodeShape ;
+    sh:targetClass :ServiceDegradation ;
+    sh:property [
+        sh:path :serviceDegradationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:OutageShape a sh:NodeShape ;
+    sh:targetClass :Outage ;
+    sh:property [
+        sh:path :outageId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CustomerImpactShape a sh:NodeShape ;
+    sh:targetClass :CustomerImpact ;
+    sh:property [
+        sh:path :customerImpactId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SLAViolationShape a sh:NodeShape ;
+    sh:targetClass :SLAViolation ;
+    sh:property [
+        sh:path :sLAViolationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AssuranceCaseShape a sh:NodeShape ;
+    sh:targetClass :AssuranceCase ;
+    sh:property [
+        sh:path :assuranceCaseId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

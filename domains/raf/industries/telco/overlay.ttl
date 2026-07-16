@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/raf/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/raf#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/raf/telco> a owl:Ontology ;
+    rdfs:label "RAF Telco Overlay" ;
+    rdfs:comment "Telco specialization of Revenue Assurance and Fraud Management for MVNO operations." .
+
+:SIMBoxFraudAlert a owl:Class ;
+    rdfs:subClassOf base:FraudAlert ;
+    skos:prefLabel "SIM Box Fraud Alert" ;
+    skos:definition "A fraud alert indicating suspected bypass of legitimate mobile interconnect charging." .
+
+:SubscriberInvestigation a owl:Class ;
+    rdfs:subClassOf base:Investigation ;
+    skos:prefLabel "Subscriber Investigation" ;
+    skos:definition "An investigation centered on one or more mobile subscriber identities." .
+
+:investigatesSubscriber a owl:ObjectProperty ;
+    rdfs:label "investigates subscriber" ;
+    rdfs:domain :SubscriberInvestigation ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates an assurance or fraud investigation with an affected telco subscriber identity." .
+
+:TelecomFraudInvestigatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Telecom Fraud Investigator" ;
+    skos:altLabel "Telecom Fraud Investigator Role" ;
+    skos:definition "Person role that investigates suspicious subscriber and network usage patterns. Bearer: person. Permissions: FraudAlert:read, UsageAnomaly:read, Investigation:read, Investigation:write, RecoveryAction:write." .
+
+:SubscriberInvestigationShape a sh:NodeShape ;
+    sh:targetClass :SubscriberInvestigation ;
+    sh:property [
+        sh:path :investigatesSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

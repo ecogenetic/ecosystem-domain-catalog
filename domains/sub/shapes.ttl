@@ -1,0 +1,65 @@
+@prefix :    <https://ecosystemcode.com/ontology/sub#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:CustomerAccountShape a sh:NodeShape ;
+    sh:targetClass :CustomerAccount ;
+    sh:property [
+        sh:path :customerAccountId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SubscriptionShape a sh:NodeShape ;
+    sh:targetClass :Subscription ;
+    sh:property [
+        sh:path :subscriptionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :subscriptionStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "pending" "active" "suspended" "terminated" )
+    ] .
+
+:ServiceLineShape a sh:NodeShape ;
+    sh:targetClass :ServiceLine ;
+    sh:property [
+        sh:path :serviceLineId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SubscriptionPlanShape a sh:NodeShape ;
+    sh:targetClass :SubscriptionPlan ;
+    sh:property [
+        sh:path :subscriptionPlanId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SubscriptionChangeShape a sh:NodeShape ;
+    sh:targetClass :SubscriptionChange ;
+    sh:property [
+        sh:path :subscriptionChangeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SuspensionShape a sh:NodeShape ;
+    sh:targetClass :Suspension ;
+    sh:property [
+        sh:path :suspensionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:TerminationShape a sh:NodeShape ;
+    sh:targetClass :Termination ;
+    sh:property [
+        sh:path :terminationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,146 @@
+@prefix : <https://ecosystemcode.com/ontology/num#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/num> a owl:Ontology ;
+    rdfs:label "NUM Domain Ontology" ;
+    rdfs:comment "Manages mobile-number pools, SIM and eSIM profiles, identifier assignments, and number-portability history." .
+
+#################################################################
+# Classes
+#################################################################
+
+:NumberPool a owl:Class ;
+    skos:prefLabel "Number Pool" ;
+    skos:definition "A governed collection of mobile numbers available for allocation." .
+
+:MobileNumber a owl:Class ;
+    skos:prefLabel "Mobile Number" ;
+    skos:definition "A mobile service number that can be allocated and ported." .
+
+:SIMProfile a owl:Class ;
+    skos:prefLabel "SIM Profile" ;
+    skos:definition "The logical subscriber identity profile carried by a physical SIM or eSIM." .
+
+:PhysicalSIM a owl:Class ;
+    skos:prefLabel "Physical SIM" ;
+    skos:definition "A removable physical card capable of carrying a SIM profile." .
+
+:ESIMProfile a owl:Class ;
+    skos:prefLabel "ESIM Profile" ;
+    skos:definition "A downloadable embedded-SIM profile provisioned to compatible equipment." .
+
+:IdentifierAssignment a owl:Class ;
+    skos:prefLabel "Identifier Assignment" ;
+    skos:definition "A time-bounded association between mobile identifiers and a service." .
+
+:PortingRequest a owl:Class ;
+    skos:prefLabel "Porting Request" ;
+    skos:definition "A request to transfer a mobile number between providers." .
+
+:PortingEvent a owl:Class ;
+    skos:prefLabel "Porting Event" ;
+    skos:definition "An auditable event occurring during a number-portability process." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:containsMobileNumber a owl:ObjectProperty ;
+    rdfs:label "contains mobile number" ;
+    rdfs:domain :NumberPool ;
+    rdfs:range  :MobileNumber ;
+    skos:definition "Associates number pool with mobile number for number, sim and portability management." .
+
+:assignsMobileNumber a owl:ObjectProperty ;
+    rdfs:label "assigns mobile number" ;
+    rdfs:domain :IdentifierAssignment ;
+    rdfs:range  :MobileNumber ;
+    skos:definition "Associates identifier assignment with mobile number for number, sim and portability management." .
+
+:assignsSIMProfile a owl:ObjectProperty ;
+    rdfs:label "assigns sim profile" ;
+    rdfs:domain :IdentifierAssignment ;
+    rdfs:range  :SIMProfile ;
+    skos:definition "Associates identifier assignment with sim profile for number, sim and portability management." .
+
+:carriesSIMProfile a owl:ObjectProperty ;
+    rdfs:label "carries sim profile" ;
+    rdfs:domain :PhysicalSIM ;
+    rdfs:range  :SIMProfile ;
+    skos:definition "Associates physical sim with sim profile for number, sim and portability management." .
+
+:transfersMobileNumber a owl:ObjectProperty ;
+    rdfs:label "transfers mobile number" ;
+    rdfs:domain :PortingRequest ;
+    rdfs:range  :MobileNumber ;
+    skos:definition "Associates porting request with mobile number for number, sim and portability management." .
+
+:producesPortingEvent a owl:ObjectProperty ;
+    rdfs:label "produces porting event" ;
+    rdfs:domain :PortingRequest ;
+    rdfs:range  :PortingEvent ;
+    skos:definition "Associates porting request with porting event for number, sim and portability management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:numberPoolId a owl:DatatypeProperty ;
+    rdfs:label "number pool id" ;
+    rdfs:domain :NumberPool ;
+    rdfs:range  xsd:string .
+
+:mobileNumberId a owl:DatatypeProperty ;
+    rdfs:label "mobile number id" ;
+    rdfs:domain :MobileNumber ;
+    rdfs:range  xsd:string .
+
+:sIMProfileId a owl:DatatypeProperty ;
+    rdfs:label "s im profile id" ;
+    rdfs:domain :SIMProfile ;
+    rdfs:range  xsd:string .
+
+:physicalSIMId a owl:DatatypeProperty ;
+    rdfs:label "physical sim id" ;
+    rdfs:domain :PhysicalSIM ;
+    rdfs:range  xsd:string .
+
+:eSIMProfileId a owl:DatatypeProperty ;
+    rdfs:label "e sim profile id" ;
+    rdfs:domain :ESIMProfile ;
+    rdfs:range  xsd:string .
+
+:identifierAssignmentId a owl:DatatypeProperty ;
+    rdfs:label "identifier assignment id" ;
+    rdfs:domain :IdentifierAssignment ;
+    rdfs:range  xsd:string .
+
+:portingRequestId a owl:DatatypeProperty ;
+    rdfs:label "porting request id" ;
+    rdfs:domain :PortingRequest ;
+    rdfs:range  xsd:string .
+
+:portingEventId a owl:DatatypeProperty ;
+    rdfs:label "porting event id" ;
+    rdfs:domain :PortingEvent ;
+    rdfs:range  xsd:string .
+
+:portingRequestStatus a owl:DatatypeProperty ;
+    rdfs:label "porting request status" ;
+    rdfs:domain :PortingRequest ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of porting request: requested, validated, scheduled, completed, rejected, cancelled." .
+
+#################################################################
+# Roles
+#################################################################
+
+:NumberPortabilityOperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Number Portability Operator" ;
+    skos:altLabel "Number Portability Operator Role" ;
+    skos:definition "Validates identifier assignments and coordinates number transfers. Bearer: person. Permissions: NumberPool:read, MobileNumber:read, IdentifierAssignment:write, PortingRequest:read, PortingRequest:write." .

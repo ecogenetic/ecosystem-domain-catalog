@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/prm/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/prm#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/prm/telco> a owl:Ontology ;
+    rdfs:label "PRM Telco Overlay" ;
+    rdfs:comment "Telco specialization of Partner and Dealer Management for MVNO operations." .
+
+:MVNODealer a owl:Class ;
+    rdfs:subClassOf base:Dealer ;
+    skos:prefLabel "MVNO Dealer" ;
+    skos:definition "A dealer authorized to register subscribers and sell MVNO products and services." .
+
+:AirtimeDistributor a owl:Class ;
+    rdfs:subClassOf base:Partner ;
+    skos:prefLabel "Airtime Distributor" ;
+    skos:definition "A partner distributing prepaid airtime or electronic value across downstream channels." .
+
+:servesSubscriber a owl:ObjectProperty ;
+    rdfs:label "serves subscriber" ;
+    rdfs:domain :MVNODealer ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates an MVNO dealer with a subscriber relationship it originated or services." .
+
+:DealerOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Dealer Operations" ;
+    skos:altLabel "Dealer Operations Role" ;
+    skos:definition "Person role that manages MVNO dealer onboarding, credentials, and channel compliance. Bearer: person. Permissions: Dealer:read, Dealer:write, PartnerCredential:read, PartnerCredential:write, PartnerAgreement:read." .
+
+:MVNODealerShape a sh:NodeShape ;
+    sh:targetClass :MVNODealer ;
+    sh:property [
+        sh:path :servesSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .
