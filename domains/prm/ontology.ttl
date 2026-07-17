@@ -1,0 +1,153 @@
+@prefix : <https://ecosystemcode.com/ontology/prm#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/prm> a owl:Ontology ;
+    rdfs:label "PRM Domain Ontology" ;
+    rdfs:comment "Manages partners, dealers, agreements, channel roles, territories, commission plans, statements, and credentials." .
+
+#################################################################
+# Classes
+#################################################################
+
+:Partner a owl:Class ;
+    skos:prefLabel "Partner" ;
+    skos:definition "An organization participating in sales, distribution, service, or fulfilment on behalf of the enterprise." .
+
+:Dealer a owl:Class ;
+    skos:prefLabel "Dealer" ;
+    skos:definition "A partner authorized to sell or service offerings through an approved channel." .
+
+:PartnerAgreement a owl:Class ;
+    skos:prefLabel "Partner Agreement" ;
+    skos:definition "A contract defining partner rights, obligations, commercial terms, and duration." .
+
+:PartnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Partner Role" ;
+    skos:definition "A formally assigned function performed by a partner organization." .
+
+:Territory a owl:Class ;
+    skos:prefLabel "Territory" ;
+    skos:definition "A geographic or market area assigned to a partner or dealer." .
+
+:CommissionPlan a owl:Class ;
+    skos:prefLabel "Commission Plan" ;
+    skos:definition "A rule set determining partner remuneration for eligible outcomes." .
+
+:CommissionStatement a owl:Class ;
+    skos:prefLabel "Commission Statement" ;
+    skos:definition "A periodic statement of calculated commissions, adjustments, and amounts due." .
+
+:PartnerCredential a owl:Class ;
+    skos:prefLabel "Partner Credential" ;
+    skos:definition "A credential authorizing a partner user or system to access channel capabilities." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:operatesAsPartner a owl:ObjectProperty ;
+    rdfs:label "operates as partner" ;
+    rdfs:domain :Dealer ;
+    rdfs:range  :Partner ;
+    skos:definition "Associates dealer with partner for partner and dealer management." .
+
+:governsPartner a owl:ObjectProperty ;
+    rdfs:label "governs partner" ;
+    rdfs:domain :PartnerAgreement ;
+    rdfs:range  :Partner ;
+    skos:definition "Associates partner agreement with partner for partner and dealer management." .
+
+:holdsPartnerRole a owl:ObjectProperty ;
+    rdfs:label "holds partner role" ;
+    rdfs:domain :Partner ;
+    rdfs:range  :PartnerRole ;
+    skos:definition "Associates partner with partner role for partner and dealer management." .
+
+:assignedTerritory a owl:ObjectProperty ;
+    rdfs:label "assigned territory" ;
+    rdfs:domain :Partner ;
+    rdfs:range  :Territory ;
+    skos:definition "Associates partner with territory for partner and dealer management." .
+
+:appliesToPartner a owl:ObjectProperty ;
+    rdfs:label "applies to partner" ;
+    rdfs:domain :CommissionPlan ;
+    rdfs:range  :Partner ;
+    skos:definition "Associates commission plan with partner for partner and dealer management." .
+
+:calculatedUnderPlan a owl:ObjectProperty ;
+    rdfs:label "calculated under plan" ;
+    rdfs:domain :CommissionStatement ;
+    rdfs:range  :CommissionPlan ;
+    skos:definition "Associates commission statement with commission plan for partner and dealer management." .
+
+:authorizesPartner a owl:ObjectProperty ;
+    rdfs:label "authorizes partner" ;
+    rdfs:domain :PartnerCredential ;
+    rdfs:range  :Partner ;
+    skos:definition "Associates partner credential with partner for partner and dealer management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:partnerId a owl:DatatypeProperty ;
+    rdfs:label "partner id" ;
+    rdfs:domain :Partner ;
+    rdfs:range  xsd:string .
+
+:dealerId a owl:DatatypeProperty ;
+    rdfs:label "dealer id" ;
+    rdfs:domain :Dealer ;
+    rdfs:range  xsd:string .
+
+:partnerAgreementId a owl:DatatypeProperty ;
+    rdfs:label "partner agreement id" ;
+    rdfs:domain :PartnerAgreement ;
+    rdfs:range  xsd:string .
+
+:partnerRoleId a owl:DatatypeProperty ;
+    rdfs:label "partner role id" ;
+    rdfs:domain :PartnerRole ;
+    rdfs:range  xsd:string .
+
+:territoryId a owl:DatatypeProperty ;
+    rdfs:label "territory id" ;
+    rdfs:domain :Territory ;
+    rdfs:range  xsd:string .
+
+:commissionPlanId a owl:DatatypeProperty ;
+    rdfs:label "commission plan id" ;
+    rdfs:domain :CommissionPlan ;
+    rdfs:range  xsd:string .
+
+:commissionStatementId a owl:DatatypeProperty ;
+    rdfs:label "commission statement id" ;
+    rdfs:domain :CommissionStatement ;
+    rdfs:range  xsd:string .
+
+:partnerCredentialId a owl:DatatypeProperty ;
+    rdfs:label "partner credential id" ;
+    rdfs:domain :PartnerCredential ;
+    rdfs:range  xsd:string .
+
+:partnerStatus a owl:DatatypeProperty ;
+    rdfs:label "partner status" ;
+    rdfs:domain :Partner ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of partner: prospective, onboarding, active, suspended, terminated." .
+
+#################################################################
+# Roles
+#################################################################
+
+:ChannelManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Channel Manager" ;
+    skos:altLabel "Channel Manager Role" ;
+    skos:definition "Onboards partners and governs agreements, territories, and commission plans. Bearer: person. Permissions: Partner:read, Partner:write, Dealer:read, PartnerAgreement:write, Territory:write, CommissionPlan:write." .

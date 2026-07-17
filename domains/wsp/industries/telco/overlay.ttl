@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/wsp/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/wsp#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/wsp/telco> a owl:Ontology ;
+    rdfs:label "WSP Telco Overlay" ;
+    rdfs:comment "Telco specialization of Wholesale Partner and Settlement Management for MVNO operations." .
+
+:MVNOWholesaleAgreement a owl:Class ;
+    rdfs:subClassOf base:WholesaleAgreement ;
+    skos:prefLabel "MVNO Wholesale Agreement" ;
+    skos:definition "A wholesale agreement granting an MVNO access to host-network services." .
+
+:HostNetworkSettlement a owl:Class ;
+    rdfs:subClassOf base:SettlementStatement ;
+    skos:prefLabel "Host Network Settlement" ;
+    skos:definition "A settlement statement issued by or to the host mobile network operator." .
+
+:coversSubscriberUsage a owl:ObjectProperty ;
+    rdfs:label "covers subscriber usage" ;
+    rdfs:domain :HostNetworkSettlement ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a host-network settlement with subscriber usage included in its reconciliation scope." .
+
+:HostMNOCommercialRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Host MNO Commercial Manager" ;
+    skos:altLabel "Host MNO Commercial Manager Role" ;
+    skos:definition "Person role that governs MVNO host-network contracts, pricing, and settlement escalations. Bearer: person. Permissions: WholesaleAgreement:read, WholesaleAgreement:write, WholesaleRate:read, SettlementStatement:read." .
+
+:HostNetworkSettlementShape a sh:NodeShape ;
+    sh:targetClass :HostNetworkSettlement ;
+    sh:property [
+        sh:path :coversSubscriberUsage ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

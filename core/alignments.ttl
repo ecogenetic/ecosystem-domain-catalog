@@ -1,0 +1,230 @@
+@prefix core: <https://ecosystemcode.com/ontology/core#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bi:     <https://ecosystemcode.com/ontology/bi#> .
+@prefix bpm:    <https://ecosystemcode.com/ontology/bpm#> .
+@prefix ccm:    <https://ecosystemcode.com/ontology/ccm#> .
+@prefix cms:    <https://ecosystemcode.com/ontology/cms#> .
+@prefix cpq:    <https://ecosystemcode.com/ontology/cpq#> .
+@prefix crm:    <https://ecosystemcode.com/ontology/crm#> .
+@prefix cvm:    <https://ecosystemcode.com/ontology/cvm#> .
+@prefix eam:    <https://ecosystemcode.com/ontology/eam#> .
+@prefix ecom:   <https://ecosystemcode.com/ontology/ecom#> .
+@prefix erp:    <https://ecosystemcode.com/ontology/erp#> .
+@prefix fin:    <https://ecosystemcode.com/ontology/fin#> .
+@prefix fms:    <https://ecosystemcode.com/ontology/fms#> .
+@prefix grc:    <https://ecosystemcode.com/ontology/grc#> .
+@prefix hcm:    <https://ecosystemcode.com/ontology/hcm#> .
+@prefix health: <https://ecosystemcode.com/ontology/health#> .
+@prefix itsm:   <https://ecosystemcode.com/ontology/itsm#> .
+@prefix lms:    <https://ecosystemcode.com/ontology/lms#> .
+@prefix lsm:    <https://ecosystemcode.com/ontology/lsm#> .
+@prefix mdm:    <https://ecosystemcode.com/ontology/mdm#> .
+@prefix mes:    <https://ecosystemcode.com/ontology/mes#> .
+@prefix oms:    <https://ecosystemcode.com/ontology/oms#> .
+@prefix pim:    <https://ecosystemcode.com/ontology/pim#> .
+@prefix plm:    <https://ecosystemcode.com/ontology/plm#> .
+@prefix pos:    <https://ecosystemcode.com/ontology/pos#> .
+@prefix qms:    <https://ecosystemcode.com/ontology/qms#> .
+@prefix scm:    <https://ecosystemcode.com/ontology/scm#> .
+@prefix tms:    <https://ecosystemcode.com/ontology/tms#> .
+@prefix wms:    <https://ecosystemcode.com/ontology/wms#> .
+@prefix bil:    <https://ecosystemcode.com/ontology/bil#> .
+@prefix chg:    <https://ecosystemcode.com/ontology/chg#> .
+@prefix num:    <https://ecosystemcode.com/ontology/num#> .
+@prefix prm:    <https://ecosystemcode.com/ontology/prm#> .
+@prefix prv:    <https://ecosystemcode.com/ontology/prv#> .
+@prefix raf:    <https://ecosystemcode.com/ontology/raf#> .
+@prefix sam:    <https://ecosystemcode.com/ontology/sam#> .
+@prefix siv:    <https://ecosystemcode.com/ontology/siv#> .
+@prefix sub:    <https://ecosystemcode.com/ontology/sub#> .
+@prefix wsp:    <https://ecosystemcode.com/ontology/wsp#> .
+
+<https://ecosystemcode.com/ontology/core-alignments> a owl:Ontology ;
+    rdfs:label "Core Entity Alignments" ;
+    rdfs:comment "Curated cross-domain alignments from domain classes to the core shared-entity vocabulary. owl:equivalentClass collapses classes into one canonical entity in multi-domain composition; rdfs:subClassOf keeps the domain class distinct but linked to its canonical parent. Loaded only in multi-domain mode. All entries are human-confirmed; never align by name similarity alone." .
+
+#################################################################
+# Customer / Party cluster
+# NOTE false friend: fin:Account is a financial (balance-holding)
+# account, NOT a customer organisation — it aligns to
+# core:FinancialAccount, never to core:Customer.
+#################################################################
+
+crm:Account owl:equivalentClass core:Customer .
+cvm:Customer owl:equivalentClass core:Customer .
+ecom:Customer owl:equivalentClass core:Customer .
+erp:Customer owl:equivalentClass core:Customer .
+ccm:CustomerAccount rdfs:subClassOf core:Customer .
+crm:Contact owl:equivalentClass core:Contact .
+crm:Lead rdfs:subClassOf core:Party .
+health:Patient rdfs:subClassOf core:Party .
+lms:Learner rdfs:subClassOf core:Party .
+lsm:Tenant rdfs:subClassOf core:Customer .
+hcm:Employee owl:equivalentClass core:Employee .
+erp:Vendor owl:equivalentClass core:Supplier .
+scm:Supplier owl:equivalentClass core:Supplier .
+
+#################################################################
+# Product cluster
+#################################################################
+
+crm:Product owl:equivalentClass core:Product .
+cvm:Product owl:equivalentClass core:Product .
+ecom:Product owl:equivalentClass core:Product .
+erp:Product owl:equivalentClass core:Product .
+pim:Product owl:equivalentClass core:Product .
+plm:Product owl:equivalentClass core:Product .
+pim:Variant rdfs:subClassOf core:Product .
+plm:Part rdfs:subClassOf core:Product .
+ecom:Category owl:equivalentClass core:ProductCategory .
+pim:Category owl:equivalentClass core:ProductCategory .
+erp:BillOfMaterials owl:equivalentClass core:BillOfMaterials .
+plm:BillOfMaterials owl:equivalentClass core:BillOfMaterials .
+
+#################################################################
+# Order cluster
+# NOTE false friend: pos:Transaction is a register sale, not an
+# order document and not a financial posting — left unaligned.
+#################################################################
+
+ecom:Order owl:equivalentClass core:Order .
+oms:Order owl:equivalentClass core:Order .
+erp:SalesOrder owl:equivalentClass core:Order .
+ecom:OrderLine owl:equivalentClass core:OrderLine .
+oms:OrderLine owl:equivalentClass core:OrderLine .
+erp:SalesOrderLine owl:equivalentClass core:OrderLine .
+oms:Return owl:equivalentClass core:Return .
+cpq:Quote owl:equivalentClass core:Quote .
+crm:Quote owl:equivalentClass core:Quote .
+crm:Contract owl:equivalentClass core:Contract .
+lsm:LeaseContract rdfs:subClassOf core:Contract .
+crm:Campaign owl:equivalentClass core:Campaign .
+cvm:Campaign owl:equivalentClass core:Campaign .
+
+#################################################################
+# Finance cluster
+#################################################################
+
+fin:Account owl:equivalentClass core:FinancialAccount .
+erp:GLAccount rdfs:subClassOf core:FinancialAccount .
+fin:Transaction owl:equivalentClass core:FinancialTransaction .
+erp:Invoice owl:equivalentClass core:Invoice .
+erp:CustomerInvoice rdfs:subClassOf core:Invoice .
+fms:VendorInvoice rdfs:subClassOf core:Invoice .
+fms:CustomerInvoice rdfs:subClassOf core:Invoice .
+ecom:Payment owl:equivalentClass core:Payment .
+erp:Payment owl:equivalentClass core:Payment .
+fms:Payment owl:equivalentClass core:Payment .
+lsm:LeasePayment rdfs:subClassOf core:Payment .
+fin:Ledger owl:equivalentClass core:Ledger .
+erp:Ledger owl:equivalentClass core:Ledger .
+fms:GeneralLedger owl:equivalentClass core:Ledger .
+erp:JournalEntry owl:equivalentClass core:JournalEntry .
+fms:JournalEntry owl:equivalentClass core:JournalEntry .
+erp:FiscalPeriod owl:equivalentClass core:FiscalPeriod .
+fms:FiscalPeriod owl:equivalentClass core:FiscalPeriod .
+fin:Reconciliation owl:equivalentClass core:Reconciliation .
+fms:Reconciliation owl:equivalentClass core:Reconciliation .
+
+#################################################################
+# Supply chain and logistics cluster
+# NOTE false friend: pos:Receipt is a proof of purchase, NOT an
+# inbound goods receipt — left unaligned.
+#################################################################
+
+erp:Shipment owl:equivalentClass core:Shipment .
+scm:Shipment owl:equivalentClass core:Shipment .
+tms:Shipment owl:equivalentClass core:Shipment .
+wms:Shipment owl:equivalentClass core:Shipment .
+scm:Carrier owl:equivalentClass core:Carrier .
+tms:Carrier owl:equivalentClass core:Carrier .
+scm:Route owl:equivalentClass core:Route .
+tms:Route owl:equivalentClass core:Route .
+erp:Warehouse owl:equivalentClass core:Warehouse .
+wms:Warehouse owl:equivalentClass core:Warehouse .
+scm:Inventory owl:equivalentClass core:InventoryLevel .
+erp:InventoryLevel owl:equivalentClass core:InventoryLevel .
+wms:StockLevel owl:equivalentClass core:InventoryLevel .
+erp:GoodsReceipt owl:equivalentClass core:GoodsReceipt .
+wms:Receipt owl:equivalentClass core:GoodsReceipt .
+
+#################################################################
+# Assets, locations, work, and service cluster
+# NOTE specializations: eam (maintenance), mes (production), and
+# erp (manufacturing) work orders are distinct subtypes and must
+# NOT collapse into one another.
+#################################################################
+
+eam:Asset owl:equivalentClass core:Asset .
+lsm:LeasedAsset rdfs:subClassOf core:Asset .
+eam:Location owl:equivalentClass core:Location .
+eam:WorkOrder rdfs:subClassOf core:WorkOrder .
+erp:WorkOrder rdfs:subClassOf core:WorkOrder .
+mes:WorkOrder rdfs:subClassOf core:WorkOrder .
+bpm:Case owl:equivalentClass core:Case .
+crm:Case owl:equivalentClass core:Case .
+ccm:CollectionCase rdfs:subClassOf core:Case .
+itsm:Incident owl:equivalentClass core:Incident .
+
+#################################################################
+# Telco cluster (bil, chg, med, num, prm, prv, raf, sam, siv, sub, wsp)
+#################################################################
+
+# Parties and accounts
+sub:CustomerAccount rdfs:subClassOf core:Customer .
+prm:Partner rdfs:subClassOf core:Party .
+wsp:WholesalePartner rdfs:subClassOf core:Party .
+bil:BillingAccount rdfs:subClassOf core:FinancialAccount .
+chg:ChargingAccount rdfs:subClassOf core:FinancialAccount .
+
+# Contracts and commercial agreements
+sub:Subscription rdfs:subClassOf core:Contract .
+prm:PartnerAgreement rdfs:subClassOf core:Contract .
+wsp:WholesaleAgreement rdfs:subClassOf core:Contract .
+
+# Billing and charging
+bil:Invoice owl:equivalentClass core:Invoice .
+chg:Charge rdfs:subClassOf core:FinancialTransaction .
+
+# Catalog and fulfilment
+siv:ServiceOffering rdfs:subClassOf core:Product .
+prv:ServiceOrder rdfs:subClassOf core:Order .
+
+# Cases, incidents, and assets
+prv:FalloutCase rdfs:subClassOf core:Case .
+sam:AssuranceCase rdfs:subClassOf core:Case .
+raf:Investigation rdfs:subClassOf core:Case .
+sam:Outage rdfs:subClassOf core:Incident .
+num:PhysicalSIM rdfs:subClassOf core:Asset .
+
+#################################################################
+# Documented false friends (intentionally NOT aligned)
+#
+# - crm:Account (customer organisation) vs fin:Account (financial
+#   account): same name, different meaning. Aligned to different
+#   core classes above; they must never collapse together.
+# - pos:Transaction (register sale) vs fin:Transaction (money
+#   movement): pos:Transaction stays unaligned.
+# - pos:Receipt (proof of purchase) vs wms:Receipt / erp:GoodsReceipt
+#   (inbound goods): pos:Receipt stays unaligned.
+# - lms:Certificate (course completion) vs qms:Certificate
+#   (conformance certificate): both stay unaligned.
+# - cms:Publication (content publish event) vs pim:Publication
+#   (catalog feed export): both stay unaligned.
+# - cvm:Channel (marketing contact channel) vs oms:Channel (sales
+#   channel): related but not identical; both stay unaligned.
+# - bpm:Task, itsm:Problem, qms:NonConformance, grc:AuditFinding:
+#   issue-like concepts with distinct semantics; stay unaligned.
+# - chg:Balance (prepaid/postpaid value bucket) vs fin balances:
+#   an account attribute, not a core entity; stays unaligned.
+# - bil:SettlementStatement-style docs: wsp:SettlementStatement is a
+#   partner statement, NOT a customer invoice; stays unaligned.
+# - sam:ServiceAlarm (monitoring signal) vs core:Incident (managed
+#   disruption): an alarm may precede an incident; stays unaligned.
+# - raf:FraudAlert (risk signal) vs core:Case: only the managed
+#   raf:Investigation aligns; the alert itself stays unaligned.
+# - num:MobileNumber / num:ESIMProfile: identifiers and profiles,
+#   not physical assets; only num:PhysicalSIM aligns to core:Asset.
+#################################################################

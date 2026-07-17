@@ -25,7 +25,8 @@ explains the same rules for product integrators and specialists.
 2. Load `domains/{id}/description.md` for the domain language (seven sections).
 3. Load `domains/{id}/ontology.ttl` (OWL + SKOS) and optionally `shapes.ttl` (SHACL).
 4. If an industry is selected, append `domains/{id}/industries/{industry}/overlay.md` and merge `overlay.ttl` additively; also read `industries/{industry}/industry.md` and `common.ttl`.
-5. Treat published IRIs as stable. Never rename; deprecate with `owl:deprecated true`.
+5. If the user combines **more than one domain**, also load `core/ontology.ttl` (shared-entity vocabulary) and `core/alignments.ttl` (curated cross-domain links), and collapse `owl:equivalentClass`-aligned classes into one canonical entity keyed on the core IRI. Never load these files for a single domain, and never align classes by name similarity — see [extension-approaches.md](extension-approaches.md) and [../playbooks/add-alignment.md](../playbooks/add-alignment.md).
+6. Treat published IRIs as stable. Never rename; deprecate with `owl:deprecated true`.
 
 ## Versioning
 

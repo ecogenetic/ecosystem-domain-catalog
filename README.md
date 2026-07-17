@@ -28,6 +28,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [meta-data/extension-approaches.md](m
 | Completeness | SHACL | `domains/{id}/shapes.ttl` |
 | Industry specialization | Add-only overlays | `domains/{id}/industries/{industry}/` |
 | Shared industry concepts | Turtle + Markdown | `industries/{industry}/` |
+| Cross-domain identity | Core vocabulary + curated alignments | `core/ontology.ttl`, `core/alignments.ttl` |
 | Discovery | JSON manifests | `index.json`, `industries.json` |
 
 Design rules for integrators: **[meta-data/](meta-data/)**. Structural contract for agents/CI: **[AGENTS.md](AGENTS.md)**.
@@ -37,6 +38,7 @@ Design rules for integrators: **[meta-data/](meta-data/)**. Structural contract 
 ```text
 domains/{id}/           description.md · ontology.ttl · shapes.ttl · industries/…
 industries/{id}/        industry.md · common.ttl
+core/                   ontology.ttl (shared-entity vocabulary) · alignments.ttl (curated cross-domain links)
 playbooks/              extension procedures
 tools/validate-catalog.sh
 meta-data/              published design rules (external products)
@@ -64,6 +66,19 @@ and **at least one industry overlay per domain**.
 - [playbooks/extend-domain.md](playbooks/extend-domain.md)
 - [playbooks/add-industry.md](playbooks/add-industry.md)
 - [playbooks/add-industry-overlay.md](playbooks/add-industry-overlay.md)
+- [playbooks/add-alignment.md](playbooks/add-alignment.md)
+
+## Multi-domain composition (`core/`)
+
+Projects can span several domains (e.g. CRM + CVM). Shared entities like **Customer**
+must appear **once**, not per domain. `core/ontology.ttl` provides the canonical
+common-entity vocabulary; `core/alignments.ttl` holds curated triples mapping domain
+classes to it (`owl:equivalentClass` collapses, `rdfs:subClassOf` links a subtype).
+Homonyms such as `crm:Account` (customer organisation) vs `fin:Account` (financial
+account) are documented false friends and **never** aligned. Both files are consumed only
+in multi-domain mode; single-domain generation is unchanged.
+See [playbooks/add-alignment.md](playbooks/add-alignment.md) and
+[meta-data/extension-approaches.md](meta-data/extension-approaches.md).
 
 ## Used by EcosystemCode
 

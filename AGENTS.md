@@ -32,6 +32,9 @@ ecosystem-domain-catalog/
     extend-domain.md
   tools/
     validate-catalog.sh    # structural validator — run before every commit
+  core/
+    ontology.ttl           # domain-neutral shared-entity vocabulary (section 9)
+    alignments.ttl         # curated domain-to-core alignments (section 9)
   industries/
     {industryId}/
       industry.md          # cross-domain industry context (terminology, regulatory notes)
@@ -260,7 +263,37 @@ They MUST NOT redefine, rename, remove, or relax any base class, property, or sh
 `overlay.md` contains only additive description sections (extra Concepts / Relationships /
 Roles / regulatory notes) appended after the base description at generation time.
 
-## 9. Workflow for any extension
+## 9. Core shared-entity vocabulary and alignments (`core/`)
+
+`core/ontology.ttl` is the domain-neutral common-entity vocabulary
+(namespace `https://ecosystemcode.com/ontology/core#`): canonical classes for entities that
+recur across domains (Party, Customer, Product, Order, Invoice, Payment, Shipment, Asset,
+Work Order, ...). `core/alignments.ttl` holds curated triples linking existing domain class
+IRIs to core classes. Both files are consumed only in **multi-domain composition** —
+single-domain generation never loads them.
+
+Rules:
+
+1. Alignments are **curated semantic mappings**, never name-similarity guesses. Each triple
+   is one of:
+   - `dom:X owl:equivalentClass core:Y` — same real-world thing; downstream consumers
+     collapse the domain classes into one canonical entity.
+   - `dom:X rdfs:subClassOf core:Y` — domain class is a subtype; it stays distinct but is
+     linked to the canonical parent.
+   - No triple — homonyms / false friends (e.g. `crm:Account` customer organisation vs
+     `fin:Account` financial account) stay separate; document them in the false-friends
+     comment block in `alignments.ttl`.
+2. Alignment triples reference domain IRIs; they never modify `domains/{id}/ontology.ttl`.
+   Domain ontologies stay byte-for-byte unchanged.
+3. Core classes follow the same SKOS pattern as section 4 (`skos:prefLabel`,
+   `skos:definition`, `skos:altLabel` encouraged); core IRIs are stable once published
+   (invariant 1 applies).
+4. The validator checks: both files exist and are non-empty, core namespace is correct,
+   every core class has prefLabel + definition, and every alignment triple references an
+   existing domain class and an existing core class.
+5. See `playbooks/add-alignment.md` for the propose/confirm authoring procedure.
+
+## 10. Workflow for any extension
 
 1. Read the relevant playbook in `playbooks/` and `meta-data/extension-approaches.md`.
 2. Author files exactly per the templates above.

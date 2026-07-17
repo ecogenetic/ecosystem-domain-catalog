@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/wsp#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:WholesalePartnerShape a sh:NodeShape ;
+    sh:targetClass :WholesalePartner ;
+    sh:property [
+        sh:path :wholesalePartnerId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:HostMNOShape a sh:NodeShape ;
+    sh:targetClass :HostMNO ;
+    sh:property [
+        sh:path :hostMNOId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:WholesaleAgreementShape a sh:NodeShape ;
+    sh:targetClass :WholesaleAgreement ;
+    sh:property [
+        sh:path :wholesaleAgreementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:WholesaleServiceShape a sh:NodeShape ;
+    sh:targetClass :WholesaleService ;
+    sh:property [
+        sh:path :wholesaleServiceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:WholesaleRateShape a sh:NodeShape ;
+    sh:targetClass :WholesaleRate ;
+    sh:property [
+        sh:path :wholesaleRateId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SettlementPeriodShape a sh:NodeShape ;
+    sh:targetClass :SettlementPeriod ;
+    sh:property [
+        sh:path :settlementPeriodId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SettlementStatementShape a sh:NodeShape ;
+    sh:targetClass :SettlementStatement ;
+    sh:property [
+        sh:path :settlementStatementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :settlementStatementStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "received" "reconciled" "disputed" "approved" "settled" )
+    ] .
+
+:SettlementDisputeShape a sh:NodeShape ;
+    sh:targetClass :SettlementDispute ;
+    sh:property [
+        sh:path :settlementDisputeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

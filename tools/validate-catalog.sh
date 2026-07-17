@@ -179,6 +179,53 @@ for d in "$ROOT/industries"/*/; do
     echo "$INDUSTRY_IDS" | grep -qx "$iid" || fail "industries/$iid/ exists but has no industries.json entry"
 done
 
+# ---------- core shared-entity vocabulary + alignments ----------
+CORE_ONT="$ROOT/core/ontology.ttl"
+CORE_ALIGN="$ROOT/core/alignments.ttl"
+if [ -d "$ROOT/core" ]; then
+    [ -s "$CORE_ONT" ]   || fail "core/: missing or empty ontology.ttl"
+    [ -s "$CORE_ALIGN" ] || fail "core/: missing or empty alignments.ttl"
+    if [ -s "$CORE_ONT" ]; then
+        grep -q "@prefix : <https://ecosystemcode.com/ontology/core#>" "$CORE_ONT" \
+            || fail "core/ontology.ttl namespace prefix incorrect"
+        CORE_CLASSES_N=$(grep -c "a owl:Class" "$CORE_ONT")
+        CORE_PREF_N=$(grep -c "skos:prefLabel" "$CORE_ONT")
+        CORE_DEF_N=$(grep -c "skos:definition" "$CORE_ONT")
+        [ "$CORE_PREF_N" -ge "$CORE_CLASSES_N" ] || fail "core/ontology.ttl: $CORE_CLASSES_N classes but only $CORE_PREF_N skos:prefLabel"
+        [ "$CORE_DEF_N" -ge "$CORE_CLASSES_N" ] || fail "core/ontology.ttl: $CORE_CLASSES_N classes but only $CORE_DEF_N skos:definition"
+    fi
+    PLACEHOLDERS_CORE=$(grep -rlE 'TODO|TBD\b|PLACEHOLDER|FIXME' "$ROOT/core" 2>/dev/null || true)
+    [ -z "$PLACEHOLDERS_CORE" ] || fail "placeholder markers found in: $PLACEHOLDERS_CORE"
+    if [ -s "$CORE_ALIGN" ] && [ -s "$CORE_ONT" ]; then
+        python3 - "$ROOT" <<'PYEOF'
+import re, sys
+root = sys.argv[1]
+align = open(f"{root}/core/alignments.ttl").read()
+pairs = re.findall(r"^(\w+):(\w+)\s+(owl:equivalentClass|rdfs:subClassOf)\s+core:(\w+)\s*\.", align, re.M)
+core_classes = set(re.findall(r"^:(\w+) a owl:Class", open(f"{root}/core/ontology.ttl").read(), re.M))
+bad = 0
+if not pairs:
+    print("FAIL: core/alignments.ttl has no alignment triples (X owl:equivalentClass|rdfs:subClassOf core:Y)")
+    bad += 1
+for dom, cls, pred, target in pairs:
+    try:
+        ont = open(f"{root}/domains/{dom}/ontology.ttl").read()
+    except FileNotFoundError:
+        print(f"FAIL: core/alignments.ttl references unknown domain '{dom}'")
+        bad += 1
+        continue
+    if f":{cls} a owl:Class" not in ont:
+        print(f"FAIL: core/alignments.ttl references unknown class {dom}:{cls}")
+        bad += 1
+    if target not in core_classes:
+        print(f"FAIL: core/alignments.ttl references unknown core class core:{target}")
+        bad += 1
+sys.exit(1 if bad else 0)
+PYEOF
+        [ $? -ne 0 ] && ERRORS=$((ERRORS + 1))
+    fi
+fi
+
 echo ""
 if [ "$ERRORS" -gt 0 ]; then
     echo "Validation FAILED ($ERRORS error(s))"

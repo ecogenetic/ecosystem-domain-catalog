@@ -1,0 +1,146 @@
+@prefix : <https://ecosystemcode.com/ontology/med#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/med> a owl:Ontology ;
+    rdfs:label "MED Domain Ontology" ;
+    rdfs:comment "Ingests, validates, normalizes, deduplicates, enriches, and routes high-volume service-usage events." .
+
+#################################################################
+# Classes
+#################################################################
+
+:RawUsageEvent a owl:Class ;
+    skos:prefLabel "Raw Usage Event" ;
+    skos:definition "An unprocessed event emitted by a network or service platform." .
+
+:UsageBatch a owl:Class ;
+    skos:prefLabel "Usage Batch" ;
+    skos:definition "A controlled collection of usage events received and processed together." .
+
+:MediatedUsageRecord a owl:Class ;
+    skos:prefLabel "Mediated Usage Record" ;
+    skos:definition "A validated, normalized, deduplicated, and enriched usage record." .
+
+:ValidationRule a owl:Class ;
+    skos:prefLabel "Validation Rule" ;
+    skos:definition "A rule determining whether a usage event is structurally and semantically valid." .
+
+:EnrichmentRule a owl:Class ;
+    skos:prefLabel "Enrichment Rule" ;
+    skos:definition "A rule adding reference or subscriber context to usage data." .
+
+:DuplicateRecord a owl:Class ;
+    skos:prefLabel "Duplicate Record" ;
+    skos:definition "A usage record identified as a duplicate of an earlier event." .
+
+:RejectedUsageRecord a owl:Class ;
+    skos:prefLabel "Rejected Usage Record" ;
+    skos:definition "A usage record excluded from downstream processing with a recorded reason." .
+
+:UsageRoute a owl:Class ;
+    skos:prefLabel "Usage Route" ;
+    skos:definition "A rule or destination controlling distribution of mediated usage." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:containsRawUsageEvent a owl:ObjectProperty ;
+    rdfs:label "contains raw usage event" ;
+    rdfs:domain :UsageBatch ;
+    rdfs:range  :RawUsageEvent ;
+    skos:definition "Associates usage batch with raw usage event for usage mediation management." .
+
+:validatesRawUsageEvent a owl:ObjectProperty ;
+    rdfs:label "validates raw usage event" ;
+    rdfs:domain :ValidationRule ;
+    rdfs:range  :RawUsageEvent ;
+    skos:definition "Associates validation rule with raw usage event for usage mediation management." .
+
+:enrichesMediatedUsageRecord a owl:ObjectProperty ;
+    rdfs:label "enriches mediated usage record" ;
+    rdfs:domain :EnrichmentRule ;
+    rdfs:range  :MediatedUsageRecord ;
+    skos:definition "Associates enrichment rule with mediated usage record for usage mediation management." .
+
+:duplicatesRawUsageEvent a owl:ObjectProperty ;
+    rdfs:label "duplicates raw usage event" ;
+    rdfs:domain :DuplicateRecord ;
+    rdfs:range  :RawUsageEvent ;
+    skos:definition "Associates duplicate record with raw usage event for usage mediation management." .
+
+:rejectsRawUsageEvent a owl:ObjectProperty ;
+    rdfs:label "rejects raw usage event" ;
+    rdfs:domain :RejectedUsageRecord ;
+    rdfs:range  :RawUsageEvent ;
+    skos:definition "Associates rejected usage record with raw usage event for usage mediation management." .
+
+:routesMediatedUsageRecord a owl:ObjectProperty ;
+    rdfs:label "routes mediated usage record" ;
+    rdfs:domain :UsageRoute ;
+    rdfs:range  :MediatedUsageRecord ;
+    skos:definition "Associates usage route with mediated usage record for usage mediation management." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:rawUsageEventId a owl:DatatypeProperty ;
+    rdfs:label "raw usage event id" ;
+    rdfs:domain :RawUsageEvent ;
+    rdfs:range  xsd:string .
+
+:usageBatchId a owl:DatatypeProperty ;
+    rdfs:label "usage batch id" ;
+    rdfs:domain :UsageBatch ;
+    rdfs:range  xsd:string .
+
+:mediatedUsageRecordId a owl:DatatypeProperty ;
+    rdfs:label "mediated usage record id" ;
+    rdfs:domain :MediatedUsageRecord ;
+    rdfs:range  xsd:string .
+
+:validationRuleId a owl:DatatypeProperty ;
+    rdfs:label "validation rule id" ;
+    rdfs:domain :ValidationRule ;
+    rdfs:range  xsd:string .
+
+:enrichmentRuleId a owl:DatatypeProperty ;
+    rdfs:label "enrichment rule id" ;
+    rdfs:domain :EnrichmentRule ;
+    rdfs:range  xsd:string .
+
+:duplicateRecordId a owl:DatatypeProperty ;
+    rdfs:label "duplicate record id" ;
+    rdfs:domain :DuplicateRecord ;
+    rdfs:range  xsd:string .
+
+:rejectedUsageRecordId a owl:DatatypeProperty ;
+    rdfs:label "rejected usage record id" ;
+    rdfs:domain :RejectedUsageRecord ;
+    rdfs:range  xsd:string .
+
+:usageRouteId a owl:DatatypeProperty ;
+    rdfs:label "usage route id" ;
+    rdfs:domain :UsageRoute ;
+    rdfs:range  xsd:string .
+
+:usageBatchStatus a owl:DatatypeProperty ;
+    rdfs:label "usage batch status" ;
+    rdfs:domain :UsageBatch ;
+    rdfs:range  xsd:string ;
+    skos:definition "Lifecycle state of usage batch: received, validating, mediated, distributed, rejected." .
+
+#################################################################
+# Roles
+#################################################################
+
+:MediationOperatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Mediation Operator" ;
+    skos:altLabel "Mediation Operator Role" ;
+    skos:definition "Monitors usage ingestion, exceptions, and downstream distribution. Bearer: person. Permissions: UsageBatch:read, UsageBatch:write, RejectedUsageRecord:read, UsageRoute:read, UsageRoute:write." .

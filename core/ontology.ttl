@@ -1,0 +1,278 @@
+@prefix : <https://ecosystemcode.com/ontology/core#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://ecosystemcode.com/ontology/core> a owl:Ontology ;
+    rdfs:label "Core Shared Entity Ontology" ;
+    rdfs:comment "Domain-neutral common-entity vocabulary providing canonical identity for entities shared across catalog domains. Loaded only in multi-domain composition together with core/alignments.ttl; single-domain generation never uses it." .
+
+#################################################################
+# Parties
+#################################################################
+
+:Party a owl:Class ;
+    skos:prefLabel "Party" ;
+    skos:altLabel "Business Party", "Legal Entity" ;
+    skos:definition "A person or organisation that participates in business relationships, transactions, or agreements." .
+
+:Customer a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Customer" ;
+    skos:altLabel "Client", "Account", "Buyer" ;
+    skos:definition "A party the business sells to or maintains a commercial revenue relationship with." .
+
+:Contact a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Contact" ;
+    skos:altLabel "Contact Person", "Representative" ;
+    skos:definition "An individual person acting as a point of contact within a commercial relationship." .
+
+:Supplier a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Supplier" ;
+    skos:altLabel "Vendor", "Provider" ;
+    skos:definition "A party the business procures goods or services from." .
+
+:Employee a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Employee" ;
+    skos:altLabel "Staff Member", "Worker" ;
+    skos:definition "A person employed by the organisation under an employment relationship." .
+
+#################################################################
+# Products and catalog
+#################################################################
+
+:Product a owl:Class ;
+    skos:prefLabel "Product" ;
+    skos:altLabel "Item", "SKU", "Article" ;
+    skos:definition "A good or service the business defines, makes, sells, or manages across its lifecycle." .
+
+:ProductCategory a owl:Class ;
+    skos:prefLabel "Product Category" ;
+    skos:altLabel "Category", "Product Group" ;
+    skos:definition "A classification grouping used to organise products into hierarchies." .
+
+:BillOfMaterials a owl:Class ;
+    skos:prefLabel "Bill Of Materials" ;
+    skos:altLabel "BOM", "Product Structure" ;
+    skos:definition "The structured list of components and quantities required to make a product." .
+
+#################################################################
+# Commerce documents
+#################################################################
+
+:Order a owl:Class ;
+    skos:prefLabel "Order" ;
+    skos:altLabel "Sales Order", "Customer Order" ;
+    skos:definition "A customer's confirmed request to purchase products or services on agreed terms." .
+
+:OrderLine a owl:Class ;
+    skos:prefLabel "Order Line" ;
+    skos:altLabel "Line Item", "Order Item" ;
+    skos:definition "A single product-and-quantity entry within an order." .
+
+:Quote a owl:Class ;
+    skos:prefLabel "Quote" ;
+    skos:altLabel "Quotation", "Proposal" ;
+    skos:definition "A priced offer presented to a customer prior to an order." .
+
+:Contract a owl:Class ;
+    skos:prefLabel "Contract" ;
+    skos:altLabel "Agreement", "Commercial Agreement" ;
+    skos:definition "A binding agreement between parties governing commercial terms over a period." .
+
+:Return a owl:Class ;
+    skos:prefLabel "Return" ;
+    skos:altLabel "Return Order", "RMA" ;
+    skos:definition "A customer-initiated flow that sends previously ordered goods back to the business." .
+
+:Campaign a owl:Class ;
+    skos:prefLabel "Campaign" ;
+    skos:altLabel "Marketing Campaign", "Promotion Campaign" ;
+    skos:definition "An organised marketing initiative that targets an audience over a defined period." .
+
+#################################################################
+# Finance
+#################################################################
+
+:Invoice a owl:Class ;
+    skos:prefLabel "Invoice" ;
+    skos:altLabel "Bill", "Billing Document" ;
+    skos:definition "A financial document requesting payment for delivered goods or services." .
+
+:Payment a owl:Class ;
+    skos:prefLabel "Payment" ;
+    skos:altLabel "Remittance", "Settlement" ;
+    skos:definition "A transfer of funds that settles an obligation such as an invoice." .
+
+:FinancialAccount a owl:Class ;
+    skos:prefLabel "Financial Account" ;
+    skos:altLabel "Ledger Account", "Balance Account" ;
+    skos:definition "A balance-holding financial record such as a wallet, bank account, or general ledger account. Distinct from Customer: a CRM 'Account' is a customer organisation, not a financial account." .
+
+:FinancialTransaction a owl:Class ;
+    skos:prefLabel "Financial Transaction" ;
+    skos:altLabel "Money Movement", "Posting" ;
+    skos:definition "A monetary movement initiated against a financial account and posted to a ledger." .
+
+:Ledger a owl:Class ;
+    skos:prefLabel "Ledger" ;
+    skos:altLabel "General Ledger", "Book of Accounts" ;
+    skos:definition "The financial book of record that accumulates posted transactions and journal entries." .
+
+:JournalEntry a owl:Class ;
+    skos:prefLabel "Journal Entry" ;
+    skos:altLabel "Journal", "Accounting Entry" ;
+    skos:definition "A balanced accounting entry of debits and credits posted to the ledger." .
+
+:FiscalPeriod a owl:Class ;
+    skos:prefLabel "Fiscal Period" ;
+    skos:altLabel "Accounting Period", "Financial Period" ;
+    skos:definition "A bounded accounting time window that postings are recorded against and eventually closed." .
+
+:Reconciliation a owl:Class ;
+    skos:prefLabel "Reconciliation" ;
+    skos:altLabel "Account Reconciliation", "Matching" ;
+    skos:definition "The process record of matching internal financial records against external or counterpart statements." .
+
+#################################################################
+# Supply chain and logistics
+#################################################################
+
+:Shipment a owl:Class ;
+    skos:prefLabel "Shipment" ;
+    skos:altLabel "Delivery", "Consignment" ;
+    skos:definition "A physical movement of goods dispatched from one location to another." .
+
+:Carrier a owl:Class ;
+    skos:prefLabel "Carrier" ;
+    skos:altLabel "Transport Provider", "Freight Carrier" ;
+    skos:definition "A party that transports shipments on behalf of the business." .
+
+:Route a owl:Class ;
+    skos:prefLabel "Route" ;
+    skos:altLabel "Transport Route", "Delivery Route" ;
+    skos:definition "A planned transport path along which shipments move between locations." .
+
+:Warehouse a owl:Class ;
+    skos:prefLabel "Warehouse" ;
+    skos:altLabel "Distribution Center", "Depot" ;
+    skos:definition "A facility where inventory is received, stored, and dispatched." .
+
+:InventoryLevel a owl:Class ;
+    skos:prefLabel "Inventory Level" ;
+    skos:altLabel "Stock Level", "Inventory", "Stock On Hand" ;
+    skos:definition "The recorded quantity of a product held at a location at a point in time." .
+
+:GoodsReceipt a owl:Class ;
+    skos:prefLabel "Goods Receipt" ;
+    skos:altLabel "GRN", "Inbound Receipt" ;
+    skos:definition "The recorded arrival of goods into a warehouse or stock location. Distinct from a point-of-sale receipt, which is a proof of purchase." .
+
+#################################################################
+# Assets and locations
+#################################################################
+
+:Asset a owl:Class ;
+    skos:prefLabel "Asset" ;
+    skos:altLabel "Equipment", "Fixed Asset" ;
+    skos:definition "A physical or financial item of value the organisation owns, operates, or leases." .
+
+:Location a owl:Class ;
+    skos:prefLabel "Location" ;
+    skos:altLabel "Site", "Facility Location" ;
+    skos:definition "A physical place where assets sit, work happens, or stock is held." .
+
+:Address a owl:Class ;
+    skos:prefLabel "Address" ;
+    skos:altLabel "Postal Address", "Street Address" ;
+    skos:definition "A structured postal address used to locate a party, site, or delivery point." .
+
+#################################################################
+# Work and service
+#################################################################
+
+:WorkOrder a owl:Class ;
+    skos:prefLabel "Work Order" ;
+    skos:altLabel "Job Order", "Work Ticket" ;
+    skos:definition "An authorised instruction to perform maintenance, production, or service work." .
+
+:Case a owl:Class ;
+    skos:prefLabel "Case" ;
+    skos:altLabel "Service Case", "Ticket" ;
+    skos:definition "A tracked unit of work opened to resolve a customer request, complaint, or business matter." .
+
+:Incident a owl:Class ;
+    skos:prefLabel "Incident" ;
+    skos:altLabel "Service Incident", "Disruption" ;
+    skos:definition "An unplanned interruption or degradation of a service that must be restored." .
+
+#################################################################
+# Object properties (canonical cross-entity relationships)
+#################################################################
+
+:placesOrder a owl:ObjectProperty ;
+    rdfs:label "places order" ;
+    rdfs:domain :Customer ;
+    rdfs:range  :Order ;
+    skos:definition "The customer who placed the order." .
+
+:hasOrderLine a owl:ObjectProperty ;
+    rdfs:label "has order line" ;
+    rdfs:domain :Order ;
+    rdfs:range  :OrderLine ;
+    skos:definition "A line item belonging to the order." .
+
+:refersToProduct a owl:ObjectProperty ;
+    rdfs:label "refers to product" ;
+    rdfs:domain :OrderLine ;
+    rdfs:range  :Product ;
+    skos:definition "The product an order line is for." .
+
+:billedToCustomer a owl:ObjectProperty ;
+    rdfs:label "billed to customer" ;
+    rdfs:domain :Invoice ;
+    rdfs:range  :Customer ;
+    skos:definition "The customer an invoice is issued to." .
+
+:settlesInvoice a owl:ObjectProperty ;
+    rdfs:label "settles invoice" ;
+    rdfs:domain :Payment ;
+    rdfs:range  :Invoice ;
+    skos:definition "The invoice a payment settles." .
+
+:fulfillsOrder a owl:ObjectProperty ;
+    rdfs:label "fulfills order" ;
+    rdfs:domain :Shipment ;
+    rdfs:range  :Order ;
+    skos:definition "The order a shipment fulfils." .
+
+:hasAddress a owl:ObjectProperty ;
+    rdfs:label "has address" ;
+    rdfs:domain :Party ;
+    rdfs:range  :Address ;
+    skos:definition "A postal address associated with the party." .
+
+:locatedAt a owl:ObjectProperty ;
+    rdfs:label "located at" ;
+    rdfs:domain :Asset ;
+    rdfs:range  :Location ;
+    skos:definition "The location where the asset currently sits." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:partyName a owl:DatatypeProperty ;
+    rdfs:label "party name" ;
+    rdfs:domain :Party ;
+    rdfs:range  xsd:string .
+
+:externalReference a owl:DatatypeProperty ;
+    rdfs:label "external reference" ;
+    rdfs:domain :Party ;
+    rdfs:range  xsd:string ;
+    skos:definition "A stable identifier for the party in an external or master data system." .

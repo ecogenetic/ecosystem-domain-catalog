@@ -1,0 +1,42 @@
+@prefix :     <https://ecosystemcode.com/ontology/bil/telco#> .
+@prefix base:  <https://ecosystemcode.com/ontology/bil#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bil/telco> a owl:Ontology ;
+    rdfs:label "BIL Telco Overlay" ;
+    rdfs:comment "Telco specialization of Telecom Billing Management for MVNO operations." .
+
+:TelcoInvoice a owl:Class ;
+    rdfs:subClassOf base:Invoice ;
+    skos:prefLabel "Telco Invoice" ;
+    skos:definition "An invoice containing recurring and usage charges for mobile services." .
+
+:UsageInvoiceLine a owl:Class ;
+    rdfs:subClassOf base:InvoiceLine ;
+    skos:prefLabel "Usage Invoice Line" ;
+    skos:definition "An invoice line derived from rated voice, messaging, or data usage." .
+
+:billsSubscriber a owl:ObjectProperty ;
+    rdfs:label "bills subscriber" ;
+    rdfs:domain :TelcoInvoice ;
+    rdfs:range  telco:Subscriber ;
+    skos:definition "Associates a telecom invoice with the subscriber whose service charges it presents." .
+
+:TelcoBillingAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Telco Billing Analyst" ;
+    skos:altLabel "Telco Billing Analyst Role" ;
+    skos:definition "Person role that verifies subscriber bills and usage-derived invoice lines. Bearer: person. Permissions: Invoice:read, Invoice:write, InvoiceLine:read, Adjustment:read, Adjustment:write." .
+
+:TelcoInvoiceShape a sh:NodeShape ;
+    sh:targetClass :TelcoInvoice ;
+    sh:property [
+        sh:path :billsSubscriber ;
+        sh:class telco:Subscriber ;
+        sh:minCount 1 ;
+    ] .

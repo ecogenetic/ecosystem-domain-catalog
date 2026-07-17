@@ -1,0 +1,73 @@
+@prefix :    <https://ecosystemcode.com/ontology/prm#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:PartnerShape a sh:NodeShape ;
+    sh:targetClass :Partner ;
+    sh:property [
+        sh:path :partnerId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :partnerStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "prospective" "onboarding" "active" "suspended" "terminated" )
+    ] .
+
+:DealerShape a sh:NodeShape ;
+    sh:targetClass :Dealer ;
+    sh:property [
+        sh:path :dealerId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PartnerAgreementShape a sh:NodeShape ;
+    sh:targetClass :PartnerAgreement ;
+    sh:property [
+        sh:path :partnerAgreementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PartnerRoleShape a sh:NodeShape ;
+    sh:targetClass :PartnerRole ;
+    sh:property [
+        sh:path :partnerRoleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:TerritoryShape a sh:NodeShape ;
+    sh:targetClass :Territory ;
+    sh:property [
+        sh:path :territoryId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CommissionPlanShape a sh:NodeShape ;
+    sh:targetClass :CommissionPlan ;
+    sh:property [
+        sh:path :commissionPlanId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CommissionStatementShape a sh:NodeShape ;
+    sh:targetClass :CommissionStatement ;
+    sh:property [
+        sh:path :commissionStatementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:PartnerCredentialShape a sh:NodeShape ;
+    sh:targetClass :PartnerCredential ;
+    sh:property [
+        sh:path :partnerCredentialId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

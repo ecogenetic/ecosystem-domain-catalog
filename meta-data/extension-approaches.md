@@ -8,6 +8,26 @@
 | Richer base vocabulary | Extend domain (add-only IRIs) | [playbooks/extend-domain.md](../playbooks/extend-domain.md) |
 | New vertical | Register industry | [playbooks/add-industry.md](../playbooks/add-industry.md) |
 | Specialize a domain for a vertical | Industry overlay | [playbooks/add-industry-overlay.md](../playbooks/add-industry-overlay.md) |
+| Share an entity across domains (multi-domain composition) | Core alignment (add-only triples in `core/alignments.ttl`) | [playbooks/add-alignment.md](../playbooks/add-alignment.md) |
+
+## Multi-domain composition
+
+When a consumer combines more than one domain (e.g. CRM + CVM), shared real-world
+entities must resolve to **one canonical entity**, never duplicated. The catalog supports
+this with two files that are loaded only in multi-domain mode:
+
+- `core/ontology.ttl` — a domain-neutral common-entity vocabulary (Party, Customer,
+  Product, Order, Invoice, Payment, ...) with stable IRIs under
+  `https://ecosystemcode.com/ontology/core#`.
+- `core/alignments.ttl` — curated triples linking domain class IRIs to core classes:
+  `owl:equivalentClass` collapses classes into one canonical entity (e.g. `crm:Account`
+  and `cvm:Customer` both become **Customer**); `rdfs:subClassOf` keeps a domain class
+  distinct but linked to its canonical parent.
+
+Domain ontologies stay byte-for-byte unchanged — alignments are statements about IRIs
+defined elsewhere. Homonyms / false friends (e.g. `crm:Account` customer organisation vs
+`fin:Account` financial account) get **no** triple and are documented in the
+false-friends block. Single-domain generation never loads either file.
 
 ## Review bar (specialists)
 

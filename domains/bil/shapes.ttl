@@ -1,0 +1,81 @@
+@prefix :    <https://ecosystemcode.com/ontology/bil#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:BillingAccountShape a sh:NodeShape ;
+    sh:targetClass :BillingAccount ;
+    sh:property [
+        sh:path :billingAccountId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BillingProfileShape a sh:NodeShape ;
+    sh:targetClass :BillingProfile ;
+    sh:property [
+        sh:path :billingProfileId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BillingCycleShape a sh:NodeShape ;
+    sh:targetClass :BillingCycle ;
+    sh:property [
+        sh:path :billingCycleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BillRunShape a sh:NodeShape ;
+    sh:targetClass :BillRun ;
+    sh:property [
+        sh:path :billRunId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:InvoiceShape a sh:NodeShape ;
+    sh:targetClass :Invoice ;
+    sh:property [
+        sh:path :invoiceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :invoiceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "calculated" "issued" "due" "paid" "overdue" "cancelled" )
+    ] .
+
+:InvoiceLineShape a sh:NodeShape ;
+    sh:targetClass :InvoiceLine ;
+    sh:property [
+        sh:path :invoiceLineId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AdjustmentShape a sh:NodeShape ;
+    sh:targetClass :Adjustment ;
+    sh:property [
+        sh:path :adjustmentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CreditNoteShape a sh:NodeShape ;
+    sh:targetClass :CreditNote ;
+    sh:property [
+        sh:path :creditNoteId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:TaxChargeShape a sh:NodeShape ;
+    sh:targetClass :TaxCharge ;
+    sh:property [
+        sh:path :taxChargeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

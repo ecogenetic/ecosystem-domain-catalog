@@ -1,0 +1,65 @@
+@prefix :    <https://ecosystemcode.com/ontology/chg#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ChargingAccountShape a sh:NodeShape ;
+    sh:targetClass :ChargingAccount ;
+    sh:property [
+        sh:path :chargingAccountId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BalanceShape a sh:NodeShape ;
+    sh:targetClass :Balance ;
+    sh:property [
+        sh:path :balanceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AllowanceShape a sh:NodeShape ;
+    sh:targetClass :Allowance ;
+    sh:property [
+        sh:path :allowanceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RatingRuleShape a sh:NodeShape ;
+    sh:targetClass :RatingRule ;
+    sh:property [
+        sh:path :ratingRuleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RatedUsageShape a sh:NodeShape ;
+    sh:targetClass :RatedUsage ;
+    sh:property [
+        sh:path :ratedUsageId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ChargeShape a sh:NodeShape ;
+    sh:targetClass :Charge ;
+    sh:property [
+        sh:path :chargeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :chargeStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "received" "rated" "applied" "rejected" "reversed" )
+    ] .
+
+:BalanceReservationShape a sh:NodeShape ;
+    sh:targetClass :BalanceReservation ;
+    sh:property [
+        sh:path :balanceReservationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
