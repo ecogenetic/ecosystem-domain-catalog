@@ -48,6 +48,7 @@ ecosystem-domain-catalog/
         {industryId}/
           overlay.md       # description addendum appended after the base description
           overlay.ttl      # extends the base ontology — add-only (section 8)
+  mappings/
 ```
 
 Required files per domain: `description.md`, `ontology.ttl`, `shapes.ttl` — no exceptions.

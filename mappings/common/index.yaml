@@ -1,0 +1,36 @@
+sources:
+  - id: salesforce
+    name: Salesforce Classic
+    type: saas_crm
+    description: "Salesforce database schema with Account, Contact, Opportunity"
+    prefix: https://salesforce.com/legacy/crm#
+    links:
+      - type: domain_mapping
+        path: mappings/{domainId}/salesforce.ttl
+
+  - id: sap-erp
+    name: SAP ERP S/4HANA
+    type: enterprise_erp
+    description: "SAP ERP BAPI tables for Business Objects"
+    prefix: https://sap.com/legacy/erp#
+    links:
+      - type: domain_mapping
+        path: mappings/{domainId}/sap-erp.ttl
+
+  - id: oracle-db
+    name: Oracle Database
+    type: relational_db
+    description: "Oracle SQL schema for enterprise data"
+    prefix: https://oracle.com/legacy/db#
+    links:
+      - type: domain_mapping
+        path: mappings/common/oracle-templates.ttl
+
+  - id: postgresql
+    name: PostgreSQL
+    type: relational_db
+    description: "Generic SQL schema for enterprise data"
+    prefix: https://postgresql.org/legacy#
+    links:
+      - type: domain_mapping
+        path: mappings/common/postgresql-templates.ttl

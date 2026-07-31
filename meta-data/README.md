@@ -18,6 +18,7 @@ explains the same rules for product integrators and specialists.
 | [manifest-schema.md](manifest-schema.md) | Product / API integrators | `index.json` / `industries.json` fields and SemVer |
 | [extension-approaches.md](extension-approaches.md) | Contributors / maintainers | When to extend, overlay, or add a domain |
 | [images/](images/) | Readers | Screenshots of catalog domains in product use (EcosystemCode) |
+| [mappings/](../mappings/) | All consumers | Directory of data source to ontology mappings |
 
 ## How products should consume the catalog
 

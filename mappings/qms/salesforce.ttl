@@ -1,0 +1,20 @@
+# mappings/qms/salesforce.ttl — Mappings from Salesforce CRM to canonical domain
+
+@prefix crm: <https://ecosystemcode.com/ontology/qms#> .
+@prefix core: <https://ecosystemcode.com/ontology/core#> .
+@prefix salesforce: <https://salesforce.com/legacy/crm#> .
+
+# === CLASS MAPPINGS ===
+salesforce:Account owl:equivalentClass crm:Account .
+salesforce:Contact owl:equivalentClass crm:Contact .
+salesforce:Opportunity owl:equivalentClass crm:Opportunity .
+
+# === PROPERTY MAPPINGS ===
+salesforce:name rdfs:subPropertyOf crm:name .
+salesforce:email rdfs:subPropertyOf crm:email .
+salesforce:amount rdfs:subPropertyOf crm:amount .
+
+# === RELATIONSHIP MAPPINGS ===
+salesforce:AccountId rdfs:subPropertyOf crm:belongsToAccount ;
+    rdfs:domain salesforce:Contact ;
+    rdfs:range salesforce:Account .

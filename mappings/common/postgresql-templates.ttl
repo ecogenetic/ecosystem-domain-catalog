@@ -1,0 +1,30 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix crm: <https://ecosystemcode.com/ontology/crm#> .
+
+# === ID field pattern (id, ID, Id) ===
+:IdPattern a sh:NodeShape ;
+    sh:targetClass crm:Account ;
+    sh:property [
+        sh:path [ sh:alternativePath ( crm:id crm:ID crm:Id ) ] ;
+        sh:minCount 1 ;
+        sh:message "Data source must provide a non‑null ID for this entity."
+    ] .
+
+# === Date pattern (created_at, createdDate, CreateDate) ===
+:DatePattern a sh:NodeShape ;
+    sh:targetClass crm:Account ;
+    sh:property [
+        sh:path [ sh:alternativePath ( crm:created_at crm:createdDate crm:CreateDate ) ] ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+# === Foreign key pattern (ending in "_id") ===
+:ForeignKeyPattern a sh:NodeShape ;
+    sh:targetClass crm:Contact ;
+    sh:property [
+        sh:path [ sh:alternativePath ( crm:account_id crm:AccountId crm:AccountID ) ] ;
+        sh:class crm:Account ;
+        sh:minCount 1 ;
+    ] .
