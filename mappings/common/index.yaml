@@ -1,36 +1,36 @@
 sources:
-  - id: salesforce
-    name: Salesforce Classic
-    type: saas_crm
-    description: "Salesforce database schema with Account, Contact, Opportunity"
-    prefix: https://salesforce.com/legacy/crm#
+  - id: relational_db
+    name: Generic Relational Database
+    type: sql_table
+    description: "SQL tables/views with standard primary keys and foreign keys"
+    prefix: https://example.com/legacy/sql#
     links:
       - type: domain_mapping
-        path: mappings/{domainId}/salesforce.ttl
+        path: mappings/{domainId}/generic-mapping.ttl
 
-  - id: sap-erp
-    name: SAP ERP S/4HANA
-    type: enterprise_erp
-    description: "SAP ERP BAPI tables for Business Objects"
-    prefix: https://sap.com/legacy/erp#
+  - id: csv_export
+    name: CSV Data Export
+    type: flat_file
+    description: "Comma-separated values with header rows"
+    prefix: https://example.com/legacy/csv#
     links:
       - type: domain_mapping
-        path: mappings/{domainId}/sap-erp.ttl
+        path: mappings/{domainId}/generic-mapping.ttl
 
-  - id: oracle-db
-    name: Oracle Database
-    type: relational_db
-    description: "Oracle SQL schema for enterprise data"
-    prefix: https://oracle.com/legacy/db#
+  - id: json_api
+    name: REST/JSON API Payload
+    type: web_api
+    description: "JSON objects returned by modern APIs"
+    prefix: https://example.com/legacy/json#
     links:
       - type: domain_mapping
-        path: mappings/common/oracle-templates.ttl
+        path: mappings/{domainId}/generic-mapping.ttl
 
-  - id: postgresql
-    name: PostgreSQL
-    type: relational_db
-    description: "Generic SQL schema for enterprise data"
-    prefix: https://postgresql.org/legacy#
+  - id: legacy_erp
+    name: Legacy ERP/CRM System
+    type: enterprise_system
+    description: "Proprietary enterprise systems with custom schemas"
+    prefix: https://example.com/legacy/erp#
     links:
       - type: domain_mapping
-        path: mappings/common/postgresql-templates.ttl
+        path: mappings/{domainId}/generic-mapping.ttl
