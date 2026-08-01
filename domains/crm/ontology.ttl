@@ -630,3 +630,208 @@
     skos:prefLabel "Contract Administrator" ;
     skos:altLabel "Deal Desk Analyst", "Commercial Operations" ;
     skos:definition "Person role that drafts and administers contracts for won deals and tracks renewals. Bearer: person. Permissions: Contract:read, Contract:write, Opportunity:read, Account:read." .
+
+
+#################################################################
+# Party, relationship, provenance, and commercial execution
+#################################################################
+
+:Party a owl:Class ;
+    skos:prefLabel "Party" ;
+    skos:altLabel "Business Party" ;
+    skos:definition "A person or organisation participating in a prospect, customer, partner, or other business relationship." .
+
+:Person a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Person" ;
+    skos:altLabel "Individual" ;
+    skos:definition "An individual party who may be a customer, prospect, contact, or representative." .
+
+:Organisation a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Organisation" ;
+    skos:altLabel "Organization", "Legal Entity" ;
+    skos:definition "An organisational party such as a company, public body, partnership, or non-profit." .
+
+:Account rdfs:subClassOf :Organisation .
+:Contact rdfs:subClassOf :Person .
+
+:CustomerRelationship a owl:Class ;
+    skos:prefLabel "Customer Relationship" ;
+    skos:altLabel "CRM Relationship", "Client Relationship" ;
+    skos:definition "The managed commercial relationship between the enterprise and a customer party, distinct from the party and from any financial account." .
+
+:Assignment a owl:Class ;
+    skos:prefLabel "Assignment" ;
+    skos:altLabel "Ownership Assignment", "Work Allocation" ;
+    skos:definition "A dated allocation of a CRM record to a responsible user or team." .
+
+:ConsentRecord a owl:Class ;
+    skos:prefLabel "Consent Record" ;
+    skos:altLabel "Marketing Consent", "Communication Permission" ;
+    skos:definition "Auditable permission or refusal for a party to be contacted for a stated purpose through a channel." .
+
+:CampaignMember a owl:Class ;
+    skos:prefLabel "Campaign Member" ;
+    skos:altLabel "Campaign Participant", "Audience Member" ;
+    skos:definition "One party's participation in a campaign, including targeting, delivery, response, and suppression status." .
+
+:LeadConversion a owl:Class ;
+    skos:prefLabel "Lead Conversion" ;
+    skos:altLabel "Qualification Conversion" ;
+    skos:definition "The auditable event that qualifies a lead and resolves or creates the associated party, customer relationship, and opportunity." .
+
+:OpportunityLine a owl:Class ;
+    skos:prefLabel "Opportunity Line" ;
+    skos:altLabel "Opportunity Product", "Deal Line" ;
+    skos:definition "One product included in an opportunity with expected quantity, price, revenue, and term." .
+
+:StageTransition a owl:Class ;
+    skos:prefLabel "Stage Transition" ;
+    skos:altLabel "Opportunity Stage History", "Pipeline Movement" ;
+    skos:definition "The history record of an opportunity moving from one pipeline stage to another." .
+
+:relatesToParty a owl:ObjectProperty ;
+    rdfs:label "relates to party" ;
+    rdfs:domain :CustomerRelationship ;
+    rdfs:range :Party .
+
+:pursuedForRelationship a owl:ObjectProperty ;
+    rdfs:label "pursued for relationship" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range :CustomerRelationship .
+
+:governsRelationship a owl:ObjectProperty ;
+    rdfs:label "governs relationship" ;
+    rdfs:domain :Contract ;
+    rdfs:range :CustomerRelationship .
+
+:hasCampaignMember a owl:ObjectProperty ;
+    rdfs:label "has campaign member" ;
+    rdfs:domain :Campaign ;
+    rdfs:range :CampaignMember .
+
+:representsParty a owl:ObjectProperty ;
+    rdfs:label "represents party" ;
+    rdfs:domain :CampaignMember ;
+    rdfs:range :Party .
+
+:sourcedLead a owl:ObjectProperty ;
+    rdfs:label "sourced lead" ;
+    rdfs:domain :CampaignMember ;
+    rdfs:range :Lead .
+
+:convertsLead a owl:ObjectProperty ;
+    rdfs:label "converts lead" ;
+    rdfs:domain :LeadConversion ;
+    rdfs:range :Lead .
+
+:resolvesToParty a owl:ObjectProperty ;
+    rdfs:label "resolves to party" ;
+    rdfs:domain :LeadConversion ;
+    rdfs:range :Party .
+
+:createsRelationship a owl:ObjectProperty ;
+    rdfs:label "creates relationship" ;
+    rdfs:domain :LeadConversion ;
+    rdfs:range :CustomerRelationship .
+
+:createsOpportunity a owl:ObjectProperty ;
+    rdfs:label "creates opportunity" ;
+    rdfs:domain :LeadConversion ;
+    rdfs:range :Opportunity .
+
+:hasOpportunityLine a owl:ObjectProperty ;
+    rdfs:label "has opportunity line" ;
+    rdfs:domain :Opportunity ;
+    rdfs:range :OpportunityLine .
+
+:forOpportunityProduct a owl:ObjectProperty ;
+    rdfs:label "for opportunity product" ;
+    rdfs:domain :OpportunityLine ;
+    rdfs:range :Product .
+
+:recordsOpportunity a owl:ObjectProperty ;
+    rdfs:label "records opportunity" ;
+    rdfs:domain :StageTransition ;
+    rdfs:range :Opportunity .
+
+:fromPipelineStage a owl:ObjectProperty ;
+    rdfs:label "from pipeline stage" ;
+    rdfs:domain :StageTransition ;
+    rdfs:range :PipelineStage .
+
+:toPipelineStage a owl:ObjectProperty ;
+    rdfs:label "to pipeline stage" ;
+    rdfs:domain :StageTransition ;
+    rdfs:range :PipelineStage .
+
+:recordsConsentFor a owl:ObjectProperty ;
+    rdfs:label "records consent for" ;
+    rdfs:domain :ConsentRecord ;
+    rdfs:range :Party .
+
+:assignsParty a owl:ObjectProperty ;
+    rdfs:label "assigns party" ;
+    rdfs:domain :Assignment ;
+    rdfs:range :Party .
+
+:assignsOpportunity a owl:ObjectProperty ;
+    rdfs:label "assigns opportunity" ;
+    rdfs:domain :Assignment ;
+    rdfs:range :Opportunity .
+
+:assignsCase a owl:ObjectProperty ;
+    rdfs:label "assigns case" ;
+    rdfs:domain :Assignment ;
+    rdfs:range :Case .
+
+:raisedByParty a owl:ObjectProperty ;
+    rdfs:label "raised by party" ;
+    rdfs:domain :Case ;
+    rdfs:range :Party .
+
+:filedForRelationship a owl:ObjectProperty ;
+    rdfs:label "filed for relationship" ;
+    rdfs:domain :Case ;
+    rdfs:range :CustomerRelationship .
+
+:involvesParty a owl:ObjectProperty ;
+    rdfs:label "involves party" ;
+    rdfs:domain :Activity ;
+    rdfs:range :Party .
+
+:partyExternalRef a owl:DatatypeProperty ; rdfs:domain :Party ; rdfs:range xsd:string .
+:partyStatus a owl:DatatypeProperty ; rdfs:domain :Party ; rdfs:range xsd:string .
+:organisationName a owl:DatatypeProperty ; rdfs:domain :Organisation ; rdfs:range xsd:string .
+:registrationNumber a owl:DatatypeProperty ; rdfs:domain :Organisation ; rdfs:range xsd:string .
+:relationshipNumber a owl:DatatypeProperty ; rdfs:domain :CustomerRelationship ; rdfs:range xsd:string .
+:relationshipType a owl:DatatypeProperty ; rdfs:domain :CustomerRelationship ; rdfs:range xsd:string .
+:relationshipStatus a owl:DatatypeProperty ; rdfs:domain :CustomerRelationship ; rdfs:range xsd:string .
+:relationshipStartDate a owl:DatatypeProperty ; rdfs:domain :CustomerRelationship ; rdfs:range xsd:date .
+:assignedAt a owl:DatatypeProperty ; rdfs:domain :Assignment ; rdfs:range xsd:dateTime .
+:assignmentEndedAt a owl:DatatypeProperty ; rdfs:domain :Assignment ; rdfs:range xsd:dateTime .
+:assigneeRef a owl:DatatypeProperty ; rdfs:domain :Assignment ; rdfs:range xsd:string .
+:assignmentRole a owl:DatatypeProperty ; rdfs:domain :Assignment ; rdfs:range xsd:string .
+:consentPurpose a owl:DatatypeProperty ; rdfs:domain :ConsentRecord ; rdfs:range xsd:string .
+:consentChannel a owl:DatatypeProperty ; rdfs:domain :ConsentRecord ; rdfs:range xsd:string .
+:consentStatus a owl:DatatypeProperty ; rdfs:domain :ConsentRecord ; rdfs:range xsd:string .
+:consentCapturedAt a owl:DatatypeProperty ; rdfs:domain :ConsentRecord ; rdfs:range xsd:dateTime .
+:consentWithdrawnAt a owl:DatatypeProperty ; rdfs:domain :ConsentRecord ; rdfs:range xsd:dateTime .
+:consentSource a owl:DatatypeProperty ; rdfs:domain :ConsentRecord ; rdfs:range xsd:string .
+:memberStatus a owl:DatatypeProperty ; rdfs:domain :CampaignMember ; rdfs:range xsd:string .
+:targetedAt a owl:DatatypeProperty ; rdfs:domain :CampaignMember ; rdfs:range xsd:dateTime .
+:respondedAt a owl:DatatypeProperty ; rdfs:domain :CampaignMember ; rdfs:range xsd:dateTime .
+:responseType a owl:DatatypeProperty ; rdfs:domain :CampaignMember ; rdfs:range xsd:string .
+:suppressionReason a owl:DatatypeProperty ; rdfs:domain :CampaignMember ; rdfs:range xsd:string .
+:convertedAt a owl:DatatypeProperty ; rdfs:domain :LeadConversion ; rdfs:range xsd:dateTime .
+:convertedBy a owl:DatatypeProperty ; rdfs:domain :LeadConversion ; rdfs:range xsd:string .
+:conversionOutcome a owl:DatatypeProperty ; rdfs:domain :LeadConversion ; rdfs:range xsd:string .
+:matchedExistingParty a owl:DatatypeProperty ; rdfs:domain :LeadConversion ; rdfs:range xsd:boolean .
+:opportunityQuantity a owl:DatatypeProperty ; rdfs:domain :OpportunityLine ; rdfs:range xsd:decimal .
+:expectedUnitPrice a owl:DatatypeProperty ; rdfs:domain :OpportunityLine ; rdfs:range xsd:decimal .
+:expectedRevenue a owl:DatatypeProperty ; rdfs:domain :OpportunityLine ; rdfs:range xsd:decimal .
+:termMonths a owl:DatatypeProperty ; rdfs:domain :OpportunityLine ; rdfs:range xsd:integer .
+:transitionedAt a owl:DatatypeProperty ; rdfs:domain :StageTransition ; rdfs:range xsd:dateTime .
+:transitionedBy a owl:DatatypeProperty ; rdfs:domain :StageTransition ; rdfs:range xsd:string .
+:transitionReason a owl:DatatypeProperty ; rdfs:domain :StageTransition ; rdfs:range xsd:string .
