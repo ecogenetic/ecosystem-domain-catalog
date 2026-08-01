@@ -42,6 +42,32 @@ safety and privacy constraints shape every workflow.
 | Consent, documents and master identity | CMS / MDM |
 | Quality, risk and compliance | QMS / GRC |
 
+## Domain integration model
+
+| Canonical detail | Healthcare specialization | Owning domain | Shared identifiers |
+|---|---|---|---|
+| Party and customer | Patient, guarantor, practitioner or payer contact | CRM / MDM | partyId, patientId, customerRelationshipId |
+| Product | Plan, benefit, medicine or service definition | PIM | productId, productVersionId |
+| Offer and quote | Benefit, tariff or treatment-cost proposition | CPQ | offerId, quoteId |
+| Agreement and account | Membership, cover agreement or patient account | CRM / FIN | agreementId, accountId |
+| Interaction | Patient communication or service contact | CRM | interactionId, channelId |
+| Order and process | Referral, clinical order, authorisation or admission | OMS / BPM | orderId, processInstanceId |
+| Service | Encounter, treatment or care service | HEALTH / SIV | encounterId, serviceInstanceId |
+| Transaction | Charge, claim, adjudication or payment | FIN | transactionId, accountId |
+| Case | Care, authorisation, complaint or quality case | BPM / CCM | caseId |
+| Consent | Treatment, disclosure and purpose-of-use permission | CRM / GRC | consentId, patientId, purposeCode |
+| Decision | Clinical support, eligibility or authorisation result | HEALTH / RAF / GRC | decisionId, policyVersionId |
+| Partner | Provider, laboratory, pharmacy or payer | PRM | partnerId, providerId |
+
+### Integration rules
+
+- A party identifies the person; patient and practitioner are contextual identities linked with provenance.
+- Product and clinical-code versions used by services and decisions must be retained.
+- Each object keeps its own identifier and the correlation identifiers of upstream objects.
+- Lifecycle events carry eventId, eventType, occurredAt, sourceDomain, entityId, entityVersion and correlationId.
+- Domains exchange references and minimum-necessary data; clinical facts remain mastered by HEALTH.
+- Healthcare terminology and states map to canonical concepts through overlays and mappings.
+
 ## Modeling rules
 
 - Distinguish patient, practitioner, provider organisation, guarantor and payer.
