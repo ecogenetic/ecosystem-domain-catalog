@@ -221,6 +221,27 @@
     rdfs:range :Device ;
     rdfs:label "uses device" .
 
+
+:hasBillingAccountReference a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range :BillingAccountReference ;
+    rdfs:label "has billing account reference" .
+
+:referencesBillingAccount a owl:ObjectProperty ;
+    rdfs:domain :BillingAccountReference ;
+    rdfs:range bil:BillingAccount ;
+    rdfs:label "references billing account" .
+
+:hasChargingAccountReference a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range :ChargingAccountReference ;
+    rdfs:label "has charging account reference" .
+
+:referencesChargingAccount a owl:ObjectProperty ;
+    rdfs:domain :ChargingAccountReference ;
+    rdfs:range chg:ChargingAccount ;
+    rdfs:label "references charging account" .
+
 :usesBillingAccount a owl:ObjectProperty ;
     rdfs:domain :SubscriberRelationship ;
     rdfs:range bil:BillingAccount ;
@@ -382,13 +403,33 @@
 # Roles
 #################################################################
 
-:RetailSalesAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Retail Sales Agent" .
-:CustomerCareAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Customer Care Agent" .
-:RetentionAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Retention Agent" .
-:EnterpriseAccountManagerRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Enterprise Account Manager" .
-:DealerChannelAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Dealer Channel Agent" .
-:PortabilityCoordinatorRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Portability Coordinator" .
-:ServiceRecoveryAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Service Recovery Agent" .
+:RetailSalesAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Retail Sales Agent" ;
+    skos:definition "Person role acquiring customers, capturing consent, selecting products, and handing accepted sales to fulfilment." .
+
+:CustomerCareAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Customer Care Agent" ;
+    skos:definition "Person role resolving billing, balance, subscription, provisioning, and service enquiries through linked operational records." .
+
+:RetentionAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Retention Agent" ;
+    skos:definition "Person role managing consent-eligible churn and renewal journeys using decision recommendations." .
+
+:EnterpriseAccountManagerRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Enterprise Account Manager" ;
+    skos:definition "Person role managing organisational relationships, contacts, sites, contracts, opportunities, and service estates." .
+
+:DealerChannelAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Dealer Channel Agent" ;
+    skos:definition "Person role capturing partner-attributed leads and acquisition journeys within delegated authority." .
+
+:PortabilityCoordinatorRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Portability Coordinator" ;
+    skos:definition "Person role tracking customer-facing number portability milestones and exceptions." .
+
+:ServiceRecoveryAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Service Recovery Agent" ;
+    skos:definition "Person role managing customer communication for service impact and provisioning fallout." .
 
 #################################################################
 # SHACL completeness and lifecycle constraints
