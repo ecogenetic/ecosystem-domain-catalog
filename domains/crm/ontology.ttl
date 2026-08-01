@@ -835,3 +835,10 @@
 :transitionedAt a owl:DatatypeProperty ; rdfs:domain :StageTransition ; rdfs:range xsd:dateTime .
 :transitionedBy a owl:DatatypeProperty ; rdfs:domain :StageTransition ; rdfs:range xsd:string .
 :transitionReason a owl:DatatypeProperty ; rdfs:domain :StageTransition ; rdfs:range xsd:string .
+
+
+:summary a owl:DatatypeProperty ;
+    rdfs:label "summary" ;
+    rdfs:domain :Activity ;
+    rdfs:range xsd:string ;
+    skos:definition "A concise description of the customer interaction or activity outcome." .
