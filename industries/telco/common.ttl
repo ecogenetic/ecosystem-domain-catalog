@@ -24,6 +24,23 @@
     skos:altLabel "CDR", "Charging Data Record" ;
     skos:definition "A record of consumed service units (data, voice, SMS) attributable to a subscriber." .
 
+:Subscription a owl:Class ;
+    skos:prefLabel "Subscription" ;
+    skos:definition "The commercial agreement under which a subscriber receives one or more telecommunications services." .
+
+:ServiceLine a owl:Class ;
+    skos:prefLabel "Service Line" ;
+    skos:definition "A provisionable service identity governed by a subscription and used by a subscriber." .
+
+:SIMProfile a owl:Class ;
+    skos:prefLabel "SIM Profile" ;
+    skos:altLabel "SIM", "eSIM Profile" ;
+    skos:definition "A physical or embedded subscriber identity profile assigned to a service line for a bounded period." .
+
+:ServiceOrder a owl:Class ;
+    skos:prefLabel "Service Order" ;
+    skos:definition "A request to activate, modify, suspend, resume or cease a telecommunications service." .
+
 :subscribedToRatePlan a owl:ObjectProperty ;
     rdfs:label "subscribed to rate plan" ;
     rdfs:domain :Subscriber ;
@@ -36,11 +53,32 @@
     rdfs:range  :Subscriber ;
     skos:definition "Attributes a usage record to the subscriber that generated it." .
 
+:subscriptionHasServiceLine a owl:ObjectProperty ;
+    rdfs:label "subscription has service line" ;
+    rdfs:domain :Subscription ;
+    rdfs:range :ServiceLine .
+
+:serviceLineUsedBySubscriber a owl:ObjectProperty ;
+    rdfs:label "service line used by subscriber" ;
+    rdfs:domain :ServiceLine ;
+    rdfs:range :Subscriber .
+
+:serviceLineUsesSIMProfile a owl:ObjectProperty ;
+    rdfs:label "service line uses SIM profile" ;
+    rdfs:domain :ServiceLine ;
+    rdfs:range :SIMProfile .
+
 :msisdn a owl:DatatypeProperty ;
     rdfs:label "msisdn" ;
     rdfs:domain :Subscriber ;
     rdfs:range  xsd:string ;
     skos:definition "The mobile number identifying the subscriber." .
+
+:serviceStatus a owl:DatatypeProperty ;
+    rdfs:label "service status" ;
+    rdfs:domain :ServiceLine ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state such as reserved, pending activation, active, suspended or ceased." .
 
 :RetentionAgentRole a owl:Class ;
     rdfs:subClassOf bfo:0000023 ;
