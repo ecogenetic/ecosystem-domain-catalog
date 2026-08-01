@@ -41,6 +41,32 @@ long-lived contracts (policies) and event-driven liabilities (claims).
 | Documents and evidence | CMS |
 | Customer value and retention | CVM |
 
+## Domain integration model
+
+| Canonical detail | Insurance specialization | Owning domain | Shared identifiers |
+|---|---|---|---|
+| Party and customer | Policyholder, insured, beneficiary, claimant or payer | CRM / MDM | partyId, customerRelationshipId |
+| Product | Insurance product, cover and benefit definition | PIM | productId, productVersionId |
+| Offer and quote | Premium-bearing quotation and terms | CPQ | offerId, quoteId |
+| Agreement and account | Policy agreement and premium account | CRM / FIN | agreementId, policyId, accountId |
+| Interaction | Adviser, broker, digital or service contact | CRM | interactionId, channelId |
+| Order and process | Proposal, change or renewal request | OMS / BPM | orderId, processInstanceId |
+| Service | Active cover or assistance service | SIV | serviceInstanceId |
+| Transaction | Premium, commission, reserve, payment or recovery | FIN | transactionId, accountId |
+| Case | Underwriting referral, claim, complaint or investigation | BPM / CCM | caseId, claimId |
+| Consent | Data use, sensitive-data access and contact permission | CRM / GRC | consentId, partyId, purposeCode |
+| Decision | Underwriting, claim, fraud or eligibility result | RAF / GRC | decisionId, policyVersionId |
+| Partner | Broker, reinsurer, assessor or service provider | PRM | partnerId |
+
+### Integration rules
+
+- A party is the legal person or organisation; policyholder, insured, beneficiary and claimant are roles.
+- Product and quote versions are immutable inputs to issued policy terms.
+- Each object keeps its own identifier and the correlation identifiers of upstream objects.
+- Lifecycle events carry eventId, eventType, occurredAt, sourceDomain, entityId, entityVersion and correlationId.
+- Domains exchange references and events instead of copying another domain's authoritative state.
+- Insurance terminology and states map to canonical concepts through overlays and mappings.
+
 ## Modeling rules
 
 - Distinguish policyholder, insured, beneficiary, payer and claimant roles.
