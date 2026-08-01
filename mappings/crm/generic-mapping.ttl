@@ -1,293 +1,297 @@
-# mappings/crm/generic-mapping.ttl — Comprehensive generic data-source alignments for CRM domain
-# Aligns common legacy tables/columns (SQL, CSV, JSON) to the canonical CRM ontology.
+# Generic structured-source mapping for CRM 2.0
+# Replace the example legacy namespace with the source-system namespace.
+# Source-specific predicates are intentionally unique to prevent one foreign key
+# from being inferred as several unrelated CRM relationships.
 
-@prefix : <https://ecosystemcode.com/ontology/crm#> .
-@prefix legacy: <https://example.com/legacy/data#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-
-#################################################################
-# CLASS MAPPINGS (Tables, Collections, JSON Objects → Canonical Classes)
-#################################################################
-
-# --- Customer Master ---
-legacy:accounts_table owl:equivalentClass :Account .
-legacy:contacts_table owl:equivalentClass :Contact .
-legacy:territories_table owl:equivalentClass :Territory .
-
-# --- Marketing & Leads ---
-legacy:campaigns_table owl:equivalentClass :Campaign .
-legacy:leads_table owl:equivalentClass :Lead .
-
-# --- Sales Execution ---
-legacy:opportunities_table owl:equivalentClass :Opportunity .
-legacy:pipelines_table owl:equivalentClass :Pipeline .
-legacy:pipeline_stages_table owl:equivalentClass :PipelineStage .
-legacy:products_table owl:equivalentClass :Product .
-legacy:quotes_table owl:equivalentClass :Quote .
-legacy:quote_lines_table owl:equivalentClass :QuoteLine .
-legacy:contracts_table owl:equivalentClass :Contract .
-legacy:forecasts_table owl:equivalentClass :Forecast .
-
-# --- Engagement & Service ---
-legacy:activities_table owl:equivalentClass :Activity .
-legacy:cases_table owl:equivalentClass :Case .
+@prefix crm:    <https://ecosystemcode.com/ontology/crm#> .
+@prefix legacy: <https://example.com/legacy/crm#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
 
 #################################################################
-# DATATYPE PROPERTY MAPPINGS (Columns, Fields → Canonical Attributes)
+# Class mappings
 #################################################################
 
-# --- Account Attributes ---
-legacy:account_id rdfs:subPropertyOf :id .
-legacy:account_name rdfs:subPropertyOf :accountName .
-legacy:industry rdfs:subPropertyOf :industry .
-legacy:annual_revenue rdfs:subPropertyOf :annualRevenue .
-legacy:website rdfs:subPropertyOf :website .
-legacy:account_type rdfs:subPropertyOf :accountType .
-legacy:employee_count rdfs:subPropertyOf :employeeCount .
-legacy:created_at rdfs:subPropertyOf :createdAt .
-legacy:updated_at rdfs:subPropertyOf :updatedAt .
-
-# --- Contact Attributes ---
-legacy:contact_id rdfs:subPropertyOf :id .
-legacy:full_name rdfs:subPropertyOf :fullName .
-legacy:email rdfs:subPropertyOf :email .
-legacy:phone rdfs:subPropertyOf :phone .
-legacy:job_title rdfs:subPropertyOf :jobTitle .
-legacy:department rdfs:subPropertyOf :department .
-legacy:marketing_opt_in rdfs:subPropertyOf :marketingOptIn .
-legacy:preferred_channel rdfs:subPropertyOf :preferredChannel .
-
-# --- Territory Attributes ---
-legacy:territory_id rdfs:subPropertyOf :id .
-legacy:territory_name rdfs:subPropertyOf :territoryName .
-legacy:region rdfs:subPropertyOf :region .
-
-# --- Campaign Attributes ---
-legacy:campaign_id rdfs:subPropertyOf :id .
-legacy:campaign_name rdfs:subPropertyOf :campaignName .
-legacy:campaign_type rdfs:subPropertyOf :campaignType .
-legacy:campaign_start_date rdfs:subPropertyOf :campaignStartDate .
-legacy:campaign_end_date rdfs:subPropertyOf :campaignEndDate .
-legacy:budgeted_cost rdfs:subPropertyOf :budgetedCost .
-legacy:campaign_status rdfs:subPropertyOf :campaignStatus .
-
-# --- Lead Attributes ---
-legacy:lead_id rdfs:subPropertyOf :id .
-legacy:lead_source rdfs:subPropertyOf :leadSource .
-legacy:captured_at rdfs:subPropertyOf :capturedAt .
-legacy:company rdfs:subPropertyOf :company .
-legacy:lead_score rdfs:subPropertyOf :leadScore .
-legacy:lead_status rdfs:subPropertyOf :leadStatus .
-
-# --- Opportunity Attributes ---
-legacy:opportunity_id rdfs:subPropertyOf :id .
-legacy:opportunity_name rdfs:subPropertyOf :opportunityName .
-legacy:amount rdfs:subPropertyOf :amount .
-legacy:probability rdfs:subPropertyOf :probability .
-legacy:close_date rdfs:subPropertyOf :closeDate .
-legacy:opportunity_status rdfs:subPropertyOf :opportunityStatus .
-
-# --- Pipeline & Stage Attributes ---
-legacy:pipeline_id rdfs:subPropertyOf :id .
-legacy:pipeline_name rdfs:subPropertyOf :pipelineName .
-legacy:stage_count rdfs:subPropertyOf :stageCount .
-legacy:stage_id rdfs:subPropertyOf :id .
-legacy:stage_name rdfs:subPropertyOf :stageName .
-legacy:stage_order rdfs:subPropertyOf :stageOrder .
-legacy:default_probability rdfs:subPropertyOf :defaultProbability .
-
-# --- Product Attributes ---
-legacy:product_id rdfs:subPropertyOf :id .
-legacy:product_code rdfs:subPropertyOf :productCode .
-legacy:product_name rdfs:subPropertyOf :productName .
-legacy:list_price rdfs:subPropertyOf :listPrice .
-
-# --- Quote & QuoteLine Attributes ---
-legacy:quote_id rdfs:subPropertyOf :id .
-legacy:quote_number rdfs:subPropertyOf :quoteNumber .
-legacy:quote_date rdfs:subPropertyOf :quoteDate .
-legacy:valid_until rdfs:subPropertyOf :validUntil .
-legacy:quote_total rdfs:subPropertyOf :quoteTotal .
-legacy:quote_status rdfs:subPropertyOf :quoteStatus .
-legacy:quote_line_id rdfs:subPropertyOf :id .
-legacy:quoted_quantity rdfs:subPropertyOf :quotedQuantity .
-legacy:quoted_unit_price rdfs:subPropertyOf :quotedUnitPrice .
-legacy:discount_percent rdfs:subPropertyOf :discountPercent .
-
-# --- Contract Attributes ---
-legacy:contract_id rdfs:subPropertyOf :id .
-legacy:contract_number rdfs:subPropertyOf :contractNumber .
-legacy:contract_start rdfs:subPropertyOf :contractStart .
-legacy:contract_end rdfs:subPropertyOf :contractEnd .
-legacy:contract_value rdfs:subPropertyOf :contractValue .
-legacy:contract_status rdfs:subPropertyOf :contractStatus .
-
-# --- Forecast Attributes ---
-legacy:forecast_id rdfs:subPropertyOf :id .
-legacy:forecast_period rdfs:subPropertyOf :forecastPeriod .
-legacy:forecast_amount rdfs:subPropertyOf :forecastAmount .
-legacy:commit_amount rdfs:subPropertyOf :commitAmount .
-legacy:best_case_amount rdfs:subPropertyOf :bestCaseAmount .
-
-# --- Activity Attributes ---
-legacy:activity_id rdfs:subPropertyOf :id .
-legacy:activity_type rdfs:subPropertyOf :activityType .
-legacy:occurred_at rdfs:subPropertyOf :occurredAt .
-legacy:summary rdfs:subPropertyOf :summary .
-
-# --- Case Attributes ---
-legacy:case_id rdfs:subPropertyOf :id .
-legacy:case_number rdfs:subPropertyOf :caseNumber .
-legacy:subject rdfs:subPropertyOf :subject .
-legacy:priority rdfs:subPropertyOf :priority .
-legacy:opened_at rdfs:subPropertyOf :openedAt .
-legacy:resolved_at rdfs:subPropertyOf :resolvedAt .
-legacy:sla_due_at rdfs:subPropertyOf :slaDueAt .
-legacy:escalated rdfs:subPropertyOf :escalated .
-legacy:case_status rdfs:subPropertyOf :caseStatus .
+legacy:parties_table owl:equivalentClass crm:Party .
+legacy:people_table owl:equivalentClass crm:Person .
+legacy:organisations_table owl:equivalentClass crm:Organisation .
+legacy:accounts_table owl:equivalentClass crm:Account .
+legacy:contacts_table owl:equivalentClass crm:Contact .
+legacy:customer_relationships_table owl:equivalentClass crm:CustomerRelationship .
+legacy:territories_table owl:equivalentClass crm:Territory .
+legacy:assignments_table owl:equivalentClass crm:Assignment .
+legacy:consents_table owl:equivalentClass crm:ConsentRecord .
+legacy:campaigns_table owl:equivalentClass crm:Campaign .
+legacy:campaign_members_table owl:equivalentClass crm:CampaignMember .
+legacy:leads_table owl:equivalentClass crm:Lead .
+legacy:lead_conversions_table owl:equivalentClass crm:LeadConversion .
+legacy:opportunities_table owl:equivalentClass crm:Opportunity .
+legacy:pipelines_table owl:equivalentClass crm:Pipeline .
+legacy:pipeline_stages_table owl:equivalentClass crm:PipelineStage .
+legacy:stage_transitions_table owl:equivalentClass crm:StageTransition .
+legacy:products_table owl:equivalentClass crm:Product .
+legacy:opportunity_lines_table owl:equivalentClass crm:OpportunityLine .
+legacy:quotes_table owl:equivalentClass crm:Quote .
+legacy:quote_lines_table owl:equivalentClass crm:QuoteLine .
+legacy:contracts_table owl:equivalentClass crm:Contract .
+legacy:forecasts_table owl:equivalentClass crm:Forecast .
+legacy:activities_table owl:equivalentClass crm:Activity .
+legacy:cases_table owl:equivalentClass crm:Case .
 
 #################################################################
-# OBJECT PROPERTY MAPPINGS (Foreign Keys, References → Canonical Relationships)
+# Party and relationship fields
 #################################################################
 
-# --- Contact ↔ Account ---
-legacy:account_id_fk rdfs:subPropertyOf :belongsToAccount ;
-    rdfs:domain legacy:contacts_table ;
-    rdfs:range  legacy:accounts_table .
-
-# --- Account ↔ Territory ---
-legacy:territory_id_fk rdfs:subPropertyOf :assignedToTerritory ;
-    rdfs:domain legacy:accounts_table ;
-    rdfs:range  legacy:territories_table .
-
-# --- Campaign ↔ Lead ---
-legacy:campaign_id_fk rdfs:subPropertyOf :generatesLead ;
-    rdfs:domain legacy:campaigns_table ;
-    rdfs:range  legacy:leads_table .
-
-# --- Lead Conversions ---
-legacy:opportunity_id_fk rdfs:subPropertyOf :convertsToOpportunity ;
-    rdfs:domain legacy:leads_table ;
-    rdfs:range  legacy:opportunities_table .
-
-legacy:contact_id_fk rdfs:subPropertyOf :convertsToContact ;
-    rdfs:domain legacy:leads_table ;
-    rdfs:range  legacy:contacts_table .
-
-legacy:account_id_fk rdfs:subPropertyOf :convertsToAccount ;
-    rdfs:domain legacy:leads_table ;
-    rdfs:range  legacy:accounts_table .
-
-# --- Opportunity Relationships ---
-legacy:account_id_fk rdfs:subPropertyOf :pursuedWithAccount ;
-    rdfs:domain legacy:opportunities_table ;
-    rdfs:range  legacy:accounts_table .
-
-legacy:contact_id_fk rdfs:subPropertyOf :hasPrimaryContact ;
-    rdfs:domain legacy:opportunities_table ;
-    rdfs:range  legacy:contacts_table .
-
-legacy:pipeline_id_fk rdfs:subPropertyOf :progressesThroughPipeline ;
-    rdfs:domain legacy:opportunities_table ;
-    rdfs:range  legacy:pipelines_table .
-
-legacy:stage_id_fk rdfs:subPropertyOf :atPipelineStage ;
-    rdfs:domain legacy:opportunities_table ;
-    rdfs:range  legacy:pipeline_stages_table .
-
-legacy:pipeline_id_fk rdfs:subPropertyOf :partOfPipeline ;
-    rdfs:domain legacy:pipeline_stages_table ;
-    rdfs:range  legacy:pipelines_table .
-
-legacy:campaign_id_fk rdfs:subPropertyOf :influencedByCampaign ;
-    rdfs:domain legacy:opportunities_table ;
-    rdfs:range  legacy:campaigns_table .
-
-# --- Quote & Contract Relationships ---
-legacy:opportunity_id_fk rdfs:subPropertyOf :quotesOpportunity ;
-    rdfs:domain legacy:quotes_table ;
-    rdfs:range  legacy:opportunities_table .
-
-legacy:quote_id_fk rdfs:subPropertyOf :partOfQuote ;
-    rdfs:domain legacy:quote_lines_table ;
-    rdfs:range  legacy:quotes_table .
-
-legacy:product_id_fk rdfs:subPropertyOf :forQuotedProduct ;
-    rdfs:domain legacy:quote_lines_table ;
-    rdfs:range  legacy:products_table .
-
-legacy:opportunity_id_fk rdfs:subPropertyOf :resultsFromOpportunity ;
-    rdfs:domain legacy:contracts_table ;
-    rdfs:range  legacy:opportunities_table .
-
-legacy:account_id_fk rdfs:subPropertyOf :governsAccount ;
-    rdfs:domain legacy:contracts_table ;
-    rdfs:range  legacy:accounts_table .
-
-legacy:renewal_opportunity_id_fk rdfs:subPropertyOf :renewsIntoOpportunity ;
-    rdfs:domain legacy:contracts_table ;
-    rdfs:range  legacy:opportunities_table .
-
-# --- Case & Activity Relationships ---
-legacy:contact_id_fk rdfs:subPropertyOf :raisedByContact ;
-    rdfs:domain legacy:cases_table ;
-    rdfs:range  legacy:contacts_table .
-
-legacy:account_id_fk rdfs:subPropertyOf :filedAgainstAccount ;
-    rdfs:domain legacy:cases_table ;
-    rdfs:range  legacy:accounts_table .
-
-legacy:product_id_fk rdfs:subPropertyOf :aboutProduct ;
-    rdfs:domain legacy:cases_table ;
-    rdfs:range  legacy:products_table .
-
-legacy:opportunity_id_fk rdfs:subPropertyOf :loggedAgainstOpportunity ;
-    rdfs:domain legacy:activities_table ;
-    rdfs:range  legacy:opportunities_table .
-
-legacy:case_id_fk rdfs:subPropertyOf :loggedAgainstCase ;
-    rdfs:domain legacy:activities_table ;
-    rdfs:range  legacy:cases_table .
-
-legacy:contact_id_fk rdfs:subPropertyOf :involvesContact ;
-    rdfs:domain legacy:activities_table ;
-    rdfs:range  legacy:contacts_table .
-
-# --- Forecast Relationships ---
-legacy:territory_id_fk rdfs:subPropertyOf :coversTerritory ;
-    rdfs:domain legacy:forecasts_table ;
-    rdfs:range  legacy:territories_table .
+legacy:party_external_ref rdfs:subPropertyOf crm:partyExternalRef .
+legacy:party_status rdfs:subPropertyOf crm:partyStatus .
+legacy:person_full_name rdfs:subPropertyOf crm:fullName .
+legacy:person_email rdfs:subPropertyOf crm:email .
+legacy:person_phone rdfs:subPropertyOf crm:phone .
+legacy:organisation_name rdfs:subPropertyOf crm:organisationName .
+legacy:organisation_registration_number rdfs:subPropertyOf crm:registrationNumber .
+legacy:organisation_industry rdfs:subPropertyOf crm:industry .
+legacy:organisation_website rdfs:subPropertyOf crm:website .
+legacy:account_name rdfs:subPropertyOf crm:accountName .
+legacy:account_type rdfs:subPropertyOf crm:accountType .
+legacy:annual_revenue rdfs:subPropertyOf crm:annualRevenue .
+legacy:employee_count rdfs:subPropertyOf crm:employeeCount .
+legacy:contact_job_title rdfs:subPropertyOf crm:jobTitle .
+legacy:contact_department rdfs:subPropertyOf crm:department .
+legacy:contact_preferred_channel rdfs:subPropertyOf crm:preferredChannel .
+legacy:relationship_number rdfs:subPropertyOf crm:relationshipNumber .
+legacy:relationship_type rdfs:subPropertyOf crm:relationshipType .
+legacy:relationship_status rdfs:subPropertyOf crm:relationshipStatus .
+legacy:relationship_start_date rdfs:subPropertyOf crm:relationshipStartDate .
+legacy:territory_name rdfs:subPropertyOf crm:territoryName .
+legacy:territory_region rdfs:subPropertyOf crm:region .
 
 #################################################################
-# SHACL TEMPLATES FOR COMMON LEGACY PATTERNS
+# Assignment and consent fields
 #################################################################
 
-# Ensure every legacy table row has a primary key aligned to the ontology
-legacy:IdShape a sh:NodeShape ;
-    sh:targetClass legacy:Entity ;
-    sh:property [
-        sh:path :id ;
-        sh:datatype <http://www.w3.org/2001/XMLSchema#string> ;
-        sh:minCount 1 ;
-        sh:pattern "^[a-zA-Z0-9_-]+$" ;
-    ] .
+legacy:assignment_assignee_ref rdfs:subPropertyOf crm:assigneeRef .
+legacy:assignment_role rdfs:subPropertyOf crm:assignmentRole .
+legacy:assignment_started_at rdfs:subPropertyOf crm:assignedAt .
+legacy:assignment_ended_at rdfs:subPropertyOf crm:assignmentEndedAt .
+legacy:consent_purpose rdfs:subPropertyOf crm:consentPurpose .
+legacy:consent_channel rdfs:subPropertyOf crm:consentChannel .
+legacy:consent_status rdfs:subPropertyOf crm:consentStatus .
+legacy:consent_captured_at rdfs:subPropertyOf crm:consentCapturedAt .
+legacy:consent_withdrawn_at rdfs:subPropertyOf crm:consentWithdrawnAt .
+legacy:consent_source rdfs:subPropertyOf crm:consentSource .
 
-# Ensure legacy status columns match expected ontology enums
-legacy:StatusShape a sh:NodeShape ;
-    sh:targetClass legacy:Entity ;
-    sh:property [
-        sh:path :status ;
-        sh:datatype <http://www.w3.org/2001/XMLSchema#string> ;
-        sh:minCount 1 ;
-    ] .
+#################################################################
+# Marketing, lead, and conversion fields
+#################################################################
 
-# Ensure legacy date columns are valid ISO dates
-legacy:DateShape a sh:NodeShape ;
-    sh:targetClass legacy:Entity ;
-    sh:property [
-        sh:path :createdAt ;
-        sh:datatype <http://www.w3.org/2001/XMLSchema#dateTime> ;
-        sh:minCount 1 ;
-    ] .
+legacy:campaign_name rdfs:subPropertyOf crm:campaignName .
+legacy:campaign_type rdfs:subPropertyOf crm:campaignType .
+legacy:campaign_start_date rdfs:subPropertyOf crm:campaignStartDate .
+legacy:campaign_end_date rdfs:subPropertyOf crm:campaignEndDate .
+legacy:campaign_budget rdfs:subPropertyOf crm:budgetedCost .
+legacy:campaign_status rdfs:subPropertyOf crm:campaignStatus .
+legacy:campaign_member_status rdfs:subPropertyOf crm:memberStatus .
+legacy:campaign_targeted_at rdfs:subPropertyOf crm:targetedAt .
+legacy:campaign_responded_at rdfs:subPropertyOf crm:respondedAt .
+legacy:campaign_response_type rdfs:subPropertyOf crm:responseType .
+legacy:campaign_suppression_reason rdfs:subPropertyOf crm:suppressionReason .
+legacy:lead_source rdfs:subPropertyOf crm:leadSource .
+legacy:lead_captured_at rdfs:subPropertyOf crm:capturedAt .
+legacy:lead_company rdfs:subPropertyOf crm:company .
+legacy:lead_score rdfs:subPropertyOf crm:leadScore .
+legacy:lead_status rdfs:subPropertyOf crm:leadStatus .
+legacy:conversion_at rdfs:subPropertyOf crm:convertedAt .
+legacy:conversion_by rdfs:subPropertyOf crm:convertedBy .
+legacy:conversion_outcome rdfs:subPropertyOf crm:conversionOutcome .
+legacy:conversion_matched_existing rdfs:subPropertyOf crm:matchedExistingParty .
+
+#################################################################
+# Sales, pipeline, and product fields
+#################################################################
+
+legacy:opportunity_name rdfs:subPropertyOf crm:opportunityName .
+legacy:opportunity_amount rdfs:subPropertyOf crm:amount .
+legacy:opportunity_probability rdfs:subPropertyOf crm:probability .
+legacy:opportunity_close_date rdfs:subPropertyOf crm:closeDate .
+legacy:opportunity_status rdfs:subPropertyOf crm:opportunityStatus .
+legacy:pipeline_name rdfs:subPropertyOf crm:pipelineName .
+legacy:pipeline_stage_count rdfs:subPropertyOf crm:stageCount .
+legacy:stage_name rdfs:subPropertyOf crm:stageName .
+legacy:stage_order rdfs:subPropertyOf crm:stageOrder .
+legacy:stage_default_probability rdfs:subPropertyOf crm:defaultProbability .
+legacy:transitioned_at rdfs:subPropertyOf crm:transitionedAt .
+legacy:transitioned_by rdfs:subPropertyOf crm:transitionedBy .
+legacy:transition_reason rdfs:subPropertyOf crm:transitionReason .
+legacy:product_code rdfs:subPropertyOf crm:productCode .
+legacy:product_name rdfs:subPropertyOf crm:productName .
+legacy:product_list_price rdfs:subPropertyOf crm:listPrice .
+legacy:opportunity_quantity rdfs:subPropertyOf crm:opportunityQuantity .
+legacy:expected_unit_price rdfs:subPropertyOf crm:expectedUnitPrice .
+legacy:expected_revenue rdfs:subPropertyOf crm:expectedRevenue .
+legacy:opportunity_term_months rdfs:subPropertyOf crm:termMonths .
+
+#################################################################
+# Quote, contract, forecast, activity, and case fields
+#################################################################
+
+legacy:quote_number rdfs:subPropertyOf crm:quoteNumber .
+legacy:quote_date rdfs:subPropertyOf crm:quoteDate .
+legacy:quote_valid_until rdfs:subPropertyOf crm:validUntil .
+legacy:quote_total rdfs:subPropertyOf crm:quoteTotal .
+legacy:quote_status rdfs:subPropertyOf crm:quoteStatus .
+legacy:quoted_quantity rdfs:subPropertyOf crm:quotedQuantity .
+legacy:quoted_unit_price rdfs:subPropertyOf crm:quotedUnitPrice .
+legacy:quote_discount_percent rdfs:subPropertyOf crm:discountPercent .
+legacy:contract_number rdfs:subPropertyOf crm:contractNumber .
+legacy:contract_start rdfs:subPropertyOf crm:contractStart .
+legacy:contract_end rdfs:subPropertyOf crm:contractEnd .
+legacy:contract_value rdfs:subPropertyOf crm:contractValue .
+legacy:contract_status rdfs:subPropertyOf crm:contractStatus .
+legacy:forecast_period rdfs:subPropertyOf crm:forecastPeriod .
+legacy:forecast_amount rdfs:subPropertyOf crm:forecastAmount .
+legacy:forecast_commit_amount rdfs:subPropertyOf crm:commitAmount .
+legacy:forecast_best_case_amount rdfs:subPropertyOf crm:bestCaseAmount .
+legacy:activity_type rdfs:subPropertyOf crm:activityType .
+legacy:activity_at rdfs:subPropertyOf crm:occurredAt .
+legacy:activity_summary rdfs:subPropertyOf crm:summary .
+legacy:case_number rdfs:subPropertyOf crm:caseNumber .
+legacy:case_subject rdfs:subPropertyOf crm:subject .
+legacy:case_priority rdfs:subPropertyOf crm:priority .
+legacy:case_opened_at rdfs:subPropertyOf crm:openedAt .
+legacy:case_resolved_at rdfs:subPropertyOf crm:resolvedAt .
+legacy:case_sla_due_at rdfs:subPropertyOf crm:slaDueAt .
+legacy:case_escalated rdfs:subPropertyOf crm:escalated .
+legacy:case_status rdfs:subPropertyOf crm:caseStatus .
+
+#################################################################
+# Relationship mappings — source predicates are context-specific
+#################################################################
+
+legacy:contact_account_ref rdfs:subPropertyOf crm:belongsToAccount ;
+    rdfs:domain legacy:contacts_table ; rdfs:range legacy:accounts_table .
+
+legacy:relationship_party_ref rdfs:subPropertyOf crm:relatesToParty ;
+    rdfs:domain legacy:customer_relationships_table ; rdfs:range legacy:parties_table .
+
+legacy:relationship_territory_ref rdfs:subPropertyOf crm:assignedToTerritory ;
+    rdfs:domain legacy:customer_relationships_table ; rdfs:range legacy:territories_table .
+
+legacy:assignment_party_ref rdfs:subPropertyOf crm:assignsParty ;
+    rdfs:domain legacy:assignments_table ; rdfs:range legacy:parties_table .
+
+legacy:assignment_opportunity_ref rdfs:subPropertyOf crm:assignsOpportunity ;
+    rdfs:domain legacy:assignments_table ; rdfs:range legacy:opportunities_table .
+
+legacy:assignment_case_ref rdfs:subPropertyOf crm:assignsCase ;
+    rdfs:domain legacy:assignments_table ; rdfs:range legacy:cases_table .
+
+legacy:consent_party_ref rdfs:subPropertyOf crm:recordsConsentFor ;
+    rdfs:domain legacy:consents_table ; rdfs:range legacy:parties_table .
+
+legacy:campaign_member_campaign_ref rdfs:subPropertyOf crm:hasCampaignMember ;
+    rdfs:domain legacy:campaigns_table ; rdfs:range legacy:campaign_members_table .
+
+legacy:campaign_member_party_ref rdfs:subPropertyOf crm:representsParty ;
+    rdfs:domain legacy:campaign_members_table ; rdfs:range legacy:parties_table .
+
+legacy:campaign_member_lead_ref rdfs:subPropertyOf crm:sourcedLead ;
+    rdfs:domain legacy:campaign_members_table ; rdfs:range legacy:leads_table .
+
+legacy:lead_conversion_lead_ref rdfs:subPropertyOf crm:convertsLead ;
+    rdfs:domain legacy:lead_conversions_table ; rdfs:range legacy:leads_table .
+
+legacy:lead_conversion_party_ref rdfs:subPropertyOf crm:resolvesToParty ;
+    rdfs:domain legacy:lead_conversions_table ; rdfs:range legacy:parties_table .
+
+legacy:lead_conversion_relationship_ref rdfs:subPropertyOf crm:createsRelationship ;
+    rdfs:domain legacy:lead_conversions_table ; rdfs:range legacy:customer_relationships_table .
+
+legacy:lead_conversion_opportunity_ref rdfs:subPropertyOf crm:createsOpportunity ;
+    rdfs:domain legacy:lead_conversions_table ; rdfs:range legacy:opportunities_table .
+
+legacy:opportunity_relationship_ref rdfs:subPropertyOf crm:pursuedForRelationship ;
+    rdfs:domain legacy:opportunities_table ; rdfs:range legacy:customer_relationships_table .
+
+legacy:opportunity_contact_ref rdfs:subPropertyOf crm:hasPrimaryContact ;
+    rdfs:domain legacy:opportunities_table ; rdfs:range legacy:contacts_table .
+
+legacy:opportunity_pipeline_ref rdfs:subPropertyOf crm:progressesThroughPipeline ;
+    rdfs:domain legacy:opportunities_table ; rdfs:range legacy:pipelines_table .
+
+legacy:opportunity_stage_ref rdfs:subPropertyOf crm:atPipelineStage ;
+    rdfs:domain legacy:opportunities_table ; rdfs:range legacy:pipeline_stages_table .
+
+legacy:stage_pipeline_ref rdfs:subPropertyOf crm:partOfPipeline ;
+    rdfs:domain legacy:pipeline_stages_table ; rdfs:range legacy:pipelines_table .
+
+legacy:transition_opportunity_ref rdfs:subPropertyOf crm:recordsOpportunity ;
+    rdfs:domain legacy:stage_transitions_table ; rdfs:range legacy:opportunities_table .
+
+legacy:transition_from_stage_ref rdfs:subPropertyOf crm:fromPipelineStage ;
+    rdfs:domain legacy:stage_transitions_table ; rdfs:range legacy:pipeline_stages_table .
+
+legacy:transition_to_stage_ref rdfs:subPropertyOf crm:toPipelineStage ;
+    rdfs:domain legacy:stage_transitions_table ; rdfs:range legacy:pipeline_stages_table .
+
+legacy:opportunity_line_opportunity_ref rdfs:subPropertyOf crm:hasOpportunityLine ;
+    rdfs:domain legacy:opportunities_table ; rdfs:range legacy:opportunity_lines_table .
+
+legacy:opportunity_line_product_ref rdfs:subPropertyOf crm:forOpportunityProduct ;
+    rdfs:domain legacy:opportunity_lines_table ; rdfs:range legacy:products_table .
+
+legacy:quote_opportunity_ref rdfs:subPropertyOf crm:quotesOpportunity ;
+    rdfs:domain legacy:quotes_table ; rdfs:range legacy:opportunities_table .
+
+legacy:quote_line_quote_ref rdfs:subPropertyOf crm:partOfQuote ;
+    rdfs:domain legacy:quote_lines_table ; rdfs:range legacy:quotes_table .
+
+legacy:quote_line_product_ref rdfs:subPropertyOf crm:forQuotedProduct ;
+    rdfs:domain legacy:quote_lines_table ; rdfs:range legacy:products_table .
+
+legacy:contract_opportunity_ref rdfs:subPropertyOf crm:resultsFromOpportunity ;
+    rdfs:domain legacy:contracts_table ; rdfs:range legacy:opportunities_table .
+
+legacy:contract_relationship_ref rdfs:subPropertyOf crm:governsRelationship ;
+    rdfs:domain legacy:contracts_table ; rdfs:range legacy:customer_relationships_table .
+
+legacy:case_party_ref rdfs:subPropertyOf crm:raisedByParty ;
+    rdfs:domain legacy:cases_table ; rdfs:range legacy:parties_table .
+
+legacy:case_relationship_ref rdfs:subPropertyOf crm:filedForRelationship ;
+    rdfs:domain legacy:cases_table ; rdfs:range legacy:customer_relationships_table .
+
+legacy:case_product_ref rdfs:subPropertyOf crm:aboutProduct ;
+    rdfs:domain legacy:cases_table ; rdfs:range legacy:products_table .
+
+legacy:activity_opportunity_ref rdfs:subPropertyOf crm:loggedAgainstOpportunity ;
+    rdfs:domain legacy:activities_table ; rdfs:range legacy:opportunities_table .
+
+legacy:activity_case_ref rdfs:subPropertyOf crm:loggedAgainstCase ;
+    rdfs:domain legacy:activities_table ; rdfs:range legacy:cases_table .
+
+legacy:activity_party_ref rdfs:subPropertyOf crm:involvesParty ;
+    rdfs:domain legacy:activities_table ; rdfs:range legacy:parties_table .
+
+legacy:forecast_territory_ref rdfs:subPropertyOf crm:coversTerritory ;
+    rdfs:domain legacy:forecasts_table ; rdfs:range legacy:territories_table .
+
+#################################################################
+# Source validation templates
+#################################################################
+
+legacy:PartySourceShape a sh:NodeShape ;
+    sh:targetClass legacy:parties_table ;
+    sh:property [ sh:path legacy:party_external_ref ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+legacy:RelationshipSourceShape a sh:NodeShape ;
+    sh:targetClass legacy:customer_relationships_table ;
+    sh:property [ sh:path legacy:relationship_number ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path legacy:relationship_party_ref ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+legacy:OpportunitySourceShape a sh:NodeShape ;
+    sh:targetClass legacy:opportunities_table ;
+    sh:property [ sh:path legacy:opportunity_relationship_ref ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path legacy:opportunity_probability ; sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ; sh:maxInclusive 1 ] .
