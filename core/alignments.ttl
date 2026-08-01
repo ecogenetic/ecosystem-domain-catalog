@@ -47,12 +47,17 @@
 
 #################################################################
 # Customer / Party cluster
-# NOTE false friend: fin:Account is a financial (balance-holding)
-# account, NOT a customer organisation — it aligns to
-# core:FinancialAccount, never to core:Customer.
+# CRM separates the party from the managed customer relationship.
+# crm:Account remains the familiar B2B organisation record and is
+# not collapsed into core:Customer or any financial account.
+# fin:Account is balance-holding and aligns only to FinancialAccount.
 #################################################################
 
-crm:Account owl:equivalentClass core:Customer .
+crm:Party owl:equivalentClass core:Party .
+crm:Person owl:equivalentClass core:Person .
+crm:Organisation owl:equivalentClass core:Organisation .
+crm:Account rdfs:subClassOf core:Organisation .
+crm:CustomerRelationship owl:equivalentClass core:CustomerRelationship .
 cvm:Customer owl:equivalentClass core:Customer .
 ecom:Customer owl:equivalentClass core:Customer .
 erp:Customer owl:equivalentClass core:Customer .
@@ -100,7 +105,7 @@ cpq:Quote owl:equivalentClass core:Quote .
 crm:Quote owl:equivalentClass core:Quote .
 crm:Contract owl:equivalentClass core:Contract .
 lsm:LeaseContract rdfs:subClassOf core:Contract .
-crm:Campaign owl:equivalentClass core:Campaign .
+crm:Campaign rdfs:subClassOf core:Campaign .
 cvm:Campaign owl:equivalentClass core:Campaign .
 
 #################################################################
@@ -164,7 +169,7 @@ eam:WorkOrder rdfs:subClassOf core:WorkOrder .
 erp:WorkOrder rdfs:subClassOf core:WorkOrder .
 mes:WorkOrder rdfs:subClassOf core:WorkOrder .
 bpm:Case owl:equivalentClass core:Case .
-crm:Case owl:equivalentClass core:Case .
+crm:Case rdfs:subClassOf core:Case .
 ccm:CollectionCase rdfs:subClassOf core:Case .
 itsm:Incident owl:equivalentClass core:Incident .
 
@@ -202,9 +207,9 @@ num:PhysicalSIM rdfs:subClassOf core:Asset .
 #################################################################
 # Documented false friends (intentionally NOT aligned)
 #
-# - crm:Account (customer organisation) vs fin:Account (financial
-#   account): same name, different meaning. Aligned to different
-#   core classes above; they must never collapse together.
+# - crm:Account (B2B organisation record), core:CustomerRelationship
+#   (managed commercial relationship), and fin:Account (balance-holding
+#   financial account) are distinct and must never collapse together.
 # - pos:Transaction (register sale) vs fin:Transaction (money
 #   movement): pos:Transaction stays unaligned.
 # - pos:Receipt (proof of purchase) vs wms:Receipt / erp:GoodsReceipt
@@ -227,4 +232,17 @@ num:PhysicalSIM rdfs:subClassOf core:Asset .
 #   raf:Investigation aligns; the alert itself stays unaligned.
 # - num:MobileNumber / num:ESIMProfile: identifiers and profiles,
 #   not physical assets; only num:PhysicalSIM aligns to core:Asset.
+#################################################################
+
+
+#################################################################
+# CRM execution-to-CVM interpretation notes
+#
+# These pairs are intentionally not equivalent:
+# - crm:CampaignMember is an audience/participation record, whereas
+#   cvm:Treatment is a delivered decision treatment.
+# - crm:Opportunity may be informed by cvm:NextBestAction but is not
+#   the recommendation itself.
+# - crm:Activity may capture a response to a treatment but represents
+#   a broader family of customer interactions.
 #################################################################
