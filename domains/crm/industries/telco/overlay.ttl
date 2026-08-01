@@ -1,102 +1,438 @@
-@prefix :     <https://ecosystemcode.com/ontology/crm/telco#> .
-@prefix crm:  <https://ecosystemcode.com/ontology/crm#> .
-@prefix sub:  <https://ecosystemcode.com/ontology/sub#> .
-@prefix cvm:  <https://ecosystemcode.com/ontology/cvm#> .
-@prefix owl:  <http://www.w3.org/2002/07/owl#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
-@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix :      <https://ecosystemcode.com/ontology/crm/telco#> .
+@prefix crm:   <https://ecosystemcode.com/ontology/crm#> .
+@prefix telco: <https://ecosystemcode.com/ontology/industry/telco#> .
+@prefix sub:   <https://ecosystemcode.com/ontology/sub#> .
+@prefix bil:   <https://ecosystemcode.com/ontology/bil#> .
+@prefix chg:   <https://ecosystemcode.com/ontology/chg#> .
+@prefix num:   <https://ecosystemcode.com/ontology/num#> .
+@prefix siv:   <https://ecosystemcode.com/ontology/siv#> .
+@prefix prv:   <https://ecosystemcode.com/ontology/prv#> .
+@prefix sam:   <https://ecosystemcode.com/ontology/sam#> .
+@prefix raf:   <https://ecosystemcode.com/ontology/raf#> .
+@prefix prm:   <https://ecosystemcode.com/ontology/prm#> .
+@prefix wsp:   <https://ecosystemcode.com/ontology/wsp#> .
+@prefix cvm:   <https://ecosystemcode.com/ontology/cvm#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:   <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
 
 <https://ecosystemcode.com/ontology/crm/telco> a owl:Ontology ;
-    rdfs:label "CRM Telco Overlay" ;
-    rdfs:comment "Telco specialization of the CRM base ontology: subscribers, MSISDNs, rate plans, and service subscriptions." .
+    rdfs:label "CRM Telecommunications Overlay" ;
+    rdfs:comment "CRM relationship and journey specialization for telecommunications, connected to subscription, billing, charging, number, service inventory, provisioning, assurance, fraud, partner, wholesale, and CVM domains." .
 
-:Subscriber a owl:Class ;
+#################################################################
+# Customer, account, subscription, and service identity
+#################################################################
+
+:CustomerParty a owl:Class ;
+    rdfs:subClassOf crm:Party ;
+    skos:prefLabel "Customer Party" ;
+    skos:altLabel "Paying Customer", "Account Holder" ;
+    skos:definition "A person or organisation responsible for a telco commercial relationship; distinct from the subscriber service identity." .
+
+:AuthorisedContact a owl:Class ;
     rdfs:subClassOf crm:Person ;
-    skos:prefLabel "Subscriber" ;
-    skos:altLabel "Mobile Customer", "MSISDN Holder" ;
-    skos:definition "A person who holds one or more active service subscriptions identified by MSISDNs." .
-
-:RatePlan a owl:Class ;
-    rdfs:subClassOf cvm:PricePlan ;
-    skos:prefLabel "Rate Plan" ;
-    skos:altLabel "Tariff", "Price Plan" ;
-    skos:definition "A commercial tariff defining charges, allowances, and contract terms for a subscription." .
-
-:Subscription a owl:Class ;
-    rdfs:subClassOf sub:Subscription ;
-    skos:prefLabel "Subscription" ;
-    skos:altLabel "Service Instance" ;
-    skos:definition "An active service held by a subscriber on a rate plan, identified by an MSISDN." .
-
-:subscriptionOfSubscriber a owl:ObjectProperty ;
-    rdfs:label "subscription of subscriber" ;
-    rdfs:domain :Subscription ;
-    rdfs:range  :Subscriber ;
-    skos:definition "The subscriber who owns the subscription." .
-
-:subscriptionOnRatePlan a owl:ObjectProperty ;
-    rdfs:label "subscription on rate plan" ;
-    rdfs:domain :Subscription ;
-    rdfs:range  :RatePlan ;
-    skos:definition "The tariff the subscription is billed on (exactly one at a time)." .
-
-:upsellOpportunityForSubscription a owl:ObjectProperty ;
-    rdfs:label "upsell opportunity for subscription" ;
-    rdfs:domain crm:Opportunity ;
-    rdfs:range  :Subscription ;
-    skos:definition "Links an upgrade/upsell opportunity to the subscription it would change." .
-
-:msisdn a owl:DatatypeProperty ;
-    rdfs:label "msisdn" ;
-    rdfs:domain :Subscription ;
-    rdfs:range  xsd:string ;
-    skos:definition "The mobile number identifying this subscription (E.164 format)." .
-
-:contractEndDate a owl:DatatypeProperty ;
-    rdfs:label "contract end date" ;
-    rdfs:domain :Subscription ;
-    rdfs:range  xsd:date ;
-    skos:definition "When the current commitment period ends; drives retention timing." .
-
-:RetentionAgentRole a owl:Class ;
-    rdfs:subClassOf bfo:0000023 ;
-    skos:prefLabel "Retention Agent" ;
-    skos:altLabel "Save Desk Agent" ;
-    skos:definition "Person role that handles churn-risk subscribers with retention offers. Bearer: person. Permissions: Subscriber:read, Subscription:read, Opportunity:read, Opportunity:write." .
-
-:SubscriptionShape a sh:NodeShape ;
-    sh:targetClass :Subscription ;
-    sh:property [
-        sh:path :msisdn ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-    ] ;
-    sh:property [
-        sh:path :subscriptionOnRatePlan ;
-        sh:class :RatePlan ;
-        sh:minCount 1 ;
-    ] .
-
+    skos:prefLabel "Authorised Contact" ;
+    skos:altLabel "Authorized Contact", "Account Administrator" ;
+    skos:definition "A person permitted to enquire about or change a relationship, account, or subscription within assigned authority." .
 
 :SubscriberRelationship a owl:Class ;
     rdfs:subClassOf crm:CustomerRelationship ;
     skos:prefLabel "Subscriber Relationship" ;
-    skos:definition "A managed customer relationship linking one subscriber to the operator across one or more subscriptions." .
+    skos:definition "The CRM relationship connecting a customer party to customer accounts, subscriptions, service identities, and operational accounts." .
 
-:relationshipWithSubscriber a owl:ObjectProperty ;
-    rdfs:label "relationship with subscriber" ;
-    rdfs:domain :SubscriberRelationship ;
-    rdfs:range :Subscriber .
+:CustomerAccount a owl:Class ;
+    rdfs:subClassOf sub:CustomerAccount ;
+    skos:prefLabel "Customer Account" ;
+    skos:definition "The subscription-domain commercial account owning and paying for one or more subscriptions." .
 
-:relationshipCoversSubscription a owl:ObjectProperty ;
-    rdfs:label "relationship covers subscription" ;
+:Subscription a owl:Class ;
+    rdfs:subClassOf sub:Subscription ;
+    skos:prefLabel "Subscription" ;
+    skos:altLabel "Commercial Subscription" ;
+    skos:definition "The contracted service relationship governed by a plan and lifecycle." .
+
+:ServiceLine a owl:Class ;
+    rdfs:subClassOf sub:ServiceLine ;
+    skos:prefLabel "Service Line" ;
+    skos:definition "The operational line activated by a subscription." .
+
+:Subscriber a owl:Class ;
+    rdfs:subClassOf telco:Subscriber, :ServiceLine ;
+    skos:prefLabel "Subscriber" ;
+    skos:altLabel "Service Identity", "Line" ;
+    skos:definition "The service identity or line consuming network services; distinct from the paying customer party, authorised contact, and device user." .
+
+:RatePlan a owl:Class ;
+    rdfs:subClassOf telco:RatePlan, cvm:PricePlan ;
+    skos:prefLabel "Rate Plan" ;
+    skos:altLabel "Tariff", "Price Plan" ;
+    skos:definition "The tariff governing recurring charges, usage rates, allowances, and commitment terms." .
+
+:Device a owl:Class ;
+    skos:prefLabel "Device" ;
+    skos:altLabel "Handset", "Customer Equipment", "CPE" ;
+    skos:definition "Customer equipment associated with a service line for sales, support, warranty, and upgrade journeys." .
+
+:BillingAccountReference a owl:Class ;
+    skos:prefLabel "Billing Account Reference" ;
+    skos:definition "A CRM-visible reference to an authoritative billing account; amounts and invoices remain in billing." .
+
+:ChargingAccountReference a owl:Class ;
+    skos:prefLabel "Charging Account Reference" ;
+    skos:definition "A CRM-visible reference to authoritative balances and allowances; real-time value remains in charging." .
+
+#################################################################
+# Journeys and handoffs
+#################################################################
+
+:AcquisitionJourney a owl:Class ;
+    skos:prefLabel "Acquisition Journey" ;
+    skos:definition "The traceable journey from lead through identity verification, order, provisioning, and activation." .
+
+:UpgradeJourney a owl:Class ;
+    skos:prefLabel "Upgrade Journey" ;
+    skos:definition "A commercial journey changing a plan, device, bundle, or service while preserving the customer relationship." .
+
+:PortabilityJourney a owl:Class ;
+    skos:prefLabel "Portability Journey" ;
+    skos:definition "The customer-facing port-in or port-out journey linked to the authoritative number-management request." .
+
+:DealerReferral a owl:Class ;
+    skos:prefLabel "Dealer Referral" ;
+    skos:definition "Auditable attribution of a lead, opportunity, or acquisition journey to a dealer or partner." .
+
+:ServiceOrderHandoff a owl:Class ;
+    skos:prefLabel "Service Order Handoff" ;
+    skos:definition "The traceable handoff from a won opportunity or accepted quote to an authoritative provisioning service order." .
+
+:ContractRenewalJourney a owl:Class ;
+    skos:prefLabel "Contract Renewal Journey" ;
+    skos:definition "A renewal journey triggered by commitment end dates and informed by value, propensity, and churn risk." .
+
+:RetentionJourney a owl:Class ;
+    skos:prefLabel "Retention Journey" ;
+    skos:definition "A consent-aware journey triggered by churn risk, contract end, dissatisfaction, port-out intent, or declining usage." .
+
+#################################################################
+# Care and experience
+#################################################################
+
+:BillingEnquiry a owl:Class ;
+    rdfs:subClassOf crm:Case ;
+    skos:prefLabel "Billing Enquiry" ;
+    skos:definition "A case concerning a billing account, invoice, adjustment, credit, or payment." .
+
+:BalanceEnquiry a owl:Class ;
+    rdfs:subClassOf crm:Case ;
+    skos:prefLabel "Balance Enquiry" ;
+    skos:definition "A case concerning a prepaid or hybrid balance, allowance, charge, or reservation." .
+
+:ServiceEnquiry a owl:Class ;
+    rdfs:subClassOf crm:Case ;
+    skos:prefLabel "Service Enquiry" ;
+    skos:definition "A case concerning a live service instance, service line, configuration, or product-service mapping." .
+
+:ProvisioningEnquiry a owl:Class ;
+    rdfs:subClassOf crm:Case ;
+    skos:prefLabel "Provisioning Enquiry" ;
+    skos:definition "A case concerning activation, configuration change, delay, or provisioning fallout." .
+
+:NetworkExperienceCase a owl:Class ;
+    rdfs:subClassOf crm:Case ;
+    skos:prefLabel "Network Experience Case" ;
+    skos:definition "A case linked to customer impact from degradation, outage, or an SLA violation." .
+
+:FraudOrRiskReferral a owl:Class ;
+    skos:prefLabel "Fraud or Risk Referral" ;
+    skos:definition "A restricted CRM handoff to an assurance or fraud investigation, retaining only permitted reference and status information." .
+
+:InteractionOutcome a owl:Class ;
+    skos:prefLabel "Interaction Outcome" ;
+    skos:definition "The measured outcome of a call, message, store visit, digital session, complaint, save attempt, or treatment response." .
+
+#################################################################
+# Enterprise and partner
+#################################################################
+
+:EnterpriseRelationship a owl:Class ;
+    rdfs:subClassOf :SubscriberRelationship ;
+    skos:prefLabel "Enterprise Relationship" ;
+    skos:definition "A relationship for an organisation with multiple contacts, sites, accounts, contracts, subscriptions, and services." .
+
+:PartnerRelationship a owl:Class ;
+    rdfs:subClassOf crm:CustomerRelationship ;
+    skos:prefLabel "Partner Relationship" ;
+    skos:definition "A managed relationship with a dealer, service partner, MVNO, or wholesale counterparty." .
+
+:ServiceSite a owl:Class ;
+    skos:prefLabel "Service Site" ;
+    skos:definition "An enterprise location at which fixed, mobile, IoT, or managed services are delivered." .
+
+#################################################################
+# Relationship properties
+#################################################################
+
+:relationshipWithCustomerParty a owl:ObjectProperty ;
     rdfs:domain :SubscriberRelationship ;
-    rdfs:range :Subscription .
+    rdfs:range :CustomerParty ;
+    rdfs:label "relationship with customer party" .
+
+:hasAuthorisedContact a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range :AuthorisedContact ;
+    rdfs:label "has authorised contact" .
+
+:ownsCustomerAccount a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range sub:CustomerAccount ;
+    rdfs:label "owns customer account" .
+
+:coversSubscription a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range sub:Subscription ;
+    rdfs:label "covers subscription" .
+
+:activatesSubscriber a owl:ObjectProperty ;
+    rdfs:domain sub:Subscription ;
+    rdfs:range :Subscriber ;
+    rdfs:label "activates subscriber" .
+
+:usesRatePlan a owl:ObjectProperty ;
+    rdfs:domain sub:Subscription ;
+    rdfs:range :RatePlan ;
+    rdfs:label "uses rate plan" .
+
+:usesMobileNumber a owl:ObjectProperty ;
+    rdfs:domain :Subscriber ;
+    rdfs:range num:MobileNumber ;
+    rdfs:label "uses mobile number" .
+
+:usesSimProfile a owl:ObjectProperty ;
+    rdfs:domain :Subscriber ;
+    rdfs:range num:SIMProfile ;
+    rdfs:label "uses sim profile" .
+
+:usesDevice a owl:ObjectProperty ;
+    rdfs:domain :Subscriber ;
+    rdfs:range :Device ;
+    rdfs:label "uses device" .
+
+:usesBillingAccount a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range bil:BillingAccount ;
+    rdfs:label "uses billing account" .
+
+:usesChargingAccount a owl:ObjectProperty ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range chg:ChargingAccount ;
+    rdfs:label "uses charging account" .
+
+:changesSubscription a owl:ObjectProperty ;
+    rdfs:domain crm:Opportunity ;
+    rdfs:range sub:Subscription ;
+    rdfs:label "changes subscription" .
+
+:recommendsRatePlan a owl:ObjectProperty ;
+    rdfs:domain crm:Opportunity ;
+    rdfs:range :RatePlan ;
+    rdfs:label "recommends rate plan" .
+
+:createsServiceOrder a owl:ObjectProperty ;
+    rdfs:domain crm:Opportunity ;
+    rdfs:range prv:ServiceOrder ;
+    rdfs:label "creates service order" .
+
+:handsOpportunityToServiceOrder a owl:ObjectProperty ;
+    rdfs:domain :ServiceOrderHandoff ;
+    rdfs:range prv:ServiceOrder ;
+    rdfs:label "hands opportunity to service order" .
+
+:handoffForOpportunity a owl:ObjectProperty ;
+    rdfs:domain :ServiceOrderHandoff ;
+    rdfs:range crm:Opportunity ;
+    rdfs:label "handoff for opportunity" .
+
+:originatedFromCampaignMember a owl:ObjectProperty ;
+    rdfs:domain :AcquisitionJourney ;
+    rdfs:range crm:CampaignMember ;
+    rdfs:label "originated from campaign member" .
+
+:originatedFromDealer a owl:ObjectProperty ;
+    rdfs:domain :AcquisitionJourney ;
+    rdfs:range prm:Partner ;
+    rdfs:label "originated from dealer" .
+
+:createsSubscription a owl:ObjectProperty ;
+    rdfs:domain :AcquisitionJourney ;
+    rdfs:range sub:Subscription ;
+    rdfs:label "creates subscription" .
+
+:tracksPortingRequest a owl:ObjectProperty ;
+    rdfs:domain :PortabilityJourney ;
+    rdfs:range num:PortingRequest ;
+    rdfs:label "tracks porting request" .
+
+:concernsInvoice a owl:ObjectProperty ;
+    rdfs:domain :BillingEnquiry ;
+    rdfs:range bil:Invoice ;
+    rdfs:label "concerns invoice" .
+
+:concernsChargingAccount a owl:ObjectProperty ;
+    rdfs:domain :BalanceEnquiry ;
+    rdfs:range chg:ChargingAccount ;
+    rdfs:label "concerns charging account" .
+
+:concernsServiceInstance a owl:ObjectProperty ;
+    rdfs:domain :ServiceEnquiry ;
+    rdfs:range siv:ServiceInstance ;
+    rdfs:label "concerns service instance" .
+
+:concernsFalloutCase a owl:ObjectProperty ;
+    rdfs:domain :ProvisioningEnquiry ;
+    rdfs:range prv:FalloutCase ;
+    rdfs:label "concerns fallout case" .
+
+:concernsCustomerImpact a owl:ObjectProperty ;
+    rdfs:domain :NetworkExperienceCase ;
+    rdfs:range sam:CustomerImpact ;
+    rdfs:label "concerns customer impact" .
+
+:concernsAssuranceCase a owl:ObjectProperty ;
+    rdfs:domain :NetworkExperienceCase ;
+    rdfs:range sam:AssuranceCase ;
+    rdfs:label "concerns assurance case" .
+
+:informedByChurnRisk a owl:ObjectProperty ;
+    rdfs:domain :RetentionJourney ;
+    rdfs:range cvm:ChurnRisk ;
+    rdfs:label "informed by churn risk" .
+
+:producesOpportunity a owl:ObjectProperty ;
+    rdfs:domain :RetentionJourney ;
+    rdfs:range crm:Opportunity ;
+    rdfs:label "produces opportunity" .
+
+:refersInvestigation a owl:ObjectProperty ;
+    rdfs:domain :FraudOrRiskReferral ;
+    rdfs:range raf:Investigation ;
+    rdfs:label "refers investigation" .
+
+:representsPartner a owl:ObjectProperty ;
+    rdfs:domain :PartnerRelationship ;
+    rdfs:range prm:Partner ;
+    rdfs:label "represents partner" .
+
+:representsWholesalePartner a owl:ObjectProperty ;
+    rdfs:domain :PartnerRelationship ;
+    rdfs:range wsp:WholesalePartner ;
+    rdfs:label "represents wholesale partner" .
+
+:hasServiceSite a owl:ObjectProperty ;
+    rdfs:domain :EnterpriseRelationship ;
+    rdfs:range :ServiceSite ;
+    rdfs:label "has service site" .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:customerPartyId a owl:DatatypeProperty ; rdfs:domain :CustomerParty ; rdfs:range xsd:string .
+:partyRole a owl:DatatypeProperty ; rdfs:domain :CustomerParty ; rdfs:range xsd:string .
+:identityVerified a owl:DatatypeProperty ; rdfs:domain :CustomerParty ; rdfs:range xsd:boolean .
+:authorityType a owl:DatatypeProperty ; rdfs:domain :AuthorisedContact ; rdfs:range xsd:string .
+:authorityStart a owl:DatatypeProperty ; rdfs:domain :AuthorisedContact ; rdfs:range xsd:date .
+:authorityEnd a owl:DatatypeProperty ; rdfs:domain :AuthorisedContact ; rdfs:range xsd:date .
+:relationshipSegment a owl:DatatypeProperty ; rdfs:domain :SubscriberRelationship ; rdfs:range xsd:string .
+:subscriberId a owl:DatatypeProperty ; rdfs:domain :Subscriber ; rdfs:range xsd:string .
+:serviceStatus a owl:DatatypeProperty ; rdfs:domain :Subscriber ; rdfs:range xsd:string .
+:activatedAt a owl:DatatypeProperty ; rdfs:domain :Subscriber ; rdfs:range xsd:dateTime .
+:subscriptionType a owl:DatatypeProperty ; rdfs:domain :Subscription ; rdfs:range xsd:string .
+:contractEndDate a owl:DatatypeProperty ; rdfs:domain :Subscription ; rdfs:range xsd:date .
+:planCode a owl:DatatypeProperty ; rdfs:domain :RatePlan ; rdfs:range xsd:string .
+:planName a owl:DatatypeProperty ; rdfs:domain :RatePlan ; rdfs:range xsd:string .
+:recurringFee a owl:DatatypeProperty ; rdfs:domain :RatePlan ; rdfs:range xsd:decimal .
+:commitmentMonths a owl:DatatypeProperty ; rdfs:domain :RatePlan ; rdfs:range xsd:integer .
+:deviceIdentifier a owl:DatatypeProperty ; rdfs:domain :Device ; rdfs:range xsd:string .
+:deviceType a owl:DatatypeProperty ; rdfs:domain :Device ; rdfs:range xsd:string .
+:deviceModel a owl:DatatypeProperty ; rdfs:domain :Device ; rdfs:range xsd:string .
+:eligibilityDate a owl:DatatypeProperty ; rdfs:domain :Device ; rdfs:range xsd:date .
+:journeyStatus a owl:DatatypeProperty ;
+    rdfs:domain :AcquisitionJourney, :UpgradeJourney, :PortabilityJourney, :RetentionJourney, :ContractRenewalJourney ;
+    rdfs:range xsd:string .
+:startedAt a owl:DatatypeProperty ; rdfs:domain :AcquisitionJourney ; rdfs:range xsd:dateTime .
+:completedAt a owl:DatatypeProperty ; rdfs:range xsd:dateTime .
+:acquisitionChannel a owl:DatatypeProperty ; rdfs:domain :AcquisitionJourney ; rdfs:range xsd:string .
+:upgradeReason a owl:DatatypeProperty ; rdfs:domain :UpgradeJourney ; rdfs:range xsd:string .
+:direction a owl:DatatypeProperty ; rdfs:domain :PortabilityJourney ; rdfs:range xsd:string .
+:handedOffAt a owl:DatatypeProperty ; rdfs:domain :ServiceOrderHandoff ; rdfs:range xsd:dateTime .
+:handoffStatus a owl:DatatypeProperty ; rdfs:domain :ServiceOrderHandoff ; rdfs:range xsd:string .
+:retentionReason a owl:DatatypeProperty ; rdfs:domain :RetentionJourney ; rdfs:range xsd:string .
+:saveOutcome a owl:DatatypeProperty ; rdfs:domain :RetentionJourney ; rdfs:range xsd:string .
+:outcomeType a owl:DatatypeProperty ; rdfs:domain :InteractionOutcome ; rdfs:range xsd:string .
+:outcomeAt a owl:DatatypeProperty ; rdfs:domain :InteractionOutcome ; rdfs:range xsd:dateTime .
+:outcomeValue a owl:DatatypeProperty ; rdfs:domain :InteractionOutcome ; rdfs:range xsd:decimal .
+:siteName a owl:DatatypeProperty ; rdfs:domain :ServiceSite ; rdfs:range xsd:string .
+:siteReference a owl:DatatypeProperty ; rdfs:domain :ServiceSite ; rdfs:range xsd:string .
+
+#################################################################
+# Roles
+#################################################################
+
+:RetailSalesAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Retail Sales Agent" .
+:CustomerCareAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Customer Care Agent" .
+:RetentionAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Retention Agent" .
+:EnterpriseAccountManagerRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Enterprise Account Manager" .
+:DealerChannelAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Dealer Channel Agent" .
+:PortabilityCoordinatorRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Portability Coordinator" .
+:ServiceRecoveryAgentRole a owl:Class ; rdfs:subClassOf bfo:0000023 ; skos:prefLabel "Service Recovery Agent" .
+
+#################################################################
+# SHACL completeness and lifecycle constraints
+#################################################################
+
+:CustomerPartyShape a sh:NodeShape ;
+    sh:targetClass :CustomerParty ;
+    sh:property [ sh:path :customerPartyId ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :identityVerified ; sh:datatype xsd:boolean ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 :SubscriberRelationshipShape a sh:NodeShape ;
     sh:targetClass :SubscriberRelationship ;
-    sh:property [ sh:path :relationshipWithSubscriber ; sh:class :Subscriber ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path :relationshipCoversSubscription ; sh:class :Subscription ; sh:minCount 1 ] .
+    sh:property [ sh:path :relationshipWithCustomerParty ; sh:class :CustomerParty ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :ownsCustomerAccount ; sh:class sub:CustomerAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :coversSubscription ; sh:class sub:Subscription ; sh:minCount 1 ] .
+
+:SubscriberShape a sh:NodeShape ;
+    sh:targetClass :Subscriber ;
+    sh:property [ sh:path :subscriberId ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :serviceStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "reserved" "pending_activation" "active" "suspended" "ceased" ) ] .
+
+:SubscriptionShape a sh:NodeShape ;
+    sh:targetClass :Subscription ;
+    sh:property [ sh:path :usesRatePlan ; sh:class :RatePlan ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+:AcquisitionJourneyShape a sh:NodeShape ;
+    sh:targetClass :AcquisitionJourney ;
+    sh:property [ sh:path :journeyStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "initiated" "verified" "ordered" "provisioning" "activated" "failed" "cancelled" ) ] .
+
+:PortabilityJourneyShape a sh:NodeShape ;
+    sh:targetClass :PortabilityJourney ;
+    sh:property [ sh:path :tracksPortingRequest ; sh:class num:PortingRequest ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :direction ; sh:datatype xsd:string ; sh:in ( "port_in" "port_out" ) ] .
+
+:ServiceOrderHandoffShape a sh:NodeShape ;
+    sh:targetClass :ServiceOrderHandoff ;
+    sh:property [ sh:path :handoffForOpportunity ; sh:class crm:Opportunity ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :handsOpportunityToServiceOrder ; sh:class prv:ServiceOrder ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :handoffStatus ; sh:datatype xsd:string ;
+        sh:in ( "prepared" "submitted" "acknowledged" "completed" "failed" ) ] .
+
+:RetentionJourneyShape a sh:NodeShape ;
+    sh:targetClass :RetentionJourney ;
+    sh:property [ sh:path :journeyStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "triggered" "assessed" "contacted" "offered" "retained" "churned" "suppressed" ) ] .
