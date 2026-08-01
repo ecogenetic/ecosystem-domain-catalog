@@ -24,6 +24,22 @@
     skos:altLabel "Authorization", "Permission" ;
     skos:definition "A patient's scoped, revocable permission for treatment or for sharing health data." .
 
+:Practitioner a owl:Class ;
+    skos:prefLabel "Practitioner" ;
+    skos:definition "A licensed person responsible for delivering or supervising healthcare." .
+
+:ClinicalObservation a owl:Class ;
+    skos:prefLabel "Clinical Observation" ;
+    skos:definition "A measured, asserted or observed clinical fact with value, time, subject and provenance." .
+
+:Diagnosis a owl:Class ;
+    skos:prefLabel "Diagnosis" ;
+    skos:definition "A clinician's coded assessment of a patient's condition, distinct from an observation." .
+
+:CarePlan a owl:Class ;
+    skos:prefLabel "Care Plan" ;
+    skos:definition "A versioned plan of goals, activities and interventions for a patient." .
+
 :encounterOfPatient a owl:ObjectProperty ;
     rdfs:label "encounter of patient" ;
     rdfs:domain :Encounter ;
@@ -35,6 +51,22 @@
     rdfs:domain :Consent ;
     rdfs:range  :Patient ;
     skos:definition "The patient who granted the consent." .
+
+:encounterLedByPractitioner a owl:ObjectProperty ;
+    rdfs:domain :Encounter ;
+    rdfs:range :Practitioner .
+
+:observationForPatient a owl:ObjectProperty ;
+    rdfs:domain :ClinicalObservation ;
+    rdfs:range :Patient .
+
+:diagnosisForPatient a owl:ObjectProperty ;
+    rdfs:domain :Diagnosis ;
+    rdfs:range :Patient .
+
+:carePlanForPatient a owl:ObjectProperty ;
+    rdfs:domain :CarePlan ;
+    rdfs:range :Patient .
 
 :consentScope a owl:DatatypeProperty ;
     rdfs:label "consent scope" ;
