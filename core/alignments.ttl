@@ -246,3 +246,59 @@ num:PhysicalSIM rdfs:subClassOf core:Asset .
 # - crm:Activity may capture a response to a treatment but represents
 #   a broader family of customer interactions.
 #################################################################
+
+
+#################################################################
+# Operational CRM composition mappings
+#
+# These predicates connect lifecycle records across domains without
+# claiming that the records are identical classes.
+#################################################################
+
+core:masteredByRecord a owl:ObjectProperty ;
+    rdfs:label "mastered by record" ;
+    rdfs:domain crm:Party ;
+    rdfs:range mdm:MasterRecord ;
+    skos:definition "Links a CRM party to the MDM record governing its mastered identity and lineage." .
+
+core:realizedAsTreatment a owl:ObjectProperty ;
+    rdfs:label "realized as treatment" ;
+    rdfs:domain crm:CampaignMember ;
+    rdfs:range cvm:Treatment ;
+    skos:definition "Links CRM campaign participation to the CVM treatment that executed the selected offer." .
+
+core:informedByNextBestAction a owl:ObjectProperty ;
+    rdfs:label "informed by next best action" ;
+    rdfs:domain crm:Opportunity ;
+    rdfs:range cvm:NextBestAction ;
+    skos:definition "Links an opportunity to the decision recommendation that informed its creation or prioritisation." .
+
+core:recordsTreatmentResponse a owl:ObjectProperty ;
+    rdfs:label "records treatment response" ;
+    rdfs:domain crm:Activity ;
+    rdfs:range cvm:Treatment ;
+    skos:definition "Links a CRM interaction to the CVM treatment whose customer response it records." .
+
+core:configuredBy a owl:ObjectProperty ;
+    rdfs:label "configured by" ;
+    rdfs:domain crm:Quote ;
+    rdfs:range cpq:Configuration ;
+    skos:definition "Links a customer-facing CRM quote to the CPQ configuration used to price and approve it." .
+
+core:convertedToOrder a owl:ObjectProperty ;
+    rdfs:label "converted to order" ;
+    rdfs:domain crm:Opportunity ;
+    rdfs:range oms:Order ;
+    skos:definition "Links a won CRM opportunity to the downstream order created for fulfilment." .
+
+core:orderedUnderContract a owl:ObjectProperty ;
+    rdfs:label "ordered under contract" ;
+    rdfs:domain oms:Order ;
+    rdfs:range crm:Contract ;
+    skos:definition "Links an order to the CRM contract governing its commercial terms." .
+
+core:creditAccountForRelationship a owl:ObjectProperty ;
+    rdfs:label "credit account for relationship" ;
+    rdfs:domain ccm:CustomerAccount ;
+    rdfs:range crm:CustomerRelationship ;
+    skos:definition "Links a credit-managed trading account to the CRM relationship through which the customer is managed." .
