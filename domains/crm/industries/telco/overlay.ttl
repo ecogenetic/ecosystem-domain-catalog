@@ -1,5 +1,7 @@
 @prefix :     <https://ecosystemcode.com/ontology/crm/telco#> .
 @prefix crm:  <https://ecosystemcode.com/ontology/crm#> .
+@prefix sub:  <https://ecosystemcode.com/ontology/sub#> .
+@prefix cvm:  <https://ecosystemcode.com/ontology/cvm#> .
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
@@ -12,17 +14,19 @@
     rdfs:comment "Telco specialization of the CRM base ontology: subscribers, MSISDNs, rate plans, and service subscriptions." .
 
 :Subscriber a owl:Class ;
-    rdfs:subClassOf crm:Contact ;
+    rdfs:subClassOf crm:Person ;
     skos:prefLabel "Subscriber" ;
     skos:altLabel "Mobile Customer", "MSISDN Holder" ;
-    skos:definition "A contact who holds one or more active service subscriptions identified by MSISDNs." .
+    skos:definition "A person who holds one or more active service subscriptions identified by MSISDNs." .
 
 :RatePlan a owl:Class ;
+    rdfs:subClassOf cvm:PricePlan ;
     skos:prefLabel "Rate Plan" ;
     skos:altLabel "Tariff", "Price Plan" ;
     skos:definition "A commercial tariff defining charges, allowances, and contract terms for a subscription." .
 
 :Subscription a owl:Class ;
+    rdfs:subClassOf sub:Subscription ;
     skos:prefLabel "Subscription" ;
     skos:altLabel "Service Instance" ;
     skos:definition "An active service held by a subscriber on a rate plan, identified by an MSISDN." .
@@ -75,3 +79,24 @@
         sh:class :RatePlan ;
         sh:minCount 1 ;
     ] .
+
+
+:SubscriberRelationship a owl:Class ;
+    rdfs:subClassOf crm:CustomerRelationship ;
+    skos:prefLabel "Subscriber Relationship" ;
+    skos:definition "A managed customer relationship linking one subscriber to the operator across one or more subscriptions." .
+
+:relationshipWithSubscriber a owl:ObjectProperty ;
+    rdfs:label "relationship with subscriber" ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range :Subscriber .
+
+:relationshipCoversSubscription a owl:ObjectProperty ;
+    rdfs:label "relationship covers subscription" ;
+    rdfs:domain :SubscriberRelationship ;
+    rdfs:range :Subscription .
+
+:SubscriberRelationshipShape a sh:NodeShape ;
+    sh:targetClass :SubscriberRelationship ;
+    sh:property [ sh:path :relationshipWithSubscriber ; sh:class :Subscriber ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :relationshipCoversSubscription ; sh:class :Subscription ; sh:minCount 1 ] .
