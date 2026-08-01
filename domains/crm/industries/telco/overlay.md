@@ -2,13 +2,14 @@
 
 ## Additional concepts
 
-- **Subscriber** — a Contact holding one or more active service subscriptions; the primary customer term.
+- **Subscriber** — a Person holding one or more active service subscriptions; the primary customer term.
+- **SubscriberRelationship** — a CustomerRelationship linking a subscriber to the operator across one or more subscriptions.
 - **Subscription** — an active service identified by an MSISDN, billed on exactly one RatePlan.
 - **RatePlan** — the tariff (charges, allowances, contract term) a subscription is billed on.
 
 ## Additional relationships
 
-- Subscriber holds Subscriptions (1..*); each Subscription is on exactly one RatePlan (1..1).
+- SubscriberRelationship relates to one Subscriber (1..1) and covers Subscriptions (1..*); each Subscription is on exactly one RatePlan (1..1).
 - Upsell/upgrade Opportunities link to the Subscription they would change.
 - Contract end dates on subscriptions drive retention and renewal opportunity timing.
 
