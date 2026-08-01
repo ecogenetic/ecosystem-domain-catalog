@@ -1,0 +1,18 @@
+# mappings/cms/generic-mapping.ttl — Generic data source alignments to canonical domain
+
+@prefix : <https://ecosystemcode.com/ontology/cms#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+
+# === CLASS MAPPINGS ===
+legacy:Entity owl:equivalentClass :CoreEntity .
+
+# === PROPERTY MAPPINGS ===
+legacy:id rdfs:subPropertyOf :id .
+legacy:name rdfs:subPropertyOf :name .
+legacy:description rdfs:subPropertyOf :description .
+legacy:created_at rdfs:subPropertyOf :createdAt .
+legacy:status rdfs:subPropertyOf :status .
+
+# === RELATIONSHIP MAPPINGS ===
+legacy:parent_id rdfs:subPropertyOf :parentOf .
+legacy:related_id rdfs:subPropertyOf :relatedTo .
