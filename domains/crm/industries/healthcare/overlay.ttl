@@ -16,13 +16,13 @@
 #################################################################
 
 :Patient a owl:Class ;
-    rdfs:subClassOf crm:Contact ;
+    rdfs:subClassOf crm:Person ;
     skos:prefLabel "Patient" ;
     skos:altLabel "Care Recipient", "Service User" ;
-    skos:definition "A contact receiving or seeking care, identified by a medical record number; may differ from the guarantor who pays." .
+    skos:definition "A person receiving or seeking care, identified by a medical record number; may differ from the guarantor who pays." .
 
 :ProviderOrganization a owl:Class ;
-    rdfs:subClassOf crm:Account ;
+    rdfs:subClassOf crm:Organisation ;
     skos:prefLabel "Provider Organization" ;
     skos:altLabel "Practice", "Clinic", "Referring Provider" ;
     skos:definition "An account representing a practice, clinic, hospital, or referring organisation." .
@@ -40,6 +40,7 @@
     skos:definition "An activity that books a patient with a provider at a time; confirmations, reminders, and no-show follow-up are core CRM work." .
 
 :ConsentRecord a owl:Class ;
+    rdfs:subClassOf crm:ConsentRecord ;
     skos:prefLabel "Consent Record" ;
     skos:altLabel "Communication Consent", "Data Sharing Consent" ;
     skos:definition "The patient's explicit, scoped, revocable permission for communication and data sharing; every outreach checks it." .
@@ -208,3 +209,24 @@
         sh:minCount 1 ;
         sh:in ( "granted" "revoked" "expired" ) ;
     ] .
+
+
+:PatientRelationship a owl:Class ;
+    rdfs:subClassOf crm:CustomerRelationship ;
+    skos:prefLabel "Patient Relationship" ;
+    skos:definition "A managed relationship connecting a patient to a care organisation without duplicating the clinical record." .
+
+:relationshipWithPatient a owl:ObjectProperty ;
+    rdfs:label "relationship with patient" ;
+    rdfs:domain :PatientRelationship ;
+    rdfs:range :Patient .
+
+:relationshipWithProvider a owl:ObjectProperty ;
+    rdfs:label "relationship with provider" ;
+    rdfs:domain :PatientRelationship ;
+    rdfs:range :ProviderOrganization .
+
+:PatientRelationshipShape a sh:NodeShape ;
+    sh:targetClass :PatientRelationship ;
+    sh:property [ sh:path :relationshipWithPatient ; sh:class :Patient ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :relationshipWithProvider ; sh:class :ProviderOrganization ; sh:minCount 1 ; sh:maxCount 1 ] .
