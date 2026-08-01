@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "1.0.0",
+  "catalogVersion": "2.0.0",
   "domains": [
     {
       "id": "crm",
@@ -8,30 +8,41 @@
       "description": "Customer Relationship Management",
       "icon": "Users",
       "chips": [
-        "Account",
+        "Customer Relationship",
         "Opportunity",
-        "Case"
+        "Campaign"
       ],
       "entities": [
+        "Party",
+        "Person",
+        "Organisation",
         "Account",
         "Contact",
+        "CustomerRelationship",
         "Territory",
+        "Assignment",
+        "ConsentRecord",
         "Campaign",
+        "CampaignMember",
         "Lead",
+        "LeadConversion",
         "Opportunity",
         "Pipeline",
         "PipelineStage",
+        "StageTransition",
         "Product",
+        "OpportunityLine",
         "Quote",
+        "QuoteLine",
         "Contract",
         "Forecast",
         "Activity",
         "Case"
       ],
-      "capability": "run campaigns, capture and qualify leads, progress opportunities through pipeline stages with quotes and contracts, and resolve service cases",
-      "benefit": "marketing, sales, and service share one forecastable, auditable view of every customer relationship",
-      "workflow": "Run campaign → capture lead → qualify → open opportunity → advance pipeline stage → quote → close won → sign contract",
-      "statefulEntity": "Opportunity (pipeline stages: lead → qualified → proposal → won/lost)",
+      "capability": "manage party identity and customer relationships, run consent-aware campaigns, convert qualified leads, progress product-level opportunities through auditable pipeline stages, quote and contract won business, and resolve service cases",
+      "benefit": "marketing, sales, service, and decisioning share one auditable view of each party, customer relationship, interaction, commercial outcome, and consent state",
+      "workflow": "Target parties → capture lead → qualify and convert → establish customer relationship → open opportunity → progress stages → quote → close won → contract → hand off to fulfilment",
+      "statefulEntity": "CustomerRelationship (prospect → active → dormant/ended); Opportunity (lead → qualified → proposal → won/lost)",
       "industries": [
         "banking",
         "gambling",
@@ -41,7 +52,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "2.0.0"
     },
     {
       "id": "cvm",
