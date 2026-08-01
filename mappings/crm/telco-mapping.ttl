@@ -49,6 +49,8 @@ legacy:interaction_outcomes owl:equivalentClass telcrm:InteractionOutcome .
 legacy:enterprise_relationships owl:equivalentClass telcrm:EnterpriseRelationship .
 legacy:partner_relationships owl:equivalentClass telcrm:PartnerRelationship .
 legacy:service_sites owl:equivalentClass telcrm:ServiceSite .
+legacy:opportunities owl:equivalentClass crm:Opportunity .
+legacy:campaign_members owl:equivalentClass crm:CampaignMember .
 
 #################################################################
 # Authoritative operational class mappings
