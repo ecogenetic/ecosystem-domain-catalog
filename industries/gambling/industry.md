@@ -44,6 +44,32 @@ account with its wallet and protection limits is the central construct.
 | Content, event and market publication | CMS |
 | Partner and affiliate relationships | PRM |
 
+## Domain integration model
+
+| Canonical detail | Industry specialization | Owning domain | Shared identifiers |
+|---|---|---|---|
+| Party and customer | Verified account holder | CRM / MDM | partyId, playerId, customerRelationshipId |
+| Product | Game, event, market or promotion definition | PIM / CMS | productId, productVersionId |
+| Offer and quote | Published price or eligible promotion | CPQ | offerId, quoteId |
+| Agreement and account | Terms acceptance and wallet account | CRM / FIN | agreementId, walletId, accountId |
+| Interaction | Digital, retail or service contact | CRM | interactionId, channelId |
+| Order and process | Registration or account transaction request | OMS / BPM | orderId, processInstanceId |
+| Service | Enabled account or platform service | SIV | serviceInstanceId |
+| Transaction | Wallet or settlement movement | FIN | transactionId, walletId |
+| Case | Verification, protection, dispute or investigation case | BPM / CCM | caseId |
+| Consent | Marketing and data-use permission | CRM / GRC | consentId, playerId, purposeCode |
+| Decision | Eligibility, protection, AML or fraud result | RAF / GRC | decisionId, policyVersionId |
+| Partner | Affiliate, content or payment provider | PRM | partnerId |
+
+### Integration rules
+
+- A party identifies the person while the regulated account relationship has its own identifier.
+- Product, market and price versions referenced by accepted transactions must be retained.
+- Each object keeps its own identifier and the correlation identifiers of upstream objects.
+- Lifecycle events carry eventId, eventType, occurredAt, sourceDomain, entityId, entityVersion and correlationId.
+- Domains exchange references and events; identity, ledger and protection state remain authoritative.
+- Industry terminology and states map to canonical concepts through overlays and mappings.
+
 ## Modeling rules
 
 - Keep player identity, wallet, wager, wager leg, market, outcome and settlement separate.
