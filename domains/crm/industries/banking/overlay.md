@@ -2,13 +2,15 @@
 
 ## Additional concepts
 
-- **ClientParty** — a Contact who is a verified banking client; "client" and "party" are the preferred terms.
-- **CorporateClient** — an Account representing a corporate relationship with its own signatories.
+- **ClientParty** — a Person who is a verified banking client; "client" and "party" are the preferred terms.
+- **CorporateClient** — an Organisation participating in a corporate customer relationship with its own signatories.
+- **BankingRelationship** — a CustomerRelationship with a verified banking client or corporate client, owned by a Relationship Manager.
 - **KYCProfile** — mandatory identity verification record; onboarding is gated on verification.
 - **Mandate** — signing authority allowing a person to operate accounts for a corporate client.
 
 ## Additional relationships
 
+- BankingRelationship relates to exactly one ClientParty or CorporateClient (1..1).
 - ClientParty has exactly one active KYCProfile (1..1).
 - Mandate is granted for one CorporateClient (1..1) and held by one ClientParty (1..1).
 - Opportunity for a banking product must not close-won until the ClientParty's KYCProfile is verified.

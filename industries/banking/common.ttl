@@ -24,6 +24,22 @@
     skos:altLabel "Authority", "Signing Authority" ;
     skos:definition "An authorisation allowing a person to operate an account or approve payments on behalf of a party." .
 
+:FinancialProductAgreement a owl:Class ;
+    skos:prefLabel "Financial Product Agreement" ;
+    skos:definition "A contract under which a bank provides a deposit, lending, card or investment product to a party." .
+
+:FinancialAccount a owl:Class ;
+    skos:prefLabel "Financial Account" ;
+    skos:definition "A ledger-backed account maintained under a financial product agreement." .
+
+:BeneficialOwnership a owl:Class ;
+    skos:prefLabel "Beneficial Ownership" ;
+    skos:definition "A dated relationship identifying a natural person who ultimately owns or controls a party." .
+
+:ComplianceDecision a owl:Class ;
+    skos:prefLabel "Compliance Decision" ;
+    skos:definition "An auditable KYC, AML, sanctions or conduct decision made under a named policy version." .
+
 :kycProfileOfParty a owl:ObjectProperty ;
     rdfs:label "kyc profile of party" ;
     rdfs:domain :KYCProfile ;
@@ -35,6 +51,18 @@
     rdfs:domain :Mandate ;
     rdfs:range  :Party ;
     skos:definition "The party on whose behalf the mandate authorises action." .
+
+:agreementHeldByParty a owl:ObjectProperty ;
+    rdfs:domain :FinancialProductAgreement ;
+    rdfs:range :Party .
+
+:accountUnderAgreement a owl:ObjectProperty ;
+    rdfs:domain :FinancialAccount ;
+    rdfs:range :FinancialProductAgreement .
+
+:complianceDecisionForParty a owl:ObjectProperty ;
+    rdfs:domain :ComplianceDecision ;
+    rdfs:range :Party .
 
 :kycStatus a owl:DatatypeProperty ;
     rdfs:label "kyc status" ;

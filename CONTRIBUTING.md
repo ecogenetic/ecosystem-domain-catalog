@@ -25,6 +25,7 @@ completeness shapes — used by specialists and by external products.
 | Extend domain | [playbooks/extend-domain.md](playbooks/extend-domain.md) |
 | New industry | [playbooks/add-industry.md](playbooks/add-industry.md) |
 | Industry overlay | [playbooks/add-industry-overlay.md](playbooks/add-industry-overlay.md) |
+| New data source mapping | [playbooks/add-mapping.md](playbooks/add-mapping.md) |
 
 ## Hard rules
 

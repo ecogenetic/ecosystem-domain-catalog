@@ -1,0 +1,510 @@
+# ============================================================================
+# mappings/crm/salesforce.ttl — Salesforce CRM → Canonical CRM Ontology
+#
+# Comprehensive mapping of Salesforce standard objects, fields, and
+# relationship lookups to the canonical CRM domain ontology.
+#
+# Salesforce API names are used verbatim (e.g., Account.Name, Contact.Email).
+# Custom objects/fields follow the Salesforce __c naming convention.
+# ============================================================================
+
+@prefix crm: <https://ecosystemcode.com/ontology/crm#> .
+@prefix salesforce: <https://salesforce.com/legacy/crm#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# 1. CLASS MAPPINGS — Salesforce Standard Objects → Canonical Classes
+# ============================================================================
+
+# --- Customer Master ---
+salesforce:Account a owl:Class ;
+    owl:equivalentClass crm:Account ;
+    rdfs:comment "Salesforce Account object maps to canonical Account." .
+
+salesforce:Contact a owl:Class ;
+    owl:equivalentClass crm:Contact ;
+    rdfs:comment "Salesforce Contact object maps to canonical Contact." .
+
+# --- Marketing & Leads ---
+salesforce:Lead a owl:Class ;
+    owl:equivalentClass crm:Lead ;
+    rdfs:comment "Salesforce Lead object maps to canonical Lead." .
+
+salesforce:Campaign a owl:Class ;
+    owl:equivalentClass crm:Campaign ;
+    rdfs:comment "Salesforce Campaign object maps to canonical Campaign." .
+
+# --- Sales Execution ---
+salesforce:Opportunity a owl:Class ;
+    owl:equivalentClass crm:Opportunity ;
+    rdfs:comment "Salesforce Opportunity object maps to canonical Opportunity." .
+
+salesforce:Product2 a owl:Class ;
+    owl:equivalentClass crm:Product ;
+    rdfs:comment "Salesforce Product2 (product catalog) maps to canonical Product." .
+
+salesforce:Quote a owl:Class ;
+    owl:equivalentClass crm:Quote ;
+    rdfs:comment "Salesforce Quote object maps to canonical Quote." .
+
+salesforce:QuoteLineItem a owl:Class ;
+    owl:equivalentClass crm:QuoteLine ;
+    rdfs:comment "Salesforce QuoteLineItem maps to canonical QuoteLine." .
+
+salesforce:Contract a owl:Class ;
+    owl:equivalentClass crm:Contract ;
+    rdfs:comment "Salesforce Contract object maps to canonical Contract." .
+
+# --- Engagement & Service ---
+salesforce:Case a owl:Class ;
+    owl:equivalentClass crm:Case ;
+    rdfs:comment "Salesforce Case object maps to canonical Case." .
+
+salesforce:Task a owl:Class ;
+    owl:equivalentClass crm:Activity ;
+    rdfs:comment "Salesforce Task (and Event) maps to canonical Activity." .
+
+salesforce:Event a owl:Class ;
+    owl:equivalentClass crm:Activity ;
+    rdfs:comment "Salesforce Event maps to canonical Activity." .
+
+# --- Territory & Forecast (derived from Salesforce features) ---
+salesforce:Territory2 a owl:Class ;
+    owl:equivalentClass crm:Territory ;
+    rdfs:comment "Salesforce Territory2 model maps to canonical Territory." .
+
+# Note: Salesforce does not have a native Forecast object; forecasts are
+# computed from Opportunity amounts × probabilities. The canonical Forecast
+# class is derived rather than directly mapped.
+
+# ============================================================================
+# 2. DATATYPE PROPERTY MAPPINGS — Salesforce Fields → Canonical Attributes
+# ============================================================================
+
+# --- Account Fields ---
+salesforce:Account_Name rdfs:subPropertyOf crm:accountName .
+salesforce:Account_Industry rdfs:subPropertyOf crm:industry .
+salesforce:Account_AnnualRevenue rdfs:subPropertyOf crm:annualRevenue .
+salesforce:Account_Website rdfs:subPropertyOf crm:website .
+salesforce:Account_Type rdfs:subPropertyOf crm:accountType .
+salesforce:Account_NumberOfEmployees rdfs:subPropertyOf crm:employeeCount .
+salesforce:Account_Phone rdfs:subPropertyOf crm:phone .
+salesforce:Account_Description rdfs:subPropertyOf crm:description .
+salesforce:Account_OwnerId rdfs:subPropertyOf crm:assignedTo ;
+    rdfs:comment "Account owner is a Salesforce-specific relationship to a User." .
+
+# --- Contact Fields ---
+salesforce:Contact_LastName rdfs:subPropertyOf crm:lastName .
+salesforce:Contact_FirstName rdfs:subPropertyOf crm:firstName .
+salesforce:Contact_Email rdfs:subPropertyOf crm:email .
+salesforce:Contact_Phone rdfs:subPropertyOf crm:phone .
+salesforce:Contact_MobilePhone rdfs:subPropertyOf crm:mobilePhone .
+salesforce:Contact_Title rdfs:subPropertyOf crm:jobTitle .
+salesforce:Contact_Department rdfs:subPropertyOf crm:department .
+salesforce:Contact_MailingStreet rdfs:subPropertyOf crm:mailingStreet .
+salesforce:Contact_MailingCity rdfs:subPropertyOf crm:mailingCity .
+salesforce:Contact_MailingState rdfs:subPropertyOf crm:mailingState .
+salesforce:Contact_MailingPostalCode rdfs:subPropertyOf crm:mailingPostalCode .
+salesforce:Contact_MailingCountry rdfs:subPropertyOf crm:mailingCountry .
+salesforce:Contact_Description rdfs:subPropertyOf crm:description .
+salesforce:Contact_LanguageLocaleKey rdfs:subPropertyOf crm:language .
+salesforce:Contact_TimeZoneSidKey rdfs:subPropertyOf crm:timeZone .
+
+# --- Lead Fields ---
+salesforce:Lead_Company rdfs:subPropertyOf crm:company .
+salesforce:Lead_LeadSource rdfs:subPropertyOf crm:leadSource .
+salesforce:Lead_Status rdfs:subPropertyOf crm:leadStatus .
+salesforce:Lead_Industry rdfs:subPropertyOf crm:industry .
+salesforce:Lead_AnnualRevenue rdfs:subPropertyOf crm:annualRevenue .
+salesforce:Lead_NumberOfEmployees rdfs:subPropertyOf crm:employeeCount .
+salesforce:Lead_Website rdfs:subPropertyOf crm:website .
+salesforce:Lead_Email rdfs:subPropertyOf crm:email .
+salesforce:Lead_Phone rdfs:subPropertyOf crm:phone .
+salesforce:Lead_Title rdfs:subPropertyOf crm:jobTitle .
+salesforce:Lead_Description rdfs:subPropertyOf crm:description .
+salesforce:Lead_CreatedDate rdfs:subPropertyOf crm:capturedAt .
+salesforce:Lead_Rating rdfs:subPropertyOf crm:leadScore ;
+    rdfs:comment "Salesforce Lead Rating (Hot/Warm/Cold) maps to lead scoring." .
+
+# --- Opportunity Fields ---
+salesforce:Opportunity_Name rdfs:subPropertyOf crm:opportunityName .
+salesforce:Opportunity_Amount rdfs:subPropertyOf crm:amount .
+salesforce:Opportunity_CloseDate rdfs:subPropertyOf crm:closeDate .
+salesforce:Opportunity_StageName rdfs:subPropertyOf crm:opportunityStatus .
+salesforce:Opportunity_Probability rdfs:subPropertyOf crm:probability .
+salesforce:Opportunity_Type rdfs:subPropertyOf crm:opportunityType ;
+    rdfs:comment "Salesforce Opportunity Type (New Business, Existing Business, etc.)." .
+salesforce:Opportunity_LeadSource rdfs:subPropertyOf crm:leadSource .
+salesforce:Opportunity_Description rdfs:subPropertyOf crm:description .
+salesforce:Opportunity_ExpectedRevenue rdfs:subPropertyOf crm:expectedRevenue ;
+    rdfs:comment "Salesforce computed field: Amount × Probability." .
+salesforce:Opportunity_Fiscal rdfs:subPropertyOf crm:fiscalPeriod .
+salesforce:Opportunity_FiscalQuarter rdfs:subPropertyOf crm:fiscalQuarter .
+salesforce:Opportunity_IsClosed rdfs:subPropertyOf crm:isClosed .
+salesforce:Opportunity_IsWon rdfs:subPropertyOf crm:isWon .
+salesforce:Opportunity_PrimaryContactId rdfs:subPropertyOf crm:hasPrimaryContact ;
+    rdfs:comment "Salesforce lookup to the primary contact on the opportunity." .
+salesforce:Opportunity_AccountId rdfs:subPropertyOf crm:pursuedWithAccount ;
+    rdfs:comment "Salesforce lookup to the account the opportunity belongs to." .
+
+# --- Campaign Fields ---
+salesforce:Campaign_Name rdfs:subPropertyOf crm:campaignName .
+salesforce:Campaign_Type rdfs:subPropertyOf crm:campaignType .
+salesforce:Campaign_StartDate rdfs:subPropertyOf crm:campaignStartDate .
+salesforce:Campaign_EndDate rdfs:subPropertyOf crm:campaignEndDate .
+salesforce:Campaign_BudgetedCost rdfs:subPropertyOf crm:budgetedCost .
+salesforce:Campaign_ActualCost rdfs:subPropertyOf crm:actualCost .
+salesforce:Campaign_Status rdfs:subPropertyOf crm:campaignStatus .
+salesforce:Campaign_Description rdfs:subPropertyOf crm:description .
+salesforce:Campaign_ExpectedRevenue rdfs:subPropertyOf crm:expectedRevenue .
+salesforce:Campaign_NumberOfLeads rdfs:subPropertyOf crm:leadCount .
+salesforce:Campaign_NumberOfOpportunities rdfs:subPropertyOf crm:opportunityCount .
+salesforce:Campaign_NumberOfContacts rdfs:subPropertyOf crm:contactCount .
+
+# --- Product Fields ---
+salesforce:Product2_Code rdfs:subPropertyOf crm:productCode .
+salesforce:Product2_Family rdfs:subPropertyOf crm:productFamily .
+salesforce:Product2_Name rdfs:subPropertyOf crm:productName .
+salesforce:Product2_Description rdfs:subPropertyOf crm:description .
+salesforce:Product2_IsActive rdfs:subPropertyOf crm:isActive .
+salesforce:Product2_ExternalId rdfs:subPropertyOf crm:externalId .
+
+# --- Pricebook & PricebookEntry (Salesforce-specific pricing model) ---
+salesforce:PricebookEntry_UnitPrice rdfs:subPropertyOf crm:listPrice ;
+    rdfs:comment "Salesforce PricebookEntry price maps to canonical list price." .
+
+# --- Quote Fields ---
+salesforce:Quote_QuoteNumber rdfs:subPropertyOf crm:quoteNumber .
+salesforce:Quote_Name rdfs:subPropertyOf crm:quoteName .
+salesforce:Quote_Status rdfs:subPropertyOf crm:quoteStatus .
+salesforce:Quote_QuoteDate rdfs:subPropertyOf crm:quoteDate .
+salesforce:Quote_ExpirationDate rdfs:subPropertyOf crm:validUntil .
+salesforce:Quote_TotalPrice rdfs:subPropertyOf crm:quoteTotal .
+salesforce:Quote_Description rdfs:subPropertyOf crm:description .
+salesforce:Quote_OpportunityId rdfs:subPropertyOf crm:quotesOpportunity ;
+    rdfs:comment "Salesforce lookup to the opportunity the quote is for." .
+salesforce:Quote_AccountId rdfs:subPropertyOf crm:quotedAccount .
+salesforce:Quote_BillingStreet rdfs:subPropertyOf crm:billingStreet .
+salesforce:Quote_BillingCity rdfs:subPropertyOf crm:billingCity .
+salesforce:Quote_BillingState rdfs:subPropertyOf crm:billingState .
+salesforce:Quote_BillingPostalCode rdfs:subPropertyOf crm:billingPostalCode .
+salesforce:Quote_BillingCountry rdfs:subPropertyOf crm:billingCountry .
+salesforce:Quote_Subtotal rdfs:subPropertyOf crm:subtotal .
+salesforce:Quote_Tax rdfs:subPropertyOf crm:tax .
+salesforce:Quote_Shipping rdfs:subPropertyOf crm:shipping .
+salesforce:Quote_ShippingHandling rdfs:subPropertyOf crm:shippingHandling .
+
+# --- QuoteLineItem Fields ---
+salesforce:QuoteLineItem_Quantity rdfs:subPropertyOf crm:quotedQuantity .
+salesforce:QuoteLineItem_UnitPrice rdfs:subPropertyOf crm:quotedUnitPrice .
+salesforce:QuoteLineItem_ListPrice rdfs:subPropertyOf crm:listPrice .
+salesforce:QuoteLineItem_Discount rdfs:subPropertyOf crm:discountPercent .
+salesforce:QuoteLineItem_TotalPrice rdfs:subPropertyOf crm:lineTotal .
+salesforce:QuoteLineItem_Subtotal rdfs:subPropertyOf crm:lineSubtotal .
+salesforce:QuoteLineItem_Product2Id rdfs:subPropertyOf crm:forQuotedProduct ;
+    rdfs:comment "Salesforce lookup to the product on the quote line." .
+salesforce:QuoteLineItem_QuoteId rdfs:subPropertyOf crm:partOfQuote ;
+    rdfs:comment "Salesforce lookup to the parent quote." .
+salesforce:QuoteLineItem_Description rdfs:subPropertyOf crm:description .
+salesforce:QuoteLineItem_ServiceDate rdfs:subPropertyOf crm:serviceDate .
+
+# --- Contract Fields ---
+salesforce:Contract_ContractNumber rdfs:subPropertyOf crm:contractNumber .
+salesforce:Contract_Name rdfs:subPropertyOf crm:contractName .
+salesforce:Contract_Status rdfs:subPropertyOf crm:contractStatus .
+salesforce:Contract_StartDate rdfs:subPropertyOf crm:contractStart .
+salesforce:Contract_EndDate rdfs:subPropertyOf crm:contractEnd .
+salesforce:Contract_Description rdfs:subPropertyOf crm:description .
+salesforce:Contract_ContractTerm rdfs:subPropertyOf crm:contractTerm .
+salesforce:Contract_Type rdfs:subPropertyOf crm:contractType .
+salesforce:Contract_OpportunityId rdfs:subPropertyOf crm:resultsFromOpportunity ;
+    rdfs:comment "Salesforce lookup to the won opportunity." .
+salesforce:Contract_AccountId rdfs:subPropertyOf crm:governsAccount ;
+    rdfs:comment "Salesforce lookup to the governed account." .
+salesforce:Contract_Pricebook2Id rdfs:subPropertyOf crm:usesPricebook .
+salesforce:Contract_DaysBetweenSigningAndEffective rdfs:subPropertyOf crm:daysToEffective .
+salesforce:Contract_ApprovalNotes rdfs:subPropertyOf crm:approvalNotes .
+salesforce:Contract_BillingStreet rdfs:subPropertyOf crm:billingStreet .
+salesforce:Contract_BillingCity rdfs:subPropertyOf crm:billingCity .
+salesforce:Contract_BillingState rdfs:subPropertyOf crm:billingState .
+salesforce:Contract_BillingPostalCode rdfs:subPropertyOf crm:billingPostalCode .
+salesforce:Contract_BillingCountry rdfs:subPropertyOf crm:billingCountry .
+
+# --- ContractLineItem (Salesforce-specific) ---
+salesforce:ContractLineItem_Product2Id rdfs:subPropertyOf crm:contractProduct .
+salesforce:ContractLineItem_Quantity rdfs:subPropertyOf crm:contractQuantity .
+salesforce:ContractLineItem_UnitPrice rdfs:subPropertyOf crm:contractUnitPrice .
+salesforce:ContractLineItem_StartDate rdfs:subPropertyOf crm:contractLineStart .
+salesforce:ContractLineItem_EndDate rdfs:subPropertyOf crm:contractLineEnd .
+salesforce:ContractLineItem_SubscriptionType rdfs:subPropertyOf crm:subscriptionType ;
+    rdfs:comment "Salesforce subscription type (One Time, Term, Renewal, etc.)." .
+
+# --- Case Fields ---
+salesforce:Case_CaseNumber rdfs:subPropertyOf crm:caseNumber .
+salesforce:Case_Subject rdfs:subPropertyOf crm:subject .
+salesforce:Case_Priority rdfs:subPropertyOf crm:priority .
+salesforce:Case_Status rdfs:subPropertyOf crm:caseStatus .
+salesforce:Case_Origin rdfs:subPropertyOf crm:caseOrigin ;
+    rdfs:comment "Salesforce Case Origin (Phone, Email, Web, Chat, etc.)." .
+salesforce:Case_Type rdfs:subPropertyOf crm:caseType ;
+    rdfs:comment "Salesforce Case Type (Problem, Question, Request, etc.)." .
+salesforce:Case_Reason rdfs:subPropertyOf crm:caseReason .
+salesforce:Case_Description rdfs:subPropertyOf crm:description .
+salesforce:Case_IsEscalated rdfs:subPropertyOf crm:escalated .
+salesforce:Case_IsClosed rdfs:subPropertyOf crm:isClosed .
+salesforce:Case_ClosedDate rdfs:subPropertyOf crm:resolvedAt .
+salesforce:Case_CreatedDate rdfs:subPropertyOf crm:openedAt .
+salesforce:Case_ContactId rdfs:subPropertyOf crm:raisedByContact ;
+    rdfs:comment "Salesforce lookup to the contact who raised the case." .
+salesforce:Case_AccountId rdfs:subPropertyOf crm:filedAgainstAccount ;
+    rdfs:comment "Salesforce lookup to the account the case is filed against." .
+salesforce:Case_Product2Id rdfs:subPropertyOf crm:aboutProduct ;
+    rdfs:comment "Salesforce lookup to the product the case concerns." .
+salesforce:Case_SuppliedEmail rdfs:subPropertyOf crm:suppliedEmail .
+salesforce:Case_SuppliedName rdfs:subPropertyOf crm:suppliedName .
+salesforce:Case_SuppliedPhone rdfs:subPropertyOf crm:suppliedPhone .
+
+# --- Activity Fields (Task & Event) ---
+salesforce:Task_Subject rdfs:subPropertyOf crm:activitySubject .
+salesforce:Task_Status rdfs:subPropertyOf crm:activityStatus .
+salesforce:Task_Priority rdfs:subPropertyOf crm:activityPriority .
+salesforce:Task_Type rdfs:subPropertyOf crm:activityType .
+salesforce:Task_Description rdfs:subPropertyOf crm:activitySummary .
+salesforce:Task_ActivityDate rdfs:subPropertyOf crm:activityDate .
+salesforce:Task_IsClosed rdfs:subPropertyOf crm:isClosed .
+salesforce:Task_WhoId rdfs:subPropertyOf crm:involvesContact ;
+    rdfs:comment "Salesforce polymorphic lookup to a Contact or Lead." .
+salesforce:Task_WhatId rdfs:subPropertyOf crm:loggedAgainst ;
+    rdfs:comment "Salesforce polymorphic lookup to an Opportunity, Case, etc." .
+
+salesforce:Event_Subject rdfs:subPropertyOf crm:activitySubject .
+salesforce:Event_Description rdfs:subPropertyOf crm:activitySummary .
+salesforce:Event_StartDateTime rdfs:subPropertyOf crm:activityStart .
+salesforce:Event_EndDateTime rdfs:subPropertyOf crm:activityEnd .
+salesforce:Event_IsAllDayEvent rdfs:subPropertyOf crm:isAllDay .
+salesforce:Event_WhoId rdfs:subPropertyOf crm:involvesContact .
+salesforce:Event_WhatId rdfs:subPropertyOf crm:loggedAgainst .
+salesforce:Event_Location rdfs:subPropertyOf crm:activityLocation .
+salesforce:Event_Type rdfs:subPropertyOf crm:activityType .
+
+# --- Territory Fields ---
+salesforce:Territory2_Name rdfs:subPropertyOf crm:territoryName .
+salesforce:Territory2_Type rdfs:subPropertyOf crm:territoryType .
+salesforce:Territory2_Code rdfs:subPropertyOf crm:territoryCode .
+salesforce:Territory2_EffectiveDate rdfs:subPropertyOf crm:territoryEffectiveDate .
+salesforce:Territory2_EndDate rdfs:subPropertyOf crm:territoryEndDate .
+
+# ============================================================================
+# 3. OBJECT PROPERTY MAPPINGS — Salesforce Relationships → Canonical Relationships
+# ============================================================================
+
+# --- Contact → Account ---
+salesforce:Contact_AccountId rdfs:subPropertyOf crm:belongsToAccount ;
+    rdfs:domain salesforce:Contact ;
+    rdfs:range salesforce:Account ;
+    rdfs:comment "Salesforce Contact.AccountId lookup." .
+
+# --- Account → Territory ---
+salesforce:Account_Territory2Id rdfs:subPropertyOf crm:assignedToTerritory ;
+    rdfs:domain salesforce:Account ;
+    rdfs:range salesforce:Territory2 ;
+    rdfs:comment "Salesforce Account-Territory2 membership." .
+
+# --- Campaign → Lead ---
+salesforce:CampaignMember_LeadId rdfs:subPropertyOf crm:generatesLead ;
+    rdfs:domain salesforce:Campaign ;
+    rdfs:range salesforce:Lead ;
+    rdfs:comment "Salesforce CampaignMember junction object links Campaigns to Leads." .
+
+salesforce:CampaignMember_ContactId rdfs:subPropertyOf crm:campaignContact ;
+    rdfs:domain salesforce:Campaign ;
+    rdfs:range salesforce:Contact ;
+    rdfs:comment "Salesforce CampaignMember also links Campaigns to Contacts." .
+
+# --- Lead → Opportunity (via conversion) ---
+salesforce:Lead_ConvertedOpportunityId rdfs:subPropertyOf crm:convertsToOpportunity ;
+    rdfs:domain salesforce:Lead ;
+    rdfs:range salesforce:Opportunity ;
+    rdfs:comment "Salesforce Lead.ConvertedOpportunityId after conversion." .
+
+salesforce:Lead_ConvertedContactId rdfs:subPropertyOf crm:convertsToContact ;
+    rdfs:domain salesforce:Lead ;
+    rdfs:range salesforce:Contact ;
+    rdfs:comment "Salesforce Lead.ConvertedContactId after conversion." .
+
+salesforce:Lead_ConvertedAccountId rdfs:subPropertyOf crm:convertsToAccount ;
+    rdfs:domain salesforce:Lead ;
+    rdfs:range salesforce:Account ;
+    rdfs:comment "Salesforce Lead.ConvertedAccountId after conversion." .
+
+salesforce:Lead_IsConverted rdfs:subPropertyOf crm:isConverted ;
+    rdfs:comment "Salesforce Lead.IsConverted boolean flag." .
+
+# --- Opportunity → Account ---
+salesforce:Opportunity_AccountId rdfs:subPropertyOf crm:pursuedWithAccount ;
+    rdfs:domain salesforce:Opportunity ;
+    rdfs:range salesforce:Account .
+
+# --- Opportunity → Contact ---
+salesforce:Opportunity_PrimaryContactId rdfs:subPropertyOf crm:hasPrimaryContact ;
+    rdfs:domain salesforce:Opportunity ;
+    rdfs:range salesforce:Contact .
+
+# --- Opportunity → Campaign ---
+salesforce:Opportunity_CampaignId rdfs:subPropertyOf crm:influencedByCampaign ;
+    rdfs:domain salesforce:Opportunity ;
+    rdfs:range salesforce:Campaign .
+
+# --- Opportunity → Product (via OpportunityLineItem) ---
+salesforce:OpportunityLineItem_Product2Id rdfs:subPropertyOf crm:includesProduct ;
+    rdfs:domain salesforce:Opportunity ;
+    rdfs:range salesforce:Product2 ;
+    rdfs:comment "Salesforce OpportunityLineItem junction object." .
+
+salesforce:OpportunityLineItem_Quantity rdfs:subPropertyOf crm:opportunityQuantity .
+salesforce:OpportunityLineItem_UnitPrice rdfs:subPropertyOf crm:opportunityUnitPrice .
+salesforce:OpportunityLineItem_TotalPrice rdfs:subPropertyOf crm:opportunityLineTotal .
+salesforce:OpportunityLineItem_ListPrice rdfs:subPropertyOf crm:opportunityListPrice .
+salesforce:OpportunityLineItem_Discount rdfs:subPropertyOf crm:opportunityDiscount .
+
+# --- Quote → Opportunity ---
+salesforce:Quote_OpportunityId rdfs:subPropertyOf crm:quotesOpportunity ;
+    rdfs:domain salesforce:Quote ;
+    rdfs:range salesforce:Opportunity .
+
+# --- QuoteLineItem → Quote ---
+salesforce:QuoteLineItem_QuoteId rdfs:subPropertyOf crm:partOfQuote ;
+    rdfs:domain salesforce:QuoteLineItem ;
+    rdfs:range salesforce:Quote .
+
+# --- QuoteLineItem → Product ---
+salesforce:QuoteLineItem_Product2Id rdfs:subPropertyOf crm:forQuotedProduct ;
+    rdfs:domain salesforce:QuoteLineItem ;
+    rdfs:range salesforce:Product2 .
+
+# --- Contract → Opportunity ---
+salesforce:Contract_OpportunityId rdfs:subPropertyOf crm:resultsFromOpportunity ;
+    rdfs:domain salesforce:Contract ;
+    rdfs:range salesforce:Opportunity .
+
+# --- Contract → Account ---
+salesforce:Contract_AccountId rdfs:subPropertyOf crm:governsAccount ;
+    rdfs:domain salesforce:Contract ;
+    rdfs:range salesforce:Account .
+
+# --- Case → Contact ---
+salesforce:Case_ContactId rdfs:subPropertyOf crm:raisedByContact ;
+    rdfs:domain salesforce:Case ;
+    rdfs:range salesforce:Contact .
+
+# --- Case → Account ---
+salesforce:Case_AccountId rdfs:subPropertyOf crm:filedAgainstAccount ;
+    rdfs:domain salesforce:Case ;
+    rdfs:range salesforce:Account .
+
+# --- Case → Product ---
+salesforce:Case_Product2Id rdfs:subPropertyOf crm:aboutProduct ;
+    rdfs:domain salesforce:Case ;
+    rdfs:range salesforce:Product2 .
+
+# --- Activity → Opportunity ---
+salesforce:Task_WhatId rdfs:subPropertyOf crm:loggedAgainstOpportunity ;
+    rdfs:domain salesforce:Task ;
+    rdfs:range salesforce:Opportunity ;
+    rdfs:comment "Salesforce Task.WhatId polymorphic lookup (Opportunity)." .
+
+salesforce:Event_WhatId rdfs:subPropertyOf crm:loggedAgainstOpportunity ;
+    rdfs:domain salesforce:Event ;
+    rdfs:range salesforce:Opportunity ;
+    rdfs:comment "Salesforce Event.WhatId polymorphic lookup (Opportunity)." .
+
+# --- Activity → Case ---
+salesforce:Task_WhatId rdfs:subPropertyOf crm:loggedAgainstCase ;
+    rdfs:domain salesforce:Task ;
+    rdfs:range salesforce:Case ;
+    rdfs:comment "Salesforce Task.WhatId polymorphic lookup (Case)." .
+
+salesforce:Event_WhatId rdfs:subPropertyOf crm:loggedAgainstCase ;
+    rdfs:domain salesforce:Event ;
+    rdfs:range salesforce:Case ;
+    rdfs:comment "Salesforce Event.WhatId polymorphic lookup (Case)." .
+
+# --- Activity → Contact ---
+salesforce:Task_WhoId rdfs:subPropertyOf crm:involvesContact ;
+    rdfs:domain salesforce:Task ;
+    rdfs:range salesforce:Contact ;
+    rdfs:comment "Salesforce Task.WhoId polymorphic lookup (Contact or Lead)." .
+
+salesforce:Event_WhoId rdfs:subPropertyOf crm:involvesContact ;
+    rdfs:domain salesforce:Event ;
+    rdfs:range salesforce:Contact ;
+    rdfs:comment "Salesforce Event.WhoId polymorphic lookup (Contact or Lead)." .
+
+# --- User → Account (Account Team) ---
+salesforce:AccountTeamMember_AccountId rdfs:subPropertyOf crm:accountTeamMember ;
+    rdfs:domain salesforce:User ;
+    rdfs:range salesforce:Account ;
+    rdfs:comment "Salesforce AccountTeamMember junction object." .
+
+salesforce:AccountTeamMember_UserId rdfs:subPropertyOf crm:accountTeamMember .
+salesforce:AccountTeamMember_AccountRoleId rdfs:subPropertyOf crm:accountTeamRole .
+
+# --- User → Opportunity (Opportunity Team) ---
+salesforce:OpportunityTeamMember_OpportunityId rdfs:subPropertyOf crm:opportunityTeamMember ;
+    rdfs:domain salesforce:User ;
+    rdfs:range salesforce:Opportunity ;
+    rdfs:comment "Salesforce OpportunityTeamMember junction object." .
+
+salesforce:OpportunityTeamMember_UserId rdfs:subPropertyOf crm:opportunityTeamMember .
+salesforce:OpportunityTeamMember_OpportunityRoleId rdfs:subPropertyOf crm:opportunityTeamRole .
+
+# ============================================================================
+# 4. SALESFORCE-SPECIFIC CONCEPTS
+# ============================================================================
+
+# --- RecordTypes ---
+salesforce:RecordType a owl:Class ;
+    rdfs:subClassOf crm:RecordClassification ;
+    rdfs:comment "Salesforce RecordType provides process/visibility branching." .
+
+# --- Profiles & Roles ---
+salesforce:Profile a owl:Class ;
+    rdfs:subClassOf crm:SecurityProfile ;
+    rdfs:comment "Salesforce Profile controls object/field-level permissions." .
+
+salesforce:UserRole a owl:Class ;
+    rdfs:subClassOf crm:HierarchyRole ;
+    rdfs:comment "Salesforce UserRole defines the org hierarchy for sharing." .
+
+# --- Sharing ---
+salesforce:OrgWideDefaults a owl:Class ;
+    rdfs:subClassOf crm:SharingModel ;
+    rdfs:comment "Salesforce org-wide defaults set baseline sharing visibility." .
+
+# --- Approval Processes ---
+salesforce:ProcessInstance a owl:Class ;
+    rdfs:subClassOf crm:ApprovalProcess ;
+    rdfs:comment "Salesforce ProcessInstance tracks approval workflow." .
+
+salesforce:ProcessInstanceStep a owl:Class ;
+    rdfs:subClassOf crm:ApprovalStep ;
+    rdfs:comment "Salesforce ProcessInstanceStep is an individual approval step." .
+
+# --- Custom Settings & Metadata ---
+salesforce:CustomMetadata a owl:Class ;
+    rdfs:subClassOf crm:Configuration ;
+    rdfs:comment "Salesforce CustomMetadataType for deployable configuration." .
+
+# ============================================================================
+# 5. SALESFORCE API VERSIONING NOTE
+# ============================================================================
+#
+# This mapping targets Salesforce API v58.0+. Field names and object
+# availability may differ in earlier API versions. The Territory2 model
+# (introduced in API v30.0) replaced the legacy Territory model.
+#
+# Custom objects and fields (suffix __c) should be added per-organization
+# by extending this file or creating a child mapping file.
+# ============================================================================

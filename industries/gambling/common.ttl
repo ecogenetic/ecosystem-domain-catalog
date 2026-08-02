@@ -29,6 +29,22 @@
     skos:altLabel "RG Limit", "Player Protection Limit" ;
     skos:definition "A deposit, loss, wager, or session limit protecting the player; includes cool-off and self-exclusion states." .
 
+:Market a owl:Class ;
+    skos:prefLabel "Market" ;
+    skos:definition "A versioned set of outcomes offered for wagering on an event or game." .
+
+:WagerLeg a owl:Class ;
+    skos:prefLabel "Wager Leg" ;
+    skos:definition "A selection within a wager referencing an offered market outcome and accepted price." .
+
+:WalletTransaction a owl:Class ;
+    skos:prefLabel "Wallet Transaction" ;
+    skos:definition "An immutable deposit, withdrawal, stake, winning, refund, bonus or adjustment entry." .
+
+:PlayerProtectionAssessment a owl:Class ;
+    skos:prefLabel "Player Protection Assessment" ;
+    skos:definition "An auditable assessment of age, jurisdiction, exclusion and responsible-play eligibility." .
+
 :walletOfPlayer a owl:ObjectProperty ;
     rdfs:label "wallet of player" ;
     rdfs:domain :Wallet ;
@@ -46,6 +62,22 @@
     rdfs:domain :ResponsibleGamblingLimit ;
     rdfs:range  :Player ;
     skos:definition "The player protected by the responsible gambling limit." .
+
+:wagerHasLeg a owl:ObjectProperty ;
+    rdfs:domain :Wager ;
+    rdfs:range :WagerLeg .
+
+:wagerLegSelectsMarket a owl:ObjectProperty ;
+    rdfs:domain :WagerLeg ;
+    rdfs:range :Market .
+
+:walletHasTransaction a owl:ObjectProperty ;
+    rdfs:domain :Wallet ;
+    rdfs:range :WalletTransaction .
+
+:assessmentForPlayer a owl:ObjectProperty ;
+    rdfs:domain :PlayerProtectionAssessment ;
+    rdfs:range :Player .
 
 :selfExcluded a owl:DatatypeProperty ;
     rdfs:label "self excluded" ;

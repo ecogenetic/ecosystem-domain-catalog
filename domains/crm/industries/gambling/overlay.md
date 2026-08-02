@@ -7,14 +7,16 @@ gating every piece of outreach.
 
 ## Additional concepts
 
-- **Player** — a Contact who is a registered, age-verified account holder; the primary relationship unit.
-- **AffiliatePartner** — an Account representing an affiliate or media partner that refers new players for commission.
+- **Player** — a Person who is a registered, age-verified account holder; the primary relationship unit.
+- **AffiliatePartner** — an Organisation representing an affiliate or media partner that refers new players for commission.
+- **PlayerRelationship** — a CustomerRelationship connecting an age-verified player to the licensed operator and governing outreach eligibility.
 - **VIPTier** — a named level in the VIP programme (e.g. bronze, silver, gold, host-managed) that determines relationship treatment.
 - **SaferGamblingStatus** — the player's current responsible-gambling state (active limits, cool-off, self-excluded); gates all outreach and offers.
 - **PlayerComplaint** — a Case raised by a player, including regulatory complaints that carry statutory response deadlines.
 
 ## Additional relationships
 
+- PlayerRelationship relatesToPlayer Player (many-to-one).
 - Player carriesSaferGamblingStatus SaferGamblingStatus (one-to-one); outreach must check status before any campaign, activity, or offer.
 - Player assignedToVipTier VIPTier (many-to-one); tier changes drive host assignment and treatment level.
 - Lead referredByAffiliate AffiliatePartner (many-to-one); affiliate attribution is tracked from first touch for commission and compliance.

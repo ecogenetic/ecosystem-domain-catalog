@@ -276,3 +276,31 @@
     rdfs:domain :Party ;
     rdfs:range  xsd:string ;
     skos:definition "A stable identifier for the party in an external or master data system." .
+
+
+#################################################################
+# Party kinds and managed relationships
+#################################################################
+
+:Person a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Person" ;
+    skos:altLabel "Individual", "Natural Person" ;
+    skos:definition "An individual human party participating in business relationships." .
+
+:Organisation a owl:Class ;
+    rdfs:subClassOf :Party ;
+    skos:prefLabel "Organisation" ;
+    skos:altLabel "Organization", "Legal Entity", "Company" ;
+    skos:definition "An organisational party such as a company, public body, partnership, or non-profit." .
+
+:CustomerRelationship a owl:Class ;
+    skos:prefLabel "Customer Relationship" ;
+    skos:altLabel "Client Relationship", "Commercial Relationship" ;
+    skos:definition "A managed commercial relationship between the enterprise and a customer party; distinct from the party itself and from a balance-holding financial account." .
+
+:relationshipWithCustomer a owl:ObjectProperty ;
+    rdfs:label "relationship with customer" ;
+    rdfs:domain :CustomerRelationship ;
+    rdfs:range :Customer ;
+    skos:definition "The customer party participating in the managed relationship." .

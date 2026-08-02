@@ -155,3 +155,66 @@
         sh:minCount 1 ;
         sh:in ( "new" "in_progress" "waiting_on_customer" "resolved" "closed" ) ;
     ] .
+
+
+:CustomerRelationshipShape a sh:NodeShape ;
+    sh:targetClass :CustomerRelationship ;
+    sh:property [ sh:path :relationshipNumber ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :relatesToParty ; sh:class :Party ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :relationshipStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "prospect" "active" "dormant" "ended" ) ] .
+
+:CampaignMemberShape a sh:NodeShape ;
+    sh:targetClass :CampaignMember ;
+    sh:property [ sh:path :representsParty ; sh:class :Party ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :memberStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "targeted" "delivered" "responded" "no_response" "suppressed" ) ] .
+
+:LeadConversionShape a sh:NodeShape ;
+    sh:targetClass :LeadConversion ;
+    sh:property [ sh:path :convertsLead ; sh:class :Lead ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :resolvesToParty ; sh:class :Party ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :convertedAt ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+:OpportunityLineShape a sh:NodeShape ;
+    sh:targetClass :OpportunityLine ;
+    sh:property [ sh:path :forOpportunityProduct ; sh:class :Product ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :opportunityQuantity ; sh:datatype xsd:decimal ; sh:minCount 1 ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path :expectedRevenue ; sh:datatype xsd:decimal ; sh:minInclusive 0 ] .
+
+:PipelineStageShape a sh:NodeShape ;
+    sh:targetClass :PipelineStage ;
+    sh:property [ sh:path :partOfPipeline ; sh:class :Pipeline ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :stageOrder ; sh:datatype xsd:integer ; sh:minCount 1 ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path :defaultProbability ; sh:datatype xsd:decimal ; sh:minInclusive 0 ; sh:maxInclusive 1 ] .
+
+:StageTransitionShape a sh:NodeShape ;
+    sh:targetClass :StageTransition ;
+    sh:property [ sh:path :recordsOpportunity ; sh:class :Opportunity ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :toPipelineStage ; sh:class :PipelineStage ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :transitionedAt ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+:ConsentRecordShape a sh:NodeShape ;
+    sh:targetClass :ConsentRecord ;
+    sh:property [ sh:path :recordsConsentFor ; sh:class :Party ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :consentPurpose ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :consentChannel ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :consentStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "captured" "active" "withdrawn" "expired" ) ] .
+
+:AssignmentShape a sh:NodeShape ;
+    sh:targetClass :Assignment ;
+    sh:property [ sh:path :assigneeRef ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :assignedAt ; sh:datatype xsd:dateTime ; sh:minCount 1 ] .
+
+# Strengthen existing commercial constraints.
+:OpportunityShape
+    sh:property [ sh:path :atPipelineStage ; sh:class :PipelineStage ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :probability ; sh:datatype xsd:decimal ; sh:minInclusive 0 ; sh:maxInclusive 1 ] .
+
+:QuoteLineShape a sh:NodeShape ;
+    sh:targetClass :QuoteLine ;
+    sh:property [ sh:path :partOfQuote ; sh:class :Quote ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :forQuotedProduct ; sh:class :Product ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path :quotedQuantity ; sh:datatype xsd:decimal ; sh:minCount 1 ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path :discountPercent ; sh:datatype xsd:decimal ; sh:minInclusive 0 ; sh:maxInclusive 100 ] .

@@ -24,6 +24,23 @@
     skos:altLabel "Loss Event", "Insurance Claim" ;
     skos:definition "A demand for payment under a policy following an insured event." .
 
+:Cover a owl:Class ;
+    skos:prefLabel "Cover" ;
+    skos:altLabel "Benefit" ;
+    skos:definition "A versioned promise of protection with limits, conditions and exclusions under a policy." .
+
+:InsuredRisk a owl:Class ;
+    skos:prefLabel "Insured Risk" ;
+    skos:definition "The person, asset, liability or event exposure protected by cover." .
+
+:ClaimItem a owl:Class ;
+    skos:prefLabel "Claim Item" ;
+    skos:definition "An individually assessed component of a claim with its own amount and decision." .
+
+:ClaimReserve a owl:Class ;
+    skos:prefLabel "Claim Reserve" ;
+    skos:definition "The estimated outstanding liability held for a claim at a point in time." .
+
 :policyHeldByPolicyholder a owl:ObjectProperty ;
     rdfs:label "policy held by policyholder" ;
     rdfs:domain :Policy ;
@@ -35,6 +52,22 @@
     rdfs:domain :Claim ;
     rdfs:range  :Policy ;
     skos:definition "The policy a claim draws against." .
+
+:policyProvidesCover a owl:ObjectProperty ;
+    rdfs:domain :Policy ;
+    rdfs:range :Cover .
+
+:coverProtectsRisk a owl:ObjectProperty ;
+    rdfs:domain :Cover ;
+    rdfs:range :InsuredRisk .
+
+:claimHasItem a owl:ObjectProperty ;
+    rdfs:domain :Claim ;
+    rdfs:range :ClaimItem .
+
+:reserveForClaim a owl:ObjectProperty ;
+    rdfs:domain :ClaimReserve ;
+    rdfs:range :Claim .
 
 :claimStatus a owl:DatatypeProperty ;
     rdfs:label "claim status" ;
