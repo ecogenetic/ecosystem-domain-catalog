@@ -45,6 +45,78 @@ meta-data/              published design rules (external products)
 index.json · industries.json
 ```
 
+## From ontology to SQL: where mappings fit
+
+The ontology defines the **canonical business meaning** of concepts such as Customer,
+Product, Account, Order and Interaction. A source mapping connects an implementation-specific
+schema—SQL tables and columns, CSV fields, API properties or legacy-system identifiers—to
+those canonical classes and properties.
+
+Mappings are therefore the translation layer between semantic design and physical data:
+
+~~~text
+Domain language
+  description.md
+        ↓
+Canonical semantic model
+  ontology.ttl + shapes.ttl
+        ↓
+Optional industry specialization
+  industries/{industry}/common.ttl
+  domains/{domain}/industries/{industry}/overlay.ttl
+        ↓
+Source mapping
+  domains/{domain}/mappings/generic-mapping.ttl
+  domains/{domain}/industries/{industry}/mappings/generic-mapping.ttl
+        ↓
+Physical implementation
+  SQL tables, columns, keys, views and rows
+~~~
+
+The mapping does **not** replace the ontology and does not make the SQL schema canonical.
+It states how physical structures represent canonical meaning. Different source systems can
+therefore integrate through the same domain vocabulary even when their table and column names
+differ.
+
+### Mapping levels
+
+| Level | Purpose | Example location |
+|---|---|---|
+| Canonical ontology | Defines business classes, properties and relationships | domains/crm/ontology.ttl |
+| Validation shapes | Defines required semantic completeness | domains/crm/shapes.ttl |
+| Base source mapping | Aligns a generic or product-specific schema to a domain | domains/crm/mappings/generic-mapping.ttl |
+| Industry mapping | Adds industry alignment without replacing the base mapping | domains/crm/industries/telco/mappings/generic-mapping.ttl |
+| SQL example | Demonstrates tables, columns, keys and joins consumed by the mapping | domains/crm/industries/telco/mappings/sample.sql |
+| Shared metadata | Documents mapping rules, templates and path patterns | meta-data/mappings/ |
+
+### How a SQL schema is aligned
+
+A mapping normally connects:
+
+1. a table or view to an ontology class using **owl:equivalentClass** or a more conservative
+   class relationship;
+2. a column to an ontology property using **rdfs:subPropertyOf**;
+3. a foreign key to an ontology relationship, including its expected domain and range;
+4. source constraints and datatypes to SHACL validation expectations; and
+5. source identifiers to stable IRIs so records from different systems can be joined safely.
+
+For example, a source table named **customer_parties** may map to the canonical CRM customer
+party class, while **customer_party_id** maps to its canonical identifier property. A foreign
+key such as **subscription_ref** can map to the canonical relationship between a customer
+relationship and a subscription. The SQL remains operational; the RDF mapping supplies the
+shared meaning.
+
+Load mappings in this order:
+
+1. core and domain ontologies;
+2. shared industry concepts and the selected domain overlay;
+3. the base domain mapping;
+4. the optional industry mapping; and
+5. source data transformed into RDF or queried through a semantic or virtualization layer.
+
+See [meta-data/mappings/README.md](meta-data/mappings/README.md) for authoring rules and
+[meta-data/mappings/index.yaml](meta-data/mappings/index.yaml) for mapping path patterns.
+
 ## Domain language (seven headings)
 
 1. Concepts · 2. Taxonomy · 3. Relationships · 4. Attributes · 5. Lifecycle · 6. Roles · 7. Primary workflow  
