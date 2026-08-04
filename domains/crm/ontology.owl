@@ -1,1133 +1,954 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 >
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#relatesToParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#involvesParty">
+    <rdfs:label>involves party</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#campaignName">
+    <rdfs:label>campaign name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#convertsToContact">
+    <rdfs:label>converts to contact</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <skos:definition>The contact record created when a qualified lead is converted.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#forecastPeriod">
+    <rdfs:label>forecast period</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#fullName">
+    <rdfs:label>full name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#commitAmount">
+    <rdfs:label>commit amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#marketingOptIn">
+    <rdfs:label>marketing opt in</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <skos:definition>Whether the contact has consented to marketing outreach; gates campaign targeting.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#forOpportunityProduct">
+    <rdfs:label>for opportunity product</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+  </owl:ObjectProperty>
+  <owl:Ontology rdf:about="https://ecosystemcode.com/ontology/crm">
+    <rdfs:label>CRM Domain Ontology</rdfs:label>
+    <rdfs:comment>Seed ontology for Customer Relationship Management: accounts, contacts, campaigns, leads, opportunities, quotes, contracts, forecasts, service cases, and activities.</rdfs:comment>
+  </owl:Ontology>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#listPrice">
+    <rdfs:label>list price</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#productCode">
+    <rdfs:label>product code</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#convertsLead">
+    <rdfs:label>converts lead</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#capturedAt">
+    <rdfs:label>captured at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#region">
+    <rdfs:label>region</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#validUntil">
+    <rdfs:label>valid until</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#consentPurpose">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#SalesRepRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Sales Rep</skos:prefLabel>
+    <skos:altLabel>Account Executive</skos:altLabel>
+    <skos:altLabel>Sales Representative</skos:altLabel>
+    <skos:definition>Person role that captures leads, owns opportunities, builds quotes, and logs activities. Bearer: person. Permissions: Lead:read, Lead:write, Opportunity:read, Opportunity:write, Quote:read, Quote:write, Activity:read, Activity:write, Account:read, Contact:read, Product:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#assigneeRef">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignedToTerritory">
+    <rdfs:label>assigned to territory</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
+    <skos:definition>The territory an account is assigned to for coverage and quota purposes.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#contractStart">
+    <rdfs:label>contract start</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#governsAccount">
+    <rdfs:label>governs account</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <skos:definition>The account whose commercial relationship the contract governs.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#defaultProbability">
+    <rdfs:label>default probability</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <skos:definition>The default win probability assigned to opportunities entering this stage, used for forecasting.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#accountType">
+    <rdfs:label>account type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Classification of the account: prospect, customer, partner, or former customer.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignsOpportunity">
+    <rdfs:label>assigns opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#forQuotedProduct">
+    <rdfs:label>for quoted product</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <skos:definition>The product priced on a quote line.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#industry">
+    <rdfs:label>industry</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#accountName">
+    <rdfs:label>account name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#opportunityQuantity">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#convertsToOpportunity">
+    <rdfs:label>converts to opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <skos:definition>Links a qualified lead to the opportunity it was converted into.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#ServiceAgentRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Service Agent</skos:prefLabel>
+    <skos:altLabel>Support Agent</skos:altLabel>
+    <skos:altLabel>Customer Service Representative</skos:altLabel>
+    <skos:definition>Person role that owns cases from intake to resolution and logs customer interactions. Bearer: person. Permissions: Case:read, Case:write, Activity:read, Activity:write, Account:read, Contact:read, Product:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#contractValue">
+    <rdfs:label>contract value</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#pipelineName">
+    <rdfs:label>pipeline name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#generatesLead">
+    <rdfs:label>generates lead</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <skos:definition>The leads captured as responses to a marketing campaign.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#department">
+    <rdfs:label>department</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#budgetedCost">
+    <rdfs:label>budgeted cost</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#partyExternalRef">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#contractStatus">
+    <rdfs:label>contract status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Lifecycle state of the contract: draft, active, expired, terminated.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#leadSource">
+    <rdfs:label>lead source</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#closeDate">
+    <rdfs:label>close date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#leadStatus">
+    <rdfs:label>lead status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Lifecycle state of the lead: new, contacted, qualified, converted, disqualified.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#convertsToAccount">
+    <rdfs:label>converts to account</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <skos:definition>The new or matched account a converted lead is attached to.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#quoteStatus">
+    <rdfs:label>quote status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Lifecycle state of the quote: draft, presented, accepted, rejected, expired.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#hasPrimaryContact">
+    <rdfs:label>has primary contact</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <skos:definition>The main contact person driving the deal on the customer side.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#involvesContact">
+    <rdfs:label>involves contact</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <skos:definition>The contact who took part in the activity.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#campaignStatus">
+    <rdfs:label>campaign status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Lifecycle state of the campaign: planned, active, completed.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#bestCaseAmount">
+    <rdfs:label>best case amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#partOfQuote">
+    <rdfs:label>part of quote</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <skos:definition>The quote a line belongs to.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#atPipelineStage">
+    <rdfs:label>at pipeline stage</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <skos:definition>The single pipeline stage the opportunity currently sits at.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#caseNumber">
+    <rdfs:label>case number</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#toPipelineStage">
+    <rdfs:label>to pipeline stage</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#representsParty">
+    <rdfs:label>represents party</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#caseStatus">
+    <rdfs:label>case status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Lifecycle state of the case: new, in_progress, waiting_on_customer, resolved, closed.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#resultsFromOpportunity">
+    <rdfs:label>results from opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <skos:definition>The won opportunity a contract was created from.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#opportunityStatus">
+    <rdfs:label>opportunity status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Lifecycle state of the opportunity: lead, qualified, proposal, won, lost.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#pursuedForRelationship">
+    <rdfs:label>pursued for relationship</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#conversionOutcome">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#contractEnd">
+    <rdfs:label>contract end</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#productName">
+    <rdfs:label>product name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#jobTitle">
+    <rdfs:label>job title</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#renewsIntoOpportunity">
+    <rdfs:label>renews into opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <skos:definition>The renewal opportunity opened as the contract approaches its end date.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#targetedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#territoryName">
+    <rdfs:label>territory name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#belongsToAccount">
+    <rdfs:label>belongs to account</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <skos:definition>Associates a contact with the account they work for.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#includesProduct">
+    <rdfs:label>includes product</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <skos:definition>The catalog products an opportunity is expected to sell.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#priority">
+    <rdfs:label>priority</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Urgency of the case: low, medium, high, critical.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#quoteDate">
+    <rdfs:label>quote date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#createsRelationship">
+    <rdfs:label>creates relationship</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#filedAgainstAccount">
+    <rdfs:label>filed against account</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <skos:definition>The account a service case is filed against.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#opportunityName">
+    <rdfs:label>opportunity name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#consentStatus">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#respondedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#quotedUnitPrice">
+    <rdfs:label>quoted unit price</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#quoteNumber">
+    <rdfs:label>quote number</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#stageCount">
+    <rdfs:label>stage count</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#employeeCount">
+    <rdfs:label>employee count</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#fromPipelineStage">
+    <rdfs:label>from pipeline stage</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#stageName">
+    <rdfs:label>stage name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#coversTerritory">
+    <rdfs:label>covers territory</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
+    <skos:definition>The territory whose expected revenue a forecast projects.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#stageOrder">
+    <rdfs:label>stage order</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#responseType">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#amount">
+    <rdfs:label>amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#transitionedBy">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#openedAt">
+    <rdfs:label>opened at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#summary">
+    <rdfs:label>summary</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>A concise description of the customer interaction or activity outcome.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#relationshipStatus">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#loggedAgainstOpportunity">
+    <rdfs:label>logged against opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <skos:definition>The opportunity an activity was recorded against.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#quoteTotal">
+    <rdfs:label>quote total</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#subject">
+    <rdfs:label>subject</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#partyStatus">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#partOfPipeline">
+    <rdfs:label>part of pipeline</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
+    <skos:definition>The pipeline this stage belongs to, in stage order.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#annualRevenue">
+    <rdfs:label>annual revenue</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#contractNumber">
+    <rdfs:label>contract number</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#relatesToParty">
     <rdfs:label>relates to party</rdfs:label>
     <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
     <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Opportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Opportunity</skos:prefLabel>
-    <skos:altLabel>Deal</skos:altLabel>
-    <skos:altLabel>Sales Opportunity</skos:altLabel>
-    <skos:definition>A potential deal with monetary value and an expected close date.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
-    <rdfs:label>CRM Domain Ontology</rdfs:label>
-    <rdfs:comment>Seed ontology for Customer Relationship Management: accounts, contacts, campaigns, leads, opportunities, quotes, contracts, forecasts, service cases, and activities.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quotesOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>quotes opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <skos:definition>The opportunity a quote prices a proposal for.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Pipeline">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Pipeline</skos:prefLabel>
-    <skos:altLabel>Sales Pipeline</skos:altLabel>
-    <skos:altLabel>Stage Model</skos:altLabel>
-    <skos:definition>The ordered set of stages an Opportunity moves through toward close.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#preferredChannel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#resolvesToParty">
+    <rdfs:label>resolves to party</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#recordsConsentFor">
+    <rdfs:label>records consent for</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#consentSource">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#aboutProduct">
+    <rdfs:label>about product</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <skos:definition>The product a service case concerns.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#phone">
+    <rdfs:label>phone</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#company">
+    <rdfs:label>company</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignsCase">
+    <rdfs:label>assigns case</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#convertedBy">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#website">
+    <rdfs:label>website</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignsParty">
+    <rdfs:label>assigns party</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#campaignStartDate">
+    <rdfs:label>campaign start date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#influencedByCampaign">
+    <rdfs:label>influenced by campaign</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <skos:definition>The campaign credited with sourcing or influencing an opportunity.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#relationshipStartDate">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#transitionedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#MarketingSpecialistRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Marketing Specialist</skos:prefLabel>
+    <skos:altLabel>Campaign Manager</skos:altLabel>
+    <skos:altLabel>Demand Generation Manager</skos:altLabel>
+    <skos:definition>Person role that plans campaigns, manages budgets, and routes generated leads to sales. Bearer: person. Permissions: Campaign:read, Campaign:write, Lead:read, Lead:write, Account:read, Contact:read.</skos:definition>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#raisedByContact">
+    <rdfs:label>raised by contact</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <skos:definition>The contact who raised the service case.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#probability">
+    <rdfs:label>probability</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <skos:definition>Estimated likelihood (0-1) that the opportunity closes won, used for forecast weighting.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#slaDueAt">
+    <rdfs:label>sla due at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <skos:definition>The deadline by which the case must be resolved under the applicable service-level agreement.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#campaignEndDate">
+    <rdfs:label>campaign end date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#resolvedAt">
+    <rdfs:label>resolved at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#quotedQuantity">
+    <rdfs:label>quoted quantity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#activityType">
+    <rdfs:label>activity type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#preferredChannel">
     <rdfs:label>preferred channel</rdfs:label>
     <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <skos:definition>The contact's preferred outreach channel: email, phone, sms, none.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quotedQuantity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>quoted quantity</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#filedForRelationship">
+    <rdfs:label>filed for relationship</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#consentChannel">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#termMonths">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignmentRole">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#suppressionReason">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#createsOpportunity">
+    <rdfs:label>creates opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#recordsOpportunity">
+    <rdfs:label>records opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#convertedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#sourcedLead">
+    <rdfs:label>sourced lead</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#SalesManagerRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Sales Manager</skos:prefLabel>
+    <skos:altLabel>Head of Sales</skos:altLabel>
+    <skos:definition>Person role that configures pipelines and territories, reviews forecasts, and approves discounts and closes. Bearer: person. Permissions: Pipeline:read, Pipeline:write, Territory:read, Territory:write, Forecast:read, Forecast:write, Opportunity:read, Quote:read, Account:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#occurredAt">
+    <rdfs:label>occurred at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#relationshipType">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#ContractAdminRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Contract Administrator</skos:prefLabel>
+    <skos:altLabel>Deal Desk Analyst</skos:altLabel>
+    <skos:altLabel>Commercial Operations</skos:altLabel>
+    <skos:definition>Person role that drafts and administers contracts for won deals and tracks renewals. Bearer: person. Permissions: Contract:read, Contract:write, Opportunity:read, Account:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#registrationNumber">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#loggedAgainstCase">
+    <rdfs:label>logged against case</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <skos:definition>The service case an activity was recorded against.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#consentWithdrawnAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#email">
+    <rdfs:label>email</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#organisationName">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#hasCampaignMember">
+    <rdfs:label>has campaign member</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#progressesThroughPipeline">
+    <rdfs:label>progresses through pipeline</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
+    <skos:definition>The pipeline whose stages the opportunity moves through.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#consentCapturedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#hasOpportunityLine">
+    <rdfs:label>has opportunity line</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#memberStatus">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#transitionReason">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#expectedUnitPrice">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#forecastAmount">
+    <rdfs:label>forecast amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#quotesOpportunity">
+    <rdfs:label>quotes opportunity</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <skos:definition>The opportunity a quote prices a proposal for.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#relationshipNumber">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#expectedRevenue">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#assignmentEndedAt">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#campaignType">
+    <rdfs:label>campaign type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <skos:definition>Kind of campaign: event, email, ads, webinar, content.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#discountPercent">
+    <rdfs:label>discount percent</rdfs:label>
     <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Account">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#leadScore">
+    <rdfs:label>lead score</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <skos:definition>Qualification score assigned by marketing based on fit and engagement.</skos:definition>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#raisedByParty">
+    <rdfs:label>raised by party</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#pursuedWithAccount">
+    <rdfs:label>pursued with account</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <skos:definition>The account an opportunity is being pursued with.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/crm#governsRelationship">
+    <rdfs:label>governs relationship</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#matchedExistingParty">
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/crm#escalated">
+    <rdfs:label>escalated</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Person">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <skos:prefLabel>Person</skos:prefLabel>
+    <skos:altLabel>Individual</skos:altLabel>
+    <skos:definition>An individual party who may be a customer, prospect, contact, or representative.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Activity">
+    <skos:prefLabel>Activity</skos:prefLabel>
+    <skos:altLabel>Interaction</skos:altLabel>
+    <skos:altLabel>Touchpoint</skos:altLabel>
+    <skos:definition>A logged interaction such as a call, email, meeting, or note against a Contact, Opportunity, or Case.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Territory">
+    <skos:prefLabel>Territory</skos:prefLabel>
+    <skos:altLabel>Sales Territory</skos:altLabel>
+    <skos:altLabel>Region</skos:altLabel>
+    <skos:altLabel>Patch</skos:altLabel>
+    <skos:definition>A named market segment (geography, industry, or size band) that accounts are assigned to for coverage and quota purposes.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Assignment">
+    <skos:prefLabel>Assignment</skos:prefLabel>
+    <skos:altLabel>Ownership Assignment</skos:altLabel>
+    <skos:altLabel>Work Allocation</skos:altLabel>
+    <skos:definition>A dated allocation of a CRM record to a responsible user or team.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Forecast">
+    <skos:prefLabel>Forecast</skos:prefLabel>
+    <skos:altLabel>Sales Forecast</skos:altLabel>
+    <skos:altLabel>Revenue Projection</skos:altLabel>
+    <skos:definition>A periodic projection of expected revenue for a territory, built from weighted open opportunities.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#CampaignMember">
+    <skos:prefLabel>Campaign Member</skos:prefLabel>
+    <skos:altLabel>Campaign Participant</skos:altLabel>
+    <skos:altLabel>Audience Member</skos:altLabel>
+    <skos:definition>One party's participation in a campaign, including targeting, delivery, response, and suppression status.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#OpportunityLine">
+    <skos:prefLabel>Opportunity Line</skos:prefLabel>
+    <skos:altLabel>Opportunity Product</skos:altLabel>
+    <skos:altLabel>Deal Line</skos:altLabel>
+    <skos:definition>One product included in an opportunity with expected quantity, price, revenue, and term.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#PipelineStage">
+    <skos:prefLabel>Pipeline Stage</skos:prefLabel>
+    <skos:altLabel>Sales Stage</skos:altLabel>
+    <skos:altLabel>Deal Stage</skos:altLabel>
+    <skos:definition>One named, ordered stage within a pipeline; an opportunity sits at exactly one stage at a time.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Case">
+    <skos:prefLabel>Case</skos:prefLabel>
+    <skos:altLabel>Ticket</skos:altLabel>
+    <skos:altLabel>Service Request</skos:altLabel>
+    <skos:altLabel>Complaint</skos:altLabel>
+    <skos:definition>A post-sale service request or complaint raised by a contact, tracked to resolution.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Product">
+    <skos:prefLabel>Product</skos:prefLabel>
+    <skos:altLabel>Catalog Item</skos:altLabel>
+    <skos:altLabel>Offering</skos:altLabel>
+    <skos:altLabel>Service</skos:altLabel>
+    <skos:definition>A sellable product or service in the catalog that opportunities and quotes reference.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Contract">
+    <skos:prefLabel>Contract</skos:prefLabel>
+    <skos:altLabel>Agreement</skos:altLabel>
+    <skos:altLabel>Order Form</skos:altLabel>
+    <skos:definition>The negotiated agreement that governs a won deal, with value, term, and renewal dates.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Lead">
+    <skos:prefLabel>Lead</skos:prefLabel>
+    <skos:altLabel>Prospect</skos:altLabel>
+    <skos:altLabel>Inquiry</skos:altLabel>
+    <skos:definition>An unqualified prospect captured from marketing or outreach, not yet linked to a deal.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Party">
+    <skos:prefLabel>Party</skos:prefLabel>
+    <skos:altLabel>Business Party</skos:altLabel>
+    <skos:definition>A person or organisation participating in a prospect, customer, partner, or other business relationship.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#CustomerRelationship">
+    <skos:prefLabel>Customer Relationship</skos:prefLabel>
+    <skos:altLabel>CRM Relationship</skos:altLabel>
+    <skos:altLabel>Client Relationship</skos:altLabel>
+    <skos:definition>The managed commercial relationship between the enterprise and a customer party, distinct from the party and from any financial account.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#QuoteLine">
+    <skos:prefLabel>Quote Line</skos:prefLabel>
+    <skos:altLabel>Quote Line Item</skos:altLabel>
+    <skos:altLabel>Proposal Line</skos:altLabel>
+    <skos:definition>A single product line on a quote with quantity, unit price, and discount.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Opportunity">
+    <skos:prefLabel>Opportunity</skos:prefLabel>
+    <skos:altLabel>Deal</skos:altLabel>
+    <skos:altLabel>Sales Opportunity</skos:altLabel>
+    <skos:definition>A potential deal with monetary value and an expected close date.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Organisation">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <skos:prefLabel>Organisation</skos:prefLabel>
+    <skos:altLabel>Organization</skos:altLabel>
+    <skos:altLabel>Legal Entity</skos:altLabel>
+    <skos:definition>An organisational party such as a company, public body, partnership, or non-profit.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#LeadConversion">
+    <skos:prefLabel>Lead Conversion</skos:prefLabel>
+    <skos:altLabel>Qualification Conversion</skos:altLabel>
+    <skos:definition>The auditable event that qualifies a lead and resolves or creates the associated party, customer relationship, and opportunity.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Campaign">
+    <skos:prefLabel>Campaign</skos:prefLabel>
+    <skos:altLabel>Marketing Campaign</skos:altLabel>
+    <skos:altLabel>Marketing Initiative</skos:altLabel>
+    <skos:definition>A planned marketing initiative (event, email, ads, webinar) with a budget that generates and influences leads.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Pipeline">
+    <skos:prefLabel>Pipeline</skos:prefLabel>
+    <skos:altLabel>Sales Pipeline</skos:altLabel>
+    <skos:altLabel>Stage Model</skos:altLabel>
+    <skos:definition>The ordered set of stages an Opportunity moves through toward close.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Account">
     <skos:prefLabel>Account</skos:prefLabel>
     <skos:altLabel>Customer Account</skos:altLabel>
     <skos:altLabel>Client</skos:altLabel>
     <skos:altLabel>Company</skos:altLabel>
     <skos:definition>An organisation the business sells to or has a commercial relationship with.</skos:definition>
     <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#LeadConversion">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Lead Conversion</skos:prefLabel>
-    <skos:altLabel>Qualification Conversion</skos:altLabel>
-    <skos:definition>The auditable event that qualifies a lead and resolves or creates the associated party, customer relationship, and opportunity.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#memberStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#transitionReason">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#campaignEndDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>campaign end date</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quoteDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>quote date</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quoteTotal">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>quote total</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#relationshipStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#QuoteLine">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Quote Line</skos:prefLabel>
-    <skos:altLabel>Quote Line Item</skos:altLabel>
-    <skos:altLabel>Proposal Line</skos:altLabel>
-    <skos:definition>A single product line on a quote with quantity, unit price, and discount.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#loggedAgainstCase">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>logged against case</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <skos:definition>The service case an activity was recorded against.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#occurredAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>occurred at</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#contractNumber">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>contract number</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#raisedByParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>raised by party</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#stageOrder">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>stage order</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#PipelineStage">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Pipeline Stage</skos:prefLabel>
-    <skos:altLabel>Sales Stage</skos:altLabel>
-    <skos:altLabel>Deal Stage</skos:altLabel>
-    <skos:definition>One named, ordered stage within a pipeline; an opportunity sits at exactly one stage at a time.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#priority">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>priority</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Urgency of the case: low, medium, high, critical.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#leadScore">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>lead score</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <skos:definition>Qualification score assigned by marketing based on fit and engagement.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#toPipelineStage">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>to pipeline stage</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CampaignMember">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Campaign Member</skos:prefLabel>
-    <skos:altLabel>Campaign Participant</skos:altLabel>
-    <skos:altLabel>Audience Member</skos:altLabel>
-    <skos:definition>One party's participation in a campaign, including targeting, delivery, response, and suppression status.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#conversionOutcome">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Forecast">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Forecast</skos:prefLabel>
-    <skos:altLabel>Sales Forecast</skos:altLabel>
-    <skos:altLabel>Revenue Projection</skos:altLabel>
-    <skos:definition>A periodic projection of expected revenue for a territory, built from weighted open opportunities.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#generatesLead">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>generates lead</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <skos:definition>The leads captured as responses to a marketing campaign.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#loggedAgainstOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>logged against opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <skos:definition>The opportunity an activity was recorded against.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#convertsToOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>converts to opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <skos:definition>Links a qualified lead to the opportunity it was converted into.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignsParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>assigns party</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#escalated">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>escalated</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#leadStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>lead status</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Lifecycle state of the lead: new, contacted, qualified, converted, disqualified.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#involvesContact">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>involves contact</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <skos:definition>The contact who took part in the activity.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#campaignName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>campaign name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quoteNumber">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>quote number</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#belongsToAccount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>belongs to account</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <skos:definition>Associates a contact with the account they work for.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#forecastPeriod">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>forecast period</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#department">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>department</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#partOfQuote">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>part of quote</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <skos:definition>The quote a line belongs to.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Product">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Product</skos:prefLabel>
-    <skos:altLabel>Catalog Item</skos:altLabel>
-    <skos:altLabel>Offering</skos:altLabel>
-    <skos:altLabel>Service</skos:altLabel>
-    <skos:definition>A sellable product or service in the catalog that opportunities and quotes reference.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#renewsIntoOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>renews into opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <skos:definition>The renewal opportunity opened as the contract approaches its end date.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#forecastAmount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>forecast amount</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Person">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <skos:prefLabel>Person</skos:prefLabel>
-    <skos:altLabel>Individual</skos:altLabel>
-    <skos:definition>An individual party who may be a customer, prospect, contact, or representative.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#campaignStartDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>campaign start date</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#bestCaseAmount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>best case amount</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#convertedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ServiceAgentRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-    <skos:prefLabel>Service Agent</skos:prefLabel>
-    <skos:altLabel>Support Agent</skos:altLabel>
-    <skos:altLabel>Customer Service Representative</skos:altLabel>
-    <skos:definition>Person role that owns cases from intake to resolution and logs customer interactions. Bearer: person. Permissions: Case:read, Case:write, Activity:read, Activity:write, Account:read, Contact:read, Product:read.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#raisedByContact">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>raised by contact</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <skos:definition>The contact who raised the service case.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#resolvedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>resolved at</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#responseType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#contractStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>contract status</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Lifecycle state of the contract: draft, active, expired, terminated.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quoteStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>quote status</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Lifecycle state of the quote: draft, presented, accepted, rejected, expired.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#employeeCount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>employee count</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#caseNumber">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>case number</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#StageTransition">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Quote">
+    <skos:prefLabel>Quote</skos:prefLabel>
+    <skos:altLabel>Proposal</skos:altLabel>
+    <skos:altLabel>Quotation</skos:altLabel>
+    <skos:definition>A priced, time-limited proposal presented to the customer for an opportunity.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#StageTransition">
     <skos:prefLabel>Stage Transition</skos:prefLabel>
     <skos:altLabel>Opportunity Stage History</skos:altLabel>
     <skos:altLabel>Pipeline Movement</skos:altLabel>
     <skos:definition>The history record of an opportunity moving from one pipeline stage to another.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#resultsFromOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>results from opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <skos:definition>The won opportunity a contract was created from.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ContractAdminRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-    <skos:prefLabel>Contract Administrator</skos:prefLabel>
-    <skos:altLabel>Deal Desk Analyst</skos:altLabel>
-    <skos:altLabel>Commercial Operations</skos:altLabel>
-    <skos:definition>Person role that drafts and administers contracts for won deals and tracks renewals. Bearer: person. Permissions: Contract:read, Contract:write, Opportunity:read, Account:read.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#opportunityName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>opportunity name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#marketingOptIn">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>marketing opt in</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    <skos:definition>Whether the contact has consented to marketing outreach; gates campaign targeting.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#region">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>region</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#validUntil">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>valid until</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#partOfPipeline">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>part of pipeline</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
-    <skos:definition>The pipeline this stage belongs to, in stage order.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#respondedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#forQuotedProduct">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>for quoted product</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <skos:definition>The product priced on a quote line.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#activityType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>activity type</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#OpportunityLine">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Opportunity Line</skos:prefLabel>
-    <skos:altLabel>Opportunity Product</skos:altLabel>
-    <skos:altLabel>Deal Line</skos:altLabel>
-    <skos:definition>One product included in an opportunity with expected quantity, price, revenue, and term.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#relationshipType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#sourcedLead">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>sourced lead</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#contractEnd">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>contract end</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#includesProduct">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>includes product</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <skos:definition>The catalog products an opportunity is expected to sell.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#budgetedCost">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>budgeted cost</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#opportunityStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>opportunity status</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Lifecycle state of the opportunity: lead, qualified, proposal, won, lost.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#hasOpportunityLine">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>has opportunity line</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#consentCapturedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#industry">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>industry</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#campaignStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>campaign status</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Lifecycle state of the campaign: planned, active, completed.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Activity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Activity</skos:prefLabel>
-    <skos:altLabel>Interaction</skos:altLabel>
-    <skos:altLabel>Touchpoint</skos:altLabel>
-    <skos:definition>A logged interaction such as a call, email, meeting, or note against a Contact, Opportunity, or Case.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CustomerRelationship">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Customer Relationship</skos:prefLabel>
-    <skos:altLabel>CRM Relationship</skos:altLabel>
-    <skos:altLabel>Client Relationship</skos:altLabel>
-    <skos:definition>The managed commercial relationship between the enterprise and a customer party, distinct from the party and from any financial account.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#aboutProduct">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>about product</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <skos:definition>The product a service case concerns.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#productName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>product name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#summary">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>summary</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>A concise description of the customer interaction or activity outcome.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#pursuedWithAccount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>pursued with account</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <skos:definition>The account an opportunity is being pursued with.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#convertsToContact">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>converts to contact</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <skos:definition>The contact record created when a qualified lead is converted.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#caseStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>case status</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Lifecycle state of the case: new, in_progress, waiting_on_customer, resolved, closed.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#SalesManagerRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-    <skos:prefLabel>Sales Manager</skos:prefLabel>
-    <skos:altLabel>Head of Sales</skos:altLabel>
-    <skos:definition>Person role that configures pipelines and territories, reviews forecasts, and approves discounts and closes. Bearer: person. Permissions: Pipeline:read, Pipeline:write, Territory:read, Territory:write, Forecast:read, Forecast:write, Opportunity:read, Quote:read, Account:read.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Contact">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#Contact">
     <skos:prefLabel>Contact</skos:prefLabel>
     <skos:altLabel>Customer Contact</skos:altLabel>
     <skos:altLabel>Person of Interest</skos:altLabel>
     <skos:definition>A person affiliated with an Account who participates in the buying process.</skos:definition>
     <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Person"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#discountPercent">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>discount percent</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#pursuedForRelationship">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>pursued for relationship</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#consentStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#probability">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>probability</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <skos:definition>Estimated likelihood (0-1) that the opportunity closes won, used for forecast weighting.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#fullName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>full name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#createsOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>creates opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#leadSource">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>lead source</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignsCase">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>assigns case</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#expectedRevenue">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#fromPipelineStage">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>from pipeline stage</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Contract">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Contract</skos:prefLabel>
-    <skos:altLabel>Agreement</skos:altLabel>
-    <skos:altLabel>Order Form</skos:altLabel>
-    <skos:definition>The negotiated agreement that governs a won deal, with value, term, and renewal dates.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#productCode">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>product code</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#coversTerritory">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>covers territory</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
-    <skos:definition>The territory whose expected revenue a forecast projects.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#hasCampaignMember">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>has campaign member</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Organisation">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <skos:prefLabel>Organisation</skos:prefLabel>
-    <skos:altLabel>Organization</skos:altLabel>
-    <skos:altLabel>Legal Entity</skos:altLabel>
-    <skos:definition>An organisational party such as a company, public body, partnership, or non-profit.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#governsRelationship">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>governs relationship</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Case">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Case</skos:prefLabel>
-    <skos:altLabel>Ticket</skos:altLabel>
-    <skos:altLabel>Service Request</skos:altLabel>
-    <skos:altLabel>Complaint</skos:altLabel>
-    <skos:definition>A post-sale service request or complaint raised by a contact, tracked to resolution.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#capturedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>captured at</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#accountType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>account type</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Classification of the account: prospect, customer, partner, or former customer.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#filedAgainstAccount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>filed against account</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <skos:definition>The account a service case is filed against.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#convertsLead">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>converts lead</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Quote">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Quote</skos:prefLabel>
-    <skos:altLabel>Proposal</skos:altLabel>
-    <skos:altLabel>Quotation</skos:altLabel>
-    <skos:definition>A priced, time-limited proposal presented to the customer for an opportunity.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignmentRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#slaDueAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>sla due at</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <skos:definition>The deadline by which the case must be resolved under the applicable service-level agreement.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#campaignType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>campaign type</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <skos:definition>Kind of campaign: event, email, ads, webinar, content.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#jobTitle">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>job title</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Assignment">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Assignment</skos:prefLabel>
-    <skos:altLabel>Ownership Assignment</skos:altLabel>
-    <skos:altLabel>Work Allocation</skos:altLabel>
-    <skos:definition>A dated allocation of a CRM record to a responsible user or team.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#governsAccount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>governs account</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <skos:definition>The account whose commercial relationship the contract governs.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#suppressionReason">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#relationshipStartDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#registrationNumber">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#closeDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>close date</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#contractStart">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>contract start</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#openedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>opened at</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#relationshipNumber">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#createsRelationship">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>creates relationship</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#convertsToAccount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>converts to account</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <skos:definition>The new or matched account a converted lead is attached to.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#filedForRelationship">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>filed for relationship</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#quotedUnitPrice">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>quoted unit price</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Party">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Party</skos:prefLabel>
-    <skos:altLabel>Business Party</skos:altLabel>
-    <skos:definition>A person or organisation participating in a prospect, customer, partner, or other business relationship.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#annualRevenue">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>annual revenue</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#MarketingSpecialistRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-    <skos:prefLabel>Marketing Specialist</skos:prefLabel>
-    <skos:altLabel>Campaign Manager</skos:altLabel>
-    <skos:altLabel>Demand Generation Manager</skos:altLabel>
-    <skos:definition>Person role that plans campaigns, manages budgets, and routes generated leads to sales. Bearer: person. Permissions: Campaign:read, Campaign:write, Lead:read, Lead:write, Account:read, Contact:read.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#forOpportunityProduct">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>for opportunity product</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#stageName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>stage name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#pipelineName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>pipeline name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#partyStatus">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#targetedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#phone">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>phone</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#website">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>website</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#influencedByCampaign">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>influenced by campaign</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <skos:definition>The campaign credited with sourcing or influencing an opportunity.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#progressesThroughPipeline">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>progresses through pipeline</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
-    <skos:definition>The pipeline whose stages the opportunity moves through.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#resolvesToParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>resolves to party</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#recordsConsentFor">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>records consent for</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#company">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>company</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Lead">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Lead</skos:prefLabel>
-    <skos:altLabel>Prospect</skos:altLabel>
-    <skos:altLabel>Inquiry</skos:altLabel>
-    <skos:definition>An unqualified prospect captured from marketing or outreach, not yet linked to a deal.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#SalesRepRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-    <skos:prefLabel>Sales Rep</skos:prefLabel>
-    <skos:altLabel>Account Executive</skos:altLabel>
-    <skos:altLabel>Sales Representative</skos:altLabel>
-    <skos:definition>Person role that captures leads, owns opportunities, builds quotes, and logs activities. Bearer: person. Permissions: Lead:read, Lead:write, Opportunity:read, Opportunity:write, Quote:read, Quote:write, Activity:read, Activity:write, Account:read, Contact:read, Product:read.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignsOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>assigns opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assigneeRef">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#stageCount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>stage count</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#subject">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>subject</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#involvesParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>involves party</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#hasPrimaryContact">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>has primary contact</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <skos:definition>The main contact person driving the deal on the customer side.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#atPipelineStage">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>at pipeline stage</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <skos:definition>The single pipeline stage the opportunity currently sits at.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#transitionedBy">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#expectedUnitPrice">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#organisationName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Territory">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Territory</skos:prefLabel>
-    <skos:altLabel>Sales Territory</skos:altLabel>
-    <skos:altLabel>Region</skos:altLabel>
-    <skos:altLabel>Patch</skos:altLabel>
-    <skos:definition>A named market segment (geography, industry, or size band) that accounts are assigned to for coverage and quota purposes.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#consentWithdrawnAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#termMonths">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#commitAmount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>commit amount</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#Campaign">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <skos:prefLabel>Campaign</skos:prefLabel>
-    <skos:altLabel>Marketing Campaign</skos:altLabel>
-    <skos:altLabel>Marketing Initiative</skos:altLabel>
-    <skos:definition>A planned marketing initiative (event, email, ads, webinar) with a budget that generates and influences leads.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#listPrice">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>list price</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#contractValue">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>contract value</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#consentPurpose">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignmentEndedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#assignedToTerritory">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>assigned to territory</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
-    <skos:definition>The territory an account is assigned to for coverage and quota purposes.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#opportunityQuantity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#partyExternalRef">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#accountName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>account name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#email">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>email</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#amount">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>amount</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#matchedExistingParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ConsentRecord">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/crm#ConsentRecord">
     <skos:prefLabel>Consent Record</skos:prefLabel>
     <skos:altLabel>Marketing Consent</skos:altLabel>
     <skos:altLabel>Communication Permission</skos:altLabel>
     <skos:definition>Auditable permission or refusal for a party to be contacted for a stated purpose through a channel.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#territoryName">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>territory name</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#consentSource">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#defaultProbability">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:label>default probability</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <skos:definition>The default win probability assigned to opportunities entering this stage, used for forecasting.</skos:definition>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#recordsOpportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>records opportunity</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#representsParty">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:label>represents party</rdfs:label>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#consentChannel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#transitionedAt">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#convertedBy">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdf:Description>
+  </owl:Class>
 </rdf:RDF>

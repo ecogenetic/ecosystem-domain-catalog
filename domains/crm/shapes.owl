@@ -3,586 +3,586 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:sh="http://www.w3.org/ns/shacl#"
 >
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb21">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#campaignName"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb72">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#stageOrder"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb52">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#relatesToParty"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb76">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#transitionedAt"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#OpportunityShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb11"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb12"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb13"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb87"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb88"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb7">
-    <rdf:first>contacted</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb8"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb67">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#convertedAt"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CustomerRelationshipShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb51"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb52"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb53"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb91">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quotedQuantity"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb39">
-    <rdf:first>draft</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb40"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb90">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#forQuotedProduct"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ProductShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb26"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb27"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ContactShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb2"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb3"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#PipelineStageShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb71"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb72"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb73"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb20">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#occurredAt"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#QuoteShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb28"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb29"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb30"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#StageTransitionShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb74"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb75"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb76"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb40">
-    <rdf:first>active</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb41"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CampaignMemberShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb58"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb59"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb59">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#memberStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb60"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb75">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#toPipelineStage"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb35">
-    <rdf:first>expired</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb33">
-    <rdf:first>accepted</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb34"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#LeadShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb4"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb5"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb30">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quoteStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb31"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ConsentRecordShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb77"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb78"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb79"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb80"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#QuoteLineShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb89"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb90"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb91"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb92"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb24">
-    <rdf:first>active</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb25"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb84">
-    <rdf:first>expired</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb6">
-    <rdf:first>new</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb7"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb26">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#productCode"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb19">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb63">
-    <rdf:first>no_response</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb64"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#AccountShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb1"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb58">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#representsParty"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CaseShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb43"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb44"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb45"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb80">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#consentStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb81"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb87">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#atPipelineStage"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb3">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#fullName"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb28">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quotesOpportunity"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb54">
-    <rdf:first>prospect</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb55"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb27">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#productName"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb1">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#accountName"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb43">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#raisedByContact"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ContractShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb36"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb37"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb38"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb44">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#caseNumber"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb17">
-    <rdf:first>won</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb18"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb85">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#assigneeRef"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb22">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb23"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ActivityShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb19"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb20"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb65">
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db65">
     <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#convertsLead"/>
     <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
     <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
     <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb29">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quoteNumber"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb31">
-    <rdf:first>draft</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb32"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb73">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#defaultProbability"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-    <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb42">
-    <rdf:first>terminated</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb47">
-    <rdf:first>in_progress</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb48"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb5">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#leadStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb6"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb12">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#amount"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb57">
-    <rdf:first>ended</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb61">
-    <rdf:first>delivered</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb62"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb86">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#assignedAt"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb37">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#contractNumber"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb16">
-    <rdf:first>proposal</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb17"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb82">
-    <rdf:first>active</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb83"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb92">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#discountPercent"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-    <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</sh:maxInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#LeadConversionShape">
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CampaignShape">
     <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb65"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb66"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb67"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db21"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db22"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb81">
-    <rdf:first>captured</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb82"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb8">
-    <rdf:first>qualified</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb9"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb74">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#recordsOpportunity"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb50">
-    <rdf:first>closed</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb78">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#consentPurpose"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db45">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#caseStatus"/>
     <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb41">
-    <rdf:first>expired</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb42"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb10">
-    <rdf:first>disqualified</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb68">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#forOpportunityProduct"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb89">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#partOfQuote"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb34">
-    <rdf:first>rejected</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb35"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb55">
-    <rdf:first>active</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb56"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb66">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#resolvesToParty"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb53">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb54"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb23">
-    <rdf:first>planned</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb24"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb51">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipNumber"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db46"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#PipelineShape">
     <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
     <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb13">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb14"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db6">
+    <rdf:first>new</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db7"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#AssignmentShape">
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#QuoteShape">
     <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb85"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb86"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db28"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db29"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db30"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb9">
-    <rdf:first>converted</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb10"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb38">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#contractStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb39"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb56">
-    <rdf:first>dormant</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb57"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#OpportunityLineShape">
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#LeadConversionShape">
     <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb68"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb69"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb70"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db65"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db66"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db67"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb77">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#recordsConsentFor"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb69">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityQuantity"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CampaignShape">
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CustomerRelationshipShape">
     <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb21"/>
-    <sh:property rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb22"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db51"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db52"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db53"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb62">
-    <rdf:first>responded</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb63"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb2">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#belongsToAccount"/>
-    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb60">
-    <rdf:first>targeted</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb61"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb48">
-    <rdf:first>waiting_on_customer</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb49"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb45">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#caseStatus"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:in rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb46"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb32">
-    <rdf:first>presented</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb33"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb49">
-    <rdf:first>resolved</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb50"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb4">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb14">
-    <rdf:first>lead</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb15"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb79">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#consentChannel"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb15">
-    <rdf:first>qualified</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb16"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb88">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#probability"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db73">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#defaultProbability"/>
     <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
     <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
     <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxInclusive>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb64">
-    <rdf:first>suppressed</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db90">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#forQuotedProduct"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb71">
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db71">
     <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#partOfPipeline"/>
     <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
     <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
     <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb25">
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db41">
+    <rdf:first>expired</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db42"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#PipelineStageShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db71"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db72"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db73"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db43">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#raisedByContact"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db67">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#convertedAt"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db89">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#partOfQuote"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db30">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quoteStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db31"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db26">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#productCode"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db55">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db56"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db33">
+    <rdf:first>accepted</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db34"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db91">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quotedQuantity"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db57">
+    <rdf:first>ended</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#OpportunityShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db11"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db12"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db13"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db87"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db88"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#QuoteLineShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db89"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db90"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db91"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db92"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db35">
+    <rdf:first>expired</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db31">
+    <rdf:first>draft</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db32"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ConsentRecordShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db77"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db78"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db79"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db80"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db77">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#recordsConsentFor"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db85">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#assigneeRef"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db79">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#consentChannel"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db75">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#toPipelineStage"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db7">
+    <rdf:first>contacted</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db1">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#accountName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CampaignMemberShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db58"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db59"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ContactShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db2"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db22">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db23"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db83">
+    <rdf:first>withdrawn</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db84"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#StageTransitionShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db74"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db75"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db76"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#OpportunityLineShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db68"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db69"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db70"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db10">
+    <rdf:first>disqualified</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db68">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#forOpportunityProduct"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db15">
+    <rdf:first>qualified</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db16"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db61">
+    <rdf:first>delivered</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db62"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db38">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#contractStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db39"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db84">
+    <rdf:first>expired</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db80">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#consentStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db81"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db46">
+    <rdf:first>new</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db47"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#AssignmentShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db85"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db86"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db81">
+    <rdf:first>captured</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db82"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ContractShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db36"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db37"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db38"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db50">
+    <rdf:first>closed</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db28">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quotesOpportunity"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db88">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#probability"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+    <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db12">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#amount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db21">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#campaignName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db51">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipNumber"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db66">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#resolvesToParty"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db27">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#productName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ActivityShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db19"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db20"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db39">
+    <rdf:first>draft</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db40"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db19">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db56">
+    <rdf:first>dormant</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db57"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db76">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#transitionedAt"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db63">
+    <rdf:first>no_response</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db64"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db5">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#leadStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db78">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#consentPurpose"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db69">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityQuantity"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db53">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db54"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db74">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#recordsOpportunity"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db87">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#atPipelineStage"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db92">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#discountPercent"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+    <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</sh:maxInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db2">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#belongsToAccount"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db52">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#relatesToParty"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db4">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db44">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#caseNumber"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db37">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#contractNumber"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db20">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#occurredAt"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db16">
+    <rdf:first>proposal</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db17"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#CaseShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db43"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db44"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db45"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db24">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db25"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db49">
+    <rdf:first>resolved</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db50"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db29">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#quoteNumber"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db86">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#assignedAt"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db72">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#stageOrder"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#ProductShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db26"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db27"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db34">
+    <rdf:first>rejected</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db35"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db25">
     <rdf:first>completed</rdf:first>
     <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb46">
-    <rdf:first>new</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb47"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db40">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db41"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb70">
-    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#LeadShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db4"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db5"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb18">
-    <rdf:first>lost</rdf:first>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db59">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#memberStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db60"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb11">
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db82">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db83"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db11">
     <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#pursuedWithAccount"/>
     <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
     <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb83">
-    <rdf:first>withdrawn</rdf:first>
-    <rdf:rest rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb84"/>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db48">
+    <rdf:first>waiting_on_customer</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db49"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="ncd9ae72c53ad4befaa055916c7a5335eb36">
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db3">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#fullName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db47">
+    <rdf:first>in_progress</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db48"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db54">
+    <rdf:first>prospect</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db55"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db13">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db14"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db42">
+    <rdf:first>terminated</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db58">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#representsParty"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/crm#AccountShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <sh:property rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db70">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db64">
+    <rdf:first>suppressed</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db32">
+    <rdf:first>presented</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db33"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db17">
+    <rdf:first>won</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db18"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db18">
+    <rdf:first>lost</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db8">
+    <rdf:first>qualified</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db9"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db14">
+    <rdf:first>lead</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db15"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db60">
+    <rdf:first>targeted</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db61"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db36">
     <sh:path rdf:resource="https://ecosystemcode.com/ontology/crm#governsAccount"/>
     <sh:class rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
     <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db23">
+    <rdf:first>planned</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db24"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db62">
+    <rdf:first>responded</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db63"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db9">
+    <rdf:first>converted</rdf:first>
+    <rdf:rest rdf:nodeID="nafca3ff92d06440ea06a798c9075f61db10"/>
   </rdf:Description>
 </rdf:RDF>

@@ -1,20 +1,50 @@
-# mappings/cvm/salesforce.ttl — Mappings from Salesforce CRM to canonical domain
+# ============================================================================
+# mappings/cvm/salesforce.ttl — Salesforce objects → Canonical CVM Ontology
+#
+# CVM is value-management oriented. Salesforce CRM objects map to the closest
+# CVM concepts (Customer, Campaign, Offer/Product, Channel), not to CRM Account.
+# ============================================================================
 
-@prefix crm: <https://ecosystemcode.com/ontology/cvm#> .
-@prefix core: <https://ecosystemcode.com/ontology/core#> .
+@prefix cvm:        <https://ecosystemcode.com/ontology/cvm#> .
 @prefix salesforce: <https://salesforce.com/legacy/crm#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
 
-# === CLASS MAPPINGS ===
-salesforce:Account owl:equivalentClass crm:Account .
-salesforce:Contact owl:equivalentClass crm:Contact .
-salesforce:Opportunity owl:equivalentClass crm:Opportunity .
+#################################################################
+# Class mappings
+#################################################################
 
-# === PROPERTY MAPPINGS ===
-salesforce:name rdfs:subPropertyOf crm:name .
-salesforce:email rdfs:subPropertyOf crm:email .
-salesforce:amount rdfs:subPropertyOf crm:amount .
+salesforce:Account a owl:Class ;
+    owl:equivalentClass cvm:Customer ;
+    rdfs:comment "Salesforce Account maps to CVM Customer (party whose value is managed)." .
 
-# === RELATIONSHIP MAPPINGS ===
-salesforce:AccountId rdfs:subPropertyOf crm:belongsToAccount ;
-    rdfs:domain salesforce:Contact ;
-    rdfs:range salesforce:Account .
+salesforce:Contact a owl:Class ;
+    owl:equivalentClass cvm:Customer ;
+    rdfs:comment "Salesforce Contact maps to CVM Customer for B2C-style value management." .
+
+salesforce:Campaign a owl:Class ;
+    owl:equivalentClass cvm:Campaign ;
+    rdfs:comment "Salesforce Campaign maps to CVM Campaign." .
+
+salesforce:Product2 a owl:Class ;
+    owl:equivalentClass cvm:Product ;
+    rdfs:comment "Salesforce Product2 maps to CVM Product." .
+
+salesforce:CampaignMember a owl:Class ;
+    rdfs:comment "Salesforce CampaignMember participates in CVM campaign targeting; no 1:1 class — relate via treatments/events." .
+
+#################################################################
+# Property mappings
+#################################################################
+
+salesforce:Name rdfs:subPropertyOf cvm:productName .
+salesforce:AccountNumber rdfs:subPropertyOf cvm:externalRef .
+salesforce:AnnualRevenue rdfs:subPropertyOf cvm:currentMonthlySpend .
+salesforce:Email rdfs:subPropertyOf cvm:externalRef .
+
+salesforce:CampaignId rdfs:subPropertyOf cvm:partOfCampaign ;
+    rdfs:comment "Campaign membership / treatment linkage toward CVM Campaign." .
+
+salesforce:Product2Id rdfs:subPropertyOf cvm:pricesProduct ;
+    rdfs:comment "Product reference used when aligning price plans or offers." .

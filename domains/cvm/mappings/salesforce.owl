@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#email">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#email"/>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Contact">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <rdfs:comment>Salesforce Contact maps to CVM Customer for B2C-style value management.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2Id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#pricesProduct"/>
+    <rdfs:comment>Product reference used when aligning price plans or offers.</rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#belongsToAccount"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Campaign">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Campaign"/>
+    <rdfs:comment>Salesforce Campaign maps to CVM Campaign.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AnnualRevenue">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#currentMonthlySpend"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#name"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Email">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#externalRef"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Opportunity"/>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Product2">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Product"/>
+    <rdfs:comment>Salesforce Product2 maps to CVM Product.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Account">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <rdfs:comment>Salesforce Account maps to CVM Customer (party whose value is managed).</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#CampaignId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#partOfCampaign"/>
+    <rdfs:comment>Campaign membership / treatment linkage toward CVM Campaign.</rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Contact"/>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#CampaignMember">
+    <rdfs:comment>Salesforce CampaignMember participates in CVM campaign targeting; no 1:1 class — relate via treatments/events.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountNumber">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#externalRef"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#amount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#amount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Account"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#productName"/>
   </rdf:Description>
 </rdf:RDF>

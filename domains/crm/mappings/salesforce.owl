@@ -1,16 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OrgWideDefaults">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#SharingModel"/>
-    <rdfs:comment>Salesforce org-wide defaults set baseline sharing visibility.</rdfs:comment>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_ContractNumber">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractNumber"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_IsClosed">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isClosed"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_AccountId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedAccount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Product2Id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#aboutProduct"/>
+    <rdfs:comment>Salesforce lookup to the product the case concerns.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Case"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Product2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_CampaignId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#influencedByCampaign"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Campaign"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_WhoId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#involvesContact"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Event"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
+    <rdfs:comment>Salesforce Event.WhoId polymorphic lookup (Contact or Lead).</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_EndDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractEnd"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_NumberOfOpportunities">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_OpportunityId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resultsFromOpportunity"/>
+    <rdfs:comment>Salesforce lookup to the won opportunity.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contract"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Phone">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingState">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingState"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_AccountId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#filedAgainstAccount"/>
+    <rdfs:comment>Salesforce lookup to the account the case is filed against.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Case"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_WhatId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainst"/>
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstOpportunity"/>
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstCase"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Event"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Case"/>
+    <rdfs:comment>Salesforce Event.WhatId polymorphic lookup (Opportunity).</rdfs:comment>
+    <rdfs:comment>Salesforce Event.WhatId polymorphic lookup (Case).</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_Quantity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractQuantity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_ConvertedContactId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsToContact"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
+    <rdfs:comment>Salesforce Lead.ConvertedContactId after conversion.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingPostalCode">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingPostalCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_AccountId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#governsAccount"/>
+    <rdfs:comment>Salesforce lookup to the governed account.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contract"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySummary"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_FiscalQuarter">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fiscalQuarter"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#CampaignMember_ContactId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignContact"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Campaign"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
+    <rdfs:comment>Salesforce CampaignMember also links Campaigns to Contacts.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Profile">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#SecurityProfile"/>
+    <rdfs:comment>Salesforce Profile controls object/field-level permissions.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Phone">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Email">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#email"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_ExpectedRevenue">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Territory2Id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedToTerritory"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Territory2"/>
+    <rdfs:comment>Salesforce Account-Territory2 membership.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_StartDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStartDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_Discount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityDiscount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#CampaignMember_LeadId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#generatesLead"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Campaign"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
+    <rdfs:comment>Salesforce CampaignMember junction object links Campaigns to Leads.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_ConvertedOpportunityId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsToOpportunity"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+    <rdfs:comment>Salesforce Lead.ConvertedOpportunityId after conversion.</rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_WhatId">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainst"/>
@@ -23,213 +151,8 @@
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Case"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#PricebookEntry_UnitPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#listPrice"/>
-    <rdfs:comment>Salesforce PricebookEntry price maps to canonical list price.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_AccountId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#governsAccount"/>
-    <rdfs:comment>Salesforce lookup to the governed account.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contract"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_OpportunityId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resultsFromOpportunity"/>
-    <rdfs:comment>Salesforce lookup to the won opportunity.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contract"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Product2Id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#aboutProduct"/>
-    <rdfs:comment>Salesforce lookup to the product the case concerns.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Case"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Product2"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_QuoteId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partOfQuote"/>
-    <rdfs:comment>Salesforce lookup to the parent quote.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#QuoteLineItem"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Quote"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingStreet">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingStreet"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-    <rdfs:comment>Salesforce Contract object maps to canonical Contract.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_AccountId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#belongsToAccount"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
-    <rdfs:comment>Salesforce Contact.AccountId lookup.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:comment>Salesforce Task (and Event) maps to canonical Activity.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySummary"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_ConvertedOpportunityId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsToOpportunity"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-    <rdfs:comment>Salesforce Lead.ConvertedOpportunityId after conversion.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Phone">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-    <rdfs:comment>Salesforce Event maps to canonical Activity.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingCity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingCity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_WhoId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#involvesContact"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Event"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-    <rdfs:comment>Salesforce Event.WhoId polymorphic lookup (Contact or Lead).</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#UserRole">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#HierarchyRole"/>
-    <rdfs:comment>Salesforce UserRole defines the org hierarchy for sharing.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingState">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingState"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_WhatId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainst"/>
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstOpportunity"/>
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstCase"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Event"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Case"/>
-    <rdfs:comment>Salesforce Event.WhatId polymorphic lookup (Opportunity).</rdfs:comment>
-    <rdfs:comment>Salesforce Event.WhatId polymorphic lookup (Case).</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#CampaignMember_LeadId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#generatesLead"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Campaign"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
-    <rdfs:comment>Salesforce CampaignMember junction object links Campaigns to Leads.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_BudgetedCost">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#budgetedCost"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_ContactId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#raisedByContact"/>
-    <rdfs:comment>Salesforce lookup to the contact who raised the case.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Case"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ProcessInstanceStep">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#ApprovalStep"/>
-    <rdfs:comment>Salesforce ProcessInstanceStep is an individual approval step.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_QuoteDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
-    <rdfs:comment>Salesforce Territory2 model maps to canonical Territory.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-    <rdfs:comment>Salesforce Contact object maps to canonical Contact.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_SubscriptionType">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subscriptionType"/>
-    <rdfs:comment>Salesforce subscription type (One Time, Term, Renewal, etc.).</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_ApprovalNotes">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#approvalNotes"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Company">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#company"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Priority">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityPriority"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountTeamMember_AccountRoleId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountTeamRole"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingCountry">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCountry"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_PrimaryContactId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasPrimaryContact"/>
-    <rdfs:comment>Salesforce lookup to the primary contact on the opportunity.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Amount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#amount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_FiscalQuarter">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fiscalQuarter"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#CustomMetadata">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Configuration"/>
-    <rdfs:comment>Salesforce CustomMetadataType for deployable configuration.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_TotalPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#lineTotal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_ContractNumber">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_ConvertedContactId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsToContact"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-    <rdfs:comment>Salesforce Lead.ConvertedContactId after conversion.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_UnitPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedUnitPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_Quantity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityQuantity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_ActivityDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingStreet">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingStreet"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_Product2Id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractProduct"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractType"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_WhoId">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#involvesContact"/>
@@ -238,32 +161,18 @@
     <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Task"/>
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_Product2Id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#includesProduct"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Product2"/>
-    <rdfs:comment>Salesforce OpportunityLineItem junction object.</rdfs:comment>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_StartDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStart"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-    <rdfs:comment>Salesforce Quote object maps to canonical Quote.</rdfs:comment>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_UnitPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractUnitPrice"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-    <rdfs:comment>Salesforce Product2 (product catalog) maps to canonical Product.</rdfs:comment>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_Quantity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityQuantity"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_SuppliedEmail">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppliedEmail"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_ListPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityListPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Profile">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#SecurityProfile"/>
-    <rdfs:comment>Salesforce Profile controls object/field-level permissions.</rdfs:comment>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Origin">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseOrigin"/>
+    <rdfs:comment>Salesforce Case Origin (Phone, Email, Web, Chat, etc.).</rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityTeamMember_OpportunityId">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityTeamMember"/>
@@ -271,314 +180,46 @@
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
     <rdfs:comment>Salesforce OpportunityTeamMember junction object.</rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_NumberOfContacts">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contactCount"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Family">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productFamily"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_ShippingHandling">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#shippingHandling"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_CreatedDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#openedAt"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
-    <rdfs:comment>Salesforce Opportunity object maps to canonical Opportunity.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_AccountId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#filedAgainstAccount"/>
-    <rdfs:comment>Salesforce lookup to the account the case is filed against.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Case"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Territory2Id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedToTerritory"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Account"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Territory2"/>
-    <rdfs:comment>Salesforce Account-Territory2 membership.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#CampaignMember_ContactId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignContact"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Campaign"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
-    <rdfs:comment>Salesforce CampaignMember also links Campaigns to Contacts.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Quantity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedQuantity"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Discount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#discountPercent"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Type">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseType"/>
     <rdfs:comment>Salesforce Case Type (Problem, Question, Request, etc.).</rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
-    <rdfs:comment>Salesforce Account object maps to canonical Account.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
-    <rdfs:comment>Salesforce Case object maps to canonical Case.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MobilePhone">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mobilePhone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-    <rdfs:comment>Salesforce Lead object maps to canonical Lead.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_ClosedDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resolvedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Fiscal">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fiscalPeriod"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Reason">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseReason"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_EndDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractLineEnd"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_OpportunityId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotesOpportunity"/>
-    <rdfs:comment>Salesforce lookup to the opportunity the quote is for.</rdfs:comment>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Quote"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_ExpirationDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#validUntil"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_IsConverted">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isConverted"/>
-    <rdfs:comment>Salesforce Lead.IsConverted boolean flag.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ProcessInstance">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#ApprovalProcess"/>
-    <rdfs:comment>Salesforce ProcessInstance tracks approval workflow.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingCity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Website">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#website"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_Code">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryCode"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_TotalPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteTotal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingCountry">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCountry"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Location">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityLocation"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_IsClosed">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isClosed"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_ConvertedAccountId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsToAccount"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
-    <rdfs:comment>Salesforce Lead.ConvertedAccountId after conversion.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Probability">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#probability"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Discount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#discountPercent"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_UnitPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractUnitPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityTeamMember_OpportunityRoleId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityTeamRole"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Shipping">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#shipping"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_CreatedDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#capturedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#RecordType">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#RecordClassification"/>
-    <rdfs:comment>Salesforce RecordType provides process/visibility branching.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_AccountId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedAccount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Email">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#email"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_LanguageLocaleKey">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#language"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountTeamMember_UserId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountTeamMember"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_IsWon">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isWon"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Phone">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Origin">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseOrigin"/>
-    <rdfs:comment>Salesforce Case Origin (Phone, Email, Web, Chat, etc.).</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingPostalCode">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingPostalCode"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_CaseNumber">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_OwnerId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedTo"/>
-    <rdfs:comment>Account owner is a Salesforce-specific relationship to a User.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_IsEscalated">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#escalated"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-    <rdfs:comment>Salesforce QuoteLineItem maps to canonical QuoteLine.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Title">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#jobTitle"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_CloseDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#closeDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingPostalCode">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingPostalCode"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Title">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#jobTitle"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_StartDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStart"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_StartDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStartDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Phone">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_StartDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractLineStart"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityType"/>
-    <rdfs:comment>Salesforce Opportunity Type (New Business, Existing Business, etc.).</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingPostalCode">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingPostalCode"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-    <rdfs:comment>Salesforce Campaign object maps to canonical Campaign.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySummary"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_StageName">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingCountry">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingCountry"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Website">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#website"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_NumberOfOpportunities">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityCount"/>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#UserRole">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#HierarchyRole"/>
+    <rdfs:comment>Salesforce UserRole defines the org hierarchy for sharing.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_PrimaryContactId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasPrimaryContact"/>
+    <rdfs:comment>Salesforce lookup to the primary contact on the opportunity.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_IsAllDayEvent">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isAllDay"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Subject">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySubject"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Subject">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subject"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_CampaignId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#influencedByCampaign"/>
-    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
-    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Campaign"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_StartDateTime">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityStart"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingState">
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingState">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingState"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_EffectiveDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryEffectiveDate"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Reason">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseReason"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractType"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#amount"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Email">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#email"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Rating">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadScore"/>
-    <rdfs:comment>Salesforce Lead Rating (Hot/Warm/Cold) maps to lead scoring.</rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_LastName">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#lastName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingCity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_LeadSource">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Description">
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Description">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_SuppliedPhone">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppliedPhone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Priority">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#priority"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_ExpirationDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#validUntil"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_AccountId">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#pursuedWithAccount"/>
@@ -586,21 +227,161 @@
     <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_ExpectedRevenue">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
-    <rdfs:comment>Salesforce computed field: Amount × Probability.</rdfs:comment>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Probability">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#probability"/>
   </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#OrgWideDefaults">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#SharingModel"/>
+    <rdfs:comment>Salesforce org-wide defaults set baseline sharing visibility.</rdfs:comment>
+  </owl:Class>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Product2Id">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forQuotedProduct"/>
     <rdfs:comment>Salesforce lookup to the product on the quote line.</rdfs:comment>
     <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#QuoteLineItem"/>
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Product2"/>
   </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_OwnerId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedTo"/>
+    <rdfs:comment>Account owner is a Salesforce-specific relationship to a User.</rdfs:comment>
+  </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#RecordType">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#RecordClassification"/>
+    <rdfs:comment>Salesforce RecordType provides process/visibility branching.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityType"/>
+    <rdfs:comment>Salesforce Opportunity Type (New Business, Existing Business, etc.).</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_ConvertedAccountId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsToAccount"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Lead"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+    <rdfs:comment>Salesforce Lead.ConvertedAccountId after conversion.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_QuoteId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partOfQuote"/>
+    <rdfs:comment>Salesforce lookup to the parent quote.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#QuoteLineItem"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Quote"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingCity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_SuppliedPhone">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppliedPhone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Company">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#company"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_EndDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractLineEnd"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#PricebookEntry_UnitPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#listPrice"/>
+    <rdfs:comment>Salesforce PricebookEntry price maps to canonical list price.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_StageName">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_SuppliedEmail">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppliedEmail"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_TotalPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityLineTotal"/>
+  </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#CustomMetadata">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#Configuration"/>
+    <rdfs:comment>Salesforce CustomMetadataType for deployable configuration.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Quantity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedQuantity"/>
+  </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_EndDateTime">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityEnd"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_ContractTerm">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractTerm"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Location">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityLocation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_QuoteNumber">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteNumber"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_NumberOfLeads">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_AccountId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#belongsToAccount"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+    <rdfs:comment>Salesforce Contact.AccountId lookup.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_TotalPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteTotal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_LastName">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#lastName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_BudgetedCost">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#budgetedCost"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_ActivityDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_ContactId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#raisedByContact"/>
+    <rdfs:comment>Salesforce lookup to the contact who raised the case.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Case"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingCity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Subject">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySubject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MobilePhone">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mobilePhone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_StartDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractLineStart"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Title">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#jobTitle"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingCity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingCity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_CreatedDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#capturedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_UnitPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedUnitPrice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingPostalCode">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingPostalCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_SuppliedName">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppliedName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Priority">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityPriority"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_ExternalId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#externalId"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingPostalCode">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingPostalCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryName"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountTeamMember_AccountId">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountTeamMember"/>
@@ -608,59 +389,263 @@
     <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
     <rdfs:comment>Salesforce AccountTeamMember junction object.</rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_CreatedDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#openedAt"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_NumberOfEmployees">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#employeeCount"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_IsActive">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isActive"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Fiscal">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fiscalPeriod"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Pricebook2Id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#usesPricebook"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Department">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#department"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_SuppliedName">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppliedName"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityName"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_IsClosed">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isClosed"/>
-  </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#ProcessInstance">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#ApprovalProcess"/>
+    <rdfs:comment>Salesforce ProcessInstance tracks approval workflow.</rdfs:comment>
+  </owl:Class>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_EndDate">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryEndDate"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_NumberOfLeads">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadCount"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySummary"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Code">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productCode"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_TotalPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#lineTotal"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Subtotal">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#lineSubtotal"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_ExpectedRevenue">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
+    <rdfs:comment>Salesforce computed field: Amount × Probability.</rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_TimeZoneSidKey">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#timeZone"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_ContractTerm">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractTerm"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_EndDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractEnd"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Family">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productFamily"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_FirstName">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#firstName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_OpportunityId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotesOpportunity"/>
+    <rdfs:comment>Salesforce lookup to the opportunity the quote is for.</rdfs:comment>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Quote"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_LanguageLocaleKey">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#language"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Priority">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#priority"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_IsClosed">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isClosed"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_LeadSource">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteStatus"/>
-  </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Subtotal">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subtotal"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_ActualCost">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#actualCost"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_ShippingHandling">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#shippingHandling"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingCountry">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCountry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_CloseDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#closeDate"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Status">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Industry">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#industry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityTeamMember_UserId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityTeamMember"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_IsConverted">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isConverted"/>
+    <rdfs:comment>Salesforce Lead.IsConverted boolean flag.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Rating">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadScore"/>
+    <rdfs:comment>Salesforce Lead Rating (Hot/Warm/Cold) maps to lead scoring.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_LeadSource">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Website">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#website"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Code">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_SubscriptionType">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subscriptionType"/>
+    <rdfs:comment>Salesforce subscription type (One Time, Term, Renewal, etc.).</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Pricebook2Id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#usesPricebook"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_StartDateTime">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityStart"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Phone">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_EffectiveDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryEffectiveDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingStreet">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingStreet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_DaysBetweenSigningAndEffective">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#daysToEffective"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingStreet">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingStreet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingCountry">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingCountry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Website">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#website"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountTeamMember_AccountRoleId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountTeamRole"/>
+  </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#ProcessInstanceStep">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/crm#ApprovalStep"/>
+    <rdfs:comment>Salesforce ProcessInstanceStep is an individual approval step.</rdfs:comment>
+  </owl:Class>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_ActualCost">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#actualCost"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Email">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#email"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_ApprovalNotes">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#approvalNotes"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_TimeZoneSidKey">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#timeZone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_AnnualRevenue">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#annualRevenue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_EndDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignEndDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingCountry">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingCountry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_Product2Id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractProduct"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_Product2Id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#includesProduct"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Opportunity"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Product2"/>
+    <rdfs:comment>Salesforce OpportunityLineItem junction object.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_ListPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#listPrice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_ListPrice">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityListPrice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_BillingStreet">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingStreet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Industry">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#industry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_IsClosed">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isClosed"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_NumberOfEmployees">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#employeeCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_Subtotal">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#lineSubtotal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_IsActive">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isActive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Subject">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySubject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_IsClosed">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isClosed"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_Subject">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_ClosedDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resolvedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_IsEscalated">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#escalated"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountTeamMember_UserId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountTeamMember"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_NumberOfContacts">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contactCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_IsWon">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#isWon"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Shipping">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#shipping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Event_Type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_ServiceDate">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#serviceDate"/>
@@ -668,32 +653,23 @@
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_Type">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryType"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Department">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#department"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Territory2_Code">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryCode"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_NumberOfEmployees">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#employeeCount"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_Title">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#jobTitle"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#ContractLineItem_Quantity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractQuantity"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Case_CaseNumber">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseNumber"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_ExpectedRevenue">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityTeamMember_OpportunityRoleId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityTeamRole"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_QuoteDate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteDate"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_Discount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityDiscount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityTeamMember_UserId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityTeamMember"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_FirstName">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#firstName"/>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingState">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingState"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_AnnualRevenue">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#annualRevenue"/>
@@ -701,55 +677,59 @@
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_Tax">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#tax"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact_MailingStreet">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#mailingStreet"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_TotalPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityLineTotal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_EndDate">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignEndDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_Industry">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#industry"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_QuoteNumber">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_NumberOfEmployees">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#employeeCount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Task_Subject">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activitySubject"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Product2_ExternalId">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#externalId"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contract_DaysBetweenSigningAndEffective">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#daysToEffective"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Lead_AnnualRevenue">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#annualRevenue"/>
-  </rdf:Description>
   <rdf:Description rdf:about="https://salesforce.com/legacy/crm#OpportunityLineItem_UnitPrice">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityUnitPrice"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Quote_BillingState">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#billingState"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem_ListPrice">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#listPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#description"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account_Industry">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#industry"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Campaign_Type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignType"/>
-  </rdf:Description>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#QuoteLineItem">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+    <rdfs:comment>Salesforce QuoteLineItem maps to canonical QuoteLine.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Task">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:comment>Salesforce Task (and Event) maps to canonical Activity.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Opportunity">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+    <rdfs:comment>Salesforce Opportunity object maps to canonical Opportunity.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Case">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+    <rdfs:comment>Salesforce Case object maps to canonical Case.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Contact">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+    <rdfs:comment>Salesforce Contact object maps to canonical Contact.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Lead">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+    <rdfs:comment>Salesforce Lead object maps to canonical Lead.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Campaign">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+    <rdfs:comment>Salesforce Campaign object maps to canonical Campaign.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Account">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+    <rdfs:comment>Salesforce Account object maps to canonical Account.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Contract">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+    <rdfs:comment>Salesforce Contract object maps to canonical Contract.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Territory2">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
+    <rdfs:comment>Salesforce Territory2 model maps to canonical Territory.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Event">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+    <rdfs:comment>Salesforce Event maps to canonical Activity.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Quote">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+    <rdfs:comment>Salesforce Quote object maps to canonical Quote.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="https://salesforce.com/legacy/crm#Product2">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+    <rdfs:comment>Salesforce Product2 (product catalog) maps to canonical Product.</rdfs:comment>
+  </owl:Class>
 </rdf:RDF>

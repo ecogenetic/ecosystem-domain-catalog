@@ -1,92 +1,366 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:sh="http://www.w3.org/ns/shacl#"
+  xmlns:sh="http://www.w3.org/ns/shacl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 >
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_line_quote_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partOfQuote"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#quote_lines_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#quotes_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_relationship_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#createsRelationship"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversions_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#customer_relationships_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_by">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertedBy"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_role">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignmentRole"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#cases_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_account_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#belongsToAccount"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#contacts_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#accounts_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_case_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstCase"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#activities_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#cases_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStatus"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_resolved_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resolvedAt"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_lead_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#sourcedLead"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_members_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#leads_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_opportunity_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotesOpportunity"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#quotes_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_opportunity_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignsOpportunity"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#assignments_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#opportunities_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#person_full_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fullName"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_party_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#raisedByParty"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#cases_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Case"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#parties_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_case_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignsCase"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#assignments_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#cases_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_quantity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityQuantity"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#accounts_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Account"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_from_stage_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fromPipelineStage"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#stage_transitions_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#pipeline_stages_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_start_date">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipStartDate"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_industry">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#industry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_start_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStartDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_campaign_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasCampaignMember"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#campaigns_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#campaign_members_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_relationship_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#filedForRelationship"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#cases_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_stage_ref">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#atPipelineStage"/>
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#pipeline_stages_table"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_date">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteDate"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#person_full_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fullName"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_from_stage_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#fromPipelineStage"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_opportunity_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#recordsOpportunity"/>
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#stage_transitions_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#pipeline_stages_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b4">
-    <sh:path rdf:resource="https://example.com/legacy/crm#opportunity_relationship_ref"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_opportunity_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#createsOpportunity"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#lead_conversions_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_escalated">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#escalated"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#OpportunitySourceShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-    <sh:property rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b4"/>
-    <sh:property rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b5"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_website">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#website"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_matched_existing">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#matchedExistingParty"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_line_opportunity_ref">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasOpportunityLine"/>
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunity_lines_table"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_lines_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_source">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentSource"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_product_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#aboutProduct"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#cases_table"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#products_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
+      </rdf:Description>
+    </rdfs:range>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_party_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#involvesParty"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#activities_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#organisations_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#pipeline_stage_count">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#stageCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_response_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#responseType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_opportunity_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotesOpportunity"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#quotes_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#organisationName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_number">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractNumber"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_term_months">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#termMonths"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_escalated">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#escalated"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#territory_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_assignee_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assigneeRef"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_party_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#recordsConsentFor"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#consents_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_lead_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsLead"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#lead_conversions_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#leads_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_start">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStart"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_to_stage_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#toPipelineStage"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#stage_transitions_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#pipeline_stages_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_line_product_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forQuotedProduct"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#quote_lines_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#products_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_territory_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedToTerritory"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#territories_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <sh:NodeShape rdf:about="https://example.com/legacy/crm#OpportunitySourceShape">
+    <sh:targetClass rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ne0334f583b00449f8c452853329a51b6b4">
+        <sh:path rdf:resource="https://example.com/legacy/crm#opportunity_relationship_ref"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ne0334f583b00449f8c452853329a51b6b5">
+        <sh:path rdf:resource="https://example.com/legacy/crm#opportunity_probability"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
+        <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxInclusive>
+      </rdf:Description>
+    </sh:property>
+  </sh:NodeShape>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_opportunity_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstOpportunity"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#activities_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_pipeline_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partOfPipeline"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#pipeline_stages_table"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#pipelines_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_party_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignsParty"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#assignments_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_opportunity_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resultsFromOpportunity"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#contracts_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_channel">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentChannel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#amount"/>
+  </rdf:Description>
+  <sh:NodeShape rdf:about="https://example.com/legacy/crm#RelationshipSourceShape">
+    <sh:targetClass rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ne0334f583b00449f8c452853329a51b6b2">
+        <sh:path rdf:resource="https://example.com/legacy/crm#relationship_number"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ne0334f583b00449f8c452853329a51b6b3">
+        <sh:path rdf:resource="https://example.com/legacy/crm#relationship_party_ref"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+  </sh:NodeShape>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_sla_due_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#slaDueAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_targeted_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#targetedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_start_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipStartDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#stageName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_line_product_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forOpportunityProduct"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunity_lines_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#products_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_relationship_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#governsRelationship"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#contracts_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_case_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignsCase"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#assignments_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#cases_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_valid_until">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#validUntil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_best_case_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#bestCaseAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#product_list_price">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#listPrice"/>
+  </rdf:Description>
+  <sh:NodeShape rdf:about="https://example.com/legacy/crm#PartySourceShape">
+    <sh:targetClass rdf:resource="https://example.com/legacy/crm#parties_table"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ne0334f583b00449f8c452853329a51b6b1">
+        <sh:path rdf:resource="https://example.com/legacy/crm#party_external_ref"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+      </rdf:Description>
+    </sh:property>
+  </sh:NodeShape>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_website">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#website"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_party_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#representsParty"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#campaign_members_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_pipeline_ref">
@@ -94,513 +368,264 @@
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#pipelines_table"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_responded_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#respondedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_account_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#belongsToAccount"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#contacts_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#accounts_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#expected_unit_price">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedUnitPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_contact_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasPrimaryContact"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#contacts_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_reason">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#transitionReason"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_sla_due_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#slaDueAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_opportunity_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resultsFromOpportunity"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#contracts_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activities_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Activity"/>
-  </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_amount">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forecastAmount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_relationship_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#filedForRelationship"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#cases_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_campaign_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasCampaignMember"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#campaigns_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#campaign_members_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_lines_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#QuoteLine"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_line_product_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forOpportunityProduct"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunity_lines_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#products_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_opportunity_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignsOpportunity"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#assignments_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_party_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#recordsConsentFor"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#consents_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#account_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_relationship_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#createsRelationship"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#lead_conversions_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_lead_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#sourcedLead"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#campaign_members_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#leads_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_withdrawn_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentWithdrawnAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_party_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#representsParty"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#campaign_members_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#party_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partyStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#memberStatus"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_party_ref">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resolvesToParty"/>
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#lead_conversions_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_opportunity_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#createsOpportunity"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#lead_conversions_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_reason">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#transitionReason"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_best_case_amount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#bestCaseAmount"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_registration_number">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#registrationNumber"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignments_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Assignment"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_total">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteTotal"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_source">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quoted_quantity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedQuantity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_line_product_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forQuotedProduct"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#quote_lines_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#products_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_job_title">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#jobTitle"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b2">
-    <sh:path rdf:resource="https://example.com/legacy/crm#relationship_number"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_opportunity_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstOpportunity"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_case_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#loggedAgainstCase"/>
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#activities_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#person_email">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#email"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#product_list_price">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#listPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_relationship_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#pursuedForRelationship"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#cases_table"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#stage_default_probability">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#defaultProbability"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_outcome">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#conversionOutcome"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_discount_percent">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#discountPercent"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_party_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#raisedByParty"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#cases_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_close_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#closeDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_purpose">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentPurpose"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_captured_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentCapturedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_resolved_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#resolvedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#territory_region">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#region"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_order">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#stageOrder"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quoted_quantity">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedQuantity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_contact_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#hasPrimaryContact"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#contacts_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_withdrawn_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentWithdrawnAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_party_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#involvesParty"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#activities_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_by">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertedBy"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#expected_revenue">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#case_opened_at">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#openedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#pipeline_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#pipelineName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_line_quote_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partOfQuote"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#quote_lines_table"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#quotes_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_priority">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#priority"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_territory_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#coversTerritory"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/crm#forecasts_table">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/crm#territories_table"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#occurredAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_end_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignEndDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_department">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#department"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#employee_count">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#employeeCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_source">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadSource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#transitioned_by">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#transitionedBy"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_value">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_responded_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#respondedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_outcome">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#conversionOutcome"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_period">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forecastPeriod"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_number">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseNumber"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_score">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadScore"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_summary">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#summary"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_company">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#company"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_ended_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignmentEndedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_commit_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#commitAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#expected_unit_price">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedUnitPrice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#case_subject">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#product_code">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#people_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Person"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#account_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_number">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteNumber"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#product_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_member_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#memberStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#party_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partyStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#account_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_source">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentSource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_job_title">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#jobTitle"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_end">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractEnd"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#person_email">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#email"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#person_phone">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quoted_unit_price">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedUnitPrice"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#transitioned_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#transitionedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#annual_revenue">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#annualRevenue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_preferred_channel">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#preferredChannel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_captured_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#capturedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_budget">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#budgetedCost"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_started_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_suppression_reason">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppressionReason"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_party_ref">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relatesToParty"/>
     <rdfs:domain rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_priority">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#priority"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#forecasts_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Forecast"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consents_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#ConsentRecord"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_valid_until">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#validUntil"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_commit_amount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#commitAmount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#product_code">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productCode"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b5">
-    <sh:path rdf:resource="https://example.com/legacy/crm#opportunity_probability"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-    <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_relationship_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#governsRelationship"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#contracts_table"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_relationship_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#pursuedForRelationship"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
     <rdfs:range rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#products_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Product"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#pipeline_stages_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#PipelineStage"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_transitions_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#StageTransition"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_opportunity_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#recordsOpportunity"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#stage_transitions_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#opportunities_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_captured_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#capturedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_number">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_party_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignsParty"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#assignments_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#parties_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_response_type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#responseType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversion_lead_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertsLead"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#lead_conversions_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#leads_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_end_date">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignEndDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_purpose">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentPurpose"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#PartySourceShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://example.com/legacy/crm#parties_table"/>
-    <sh:property rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b1"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#RelationshipSourceShape">
-    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
-    <sh:targetClass rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
-    <sh:property rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b2"/>
-    <sh:property rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b3"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_value">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractValue"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#transition_to_stage_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#toPipelineStage"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#stage_transitions_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#pipeline_stages_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#leads_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Lead"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_assignee_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assigneeRef"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b3">
-    <sh:path rdf:resource="https://example.com/legacy/crm#relationship_party_ref"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#stageName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_lines_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#OpportunityLine"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#territory_region">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#region"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_territory_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedToTerritory"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#customer_relationships_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#territories_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_pipeline_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partOfPipeline"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#pipeline_stages_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#pipelines_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#annual_revenue">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#annualRevenue"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#organisations_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Organisation"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_product_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#aboutProduct"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#cases_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#products_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_summary">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#summary"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_registration_number">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#registrationNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#employee_count">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#employeeCount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#product_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#productName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_conversions_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#LeadConversion"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_suppression_reason">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#suppressionReason"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="nb6a3795eebfb4e55b7a58c1e12a768f6b1">
-    <sh:path rdf:resource="https://example.com/legacy/crm#party_external_ref"/>
-    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_start">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractStart"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_subject">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#subject"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#person_phone">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#phone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#expected_revenue">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#expectedRevenue"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contracts_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contract"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_term_months">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#termMonths"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_score">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadScore"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_end">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractEnd"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_number">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#territories_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Territory"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#pipelines_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Pipeline"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_number">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contract_number">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#contractNumber"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contacts_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Contact"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#case_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#caseStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_captured_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentCapturedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quoted_unit_price">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quotedUnitPrice"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#pipeline_stage_count">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#stageCount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_period">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#forecastPeriod"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#forecast_territory_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#coversTerritory"/>
-    <rdfs:domain rdf:resource="https://example.com/legacy/crm#forecasts_table"/>
-    <rdfs:range rdf:resource="https://example.com/legacy/crm#territories_table"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#customer_relationships_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#CustomerRelationship"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_preferred_channel">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#preferredChannel"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_discount_percent">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#discountPercent"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_started_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaigns_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Campaign"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_ended_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignmentEndedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#convertedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_members_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#CampaignMember"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_channel">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentChannel"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_close_date">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#closeDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_quantity">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#opportunityQuantity"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_industry">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#industry"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_targeted_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#targetedAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#occurredAt"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#party_external_ref">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partyExternalRef"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#activity_type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#activityType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#pipeline_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#pipelineName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#conversion_matched_existing">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#matchedExistingParty"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#territory_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#territoryName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#transitioned_by">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#transitionedBy"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quote_total">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#quoteTotal"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#stage_order">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#stageOrder"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#transitioned_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#transitionedAt"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_probability">
     <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#probability"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunities_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Opportunity"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#party_external_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#partyExternalRef"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_start_date">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#campaignStartDate"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#people_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Person"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#opportunity_amount">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#amount"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#account_type">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#accountType"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#leadStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#quotes_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Quote"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#organisation_name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#organisationName"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#contact_department">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#department"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#campaign_budget">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#budgetedCost"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#consent_status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#consentStatus"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#assignment_role">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#assignmentRole"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#lead_company">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#company"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/crm#parties_table">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/crm#Party"/>
+  <rdf:Description rdf:about="https://example.com/legacy/crm#relationship_number">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/crm#relationshipNumber"/>
   </rdf:Description>
 </rdf:RDF>

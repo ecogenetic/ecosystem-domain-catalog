@@ -41,8 +41,8 @@
       ],
       "capability": "manage party identity and customer relationships, run consent-aware campaigns, convert qualified leads, progress product-level opportunities through auditable pipeline stages, quote and contract won business, and resolve service cases",
       "benefit": "marketing, sales, service, and decisioning share one auditable view of each party, customer relationship, interaction, commercial outcome, and consent state",
-      "workflow": "Target parties → capture lead → qualify and convert → establish customer relationship → open opportunity → progress stages → quote → close won → contract → hand off to fulfilment",
-      "statefulEntity": "CustomerRelationship (prospect → active → dormant/ended); Opportunity (lead → qualified → proposal → won/lost)",
+      "workflow": "Target parties \u2192 capture lead \u2192 qualify and convert \u2192 establish customer relationship \u2192 open opportunity \u2192 progress stages \u2192 quote \u2192 close won \u2192 contract \u2192 hand off to fulfilment",
+      "statefulEntity": "CustomerRelationship (prospect \u2192 active \u2192 dormant/ended); Opportunity (lead \u2192 qualified \u2192 proposal \u2192 won/lost)",
       "industries": [
         "banking",
         "gambling",
@@ -52,7 +52,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "2.0.0"
+      "version": "2.0.2"
     },
     {
       "id": "cvm",
@@ -85,8 +85,8 @@
       ],
       "capability": "score customer value, churn, and propensity, match products and pricing to segments, and deliver next-best-action offers with measured uplift",
       "benefit": "marketing, pricing, and retention decisions are evidence-based and grow revenue per customer",
-      "workflow": "Ingest events → score value and churn → segment → match products and pricing → decide next best action → deliver treatments → measure uplift vs control",
-      "statefulEntity": "Campaign (draft → targeted → launched → measured → closed)",
+      "workflow": "Ingest events \u2192 score value and churn \u2192 segment \u2192 match products and pricing \u2192 decide next best action \u2192 deliver treatments \u2192 measure uplift vs control",
+      "statefulEntity": "Campaign (draft \u2192 targeted \u2192 launched \u2192 measured \u2192 closed)",
       "industries": [
         "banking",
         "gambling",
@@ -96,7 +96,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.1"
     },
     {
       "id": "erp",
@@ -129,8 +129,8 @@
       ],
       "capability": "integrate procure-to-pay, order-to-cash, inventory, and general-ledger accounting across the enterprise",
       "benefit": "finance and operations work from a single, auditable source of enterprise truth",
-      "workflow": "Create requisition → approve → raise purchase order → receive goods → three-way match invoice → pay vendor → post to ledger",
-      "statefulEntity": "PurchaseOrder (draft → approved → received → invoiced → closed)",
+      "workflow": "Create requisition \u2192 approve \u2192 raise purchase order \u2192 receive goods \u2192 three-way match invoice \u2192 pay vendor \u2192 post to ledger",
+      "statefulEntity": "PurchaseOrder (draft \u2192 approved \u2192 received \u2192 invoiced \u2192 closed)",
       "industries": [
         "banking"
       ],
@@ -160,8 +160,8 @@
       ],
       "capability": "maintain employee records, org structure, leave requests, and payroll inputs",
       "benefit": "HR and managers handle workforce changes with consistent approvals",
-      "workflow": "Onboard employee → assign position → submit leave → approve → reflect in payroll",
-      "statefulEntity": "LeaveRequest (submitted → approved → rejected → reflected in payroll)",
+      "workflow": "Onboard employee \u2192 assign position \u2192 submit leave \u2192 approve \u2192 reflect in payroll",
+      "statefulEntity": "LeaveRequest (submitted \u2192 approved \u2192 rejected \u2192 reflected in payroll)",
       "industries": [
         "healthcare"
       ],
@@ -191,8 +191,8 @@
       ],
       "capability": "coordinate suppliers, inventory levels, fulfillment orders, and shipments",
       "benefit": "supply chain teams resolve stock-outs and delays before they hit customers",
-      "workflow": "Forecast demand → place supplier order → receive inventory → fulfill customer order → ship",
-      "statefulEntity": "FulfillmentOrder (allocated → picked → shipped → delivered)",
+      "workflow": "Forecast demand \u2192 place supplier order \u2192 receive inventory \u2192 fulfill customer order \u2192 ship",
+      "statefulEntity": "FulfillmentOrder (allocated \u2192 picked \u2192 shipped \u2192 delivered)",
       "industries": [
         "telco"
       ],
@@ -222,8 +222,8 @@
       ],
       "capability": "control bin locations, pick lists, stock levels, receipts, and outbound shipments",
       "benefit": "warehouse staff pick and ship orders accurately and on time",
-      "workflow": "Receive stock → put away → allocate pick list → pick → pack → ship",
-      "statefulEntity": "PickList (created → in progress → completed → shipped)",
+      "workflow": "Receive stock \u2192 put away \u2192 allocate pick list \u2192 pick \u2192 pack \u2192 ship",
+      "statefulEntity": "PickList (created \u2192 in progress \u2192 completed \u2192 shipped)",
       "industries": [
         "telco"
       ],
@@ -253,8 +253,8 @@
       ],
       "capability": "plan carriers, routes, loads, and freight rates for deliveries",
       "benefit": "logistics teams reduce cost while meeting delivery commitments",
-      "workflow": "Create shipment → plan route and load → assign carrier → track stops → confirm delivery",
-      "statefulEntity": "Shipment (planned → in transit → delivered → confirmed)",
+      "workflow": "Create shipment \u2192 plan route and load \u2192 assign carrier \u2192 track stops \u2192 confirm delivery",
+      "statefulEntity": "Shipment (planned \u2192 in transit \u2192 delivered \u2192 confirmed)",
       "industries": [
         "telco"
       ],
@@ -284,8 +284,8 @@
       ],
       "capability": "ingest orders from channels, allocate inventory, fulfill, and handle returns",
       "benefit": "operations teams fulfill omnichannel orders without manual reconciliation",
-      "workflow": "Receive order → allocate inventory → pick and pack → ship → process return if needed",
-      "statefulEntity": "Order (received → allocated → fulfilled → shipped → returned)",
+      "workflow": "Receive order \u2192 allocate inventory \u2192 pick and pack \u2192 ship \u2192 process return if needed",
+      "statefulEntity": "Order (received \u2192 allocated \u2192 fulfilled \u2192 shipped \u2192 returned)",
       "industries": [
         "banking"
       ],
@@ -315,8 +315,8 @@
       ],
       "capability": "manage product revisions, bills of material, and engineering change orders",
       "benefit": "engineering and manufacturing build from approved product definitions",
-      "workflow": "Create part → define BOM → submit engineering change → review → release revision",
-      "statefulEntity": "EngineeringChange (draft → review → approved → released)",
+      "workflow": "Create part \u2192 define BOM \u2192 submit engineering change \u2192 review \u2192 release revision",
+      "statefulEntity": "EngineeringChange (draft \u2192 review \u2192 approved \u2192 released)",
       "industries": [
         "telco"
       ],
@@ -346,8 +346,8 @@
       ],
       "capability": "maintain product attributes, categories, catalogs, and channel publications",
       "benefit": "merchandising teams publish accurate product data everywhere it is sold",
-      "workflow": "Create product → enrich attributes → assign category → publish to catalog channel",
-      "statefulEntity": "Product (draft → enriched → approved → published)",
+      "workflow": "Create product \u2192 enrich attributes \u2192 assign category \u2192 publish to catalog channel",
+      "statefulEntity": "Product (draft \u2192 enriched \u2192 approved \u2192 published)",
       "industries": [
         "telco"
       ],
@@ -377,8 +377,8 @@
       ],
       "capability": "govern golden records, hierarchies, match rules, and data stewardship tasks",
       "benefit": "the organization trusts one authoritative master for each data domain",
-      "workflow": "Ingest source record → match and merge → steward review → publish golden record",
-      "statefulEntity": "GoldenRecord (ingested → matched → stewarded → published)",
+      "workflow": "Ingest source record \u2192 match and merge \u2192 steward review \u2192 publish golden record",
+      "statefulEntity": "GoldenRecord (ingested \u2192 matched \u2192 stewarded \u2192 published)",
       "industries": [
         "banking"
       ],
@@ -408,8 +408,8 @@
       ],
       "capability": "run process definitions, human tasks, cases, and SLA-tracked workflows",
       "benefit": "teams execute repeatable processes with visible bottlenecks and escalations",
-      "workflow": "Start case → assign tasks → complete forms → decision gateway → close case",
-      "statefulEntity": "Case (started → in progress → decision → closed)",
+      "workflow": "Start case \u2192 assign tasks \u2192 complete forms \u2192 decision gateway \u2192 close case",
+      "statefulEntity": "Case (started \u2192 in progress \u2192 decision \u2192 closed)",
       "industries": [
         "healthcare"
       ],
@@ -439,8 +439,8 @@
       ],
       "capability": "track controls, risks, policies, audit findings, and remediation evidence",
       "benefit": "compliance teams prove adherence and close gaps before audits",
-      "workflow": "Assess risk → map control → collect evidence → record finding → remediate",
-      "statefulEntity": "AuditFinding (identified → remediated → verified → closed)",
+      "workflow": "Assess risk \u2192 map control \u2192 collect evidence \u2192 record finding \u2192 remediate",
+      "statefulEntity": "AuditFinding (identified \u2192 remediated \u2192 verified \u2192 closed)",
       "industries": [
         "insurance"
       ],
@@ -470,8 +470,8 @@
       ],
       "capability": "maintain assets, work orders, maintenance plans, and spare parts",
       "benefit": "reliability teams reduce downtime through planned maintenance",
-      "workflow": "Register asset → schedule preventive maintenance → create work order → complete → update meter reading",
-      "statefulEntity": "WorkOrder (scheduled → in progress → completed → closed)",
+      "workflow": "Register asset \u2192 schedule preventive maintenance \u2192 create work order \u2192 complete \u2192 update meter reading",
+      "statefulEntity": "WorkOrder (scheduled \u2192 in progress \u2192 completed \u2192 closed)",
       "industries": [
         "telco"
       ],
@@ -501,8 +501,8 @@
       ],
       "capability": "execute shop-floor work orders, batches, routings, and quality checks",
       "benefit": "production supervisors see real-time status across work centers",
-      "workflow": "Release work order → start batch at work center → record production → perform quality check → complete",
-      "statefulEntity": "WorkOrder (released → in progress → quality check → complete)",
+      "workflow": "Release work order \u2192 start batch at work center \u2192 record production \u2192 perform quality check \u2192 complete",
+      "statefulEntity": "WorkOrder (released \u2192 in progress \u2192 quality check \u2192 complete)",
       "industries": [
         "healthcare"
       ],
@@ -532,8 +532,8 @@
       ],
       "capability": "manage inspections, non-conformances, CAPA, and product specifications",
       "benefit": "quality teams contain defects and prevent recurrence",
-      "workflow": "Schedule inspection → record sample → raise non-conformance → initiate CAPA → verify effectiveness",
-      "statefulEntity": "NonConformance (recorded → CAPA initiated → verified → closed)",
+      "workflow": "Schedule inspection \u2192 record sample \u2192 raise non-conformance \u2192 initiate CAPA \u2192 verify effectiveness",
+      "statefulEntity": "NonConformance (recorded \u2192 CAPA initiated \u2192 verified \u2192 closed)",
       "industries": [
         "healthcare"
       ],
@@ -563,8 +563,8 @@
       ],
       "capability": "author content, manage pages and media, and publish through approval workflows",
       "benefit": "editors ship approved content to the right channels on schedule",
-      "workflow": "Draft content → review → approve → publish page → archive or update",
-      "statefulEntity": "Content (draft → review → approved → published)",
+      "workflow": "Draft content \u2192 review \u2192 approve \u2192 publish page \u2192 archive or update",
+      "statefulEntity": "Content (draft \u2192 review \u2192 approved \u2192 published)",
       "industries": [
         "gambling"
       ],
@@ -594,8 +594,8 @@
       ],
       "capability": "define datasets, metrics, dashboards, and reports for decision-makers",
       "benefit": "leaders monitor KPIs without waiting for ad hoc analysis",
-      "workflow": "Model dataset → define metric → build dashboard → share report → refresh on schedule",
-      "statefulEntity": "Report (defined → scheduled → refreshed → archived)",
+      "workflow": "Model dataset \u2192 define metric \u2192 build dashboard \u2192 share report \u2192 refresh on schedule",
+      "statefulEntity": "Report (defined \u2192 scheduled \u2192 refreshed \u2192 archived)",
       "industries": [
         "banking"
       ],
@@ -625,8 +625,8 @@
       ],
       "capability": "log incidents, manage changes, track configuration items, and meet SLAs",
       "benefit": "IT support restores service quickly with traceable change history",
-      "workflow": "Log incident → diagnose → link configuration item → resolve → close with SLA met",
-      "statefulEntity": "Incident (logged → in progress → resolved → closed)",
+      "workflow": "Log incident \u2192 diagnose \u2192 link configuration item \u2192 resolve \u2192 close with SLA met",
+      "statefulEntity": "Incident (logged \u2192 in progress \u2192 resolved \u2192 closed)",
       "industries": [
         "telco"
       ],
@@ -656,8 +656,8 @@
       ],
       "capability": "publish courses, manage enrollments, deliver lessons, and issue certificates",
       "benefit": "learners progress through structured training with measurable outcomes",
-      "workflow": "Publish course → enroll learner → complete lessons → pass assessment → issue certificate",
-      "statefulEntity": "Enrollment (enrolled → in progress → completed → certified)",
+      "workflow": "Publish course \u2192 enroll learner \u2192 complete lessons \u2192 pass assessment \u2192 issue certificate",
+      "statefulEntity": "Enrollment (enrolled \u2192 in progress \u2192 completed \u2192 certified)",
       "industries": [
         "healthcare"
       ],
@@ -687,8 +687,8 @@
       ],
       "capability": "configure products, apply price rules, bundle offers, and generate customer quotes",
       "benefit": "sales reps quote complex deals accurately without spreadsheet errors",
-      "workflow": "Select product → configure options → apply pricing rules → generate quote → submit for approval",
-      "statefulEntity": "Quote (configured → priced → submitted → approved/rejected)",
+      "workflow": "Select product \u2192 configure options \u2192 apply pricing rules \u2192 generate quote \u2192 submit for approval",
+      "statefulEntity": "Quote (configured \u2192 priced \u2192 submitted \u2192 approved/rejected)",
       "industries": [
         "telco"
       ],
@@ -701,7 +701,7 @@
       "id": "fms",
       "acronym": "FMS",
       "name": "Financial Management System",
-      "description": "Financial Management — GL, AP, AR, subledgers & close",
+      "description": "Financial Management \u2014 GL, AP, AR, subledgers & close",
       "icon": "Landmark",
       "chips": [
         "GL",
@@ -725,8 +725,8 @@
       ],
       "capability": "manage the chart of accounts, general ledger, accounts payable and receivable, sales and purchase subledgers, payments, and period close",
       "benefit": "finance teams post, reconcile, and close books with auditable GL-to-subledger traceability",
-      "workflow": "Post to GL → record AP/Purchase Ledger invoice → approve payment → post AR/Sales Ledger receipt → reconcile subledgers → close fiscal period",
-      "statefulEntity": "JournalEntry (draft → posted → reconciled → period closed)",
+      "workflow": "Post to GL \u2192 record AP/Purchase Ledger invoice \u2192 approve payment \u2192 post AR/Sales Ledger receipt \u2192 reconcile subledgers \u2192 close fiscal period",
+      "statefulEntity": "JournalEntry (draft \u2192 posted \u2192 reconciled \u2192 period closed)",
       "industries": [
         "banking"
       ],
@@ -756,8 +756,8 @@
       ],
       "capability": "set credit limits, monitor exposure, score risk, and manage collections cases",
       "benefit": "finance teams reduce bad debt while keeping good customers trading within policy",
-      "workflow": "Onboard account → assign credit limit → monitor exposure → flag breach → open collection case → resolve",
-      "statefulEntity": "CollectionCase (opened → in progress → resolved → closed)",
+      "workflow": "Onboard account \u2192 assign credit limit \u2192 monitor exposure \u2192 flag breach \u2192 open collection case \u2192 resolve",
+      "statefulEntity": "CollectionCase (opened \u2192 in progress \u2192 resolved \u2192 closed)",
       "industries": [
         "banking"
       ],
@@ -787,8 +787,8 @@
       ],
       "capability": "manage lease contracts, leased assets, payment schedules, renewals, and escalations",
       "benefit": "real estate and finance teams stay compliant with lease terms and accounting standards",
-      "workflow": "Create lease contract → link asset → schedule payments → track renewal → amend or terminate",
-      "statefulEntity": "LeaseContract (draft → active → renewal → terminated)",
+      "workflow": "Create lease contract \u2192 link asset \u2192 schedule payments \u2192 track renewal \u2192 amend or terminate",
+      "statefulEntity": "LeaseContract (draft \u2192 active \u2192 renewal \u2192 terminated)",
       "industries": [
         "banking"
       ],
@@ -818,8 +818,8 @@
       ],
       "capability": "process transactions, maintain ledgers, and enforce financial controls",
       "benefit": "stakeholders trust balances and audit trails in real time",
-      "workflow": "Initiate transaction → validate limits → post to ledger → reconcile → audit",
-      "statefulEntity": "Transaction (initiated → validated → posted → reconciled)",
+      "workflow": "Initiate transaction \u2192 validate limits \u2192 post to ledger \u2192 reconcile \u2192 audit",
+      "statefulEntity": "Transaction (initiated \u2192 validated \u2192 posted \u2192 reconciled)",
       "industries": [
         "banking"
       ],
@@ -853,8 +853,8 @@
       ],
       "capability": "browse a catalog of physical, digital, and service products, manage carts, checkout with promotions, pay, and track fulfilment from shipping to instant provisioning",
       "benefit": "shoppers complete purchases of goods and services with visibility into order status",
-      "workflow": "Browse catalog → add to cart → checkout → apply promotion → pay → fulfill order → confirm delivery",
-      "statefulEntity": "Order (cart → paid → fulfilled → delivered)",
+      "workflow": "Browse catalog \u2192 add to cart \u2192 checkout \u2192 apply promotion \u2192 pay \u2192 fulfill order \u2192 confirm delivery",
+      "statefulEntity": "Order (cart \u2192 paid \u2192 fulfilled \u2192 delivered)",
       "industries": [
         "banking",
         "telco"
@@ -885,8 +885,8 @@
       ],
       "capability": "ring up sales, apply tenders, manage register shifts, and print receipts",
       "benefit": "store staff checkout customers quickly with accurate cash control",
-      "workflow": "Open shift → scan items → apply tender → print receipt → close shift and reconcile",
-      "statefulEntity": "Sale (open shift → items scanned → tendered → receipt printed)",
+      "workflow": "Open shift \u2192 scan items \u2192 apply tender \u2192 print receipt \u2192 close shift and reconcile",
+      "statefulEntity": "Sale (open shift \u2192 items scanned \u2192 tendered \u2192 receipt printed)",
       "industries": [
         "gambling"
       ],
@@ -916,8 +916,8 @@
       ],
       "capability": "manage patients, appointments, medical records, and prescriptions",
       "benefit": "clinicians coordinate care with complete patient context at the point of service",
-      "workflow": "Register patient → schedule appointment → document visit → prescribe → follow up",
-      "statefulEntity": "Appointment (scheduled → checked in → completed → follow-up)",
+      "workflow": "Register patient \u2192 schedule appointment \u2192 document visit \u2192 prescribe \u2192 follow up",
+      "statefulEntity": "Appointment (scheduled \u2192 checked in \u2192 completed \u2192 follow-up)",
       "industries": [
         "healthcare"
       ],
@@ -948,8 +948,8 @@
       ],
       "capability": "manage customer accounts, subscriptions, service lines, plan changes, suspensions, reactivations, and terminations",
       "benefit": "commercial and operational teams share a traceable view of every subscribed mobile service",
-      "workflow": "Capture customer account → create subscription → assign plan → activate service line → manage changes → terminate",
-      "statefulEntity": "Subscription (pending → active → suspended → terminated)",
+      "workflow": "Capture customer account \u2192 create subscription \u2192 assign plan \u2192 activate service line \u2192 manage changes \u2192 terminate",
+      "statefulEntity": "Subscription (pending \u2192 active \u2192 suspended \u2192 terminated)",
       "industries": [
         "telco"
       ],
@@ -981,8 +981,8 @@
       ],
       "capability": "control mobile-number pools, SIM and eSIM identities, assignments, and port-in and port-out requests",
       "benefit": "operations teams retain complete identifier history through activation, SIM swap, reuse, and portability",
-      "workflow": "Load number pool → register SIM profile → assign identifiers → validate port request → schedule transfer → complete port",
-      "statefulEntity": "PortingRequest (requested → validated → scheduled → completed → rejected → cancelled)",
+      "workflow": "Load number pool \u2192 register SIM profile \u2192 assign identifiers \u2192 validate port request \u2192 schedule transfer \u2192 complete port",
+      "statefulEntity": "PortingRequest (requested \u2192 validated \u2192 scheduled \u2192 completed \u2192 rejected \u2192 cancelled)",
       "industries": [
         "telco"
       ],
@@ -1014,8 +1014,8 @@
       ],
       "capability": "define provisionable services and maintain an inventory of active service instances, components, dependencies, and resources",
       "benefit": "commercial products remain aligned with the operational services actually delivered to customers",
-      "workflow": "Define service specification → publish service offering → map product → reserve resources → activate service instance → retire",
-      "statefulEntity": "ServiceInstance (designed → reserved → active → suspended → retired)",
+      "workflow": "Define service specification \u2192 publish service offering \u2192 map product \u2192 reserve resources \u2192 activate service instance \u2192 retire",
+      "statefulEntity": "ServiceInstance (designed \u2192 reserved \u2192 active \u2192 suspended \u2192 retired)",
       "industries": [
         "telco"
       ],
@@ -1047,8 +1047,8 @@
       ],
       "capability": "orchestrate service orders, provisioning tasks, activations, configuration changes, retries, and fallout resolution",
       "benefit": "approved orders become active services through a traceable and recoverable fulfilment process",
-      "workflow": "Receive service order → validate request → create tasks → execute adapters → confirm activation → resolve fallout",
-      "statefulEntity": "ProvisioningRequest (received → validated → in_progress → completed → failed → cancelled)",
+      "workflow": "Receive service order \u2192 validate request \u2192 create tasks \u2192 execute adapters \u2192 confirm activation \u2192 resolve fallout",
+      "statefulEntity": "ProvisioningRequest (received \u2192 validated \u2192 in_progress \u2192 completed \u2192 failed \u2192 cancelled)",
       "industries": [
         "telco"
       ],
@@ -1080,8 +1080,8 @@
       ],
       "capability": "ingest raw usage, validate and normalize records, remove duplicates, enrich subscriber context, and route mediated usage",
       "benefit": "charging, billing, wholesale, and assurance processes consume consistent and traceable usage records",
-      "workflow": "Receive usage batch → validate events → remove duplicates → enrich context → create mediated records → distribute",
-      "statefulEntity": "UsageBatch (received → validating → mediated → distributed → rejected)",
+      "workflow": "Receive usage batch \u2192 validate events \u2192 remove duplicates \u2192 enrich context \u2192 create mediated records \u2192 distribute",
+      "statefulEntity": "UsageBatch (received \u2192 validating \u2192 mediated \u2192 distributed \u2192 rejected)",
       "industries": [
         "telco"
       ],
@@ -1112,8 +1112,8 @@
       ],
       "capability": "rate usage, apply tariff rules, reserve and consume balances, manage allowances, and reverse incorrect charges",
       "benefit": "prepaid and postpaid services apply consistent prices and maintain accurate customer entitlements",
-      "workflow": "Receive mediated usage → select rating rule → calculate rated usage → reserve balance → apply charge → update allowance",
-      "statefulEntity": "Charge (received → rated → applied → rejected → reversed)",
+      "workflow": "Receive mediated usage \u2192 select rating rule \u2192 calculate rated usage \u2192 reserve balance \u2192 apply charge \u2192 update allowance",
+      "statefulEntity": "Charge (received \u2192 rated \u2192 applied \u2192 rejected \u2192 reversed)",
       "industries": [
         "telco"
       ],
@@ -1146,8 +1146,8 @@
       ],
       "capability": "calculate periodic bills, aggregate recurring and usage charges, issue invoices, and manage adjustments, credits, and taxes",
       "benefit": "customers receive explainable bills while finance receives traceable receivable and posting references",
-      "workflow": "Open billing cycle → execute bill run → calculate invoice lines → apply tax and adjustments → issue invoice → settle",
-      "statefulEntity": "Invoice (draft → calculated → issued → due → paid → overdue → cancelled)",
+      "workflow": "Open billing cycle \u2192 execute bill run \u2192 calculate invoice lines \u2192 apply tax and adjustments \u2192 issue invoice \u2192 settle",
+      "statefulEntity": "Invoice (draft \u2192 calculated \u2192 issued \u2192 due \u2192 paid \u2192 overdue \u2192 cancelled)",
       "industries": [
         "telco"
       ],
@@ -1179,8 +1179,8 @@
       ],
       "capability": "govern wholesale agreements and rates, reconcile partner usage statements, approve settlements, and resolve disputes",
       "benefit": "commercial and finance teams control host-network cost and preserve evidence for every settlement",
-      "workflow": "Contract partner → publish wholesale rates → receive statement → reconcile usage → raise dispute or approve → settle",
-      "statefulEntity": "SettlementStatement (received → reconciled → disputed → approved → settled)",
+      "workflow": "Contract partner \u2192 publish wholesale rates \u2192 receive statement \u2192 reconcile usage \u2192 raise dispute or approve \u2192 settle",
+      "statefulEntity": "SettlementStatement (received \u2192 reconciled \u2192 disputed \u2192 approved \u2192 settled)",
       "industries": [
         "telco"
       ],
@@ -1212,8 +1212,8 @@
       ],
       "capability": "reconcile revenue flows, detect leakage and suspicious usage, investigate alerts, and track recovery actions",
       "benefit": "finance, risk, and operations identify preventable loss and fraud across order-to-cash processes",
-      "workflow": "Execute assurance control → detect exception → raise alert → triage investigation → confirm or dismiss → recover and close",
-      "statefulEntity": "Investigation (opened → triaged → investigating → confirmed → dismissed → closed)",
+      "workflow": "Execute assurance control \u2192 detect exception \u2192 raise alert \u2192 triage investigation \u2192 confirm or dismiss \u2192 recover and close",
+      "statefulEntity": "Investigation (opened \u2192 triaged \u2192 investigating \u2192 confirmed \u2192 dismissed \u2192 closed)",
       "industries": [
         "telco"
       ],
@@ -1245,8 +1245,8 @@
       ],
       "capability": "monitor service quality, correlate alarms, detect degradation and outages, calculate customer impact, and identify SLA violations",
       "benefit": "operations teams understand service impact early and provide ITSM with actionable incident context",
-      "workflow": "Collect metric → evaluate threshold → raise alarm → correlate degradation → assess customer impact → clear or escalate",
-      "statefulEntity": "ServiceAlarm (raised → acknowledged → correlated → cleared → escalated)",
+      "workflow": "Collect metric \u2192 evaluate threshold \u2192 raise alarm \u2192 correlate degradation \u2192 assess customer impact \u2192 clear or escalate",
+      "statefulEntity": "ServiceAlarm (raised \u2192 acknowledged \u2192 correlated \u2192 cleared \u2192 escalated)",
       "industries": [
         "telco"
       ],
@@ -1278,8 +1278,8 @@
       ],
       "capability": "onboard dealers and partners, govern agreements and territories, manage credentials, and calculate commission statements",
       "benefit": "channel teams operate a controlled partner network with transparent performance and remuneration",
-      "workflow": "Register partner → complete onboarding → sign agreement → assign role and territory → transact → calculate commission",
-      "statefulEntity": "Partner (prospective → onboarding → active → suspended → terminated)",
+      "workflow": "Register partner \u2192 complete onboarding \u2192 sign agreement \u2192 assign role and territory \u2192 transact \u2192 calculate commission",
+      "statefulEntity": "Partner (prospective \u2192 onboarding \u2192 active \u2192 suspended \u2192 terminated)",
       "industries": [
         "telco"
       ],

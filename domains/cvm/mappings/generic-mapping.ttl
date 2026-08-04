@@ -1,18 +1,85 @@
-# mappings/cvm/generic-mapping.ttl — Generic data source alignments to canonical domain
+# Generic structured-source mapping for CVM
+# Replace the example legacy namespace with the source-system namespace.
 
-@prefix : <https://ecosystemcode.com/ontology/cvm#> .
-@prefix legacy: <https://example.com/legacy/data#> .
+@prefix cvm:    <https://ecosystemcode.com/ontology/cvm#> .
+@prefix legacy: <https://example.com/legacy/cvm#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 
-# === CLASS MAPPINGS ===
-legacy:Entity owl:equivalentClass :CoreEntity .
+#################################################################
+# Class mappings
+#################################################################
 
-# === PROPERTY MAPPINGS ===
-legacy:id rdfs:subPropertyOf :id .
-legacy:name rdfs:subPropertyOf :name .
-legacy:description rdfs:subPropertyOf :description .
-legacy:created_at rdfs:subPropertyOf :createdAt .
-legacy:status rdfs:subPropertyOf :status .
+legacy:customers_table owl:equivalentClass cvm:Customer .
+legacy:segments_table owl:equivalentClass cvm:Segment .
+legacy:value_scores_table owl:equivalentClass cvm:ValueScore .
+legacy:churn_risks_table owl:equivalentClass cvm:ChurnRisk .
+legacy:offers_table owl:equivalentClass cvm:Offer .
+legacy:campaigns_table owl:equivalentClass cvm:Campaign .
+legacy:propensity_scores_table owl:equivalentClass cvm:PropensityScore .
+legacy:customer_events_table owl:equivalentClass cvm:CustomerEvent .
+legacy:predictive_models_table owl:equivalentClass cvm:PredictiveModel .
+legacy:products_table owl:equivalentClass cvm:Product .
+legacy:price_plans_table owl:equivalentClass cvm:PricePlan .
+legacy:eligibility_rules_table owl:equivalentClass cvm:EligibilityRule .
+legacy:next_best_actions_table owl:equivalentClass cvm:NextBestAction .
+legacy:treatments_table owl:equivalentClass cvm:Treatment .
+legacy:channels_table owl:equivalentClass cvm:Channel .
+legacy:control_groups_table owl:equivalentClass cvm:ControlGroup .
 
-# === RELATIONSHIP MAPPINGS ===
-legacy:parent_id rdfs:subPropertyOf :parentOf .
-legacy:related_id rdfs:subPropertyOf :relatedTo .
+#################################################################
+# Datatype property mappings
+#################################################################
+
+legacy:external_ref rdfs:subPropertyOf cvm:externalRef .
+legacy:consent_to_marketing rdfs:subPropertyOf cvm:consentToMarketing .
+legacy:segment_name rdfs:subPropertyOf cvm:segmentName .
+legacy:criteria rdfs:subPropertyOf cvm:criteria .
+legacy:score_value rdfs:subPropertyOf cvm:scoreValue .
+legacy:probability rdfs:subPropertyOf cvm:probability .
+legacy:risk_band rdfs:subPropertyOf cvm:riskBand .
+legacy:offer_name rdfs:subPropertyOf cvm:offerName .
+legacy:incentive_type rdfs:subPropertyOf cvm:incentiveType .
+legacy:valid_until rdfs:subPropertyOf cvm:validUntil .
+legacy:campaign_name rdfs:subPropertyOf cvm:campaignName .
+legacy:campaign_status rdfs:subPropertyOf cvm:campaignStatus .
+legacy:uplift_measured rdfs:subPropertyOf cvm:upliftMeasured .
+legacy:tenure_months rdfs:subPropertyOf cvm:tenureMonths .
+legacy:current_monthly_spend rdfs:subPropertyOf cvm:currentMonthlySpend .
+legacy:member_count rdfs:subPropertyOf cvm:memberCount .
+legacy:propensity_value rdfs:subPropertyOf cvm:propensityValue .
+legacy:scored_at rdfs:subPropertyOf cvm:scoredAt .
+legacy:target_action rdfs:subPropertyOf cvm:targetAction .
+legacy:event_type rdfs:subPropertyOf cvm:eventType .
+legacy:event_at rdfs:subPropertyOf cvm:eventAt .
+legacy:event_value rdfs:subPropertyOf cvm:eventValue .
+legacy:model_name rdfs:subPropertyOf cvm:modelName .
+legacy:model_version rdfs:subPropertyOf cvm:modelVersion .
+legacy:model_type rdfs:subPropertyOf cvm:modelType .
+legacy:product_code rdfs:subPropertyOf cvm:productCode .
+legacy:product_name rdfs:subPropertyOf cvm:productName .
+legacy:plan_name rdfs:subPropertyOf cvm:planName .
+legacy:monthly_fee rdfs:subPropertyOf cvm:monthlyFee .
+legacy:channel_name rdfs:subPropertyOf cvm:channelName .
+legacy:channel_type rdfs:subPropertyOf cvm:channelType .
+legacy:campaign_budget rdfs:subPropertyOf cvm:campaignBudget .
+
+#################################################################
+# Object property / relationship mappings
+#################################################################
+
+legacy:segment_id rdfs:subPropertyOf cvm:assignedToSegment .
+legacy:customer_id_value_score rdfs:subPropertyOf cvm:scoresCustomer .
+legacy:customer_id_churn rdfs:subPropertyOf cvm:assessesCustomer .
+legacy:campaign_segment_id rdfs:subPropertyOf cvm:targetedAtSegment .
+legacy:campaign_offer_id rdfs:subPropertyOf cvm:deliversOffer .
+legacy:offer_segment_id rdfs:subPropertyOf cvm:targetsSegment .
+legacy:customer_price_plan_id rdfs:subPropertyOf cvm:subscribedToPricePlan .
+legacy:event_customer_id rdfs:subPropertyOf cvm:recordedForCustomer .
+legacy:nba_offer_id rdfs:subPropertyOf cvm:recommendsOffer .
+legacy:nba_customer_id rdfs:subPropertyOf cvm:recommendedForCustomer .
+legacy:treatment_offer_id rdfs:subPropertyOf cvm:executesOffer .
+legacy:treatment_channel_id rdfs:subPropertyOf cvm:deliveredViaChannel .
+legacy:treatment_campaign_id rdfs:subPropertyOf cvm:partOfCampaign .
+legacy:price_plan_product_id rdfs:subPropertyOf cvm:pricesProduct .

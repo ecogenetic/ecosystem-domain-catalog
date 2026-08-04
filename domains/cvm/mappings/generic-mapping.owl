@@ -1,31 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:about="https://example.com/legacy/data#status">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#status"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#treatment_campaign_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#partOfCampaign"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#parent_id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#parentOf"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#event_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#eventType"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#Entity">
-    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#CoreEntity"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#criteria">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#criteria"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#description">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#description"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#current_monthly_spend">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#currentMonthlySpend"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#id"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#campaigns_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Campaign"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#created_at">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#createdAt"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#target_action">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#targetAction"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#related_id">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#relatedTo"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#offers_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Offer"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://example.com/legacy/data#name">
-    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#name"/>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#valid_until">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#validUntil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#model_version">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#modelVersion"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#product_code">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#productCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#next_best_actions_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#NextBestAction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#risk_band">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#riskBand"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#campaign_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#campaignStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#channel_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#channelType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#product_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#productName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#nba_customer_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#recommendedForCustomer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#propensity_value">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#propensityValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#predictive_models_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#PredictiveModel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#treatments_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Treatment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#model_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#modelType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#campaign_budget">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#campaignBudget"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#customers_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#segments_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Segment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#uplift_measured">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#upliftMeasured"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#treatment_channel_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#deliveredViaChannel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#nba_offer_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#recommendsOffer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#control_groups_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#ControlGroup"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#external_ref">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#externalRef"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#model_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#modelName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#customer_id_value_score">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#scoresCustomer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#channel_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#channelName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#treatment_offer_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#executesOffer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#event_customer_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#recordedForCustomer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#consent_to_marketing">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#consentToMarketing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#propensity_scores_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#PropensityScore"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#score_value">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#scoreValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#offer_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#offerName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#event_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#eventAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#campaign_segment_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#targetedAtSegment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#value_scores_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#ValueScore"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#segment_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#assignedToSegment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#customer_id_churn">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#assessesCustomer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#campaign_offer_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#deliversOffer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#customer_price_plan_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#subscribedToPricePlan"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#scored_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#scoredAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#monthly_fee">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#monthlyFee"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#member_count">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#memberCount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#products_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Product"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#price_plans_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#PricePlan"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#segment_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#segmentName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#eligibility_rules_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#EligibilityRule"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#tenure_months">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#tenureMonths"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#offer_segment_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#targetsSegment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#churn_risks_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#ChurnRisk"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#channels_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Channel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#plan_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#planName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#probability">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#probability"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#price_plan_product_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#pricesProduct"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#campaign_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#campaignName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#event_value">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#eventValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#incentive_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#incentiveType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/cvm#customer_events_table">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#CustomerEvent"/>
   </rdf:Description>
 </rdf:RDF>
