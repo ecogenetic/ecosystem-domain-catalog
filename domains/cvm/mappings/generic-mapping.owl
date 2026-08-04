@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="https://example.com/legacy/data#status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#status"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#parent_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#parentOf"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#Entity">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#CoreEntity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#description">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#description"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#id"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#created_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#createdAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#related_id">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#relatedTo"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/data#name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#name"/>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#email">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#email"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#AccountId">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#belongsToAccount"/>
+    <rdfs:domain rdf:resource="https://salesforce.com/legacy/crm#Contact"/>
+    <rdfs:range rdf:resource="https://salesforce.com/legacy/crm#Account"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#name"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Opportunity">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Opportunity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Contact">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/cvm#amount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://salesforce.com/legacy/crm#Account">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Account"/>
+  </rdf:Description>
+</rdf:RDF>

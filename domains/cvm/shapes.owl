@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:sh="http://www.w3.org/ns/shacl#"
+>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b28">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#planName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b12">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#campaignStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b13"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b46">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#channelName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b24">
+    <rdf:first>deployed</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b25"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#SegmentShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Segment"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#ChurnRiskShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#ChurnRisk"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b6"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b8">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#offerName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b9">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#targetedAtSegment"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Segment"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b43">
+    <rdf:first>responded</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b44"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#TreatmentShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Treatment"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b38"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b39"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b40"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b21">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#modelStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b5">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#scoreValue"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b2">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#consentToMarketing"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#CustomerShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b1"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b2"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b1">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#externalRef"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b19">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#propensityValue"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b14">
+    <rdf:first>targeted</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b15"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b27">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#productName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b4">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#scoresCustomer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b11">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#targetsSegment"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Segment"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b3">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#segmentName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b45">
+    <rdf:first>suppressed</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b35">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#recommendedForCustomer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#ProductShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Product"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b26"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b27"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b26">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#productCode"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b36">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#recommendsOffer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Offer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b40">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#responseStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b41"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#ChannelShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Channel"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b46"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b7">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#probability"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b33">
+    <rdf:first>grandfathered</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b34"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b18">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#estimatesCustomer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#PropensityScoreShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#PropensityScore"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b18"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b19"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b41">
+    <rdf:first>selected</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b42"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b34">
+    <rdf:first>retired</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#ValueScoreShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#ValueScore"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b4"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b5"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#PredictiveModelShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#PredictiveModel"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b20"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b21"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#NextBestActionShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#NextBestAction"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b35"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b36"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b37"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b32">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b33"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b37">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#expectedValue"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b6">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#assessesCustomer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b25">
+    <rdf:first>retired</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#PricePlanShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#PricePlan"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b28"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b29"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b30"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b17">
+    <rdf:first>closed</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b20">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#modelName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b39">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#executesOffer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Offer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#OfferShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Offer"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b8"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b9"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b23">
+    <rdf:first>validated</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b24"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b44">
+    <rdf:first>no_response</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b45"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b38">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#deliversOfferToCustomer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Customer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/cvm#CampaignShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/cvm#Campaign"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b10"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b11"/>
+    <sh:property rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b12"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b42">
+    <rdf:first>delivered</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b43"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b30">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#planStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b31"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b22">
+    <rdf:first>training</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b23"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b29">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#monthlyFee"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b16">
+    <rdf:first>measured</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b17"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b10">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/cvm#deliversOffer"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/cvm#Offer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b15">
+    <rdf:first>launched</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b16"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b31">
+    <rdf:first>draft</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b32"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b13">
+    <rdf:first>draft</rdf:first>
+    <rdf:rest rdf:nodeID="n7aa694de4ae042bfabbc26c3f38e85f8b14"/>
+  </rdf:Description>
+</rdf:RDF>
