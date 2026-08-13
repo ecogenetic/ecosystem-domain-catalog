@@ -1,0 +1,79 @@
+@prefix :     <https://ecosystemcode.com/ontology/raf/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/raf#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/raf/banking> a owl:Ontology ;
+    rdfs:label "RAF Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the RAF domain." .
+
+:BankingFraudAlert a owl:Class ;
+    rdfs:subClassOf base:FraudAlert ;
+    skos:prefLabel "Banking Fraud Alert" ;
+    skos:altLabel "Transaction Fraud Alert" ;
+    skos:definition "A fraud alert raised against a banking party, account, instrument, or payment." .
+
+:PaymentFraudInvestigation a owl:Class ;
+    rdfs:subClassOf base:Investigation ;
+    skos:prefLabel "Payment Fraud Investigation" ;
+    skos:altLabel "Payment Fraud Case" ;
+    skos:definition "An investigation into suspected payment or account fraud." .
+
+:AccountTakeoverCase a owl:Class ;
+    rdfs:subClassOf base:Investigation ;
+    skos:prefLabel "Account Takeover Case" ;
+    skos:altLabel "ATO Case" ;
+    skos:definition "An investigation into suspected unauthorised control of a customer account or channel." .
+
+:FraudLoss a owl:Class ;
+    skos:prefLabel "Fraud Loss" ;
+    skos:altLabel "Confirmed Fraud Loss" ;
+    skos:definition "A confirmed monetary loss attributable to fraud." .
+
+:investigatesAlert a owl:ObjectProperty ;
+    rdfs:label "investigates alert" ;
+    rdfs:domain :PaymentFraudInvestigation ;
+    rdfs:range :BankingFraudAlert ;
+    skos:definition "Links a fraud investigation to the originating alert." .
+
+:fraudAlertForParty a owl:ObjectProperty ;
+    rdfs:label "fraud alert for party" ;
+    rdfs:domain :BankingFraudAlert ;
+    rdfs:range bank:Party ;
+    skos:definition "The banking party associated with the alert." .
+
+:lossFromInvestigation a owl:ObjectProperty ;
+    rdfs:label "loss from investigation" ;
+    rdfs:domain :FraudLoss ;
+    rdfs:range :PaymentFraudInvestigation ;
+    skos:definition "Links a confirmed loss to the investigation." .
+
+:alertRiskScore a owl:DatatypeProperty ;
+    rdfs:label "alert risk score" ;
+    rdfs:domain :BankingFraudAlert ;
+    rdfs:range xsd:decimal .
+
+:fraudTypology a owl:DatatypeProperty ;
+    rdfs:label "fraud typology" ;
+    rdfs:domain :BankingFraudAlert ;
+    rdfs:range xsd:string .
+
+:lossAmount a owl:DatatypeProperty ;
+    rdfs:label "loss amount" ;
+    rdfs:domain :FraudLoss ;
+    rdfs:range xsd:decimal .
+
+:BankFraudInvestigatorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Fraud Investigator" ;
+    skos:altLabel "Bank Fraud Investigator Role" ;
+    skos:definition "Triages fraud alerts, investigates suspicious banking activity, and records outcomes. Bearer: person." .
+
+:BankingFraudAlertShape a sh:NodeShape ;
+    sh:targetClass :BankingFraudAlert ;
+    sh:property [ sh:path :fraudTypology ; sh:datatype xsd:string ; sh:minCount 1 ] .

@@ -1,0 +1,51 @@
+@prefix : <https://ecosystemcode.com/ontology/lns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:LoanAccountShape a sh:NodeShape ;
+    sh:targetClass :LoanAccount ;
+    sh:property [ sh:path :loanAccountNumber ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :principalBalance ; sh:datatype xsd:decimal ; sh:minCount 1 ] ;
+    sh:property [ sh:path :loanStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "booked" "active" "settled" "closed" "written_off" ) ] .
+
+:RepaymentScheduleShape a sh:NodeShape ;
+    sh:targetClass :RepaymentSchedule ;
+    sh:property [ sh:path :scheduleVersion ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :effectiveDate ; sh:datatype xsd:date ; sh:minCount 1 ] .
+
+:RepaymentInstallmentShape a sh:NodeShape ;
+    sh:targetClass :RepaymentInstallment ;
+    sh:property [ sh:path :dueDate ; sh:datatype xsd:date ; sh:minCount 1 ] ;
+    sh:property [ sh:path :installmentStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "scheduled" "due" "paid" "overdue" "waived" ) ] .
+
+:InterestAccrualShape a sh:NodeShape ;
+    sh:targetClass :InterestAccrual ;
+    sh:property [ sh:path :accruesOn ; sh:class :LoanAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :accrualDate ; sh:datatype xsd:date ; sh:minCount 1 ] ;
+    sh:property [ sh:path :accruedAmount ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:CollateralLinkShape a sh:NodeShape ;
+    sh:targetClass :CollateralLink ;
+    sh:property [ sh:path :securesLoan ; sh:class :LoanAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :collateralReference ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+:RestructureArrangementShape a sh:NodeShape ;
+    sh:targetClass :RestructureArrangement ;
+    sh:property [ sh:path :modifiesLoan ; sh:class :LoanAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :restructureReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :restructureStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "proposed" "approved" "active" "completed" "cancelled" ) ] .
+
+:SettlementQuoteShape a sh:NodeShape ;
+    sh:targetClass :SettlementQuote ;
+    sh:property [ sh:path :settlesLoan ; sh:class :LoanAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :quoteReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :settlementAmount ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:LoanServicingEventShape a sh:NodeShape ;
+    sh:targetClass :LoanServicingEvent ;
+    sh:property [ sh:path :recordsEventFor ; sh:class :LoanAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :eventType ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :occurredAt ; sh:datatype xsd:dateTime ; sh:minCount 1 ] .

@@ -1,0 +1,68 @@
+@prefix :     <https://ecosystemcode.com/ontology/itsm/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/itsm#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/itsm/banking> a owl:Ontology ;
+    rdfs:label "ITSM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the ITSM domain." .
+
+:CriticalBankingService a owl:Class ;
+    rdfs:subClassOf base:Service ;
+    skos:prefLabel "Critical Banking Service" ;
+    skos:altLabel "Important Business Service" ;
+    skos:definition "A service designated as important or critical to customers or financial stability." .
+
+:MajorBankingIncident a owl:Class ;
+    rdfs:subClassOf base:Incident ;
+    skos:prefLabel "Major Banking Incident" ;
+    skos:altLabel "Critical Service Incident" ;
+    skos:definition "An incident causing material disruption to a critical banking service." .
+
+:RegulatedChange a owl:Class ;
+    rdfs:subClassOf base:ChangeRequest ;
+    skos:prefLabel "Regulated Change" ;
+    skos:altLabel "Critical Banking Change" ;
+    skos:definition "A change request requiring enhanced approval, testing, or evidence because it affects a regulated banking service." .
+
+:ResilienceImpactAssessment a owl:Class ;
+    skos:prefLabel "Resilience Impact Assessment" ;
+    skos:definition "An assessment of customer, regulatory, operational, and recovery impact for an incident or change." .
+
+:affectsCriticalService a owl:ObjectProperty ;
+    rdfs:label "affects critical service" ;
+    rdfs:domain :MajorBankingIncident ;
+    rdfs:range :CriticalBankingService ;
+    skos:definition "The critical banking service disrupted by the major incident." .
+
+:changesCriticalService a owl:ObjectProperty ;
+    rdfs:label "changes critical service" ;
+    rdfs:domain :RegulatedChange ;
+    rdfs:range :CriticalBankingService ;
+    skos:definition "The critical banking service affected by the regulated change." .
+
+:assessesIncident a owl:ObjectProperty ;
+    rdfs:label "assesses incident" ;
+    rdfs:domain :ResilienceImpactAssessment ;
+    rdfs:range :MajorBankingIncident ;
+    skos:definition "The major banking incident assessed for resilience impact." .
+
+:impactSeverity a owl:DatatypeProperty ;
+    rdfs:label "impact severity" ;
+    rdfs:domain :ResilienceImpactAssessment ;
+    rdfs:range xsd:string .
+
+:BankServiceResilienceManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Service Resilience Manager" ;
+    skos:definition "Person role that coordinates major incidents, resilience evidence, and regulated changes. Bearer: person." .
+
+:ResilienceImpactAssessmentShape a sh:NodeShape ;
+    sh:targetClass :ResilienceImpactAssessment ;
+    sh:property [ sh:path :impactSeverity ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "low" "medium" "high" "critical" ) ] .

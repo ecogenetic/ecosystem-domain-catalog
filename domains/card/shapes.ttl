@@ -1,0 +1,50 @@
+@prefix : <https://ecosystemcode.com/ontology/card#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:PaymentInstrumentShape a sh:NodeShape ;
+    sh:targetClass :PaymentInstrument ;
+    sh:property [ sh:path :instrumentReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :instrumentStatus ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+:CardInstrumentShape a sh:NodeShape ;
+    sh:targetClass :CardInstrument ;
+    sh:property [ sh:path :instrumentReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :instrumentStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "requested" "issued" "active" "blocked" "replaced" "closed" ) ] .
+
+:PaymentTokenShape a sh:NodeShape ;
+    sh:targetClass :PaymentToken ;
+    sh:property [ sh:path :tokenReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :tokenStatus ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+:CardAuthorizationShape a sh:NodeShape ;
+    sh:targetClass :CardAuthorization ;
+    sh:property [ sh:path :authorizesInstrument ; sh:class :CardInstrument ; sh:minCount 1 ] ;
+    sh:property [ sh:path :authorizationReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :amount ; sh:datatype xsd:decimal ; sh:minCount 1 ] ;
+    sh:property [ sh:path :authorizationStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "requested" "approved" "declined" "reversed" ) ] .
+
+:CardClearingRecordShape a sh:NodeShape ;
+    sh:targetClass :CardClearingRecord ;
+    sh:property [ sh:path :clearingReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :clearingAmount ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:CardDisputeShape a sh:NodeShape ;
+    sh:targetClass :CardDispute ;
+    sh:property [ sh:path :disputesClearingRecord ; sh:class :CardClearingRecord ; sh:minCount 1 ] ;
+    sh:property [ sh:path :disputeReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :disputeStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "opened" "investigating" "resolved" "closed" "rejected" ) ] .
+
+:CardLimitShape a sh:NodeShape ;
+    sh:targetClass :CardLimit ;
+    sh:property [ sh:path :limitsInstrument ; sh:class :CardInstrument ; sh:minCount 1 ] ;
+    sh:property [ sh:path :limitAmount ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:CardLifecycleEventShape a sh:NodeShape ;
+    sh:targetClass :CardLifecycleEvent ;
+    sh:property [ sh:path :recordsLifecycleFor ; sh:class :CardInstrument ; sh:minCount 1 ] ;
+    sh:property [ sh:path :eventType ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :occurredAt ; sh:datatype xsd:dateTime ; sh:minCount 1 ] .

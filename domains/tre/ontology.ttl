@@ -1,0 +1,81 @@
+@prefix : <https://ecosystemcode.com/ontology/tre#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/tre> a owl:Ontology ;
+    rdfs:label "TRE Domain Ontology" ;
+    rdfs:comment "Seed ontology for treasury and asset/liability management." .
+
+:TreasuryPosition a owl:Class ; skos:prefLabel "Treasury Position" ; skos:altLabel "ALM Position" ; skos:definition "An aggregated treasury exposure or balance position at a point in time." .
+:FundingSource a owl:Class ; skos:prefLabel "Funding Source" ; skos:altLabel "Funding Line" ; skos:definition "A source of wholesale, deposit, secured, or central-bank funding." .
+:LiquidityBuffer a owl:Class ; rdfs:subClassOf :TreasuryPosition ; skos:prefLabel "Liquidity Buffer" ; skos:altLabel "Liquidity Reserve" ; skos:definition "A portfolio or reserve maintained to meet liquidity needs." .
+:MaturityBucket a owl:Class ; skos:prefLabel "Maturity Bucket" ; skos:altLabel "Time Bucket" ; skos:definition "A time bucket used to aggregate expected inflows, outflows, or repricing." .
+:InterestRateRiskPosition a owl:Class ; rdfs:subClassOf :TreasuryPosition ; skos:prefLabel "Interest Rate Risk Position" ; skos:altLabel "IRR Position" ; skos:definition "A measured exposure to changes in interest rates." .
+:FundsTransferPrice a owl:Class ; skos:prefLabel "Funds Transfer Price" ; skos:altLabel "FTP Rate" ; skos:definition "An internal transfer-pricing rate applied to products or balances." .
+:TreasuryLimit a owl:Class ; skos:prefLabel "Treasury Limit" ; skos:altLabel "Dealing Limit" ; skos:definition "A risk or dealing limit constraining treasury activity." .
+:TreasuryDeal a owl:Class ; skos:prefLabel "Treasury Deal" ; skos:altLabel "Treasury Trade" ; skos:definition "A treasury transaction executed to fund, hedge, invest, or manage liquidity." .
+
+:fundedBy a owl:ObjectProperty ;
+    rdfs:label "funded by" ;
+    rdfs:domain :TreasuryPosition ;
+    rdfs:range :FundingSource ;
+    skos:definition "Associates a treasury position with a source of funding." .
+:assignedMaturityBucket a owl:ObjectProperty ;
+    rdfs:label "assigned maturity bucket" ;
+    rdfs:domain :TreasuryPosition ;
+    rdfs:range :MaturityBucket ;
+    skos:definition "Associates a treasury position with the maturity bucket used to aggregate it." .
+:pricedBy a owl:ObjectProperty ;
+    rdfs:label "priced by" ;
+    rdfs:domain :InterestRateRiskPosition ;
+    rdfs:range :FundsTransferPrice ;
+    skos:definition "Associates an interest-rate risk position with the funds-transfer price applied to it." .
+:constrainsDeal a owl:ObjectProperty ;
+    rdfs:label "constrains deal" ;
+    rdfs:domain :TreasuryLimit ;
+    rdfs:range :TreasuryDeal ;
+    skos:definition "Associates a treasury limit with a deal it constrains." .
+:changesPosition a owl:ObjectProperty ;
+    rdfs:label "changes position" ;
+    rdfs:domain :TreasuryDeal ;
+    rdfs:range :TreasuryPosition ;
+    skos:definition "Associates a treasury deal with a position it changes." .
+
+:positionReference a owl:DatatypeProperty ; rdfs:label "position reference" ; rdfs:domain :TreasuryPosition ; rdfs:range xsd:string .
+:asOfDate a owl:DatatypeProperty ; rdfs:label "as of date" ; rdfs:domain :TreasuryPosition ; rdfs:range xsd:date .
+:amount a owl:DatatypeProperty ; rdfs:label "amount" ; rdfs:domain :TreasuryPosition ; rdfs:range xsd:decimal .
+:currencyCode a owl:DatatypeProperty ; rdfs:label "currency code" ; rdfs:domain :TreasuryPosition ; rdfs:range xsd:string .
+:fundingReference a owl:DatatypeProperty ; rdfs:label "funding reference" ; rdfs:domain :FundingSource ; rdfs:range xsd:string .
+:fundingType a owl:DatatypeProperty ; rdfs:label "funding type" ; rdfs:domain :FundingSource ; rdfs:range xsd:string .
+:maturityDate a owl:DatatypeProperty ; rdfs:label "maturity date" ; rdfs:domain :FundingSource ; rdfs:range xsd:date .
+:bufferReference a owl:DatatypeProperty ; rdfs:label "buffer reference" ; rdfs:domain :LiquidityBuffer ; rdfs:range xsd:string .
+:eligibleAmount a owl:DatatypeProperty ; rdfs:label "eligible amount" ; rdfs:domain :LiquidityBuffer ; rdfs:range xsd:decimal .
+:bucketName a owl:DatatypeProperty ; rdfs:label "bucket name" ; rdfs:domain :MaturityBucket ; rdfs:range xsd:string .
+:startDays a owl:DatatypeProperty ; rdfs:label "start days" ; rdfs:domain :MaturityBucket ; rdfs:range xsd:integer .
+:endDays a owl:DatatypeProperty ; rdfs:label "end days" ; rdfs:domain :MaturityBucket ; rdfs:range xsd:integer .
+:riskMeasure a owl:DatatypeProperty ; rdfs:label "risk measure" ; rdfs:domain :InterestRateRiskPosition ; rdfs:range xsd:string .
+:riskValue a owl:DatatypeProperty ; rdfs:label "risk value" ; rdfs:domain :InterestRateRiskPosition ; rdfs:range xsd:decimal .
+:rateReference a owl:DatatypeProperty ; rdfs:label "rate reference" ; rdfs:domain :FundsTransferPrice ; rdfs:range xsd:string .
+:transferRate a owl:DatatypeProperty ; rdfs:label "transfer rate" ; rdfs:domain :FundsTransferPrice ; rdfs:range xsd:decimal .
+:effectiveDate a owl:DatatypeProperty ; rdfs:label "effective date" ; rdfs:domain :FundsTransferPrice ; rdfs:range xsd:date .
+:limitReference a owl:DatatypeProperty ; rdfs:label "limit reference" ; rdfs:domain :TreasuryLimit ; rdfs:range xsd:string .
+:limitAmount a owl:DatatypeProperty ; rdfs:label "limit amount" ; rdfs:domain :TreasuryLimit ; rdfs:range xsd:decimal .
+:dealReference a owl:DatatypeProperty ; rdfs:label "deal reference" ; rdfs:domain :TreasuryDeal ; rdfs:range xsd:string .
+:dealStatus a owl:DatatypeProperty ; rdfs:label "deal status" ; rdfs:domain :TreasuryDeal ; rdfs:range xsd:string .
+:tradeDate a owl:DatatypeProperty ; rdfs:label "trade date" ; rdfs:domain :TreasuryDeal ; rdfs:range xsd:date .
+:settlementDate a owl:DatatypeProperty ; rdfs:label "settlement date" ; rdfs:domain :TreasuryDeal ; rdfs:range xsd:date .
+
+:TreasuryDealerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Treasury Dealer Role" ;
+    skos:altLabel "Treasury Dealer" ;
+    skos:definition "Person role that proposes and executes treasury deals within approved limits. Bearer: person. Permissions: TreasuryDeal:read, TreasuryDeal:write, TreasuryPosition:read." .
+
+:TreasuryRiskApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Treasury Risk Approver Role" ;
+    skos:altLabel "Treasury Approver" ;
+    skos:definition "Person role that approves limits and deals requiring escalation. Bearer: person. Permissions: TreasuryLimit:read, TreasuryLimit:write, TreasuryDeal:read." .

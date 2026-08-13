@@ -163,12 +163,13 @@
       "workflow": "Onboard employee \u2192 assign position \u2192 submit leave \u2192 approve \u2192 reflect in payroll",
       "statefulEntity": "LeaveRequest (submitted \u2192 approved \u2192 rejected \u2192 reflected in payroll)",
       "industries": [
-        "healthcare"
+        "healthcare",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "scm",
@@ -349,12 +350,13 @@
       "workflow": "Create product \u2192 enrich attributes \u2192 assign category \u2192 publish to catalog channel",
       "statefulEntity": "Product (draft \u2192 enriched \u2192 approved \u2192 published)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "mdm",
@@ -411,12 +413,13 @@
       "workflow": "Start case \u2192 assign tasks \u2192 complete forms \u2192 decision gateway \u2192 close case",
       "statefulEntity": "Case (started \u2192 in progress \u2192 decision \u2192 closed)",
       "industries": [
-        "healthcare"
+        "healthcare",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "grc",
@@ -442,12 +445,13 @@
       "workflow": "Assess risk \u2192 map control \u2192 collect evidence \u2192 record finding \u2192 remediate",
       "statefulEntity": "AuditFinding (identified \u2192 remediated \u2192 verified \u2192 closed)",
       "industries": [
-        "insurance"
+        "insurance",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "eam",
@@ -473,12 +477,13 @@
       "workflow": "Register asset \u2192 schedule preventive maintenance \u2192 create work order \u2192 complete \u2192 update meter reading",
       "statefulEntity": "WorkOrder (scheduled \u2192 in progress \u2192 completed \u2192 closed)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "mes",
@@ -566,12 +571,13 @@
       "workflow": "Draft content \u2192 review \u2192 approve \u2192 publish page \u2192 archive or update",
       "statefulEntity": "Content (draft \u2192 review \u2192 approved \u2192 published)",
       "industries": [
-        "gambling"
+        "gambling",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "bi",
@@ -628,12 +634,13 @@
       "workflow": "Log incident \u2192 diagnose \u2192 link configuration item \u2192 resolve \u2192 close with SLA met",
       "statefulEntity": "Incident (logged \u2192 in progress \u2192 resolved \u2192 closed)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "lms",
@@ -659,12 +666,13 @@
       "workflow": "Publish course \u2192 enroll learner \u2192 complete lessons \u2192 pass assessment \u2192 issue certificate",
       "statefulEntity": "Enrollment (enrolled \u2192 in progress \u2192 completed \u2192 certified)",
       "industries": [
-        "healthcare"
+        "healthcare",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "cpq",
@@ -690,12 +698,13 @@
       "workflow": "Select product \u2192 configure options \u2192 apply pricing rules \u2192 generate quote \u2192 submit for approval",
       "statefulEntity": "Quote (configured \u2192 priced \u2192 submitted \u2192 approved/rejected)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "fms",
@@ -816,9 +825,9 @@
         "Currency",
         "Reconciliation"
       ],
-      "capability": "process transactions, maintain ledgers, and enforce financial controls",
-      "benefit": "stakeholders trust balances and audit trails in real time",
-      "workflow": "Initiate transaction \u2192 validate limits \u2192 post to ledger \u2192 reconcile \u2192 audit",
+      "capability": "process account transactions and payments, maintain ledgers, support deposit-account servicing, and enforce reconciliation and financial controls",
+      "benefit": "banking operations and finance teams trust account balances, payment states, reconciliations, and audit trails in real time",
+      "workflow": "Maintain account \u2192 initiate transaction or payment \u2192 validate and authorise \u2192 post to ledger \u2192 clear and settle \u2192 reconcile \u2192 audit",
       "statefulEntity": "Transaction (initiated \u2192 validated \u2192 posted \u2192 reconciled)",
       "industries": [
         "banking"
@@ -826,7 +835,7 @@
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "ecom",
@@ -1017,12 +1026,13 @@
       "workflow": "Define service specification \u2192 publish service offering \u2192 map product \u2192 reserve resources \u2192 activate service instance \u2192 retire",
       "statefulEntity": "ServiceInstance (designed \u2192 reserved \u2192 active \u2192 suspended \u2192 retired)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "prv",
@@ -1215,12 +1225,13 @@
       "workflow": "Execute assurance control \u2192 detect exception \u2192 raise alert \u2192 triage investigation \u2192 confirm or dismiss \u2192 recover and close",
       "statefulEntity": "Investigation (opened \u2192 triaged \u2192 investigating \u2192 confirmed \u2192 dismissed \u2192 closed)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "sam",
@@ -1248,12 +1259,13 @@
       "workflow": "Collect metric \u2192 evaluate threshold \u2192 raise alarm \u2192 correlate degradation \u2192 assess customer impact \u2192 clear or escalate",
       "statefulEntity": "ServiceAlarm (raised \u2192 acknowledged \u2192 correlated \u2192 cleared \u2192 escalated)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "id": "prm",
@@ -1281,7 +1293,107 @@
       "workflow": "Register partner \u2192 complete onboarding \u2192 sign agreement \u2192 assign role and territory \u2192 transact \u2192 calculate commission",
       "statefulEntity": "Partner (prospective \u2192 onboarding \u2192 active \u2192 suspended \u2192 terminated)",
       "industries": [
-        "telco"
+        "telco",
+        "banking"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "card",
+      "acronym": "CARD",
+      "name": "Cards and Payment Instrument Management",
+      "description": "Cards and Payment Instrument Management.",
+      "icon": "CreditCard",
+      "chips": [
+        "Card Instrument",
+        "Authorization",
+        "Dispute"
+      ],
+      "entities": [
+        "PaymentInstrument",
+        "CardInstrument",
+        "PaymentToken",
+        "CardAuthorization",
+        "CardClearingRecord",
+        "CardDispute",
+        "CardLimit",
+        "CardLifecycleEvent"
+      ],
+      "capability": "issue and manage payment instruments, authorise card usage, process clearing records, control limits, tokenise instruments, and resolve card disputes",
+      "benefit": "card operations share a traceable payment-instrument lifecycle from issuance through transaction handling and dispute resolution",
+      "workflow": "Request instrument \u2192 issue card \u2192 activate \u2192 authorise usage \u2192 clear transaction \u2192 handle dispute \u2192 block, replace, or close",
+      "statefulEntity": "CardInstrument (requested \u2192 issued \u2192 active \u2192 blocked \u2192 replaced/closed)",
+      "industries": [
+        "banking"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "lns",
+      "acronym": "LNS",
+      "name": "Loan Servicing",
+      "description": "Loan Servicing.",
+      "icon": "Landmark",
+      "chips": [
+        "Loan Account",
+        "Repayment Schedule",
+        "Restructure"
+      ],
+      "entities": [
+        "LoanAccount",
+        "RepaymentSchedule",
+        "RepaymentInstallment",
+        "InterestAccrual",
+        "CollateralLink",
+        "RestructureArrangement",
+        "SettlementQuote",
+        "LoanServicingEvent"
+      ],
+      "capability": "service booked loans, maintain repayment schedules and interest accruals, reference collateral, manage restructures, settlements, and immutable servicing events",
+      "benefit": "lending operations maintain a complete post-origination loan history without mixing origination or collections ownership",
+      "workflow": "Book loan \u2192 generate schedule \u2192 accrue interest \u2192 apply repayments \u2192 manage servicing changes \u2192 restructure if approved \u2192 settle \u2192 close",
+      "statefulEntity": "LoanAccount (booked \u2192 active \u2192 settled \u2192 closed/written_off)",
+      "industries": [
+        "banking"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.0.0"
+    },
+    {
+      "id": "tre",
+      "acronym": "TRE",
+      "name": "Treasury and Asset/Liability Management",
+      "description": "Treasury and Asset/Liability Management.",
+      "icon": "LineChart",
+      "chips": [
+        "Liquidity",
+        "Funding",
+        "Treasury Deal"
+      ],
+      "entities": [
+        "TreasuryPosition",
+        "FundingSource",
+        "LiquidityBuffer",
+        "MaturityBucket",
+        "InterestRateRiskPosition",
+        "FundsTransferPrice",
+        "TreasuryLimit",
+        "TreasuryDeal"
+      ],
+      "capability": "manage liquidity, funding, maturity structure, interest-rate risk, funds-transfer pricing, treasury limits, and treasury deals",
+      "benefit": "treasury teams control liquidity and balance-sheet risk with traceable positions, limits, approvals, and deals",
+      "workflow": "Forecast liquidity \u2192 assess positions \u2192 source funding or hedge \u2192 check limits \u2192 approve deal \u2192 execute \u2192 settle \u2192 update positions",
+      "statefulEntity": "TreasuryDeal (proposed \u2192 approved \u2192 executed \u2192 settled \u2192 matured/cancelled)",
+      "industries": [
+        "banking"
       ],
       "hasDescription": true,
       "hasOntology": true,

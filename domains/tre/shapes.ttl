@@ -1,0 +1,49 @@
+@prefix : <https://ecosystemcode.com/ontology/tre#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:TreasuryPositionShape a sh:NodeShape ;
+    sh:targetClass :TreasuryPosition ;
+    sh:property [ sh:path :positionReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :asOfDate ; sh:datatype xsd:date ; sh:minCount 1 ] ;
+    sh:property [ sh:path :amount ; sh:datatype xsd:decimal ; sh:minCount 1 ] ;
+    sh:property [ sh:path :currencyCode ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+:FundingSourceShape a sh:NodeShape ;
+    sh:targetClass :FundingSource ;
+    sh:property [ sh:path :fundingReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :fundingType ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+:LiquidityBufferShape a sh:NodeShape ;
+    sh:targetClass :LiquidityBuffer ;
+    sh:property [ sh:path :bufferReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :eligibleAmount ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:MaturityBucketShape a sh:NodeShape ;
+    sh:targetClass :MaturityBucket ;
+    sh:property [ sh:path :bucketName ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :startDays ; sh:datatype xsd:integer ; sh:minCount 1 ] ;
+    sh:property [ sh:path :endDays ; sh:datatype xsd:integer ; sh:minCount 1 ] .
+
+:InterestRateRiskPositionShape a sh:NodeShape ;
+    sh:targetClass :InterestRateRiskPosition ;
+    sh:property [ sh:path :riskMeasure ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :riskValue ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:FundsTransferPriceShape a sh:NodeShape ;
+    sh:targetClass :FundsTransferPrice ;
+    sh:property [ sh:path :rateReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :transferRate ; sh:datatype xsd:decimal ; sh:minCount 1 ] ;
+    sh:property [ sh:path :effectiveDate ; sh:datatype xsd:date ; sh:minCount 1 ] .
+
+:TreasuryLimitShape a sh:NodeShape ;
+    sh:targetClass :TreasuryLimit ;
+    sh:property [ sh:path :limitReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :limitAmount ; sh:datatype xsd:decimal ; sh:minCount 1 ] .
+
+:TreasuryDealShape a sh:NodeShape ;
+    sh:targetClass :TreasuryDeal ;
+    sh:property [ sh:path :dealReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :dealStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "proposed" "approved" "executed" "settled" "matured" "cancelled" ) ] ;
+    sh:property [ sh:path :tradeDate ; sh:datatype xsd:date ; sh:minCount 1 ] .

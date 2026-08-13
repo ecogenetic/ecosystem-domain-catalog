@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/card/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/card#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/card/banking> a owl:Ontology ;
+    rdfs:label "CARD Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the CARD domain." .
+
+:RetailDebitCard a owl:Class ;
+    rdfs:subClassOf base:CardInstrument ;
+    skos:prefLabel "Retail Debit Card" ;
+    skos:altLabel "Debit Card" ;
+    skos:definition "A card instrument linked to a retail deposit or payment account." .
+
+:RetailCreditCard a owl:Class ;
+    rdfs:subClassOf base:CardInstrument ;
+    skos:prefLabel "Retail Credit Card" ;
+    skos:altLabel "Credit Card" ;
+    skos:definition "A card instrument issued under a regulated revolving credit agreement." .
+
+:StrongCustomerAuthenticationDecision a owl:Class ;
+    rdfs:subClassOf bank:ComplianceDecision ;
+    skos:prefLabel "Strong Customer Authentication Decision" ;
+    skos:altLabel "SCA Decision" ;
+    skos:definition "An auditable decision recording whether step-up authentication was required and satisfied." .
+
+:operatesAgainst a owl:ObjectProperty ;
+    rdfs:label "operates against" ;
+    rdfs:domain :RetailDebitCard ;
+    rdfs:range bank:FinancialAccount ;
+    skos:definition "The financial account against which the debit card operates." .
+
+:issuedUnder a owl:ObjectProperty ;
+    rdfs:label "issued under" ;
+    rdfs:domain :RetailCreditCard ;
+    rdfs:range bank:FinancialProductAgreement ;
+    skos:definition "The banking agreement under which the credit card is issued." .
+
+:appliesToAuthorization a owl:ObjectProperty ;
+    rdfs:label "applies to authorization" ;
+    rdfs:domain :StrongCustomerAuthenticationDecision ;
+    rdfs:range base:CardAuthorization ;
+    skos:definition "The authorization to which the authentication decision applies." .
+
+:scaResult a owl:DatatypeProperty ;
+    rdfs:label "SCA result" ;
+    rdfs:domain :StrongCustomerAuthenticationDecision ;
+    rdfs:range xsd:string .
+
+:CardFraudOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Card Fraud Operations Role" ;
+    skos:altLabel "Card Fraud Analyst" ;
+    skos:definition "Person role that reviews suspicious card authorisations and may block instruments pending investigation. Bearer: person." .
+
+:StrongCustomerAuthenticationDecisionShape a sh:NodeShape ;
+    sh:targetClass :StrongCustomerAuthenticationDecision ;
+    sh:property [ sh:path :appliesToAuthorization ; sh:class base:CardAuthorization ; sh:minCount 1 ] ;
+    sh:property [ sh:path :scaResult ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "not_required" "satisfied" "failed" "exempted" ) ] .

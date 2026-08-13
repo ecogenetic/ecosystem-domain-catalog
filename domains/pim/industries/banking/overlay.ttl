@@ -1,0 +1,82 @@
+@prefix :     <https://ecosystemcode.com/ontology/pim/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/pim#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/pim/banking> a owl:Ontology ;
+    rdfs:label "PIM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the PIM domain." .
+
+:BankingProduct a owl:Class ;
+    rdfs:subClassOf base:Product ;
+    skos:prefLabel "Banking Product" ;
+    skos:altLabel "Financial Product Definition" ;
+    skos:definition "A product definition for a deposit, lending, card, payment, or investment offering." .
+
+:ProductVersion a owl:Class ;
+    skos:prefLabel "Product Version" ;
+    skos:altLabel "Immutable Product Version" ;
+    skos:definition "An immutable version of a banking product used by offers, agreements, orders, and decisions." .
+
+:ProductDisclosure a owl:Class ;
+    skos:prefLabel "Product Disclosure" ;
+    skos:altLabel "Disclosure Document" ;
+    skos:definition "A dated disclosure or terms summary required for a banking product." .
+
+:RateAndFeeSchedule a owl:Class ;
+    skos:prefLabel "Rate and Fee Schedule" ;
+    skos:altLabel "Pricing Schedule" ;
+    skos:definition "A dated schedule of rates and fees associated with a banking product version." .
+
+:hasProductVersion a owl:ObjectProperty ;
+    rdfs:label "has product version" ;
+    rdfs:domain :BankingProduct ;
+    rdfs:range :ProductVersion ;
+    skos:definition "Links a banking product to an immutable product version." .
+
+:hasDisclosure a owl:ObjectProperty ;
+    rdfs:label "has disclosure" ;
+    rdfs:domain :ProductVersion ;
+    rdfs:range :ProductDisclosure ;
+    skos:definition "Links a product version to required disclosure content." .
+
+:hasRateAndFeeSchedule a owl:ObjectProperty ;
+    rdfs:label "has rate and fee schedule" ;
+    rdfs:domain :ProductVersion ;
+    rdfs:range :RateAndFeeSchedule ;
+    skos:definition "Links a product version to its rate and fee schedule." .
+
+:productVersionId a owl:DatatypeProperty ;
+    rdfs:label "product version id" ;
+    rdfs:domain :ProductVersion ;
+    rdfs:range xsd:string .
+
+:effectiveFrom a owl:DatatypeProperty ;
+    rdfs:label "effective from" ;
+    rdfs:domain :ProductVersion ;
+    rdfs:range xsd:date .
+
+:jurisdictionCode a owl:DatatypeProperty ;
+    rdfs:label "jurisdiction code" ;
+    rdfs:domain :ProductVersion ;
+    rdfs:range xsd:string .
+
+:disclosureReference a owl:DatatypeProperty ;
+    rdfs:label "disclosure reference" ;
+    rdfs:domain :ProductDisclosure ;
+    rdfs:range xsd:string .
+
+:BankProductManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Product Manager" ;
+    skos:altLabel "Bank Product Manager Role" ;
+    skos:definition "Owns banking product definitions, immutable versions, disclosures, and publication. Bearer: person." .
+
+:ProductVersionShape a sh:NodeShape ;
+    sh:targetClass :ProductVersion ;
+    sh:property [ sh:path :productVersionId ; sh:datatype xsd:string ; sh:minCount 1 ] .

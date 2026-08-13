@@ -1,0 +1,72 @@
+@prefix :     <https://ecosystemcode.com/ontology/hcm/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/hcm#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/hcm/banking> a owl:Ontology ;
+    rdfs:label "HCM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the HCM domain." .
+
+:RegulatedPosition a owl:Class ;
+    rdfs:subClassOf base:Position ;
+    skos:prefLabel "Regulated Position" ;
+    skos:altLabel "Controlled Function" ;
+    skos:definition "A position subject to fit-and-proper, licensing, or conduct requirements." .
+
+:DelegatedAuthority a owl:Class ;
+    skos:prefLabel "Delegated Authority" ;
+    skos:altLabel "Approval Authority" ;
+    skos:definition "A dated authority allowing an employee to approve banking actions up to stated limits." .
+
+:SegregationOfDutiesRule a owl:Class ;
+    skos:prefLabel "Segregation of Duties Rule" ;
+    skos:altLabel "SoD Rule" ;
+    skos:definition "A control preventing incompatible responsibilities from being assigned to the same employee." .
+
+:FitAndProperAssessment a owl:Class ;
+    skos:prefLabel "Fit and Proper Assessment" ;
+    skos:altLabel "Regulated Role Assessment" ;
+    skos:definition "An assessment recording whether an employee satisfies regulated-role requirements." .
+
+:grantedToEmployee a owl:ObjectProperty ;
+    rdfs:label "granted to employee" ;
+    rdfs:domain :DelegatedAuthority ;
+    rdfs:range base:Employee ;
+    skos:definition "The employee who holds the delegated approval authority." .
+
+:appliesToPosition a owl:ObjectProperty ;
+    rdfs:label "applies to position" ;
+    rdfs:domain :DelegatedAuthority ;
+    rdfs:range base:Position ;
+    skos:definition "The position to which the delegated authority is attached." .
+
+:evaluatesRegulatedPosition a owl:ObjectProperty ;
+    rdfs:label "evaluates regulated position" ;
+    rdfs:domain :FitAndProperAssessment ;
+    rdfs:range :RegulatedPosition ;
+    skos:definition "The regulated position evaluated by the fit-and-proper assessment." .
+
+:authorityLimit a owl:DatatypeProperty ;
+    rdfs:label "authority limit" ;
+    rdfs:domain :DelegatedAuthority ;
+    rdfs:range xsd:decimal .
+
+:assessmentStatus a owl:DatatypeProperty ;
+    rdfs:label "assessment status" ;
+    rdfs:domain :FitAndProperAssessment ;
+    rdfs:range xsd:string .
+
+:BankHRComplianceRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank HR Compliance Role" ;
+    skos:definition "Person role that manages regulated positions, delegated authorities, and fit-and-proper evidence. Bearer: person." .
+
+:FitAndProperAssessmentShape a sh:NodeShape ;
+    sh:targetClass :FitAndProperAssessment ;
+    sh:property [ sh:path :assessmentStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "pending" "satisfied" "not_satisfied" "expired" ) ] .

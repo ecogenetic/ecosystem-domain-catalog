@@ -1,0 +1,79 @@
+@prefix :     <https://ecosystemcode.com/ontology/cms/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/cms#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cms/banking> a owl:Ontology ;
+    rdfs:label "CMS Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the CMS domain." .
+
+:RegulatedDocument a owl:Class ;
+    rdfs:subClassOf base:Content ;
+    skos:prefLabel "Regulated Document" ;
+    skos:altLabel "Controlled Banking Document" ;
+    skos:definition "Banking content subject to approval, retention, or disclosure controls." .
+
+:KYCArtifact a owl:Class ;
+    rdfs:subClassOf :RegulatedDocument ;
+    skos:prefLabel "KYC Artifact" ;
+    skos:altLabel "Identity Evidence" ;
+    skos:definition "A document or media artefact supporting KYC verification." .
+
+:CustomerStatement a owl:Class ;
+    rdfs:subClassOf :RegulatedDocument ;
+    skos:prefLabel "Customer Statement" ;
+    skos:altLabel "Account Statement" ;
+    skos:definition "A periodic statement delivered to a customer." .
+
+:LegalHold a owl:Class ;
+    skos:prefLabel "Legal Hold" ;
+    skos:altLabel "Preservation Hold" ;
+    skos:definition "A preservation instruction preventing eligible content from disposal." .
+
+:kycArtifactForParty a owl:ObjectProperty ;
+    rdfs:label "kyc artifact for party" ;
+    rdfs:domain :KYCArtifact ;
+    rdfs:range bank:Party ;
+    skos:definition "The banking party whose verification the artifact supports." .
+
+:statementForAccount a owl:ObjectProperty ;
+    rdfs:label "statement for account" ;
+    rdfs:domain :CustomerStatement ;
+    rdfs:range bank:FinancialAccount ;
+    skos:definition "The account covered by the statement." .
+
+:legalHoldPreserves a owl:ObjectProperty ;
+    rdfs:label "legal hold preserves" ;
+    rdfs:domain :LegalHold ;
+    rdfs:range :RegulatedDocument ;
+    skos:definition "The regulated document preserved by the legal hold." .
+
+:documentReference a owl:DatatypeProperty ;
+    rdfs:label "document reference" ;
+    rdfs:domain :RegulatedDocument ;
+    rdfs:range xsd:string .
+
+:retentionUntil a owl:DatatypeProperty ;
+    rdfs:label "retention until" ;
+    rdfs:domain :RegulatedDocument ;
+    rdfs:range xsd:date .
+
+:holdReference a owl:DatatypeProperty ;
+    rdfs:label "hold reference" ;
+    rdfs:domain :LegalHold ;
+    rdfs:range xsd:string .
+
+:BankRecordsManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Records Manager" ;
+    skos:altLabel "Bank Records Manager Role" ;
+    skos:definition "Governs regulated banking content, retention, legal holds, and approved disclosures. Bearer: person." .
+
+:RegulatedDocumentShape a sh:NodeShape ;
+    sh:targetClass :RegulatedDocument ;
+    sh:property [ sh:path :documentReference ; sh:datatype xsd:string ; sh:minCount 1 ] .

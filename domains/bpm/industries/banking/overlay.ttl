@@ -1,0 +1,62 @@
+@prefix :     <https://ecosystemcode.com/ontology/bpm/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/bpm#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bpm/banking> a owl:Ontology ;
+    rdfs:label "BPM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the BPM domain." .
+
+:BankingCase a owl:Class ;
+    rdfs:subClassOf base:Case ;
+    skos:prefLabel "Banking Case" ;
+    skos:altLabel "Banking Process Instance" ;
+    skos:definition "A regulated banking workflow case with traceable decisions and evidence." .
+
+
+:KYCOnboardingCase a owl:Class ;
+    rdfs:subClassOf :BankingCase ;
+    skos:prefLabel "KYC Onboarding Case" ;
+    skos:altLabel "Client Onboarding Case" ;
+    skos:definition "A banking case that coordinates KYC-gated onboarding." .
+
+:RegulatorySLA a owl:Class ;
+    rdfs:subClassOf base:SLA ;
+    skos:prefLabel "Regulatory SLA" ;
+    skos:altLabel "Regulated Deadline" ;
+    skos:definition "A service-level rule derived from a regulatory or policy deadline." .
+
+:requiresApproval a owl:ObjectProperty ;
+    rdfs:label "requires approval" ;
+    rdfs:domain :BankingCase ;
+    rdfs:range bank:MakerCheckerApproval ;
+    skos:definition "Links a banking case to a maker-checker approval." .
+
+:onboardsParty a owl:ObjectProperty ;
+    rdfs:label "onboards party" ;
+    rdfs:domain :KYCOnboardingCase ;
+    rdfs:range bank:Party ;
+    skos:definition "The banking party being onboarded." .
+
+:governedByRegulatorySLA a owl:ObjectProperty ;
+    rdfs:label "governed by regulatory SLA" ;
+    rdfs:domain :BankingCase ;
+    rdfs:range :RegulatorySLA ;
+    skos:definition "Links a banking case to an applicable regulatory SLA." .
+
+:BankCaseManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Case Manager" ;
+    skos:altLabel "Bank Case Manager Role" ;
+    skos:definition "Coordinates regulated banking cases, exceptions, and escalations. Bearer: person." .
+
+:MakerCheckerApprovalShape a sh:NodeShape ;
+    sh:targetClass bank:MakerCheckerApproval ;
+    sh:property [ sh:path bank:makerIdentifier ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path bank:checkerIdentifier ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path bank:approvalStatus ; sh:datatype xsd:string ; sh:minCount 1 ] .

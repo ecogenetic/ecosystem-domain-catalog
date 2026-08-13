@@ -7,7 +7,7 @@
 
 <https://ecosystemcode.com/ontology/industry/banking> a owl:Ontology ;
     rdfs:label "Banking Industry Common Concepts" ;
-    rdfs:comment "Shared banking concepts reused across domain overlays: parties, KYC, mandates, and relationship management roles." .
+    rdfs:comment "Shared banking concepts reused across domain overlays: parties, KYC, mandates, agreements, financial accounts, compliance decisions, policy versions, and maker-checker approvals." .
 
 :Party a owl:Class ;
     skos:prefLabel "Party" ;
@@ -40,6 +40,16 @@
     skos:prefLabel "Compliance Decision" ;
     skos:definition "An auditable KYC, AML, sanctions or conduct decision made under a named policy version." .
 
+:PolicyVersion a owl:Class ;
+    skos:prefLabel "Policy Version" ;
+    skos:altLabel "Decision Policy Version", "Control Policy Version" ;
+    skos:definition "An immutable version of a policy, rule set, or control standard used to make or govern a banking decision." .
+
+:MakerCheckerApproval a owl:Class ;
+    skos:prefLabel "Maker Checker Approval" ;
+    skos:altLabel "Four Eyes Approval", "Dual Control Approval" ;
+    skos:definition "An auditable approval recording distinct maker and checker identities for a controlled banking action." .
+
 :kycProfileOfParty a owl:ObjectProperty ;
     rdfs:label "kyc profile of party" ;
     rdfs:domain :KYCProfile ;
@@ -53,22 +63,65 @@
     skos:definition "The party on whose behalf the mandate authorises action." .
 
 :agreementHeldByParty a owl:ObjectProperty ;
+    rdfs:label "agreement held by party" ;
     rdfs:domain :FinancialProductAgreement ;
-    rdfs:range :Party .
+    rdfs:range :Party ;
+    skos:definition "Links a financial product agreement to the party that holds it." .
 
 :accountUnderAgreement a owl:ObjectProperty ;
+    rdfs:label "account under agreement" ;
     rdfs:domain :FinancialAccount ;
-    rdfs:range :FinancialProductAgreement .
+    rdfs:range :FinancialProductAgreement ;
+    skos:definition "Links a ledger-backed financial account to its governing product agreement." .
 
 :complianceDecisionForParty a owl:ObjectProperty ;
+    rdfs:label "compliance decision for party" ;
     rdfs:domain :ComplianceDecision ;
-    rdfs:range :Party .
+    rdfs:range :Party ;
+    skos:definition "Links a compliance decision to the party it evaluates." .
+
+:decisionUsesPolicyVersion a owl:ObjectProperty ;
+    rdfs:label "decision uses policy version" ;
+    rdfs:domain :ComplianceDecision ;
+    rdfs:range :PolicyVersion ;
+    skos:definition "The immutable policy version used to make the compliance decision." .
+
+:approvalUsesPolicyVersion a owl:ObjectProperty ;
+    rdfs:label "approval uses policy version" ;
+    rdfs:domain :MakerCheckerApproval ;
+    rdfs:range :PolicyVersion ;
+    skos:definition "The policy version governing the controlled approval." .
 
 :kycStatus a owl:DatatypeProperty ;
     rdfs:label "kyc status" ;
     rdfs:domain :KYCProfile ;
     rdfs:range  xsd:string ;
     skos:definition "Verification state: pending, verified, rejected, expired." .
+
+:policyVersionId a owl:DatatypeProperty ;
+    rdfs:label "policy version id" ;
+    rdfs:domain :PolicyVersion ;
+    rdfs:range xsd:string .
+
+:policyEffectiveFrom a owl:DatatypeProperty ;
+    rdfs:label "policy effective from" ;
+    rdfs:domain :PolicyVersion ;
+    rdfs:range xsd:dateTime .
+
+:makerIdentifier a owl:DatatypeProperty ;
+    rdfs:label "maker identifier" ;
+    rdfs:domain :MakerCheckerApproval ;
+    rdfs:range xsd:string .
+
+:checkerIdentifier a owl:DatatypeProperty ;
+    rdfs:label "checker identifier" ;
+    rdfs:domain :MakerCheckerApproval ;
+    rdfs:range xsd:string .
+
+:approvalStatus a owl:DatatypeProperty ;
+    rdfs:label "approval status" ;
+    rdfs:domain :MakerCheckerApproval ;
+    rdfs:range xsd:string .
 
 :RelationshipManagerRole a owl:Class ;
     rdfs:subClassOf bfo:0000023 ;

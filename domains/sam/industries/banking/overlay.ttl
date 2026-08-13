@@ -1,0 +1,57 @@
+@prefix :     <https://ecosystemcode.com/ontology/sam/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/sam#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/sam/banking> a owl:Ontology ;
+    rdfs:label "SAM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the SAM domain." .
+
+:DigitalBankingServiceAlarm a owl:Class ;
+    rdfs:subClassOf base:ServiceAlarm ;
+    skos:prefLabel "Digital Banking Service Alarm" ;
+    skos:altLabel "Banking Service Alarm" ;
+    skos:definition "A service alarm raised for mobile, web, payments, cards, or another digital banking service." .
+
+:CustomerTransactionImpact a owl:Class ;
+    rdfs:subClassOf base:CustomerImpact ;
+    skos:prefLabel "Customer Transaction Impact" ;
+    skos:altLabel "Transaction Impact" ;
+    skos:definition "Customer impact describing failed, delayed, duplicated, or degraded customer transactions." .
+
+:CriticalServiceSLOViolation a owl:Class ;
+    rdfs:subClassOf base:SLAViolation ;
+    skos:prefLabel "Critical Service SLO Violation" ;
+    skos:altLabel "Critical Banking SLA Breach" ;
+    skos:definition "An SLA or service-objective violation against a critical banking service." .
+
+:causesCustomerImpact a owl:ObjectProperty ;
+    rdfs:label "causes customer impact" ;
+    rdfs:domain :DigitalBankingServiceAlarm ;
+    rdfs:range :CustomerTransactionImpact ;
+    skos:definition "The customer transaction impact caused by the digital banking service alarm." .
+
+:relatesToAlarm a owl:ObjectProperty ;
+    rdfs:label "relates to alarm" ;
+    rdfs:domain :CriticalServiceSLOViolation ;
+    rdfs:range :DigitalBankingServiceAlarm ;
+    skos:definition "The digital banking service alarm associated with the SLO violation." .
+
+:impactedTransactionCount a owl:DatatypeProperty ;
+    rdfs:label "impacted transaction count" ;
+    rdfs:domain :CustomerTransactionImpact ;
+    rdfs:range xsd:integer .
+
+:DigitalBankingAssuranceRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Digital Banking Assurance Role" ;
+    skos:definition "Person role that monitors service health, customer transaction impact, and escalation into ITSM. Bearer: person." .
+
+:CustomerTransactionImpactShape a sh:NodeShape ;
+    sh:targetClass :CustomerTransactionImpact ;
+    sh:property [ sh:path :impactedTransactionCount ; sh:datatype xsd:integer ; sh:minCount 1 ] .

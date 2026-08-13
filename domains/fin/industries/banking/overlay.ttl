@@ -1,5 +1,6 @@
 @prefix :     <https://ecosystemcode.com/ontology/fin/banking#> .
 @prefix base: <https://ecosystemcode.com/ontology/fin#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
@@ -9,58 +10,112 @@
 
 <https://ecosystemcode.com/ontology/fin/banking> a owl:Ontology ;
     rdfs:label "FIN Banking Overlay" ;
-    rdfs:comment "Industry overlay specializing fin for banking." .
+    rdfs:comment "Banking specialization of FIN for payment rails, deposit servicing, authorisation, clearing, settlement, returns, and AML alerts." .
 
-:PaymentRailInstruction a owl:Class ;
-    skos:prefLabel "Payment Rail Instruction" ;
-    skos:definition "An instruction to move funds over a payment rail (instant, RTGS, card)." .
-
-:WalletLedgerEntry a owl:Class ;
-    skos:prefLabel "Wallet Ledger Entry" ;
-    skos:definition "A ledger entry in a customer wallet or payment account." .
-
-:AMLAlert a owl:Class ;
-    skos:prefLabel "AMLAlert" ;
-    skos:definition "An alert raised by transaction monitoring for investigation." .
+:PaymentRailInstruction a owl:Class ; skos:prefLabel "Payment Rail Instruction" ; skos:definition "An instruction to move funds over a payment rail." .
+:WalletLedgerEntry a owl:Class ; skos:prefLabel "Wallet Ledger Entry" ; skos:definition "A ledger entry in a customer wallet or payment account." .
+:AMLAlert a owl:Class ; skos:prefLabel "AML Alert" ; skos:definition "An alert raised by transaction monitoring for investigation." .
+:Beneficiary a owl:Class ; skos:prefLabel "Beneficiary" ; skos:definition "A party or external payee designated to receive funds." .
+:PaymentOrder a owl:Class ; skos:prefLabel "Payment Order" ; skos:altLabel "Payment Instruction" ; skos:definition "A customer or bank instruction to move funds from one account to a beneficiary." .
+:PaymentAuthorisation a owl:Class ; skos:prefLabel "Payment Authorisation" ; skos:altLabel "Payment Approval" ; skos:definition "An auditable approval decision for a payment order." .
+:ClearingInstruction a owl:Class ; skos:prefLabel "Clearing Instruction" ; skos:definition "The instruction or message submitted to a clearing mechanism." .
+:SettlementRecord a owl:Class ; skos:prefLabel "Settlement Record" ; skos:definition "The record confirming final settlement of a payment obligation." .
+:PaymentReturn a owl:Class ; skos:prefLabel "Payment Return" ; skos:altLabel "Payment Reversal" ; skos:definition "A return or reversal of a previously submitted payment." .
+:DepositAccount a owl:Class ; rdfs:subClassOf base:Account, bank:FinancialAccount ; skos:prefLabel "Deposit Account" ; skos:altLabel "Current Account", "Savings Account" ; skos:definition "A financial account specialized for deposit servicing." .
+:AccountHold a owl:Class ; skos:prefLabel "Account Hold" ; skos:altLabel "Funds Hold" ; skos:definition "A controlled restriction reserving or blocking an amount on a deposit account." .
+:InterestAccrual a owl:Class ; skos:prefLabel "Interest Accrual" ; skos:definition "Interest accrued or credited for a deposit account and period." .
 
 :relatedToWalletLedgerEntry a owl:ObjectProperty ;
     rdfs:label "related to wallet ledger entry" ;
     rdfs:domain :PaymentRailInstruction ;
-    rdfs:range  :WalletLedgerEntry ;
-    skos:definition "Associates PaymentRailInstruction with WalletLedgerEntry in this industry overlay." .
+    rdfs:range :WalletLedgerEntry ;
+    skos:definition "Associates a payment-rail instruction with a wallet ledger entry." .
+:debitsAccount a owl:ObjectProperty ;
+    rdfs:label "debits account" ;
+    rdfs:domain :PaymentOrder ;
+    rdfs:range :DepositAccount ;
+    skos:definition "The deposit account debited by the payment order." .
+:paysBeneficiary a owl:ObjectProperty ;
+    rdfs:label "pays beneficiary" ;
+    rdfs:domain :PaymentOrder ;
+    rdfs:range :Beneficiary ;
+    skos:definition "The beneficiary that receives funds under the payment order." .
+:authorisesPayment a owl:ObjectProperty ;
+    rdfs:label "authorises payment" ;
+    rdfs:domain :PaymentAuthorisation ;
+    rdfs:range :PaymentOrder ;
+    skos:definition "The payment order approved or rejected by the authorisation." .
+:clearsPayment a owl:ObjectProperty ;
+    rdfs:label "clears payment" ;
+    rdfs:domain :ClearingInstruction ;
+    rdfs:range :PaymentOrder ;
+    skos:definition "The payment order submitted to clearing." .
+:settlesPayment a owl:ObjectProperty ;
+    rdfs:label "settles payment" ;
+    rdfs:domain :SettlementRecord ;
+    rdfs:range :PaymentOrder ;
+    skos:definition "The payment order confirmed as settled." .
+:reversesPayment a owl:ObjectProperty ;
+    rdfs:label "reverses payment" ;
+    rdfs:domain :PaymentReturn ;
+    rdfs:range :PaymentOrder ;
+    skos:definition "The original payment order reversed or returned." .
+:restrictsAccount a owl:ObjectProperty ;
+    rdfs:label "restricts account" ;
+    rdfs:domain :AccountHold ;
+    rdfs:range :DepositAccount ;
+    skos:definition "The deposit account restricted by the hold." .
+:accruesForAccount a owl:ObjectProperty ;
+    rdfs:label "accrues for account" ;
+    rdfs:domain :InterestAccrual ;
+    rdfs:range :DepositAccount ;
+    skos:definition "The deposit account for which interest is accrued." .
+:beneficiaryParty a owl:ObjectProperty ;
+    rdfs:label "beneficiary party" ;
+    rdfs:domain :Beneficiary ;
+    rdfs:range bank:Party ;
+    skos:definition "The banking party that is the designated payee." .
 
-:paymentRailInstructionName a owl:DatatypeProperty ;
-    rdfs:label "payment rail instruction name" ;
-    rdfs:domain :PaymentRailInstruction ;
-    rdfs:range  xsd:string .
-
-:walletLedgerEntryName a owl:DatatypeProperty ;
-    rdfs:label "wallet ledger entry name" ;
-    rdfs:domain :WalletLedgerEntry ;
-    rdfs:range  xsd:string .
-
-:aMLAlertName a owl:DatatypeProperty ;
-    rdfs:label "amlalert name" ;
-    rdfs:domain :AMLAlert ;
-    rdfs:range  xsd:string .
+:paymentRailInstructionName a owl:DatatypeProperty ; rdfs:label "payment rail instruction name" ; rdfs:domain :PaymentRailInstruction ; rdfs:range xsd:string .
+:walletLedgerEntryName a owl:DatatypeProperty ; rdfs:label "wallet ledger entry name" ; rdfs:domain :WalletLedgerEntry ; rdfs:range xsd:string .
+:aMLAlertName a owl:DatatypeProperty ; rdfs:label "AML alert name" ; rdfs:domain :AMLAlert ; rdfs:range xsd:string .
+:beneficiaryReference a owl:DatatypeProperty ; rdfs:label "beneficiary reference" ; rdfs:domain :Beneficiary ; rdfs:range xsd:string .
+:paymentOrderReference a owl:DatatypeProperty ; rdfs:label "payment order reference" ; rdfs:domain :PaymentOrder ; rdfs:range xsd:string .
+:paymentStatus a owl:DatatypeProperty ; rdfs:label "payment status" ; rdfs:domain :PaymentOrder ; rdfs:range xsd:string .
+:paymentAmount a owl:DatatypeProperty ; rdfs:label "payment amount" ; rdfs:domain :PaymentOrder ; rdfs:range xsd:decimal .
+:authorisationStatus a owl:DatatypeProperty ; rdfs:label "authorisation status" ; rdfs:domain :PaymentAuthorisation ; rdfs:range xsd:string .
+:settlementReference a owl:DatatypeProperty ; rdfs:label "settlement reference" ; rdfs:domain :SettlementRecord ; rdfs:range xsd:string .
+:returnReason a owl:DatatypeProperty ; rdfs:label "return reason" ; rdfs:domain :PaymentReturn ; rdfs:range xsd:string .
+:holdReference a owl:DatatypeProperty ; rdfs:label "hold reference" ; rdfs:domain :AccountHold ; rdfs:range xsd:string .
+:holdAmount a owl:DatatypeProperty ; rdfs:label "hold amount" ; rdfs:domain :AccountHold ; rdfs:range xsd:decimal .
+:holdStatus a owl:DatatypeProperty ; rdfs:label "hold status" ; rdfs:domain :AccountHold ; rdfs:range xsd:string .
+:accrualDate a owl:DatatypeProperty ; rdfs:label "accrual date" ; rdfs:domain :InterestAccrual ; rdfs:range xsd:date .
+:accrualAmount a owl:DatatypeProperty ; rdfs:label "accrual amount" ; rdfs:domain :InterestAccrual ; rdfs:range xsd:decimal .
 
 :PaymentsOpsAnalystRole a owl:Class ;
     rdfs:subClassOf bfo:0000023 ;
     skos:prefLabel "Payments Operations Analyst" ;
-    skos:definition "Person role. Monitors rails, investigates AML alerts, and reconciles wallet ledgers. Bearer: person." .
+    skos:definition "Person role that monitors payment rails, investigates AML alerts, and reconciles wallet and settlement records. Bearer: person." .
 
-:PaymentRailInstructionShape a sh:NodeShape ;
-    sh:targetClass :PaymentRailInstruction ;
-    sh:property [
-        sh:path :paymentRailInstructionName ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-    ] .
+:DepositOperationsAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Deposit Operations Analyst" ;
+    skos:definition "Person role that manages deposit holds, interest accruals, payment exceptions, and servicing events. Bearer: person." .
 
-:WalletLedgerEntryShape a sh:NodeShape ;
-    sh:targetClass :WalletLedgerEntry ;
-    sh:property [
-        sh:path :walletLedgerEntryName ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-    ] .
+:PaymentOrderShape a sh:NodeShape ;
+    sh:targetClass :PaymentOrder ;
+    sh:property [ sh:path :paymentOrderReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :debitsAccount ; sh:class :DepositAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :paysBeneficiary ; sh:class :Beneficiary ; sh:minCount 1 ] ;
+    sh:property [ sh:path :paymentStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "created" "authorised" "submitted" "cleared" "settled" "returned" "rejected" ) ] .
+
+:DepositAccountShape a sh:NodeShape ;
+    sh:targetClass :DepositAccount ;
+    sh:property [ sh:path base:accountNumber ; sh:datatype xsd:string ; sh:minCount 1 ] .
+
+:AccountHoldShape a sh:NodeShape ;
+    sh:targetClass :AccountHold ;
+    sh:property [ sh:path :restrictsAccount ; sh:class :DepositAccount ; sh:minCount 1 ] ;
+    sh:property [ sh:path :holdStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "placed" "active" "released" "expired" ) ] .

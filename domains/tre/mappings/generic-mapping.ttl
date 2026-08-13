@@ -1,0 +1,68 @@
+# Generic structured-source mapping for TRE
+# Replace the example legacy namespace with the source-system namespace.
+
+@prefix tre:    <https://ecosystemcode.com/ontology/tre#> .
+@prefix legacy: <https://example.com/legacy/tre#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# Class mappings
+#################################################################
+
+legacy:treasury_positions owl:equivalentClass tre:TreasuryPosition .
+legacy:funding_sources owl:equivalentClass tre:FundingSource .
+legacy:liquidity_buffers owl:equivalentClass tre:LiquidityBuffer .
+legacy:maturity_buckets owl:equivalentClass tre:MaturityBucket .
+legacy:interest_rate_risk_positions owl:equivalentClass tre:InterestRateRiskPosition .
+legacy:funds_transfer_prices owl:equivalentClass tre:FundsTransferPrice .
+legacy:treasury_limits owl:equivalentClass tre:TreasuryLimit .
+legacy:treasury_deals owl:equivalentClass tre:TreasuryDeal .
+
+#################################################################
+# Property mappings
+#################################################################
+
+legacy:position_reference rdfs:subPropertyOf tre:positionReference .
+legacy:as_of_date rdfs:subPropertyOf tre:asOfDate .
+legacy:amount rdfs:subPropertyOf tre:amount .
+legacy:currency_code rdfs:subPropertyOf tre:currencyCode .
+legacy:funding_reference rdfs:subPropertyOf tre:fundingReference .
+legacy:funding_type rdfs:subPropertyOf tre:fundingType .
+legacy:maturity_date rdfs:subPropertyOf tre:maturityDate .
+legacy:buffer_reference rdfs:subPropertyOf tre:bufferReference .
+legacy:eligible_amount rdfs:subPropertyOf tre:eligibleAmount .
+legacy:bucket_name rdfs:subPropertyOf tre:bucketName .
+legacy:start_days rdfs:subPropertyOf tre:startDays .
+legacy:end_days rdfs:subPropertyOf tre:endDays .
+legacy:risk_measure rdfs:subPropertyOf tre:riskMeasure .
+legacy:risk_value rdfs:subPropertyOf tre:riskValue .
+legacy:rate_reference rdfs:subPropertyOf tre:rateReference .
+legacy:transfer_rate rdfs:subPropertyOf tre:transferRate .
+legacy:effective_date rdfs:subPropertyOf tre:effectiveDate .
+legacy:limit_reference rdfs:subPropertyOf tre:limitReference .
+legacy:limit_amount rdfs:subPropertyOf tre:limitAmount .
+legacy:deal_reference rdfs:subPropertyOf tre:dealReference .
+legacy:deal_status rdfs:subPropertyOf tre:dealStatus .
+legacy:trade_date rdfs:subPropertyOf tre:tradeDate .
+legacy:settlement_date rdfs:subPropertyOf tre:settlementDate .
+
+#################################################################
+# Relationship mappings
+#################################################################
+
+legacy:funded_by rdfs:subPropertyOf tre:fundedBy ;
+    rdfs:domain legacy:treasury_positions ; rdfs:range legacy:funding_sources .
+
+legacy:assigned_maturity_bucket rdfs:subPropertyOf tre:assignedMaturityBucket ;
+    rdfs:domain legacy:treasury_positions ; rdfs:range legacy:maturity_buckets .
+
+legacy:priced_by rdfs:subPropertyOf tre:pricedBy ;
+    rdfs:domain legacy:interest_rate_risk_positions ; rdfs:range legacy:funds_transfer_prices .
+
+legacy:constrains_deal rdfs:subPropertyOf tre:constrainsDeal ;
+    rdfs:domain legacy:treasury_limits ; rdfs:range legacy:treasury_deals .
+
+legacy:changes_position rdfs:subPropertyOf tre:changesPosition ;
+    rdfs:domain legacy:treasury_deals ; rdfs:range legacy:treasury_positions .

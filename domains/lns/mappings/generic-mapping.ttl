@@ -1,0 +1,72 @@
+# Generic structured-source mapping for LNS
+# Replace the example legacy namespace with the source-system namespace.
+
+@prefix lns:    <https://ecosystemcode.com/ontology/lns#> .
+@prefix legacy: <https://example.com/legacy/lns#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# Class mappings
+#################################################################
+
+legacy:loan_accounts owl:equivalentClass lns:LoanAccount .
+legacy:repayment_schedules owl:equivalentClass lns:RepaymentSchedule .
+legacy:repayment_installments owl:equivalentClass lns:RepaymentInstallment .
+legacy:interest_accruals owl:equivalentClass lns:InterestAccrual .
+legacy:collateral_links owl:equivalentClass lns:CollateralLink .
+legacy:restructure_arrangements owl:equivalentClass lns:RestructureArrangement .
+legacy:settlement_quotes owl:equivalentClass lns:SettlementQuote .
+legacy:loan_servicing_events owl:equivalentClass lns:LoanServicingEvent .
+
+#################################################################
+# Property mappings
+#################################################################
+
+legacy:loan_account_number rdfs:subPropertyOf lns:loanAccountNumber .
+legacy:principal_balance rdfs:subPropertyOf lns:principalBalance .
+legacy:loan_status rdfs:subPropertyOf lns:loanStatus .
+legacy:schedule_version rdfs:subPropertyOf lns:scheduleVersion .
+legacy:effective_date rdfs:subPropertyOf lns:effectiveDate .
+legacy:due_date rdfs:subPropertyOf lns:dueDate .
+legacy:principal_due rdfs:subPropertyOf lns:principalDue .
+legacy:interest_due rdfs:subPropertyOf lns:interestDue .
+legacy:installment_status rdfs:subPropertyOf lns:installmentStatus .
+legacy:accrual_date rdfs:subPropertyOf lns:accrualDate .
+legacy:accrued_amount rdfs:subPropertyOf lns:accruedAmount .
+legacy:interest_rate rdfs:subPropertyOf lns:interestRate .
+legacy:collateral_reference rdfs:subPropertyOf lns:collateralReference .
+legacy:lien_priority rdfs:subPropertyOf lns:lienPriority .
+legacy:restructure_reference rdfs:subPropertyOf lns:restructureReference .
+legacy:restructure_status rdfs:subPropertyOf lns:restructureStatus .
+legacy:quote_reference rdfs:subPropertyOf lns:quoteReference .
+legacy:settlement_amount rdfs:subPropertyOf lns:settlementAmount .
+legacy:valid_until rdfs:subPropertyOf lns:validUntil .
+legacy:event_type rdfs:subPropertyOf lns:eventType .
+legacy:occurred_at rdfs:subPropertyOf lns:occurredAt .
+
+#################################################################
+# Relationship mappings
+#################################################################
+
+legacy:has_repayment_schedule rdfs:subPropertyOf lns:hasRepaymentSchedule ;
+    rdfs:domain legacy:loan_accounts ; rdfs:range legacy:repayment_schedules .
+
+legacy:comprises_installment rdfs:subPropertyOf lns:comprisesInstallment ;
+    rdfs:domain legacy:repayment_schedules ; rdfs:range legacy:repayment_installments .
+
+legacy:accrues_on rdfs:subPropertyOf lns:accruesOn ;
+    rdfs:domain legacy:interest_accruals ; rdfs:range legacy:loan_accounts .
+
+legacy:secures_loan rdfs:subPropertyOf lns:securesLoan ;
+    rdfs:domain legacy:collateral_links ; rdfs:range legacy:loan_accounts .
+
+legacy:modifies_loan rdfs:subPropertyOf lns:modifiesLoan ;
+    rdfs:domain legacy:restructure_arrangements ; rdfs:range legacy:loan_accounts .
+
+legacy:settles_loan rdfs:subPropertyOf lns:settlesLoan ;
+    rdfs:domain legacy:settlement_quotes ; rdfs:range legacy:loan_accounts .
+
+legacy:records_event_for rdfs:subPropertyOf lns:recordsEventFor ;
+    rdfs:domain legacy:loan_servicing_events ; rdfs:range legacy:loan_accounts .
