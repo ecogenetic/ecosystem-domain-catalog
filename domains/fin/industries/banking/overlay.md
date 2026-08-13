@@ -1,21 +1,35 @@
 # Banking addendum — FIN
 
 ## Additional concepts
-
-- **PaymentRailInstruction** — An instruction to move funds over a payment rail (instant, RTGS, card).
-- **WalletLedgerEntry** — A ledger entry in a customer wallet or payment account.
-- **AMLAlert** — An alert raised by transaction monitoring for investigation.
+- **PaymentRailInstruction** — an instruction to move funds over a payment rail.
+- **WalletLedgerEntry** — a ledger entry in a customer wallet or payment account.
+- **AMLAlert** — an alert raised by transaction monitoring for investigation.
+- **Beneficiary** — a party or external payee designated to receive funds.
+- **PaymentOrder** — a customer or bank instruction to move funds from one account to a beneficiary.
+- **PaymentAuthorisation** — an auditable approval decision for a payment order.
+- **ClearingInstruction** — the instruction or message submitted to a clearing mechanism.
+- **SettlementRecord** — the record confirming final settlement of a payment obligation.
+- **PaymentReturn** — a return or reversal of a previously submitted payment.
+- **DepositAccount** — a FinancialAccount specialized for deposit servicing.
+- **AccountHold** — a controlled restriction reserving or blocking an amount on a deposit account.
+- **InterestAccrual** — interest accrued or credited for a deposit account and period.
 
 ## Additional relationships
-
-- PaymentRailInstruction relatesToContext within the FIN base model (many-to-one).
-- WalletLedgerEntry is recordedAgainst operational records in this domain (many-to-one).
+- PaymentOrder debitsAccount DepositAccount (many-to-one)
+- PaymentOrder paysBeneficiary Beneficiary (many-to-one)
+- PaymentAuthorisation authorisesPayment PaymentOrder (many-to-one)
+- ClearingInstruction clearsPayment PaymentOrder (many-to-one)
+- SettlementRecord settlesPayment PaymentOrder (many-to-one)
+- PaymentReturn reversesPayment PaymentOrder (many-to-one)
+- AccountHold restrictsAccount DepositAccount (many-to-one)
+- InterestAccrual accruesForAccount DepositAccount (many-to-one)
 
 ## Additional roles
-
-- **Payments Operations Analyst** — Monitors rails, investigates AML alerts, and reconciles wallet ledgers.
+- **Payments Operations Analyst** — monitors rails, investigates AML alerts, and reconciles wallet and settlement records.
+- **Deposit Operations Analyst** — manages deposit account holds, interest accruals, payment exceptions, and servicing events.
 
 ## Regulatory notes
-
-- AML alerts must be dispositioned with an audit trail before funds are released where required.
-- Wallet ledger entries are double-entry consistent with the payment instruction.
+- KYC/AML and sanctions decisions must gate payments where policy requires it.
+- Maker-checker applies to high-risk payments, limit changes, and account restrictions where required.
+- Payment corrections should use reversal or compensating records instead of destructive edits.
+- Deposit servicing should preserve immutable rate, fee, hold, accrual, and statement history.

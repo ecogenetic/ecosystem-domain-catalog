@@ -1,0 +1,89 @@
+@prefix : <https://ecosystemcode.com/ontology/lns#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/lns> a owl:Ontology ;
+    rdfs:label "LNS Domain Ontology" ;
+    rdfs:comment "Seed ontology for loan servicing after origination." .
+
+:LoanAccount a owl:Class ; skos:prefLabel "Loan Account" ; skos:altLabel "Serviced Loan" ; skos:definition "The operational servicing record for a booked loan." .
+:RepaymentSchedule a owl:Class ; skos:prefLabel "Repayment Schedule" ; skos:altLabel "Amortization Schedule" ; skos:definition "The dated schedule of expected repayments for a loan account." .
+:RepaymentInstallment a owl:Class ; skos:prefLabel "Repayment Installment" ; skos:altLabel "Instalment" ; skos:definition "One scheduled amount due under a repayment schedule." .
+:InterestAccrual a owl:Class ; skos:prefLabel "Interest Accrual" ; skos:altLabel "Accrued Interest" ; skos:definition "Interest accrued for a period against a loan account." .
+:CollateralLink a owl:Class ; skos:prefLabel "Collateral Link" ; skos:altLabel "Security Reference" ; skos:definition "A reference linking a loan account to collateral managed or recorded elsewhere." .
+:RestructureArrangement a owl:Class ; skos:prefLabel "Restructure Arrangement" ; skos:altLabel "Loan Modification" ; skos:definition "An approved change to repayment terms for a stressed or modified loan." .
+:SettlementQuote a owl:Class ; skos:prefLabel "Settlement Quote" ; skos:altLabel "Payoff Quote" ; skos:definition "A time-bounded amount required to settle the loan." .
+:LoanServicingEvent a owl:Class ; skos:prefLabel "Loan Servicing Event" ; skos:altLabel "Servicing Event" ; skos:definition "An immutable record of a material loan servicing event." .
+
+:hasRepaymentSchedule a owl:ObjectProperty ;
+    rdfs:label "has repayment schedule" ;
+    rdfs:domain :LoanAccount ;
+    rdfs:range :RepaymentSchedule ;
+    skos:definition "Associates a loan account with a repayment schedule." .
+:comprisesInstallment a owl:ObjectProperty ;
+    rdfs:label "comprises installment" ;
+    rdfs:domain :RepaymentSchedule ;
+    rdfs:range :RepaymentInstallment ;
+    skos:definition "Associates a repayment schedule with one of its instalments." .
+:accruesOn a owl:ObjectProperty ;
+    rdfs:label "accrues on" ;
+    rdfs:domain :InterestAccrual ;
+    rdfs:range :LoanAccount ;
+    skos:definition "Associates an interest accrual with the loan account it is calculated against." .
+:securesLoan a owl:ObjectProperty ;
+    rdfs:label "secures loan" ;
+    rdfs:domain :CollateralLink ;
+    rdfs:range :LoanAccount ;
+    skos:definition "Associates a collateral reference with the loan account it secures." .
+:modifiesLoan a owl:ObjectProperty ;
+    rdfs:label "modifies loan" ;
+    rdfs:domain :RestructureArrangement ;
+    rdfs:range :LoanAccount ;
+    skos:definition "Associates a restructure arrangement with the loan account whose terms it changes." .
+:settlesLoan a owl:ObjectProperty ;
+    rdfs:label "settles loan" ;
+    rdfs:domain :SettlementQuote ;
+    rdfs:range :LoanAccount ;
+    skos:definition "Associates a settlement quote with the loan account it would pay off." .
+:recordsEventFor a owl:ObjectProperty ;
+    rdfs:label "records event for" ;
+    rdfs:domain :LoanServicingEvent ;
+    rdfs:range :LoanAccount ;
+    skos:definition "Associates a servicing event with the loan account whose history it records." .
+
+:loanAccountNumber a owl:DatatypeProperty ; rdfs:label "loan account number" ; rdfs:domain :LoanAccount ; rdfs:range xsd:string .
+:principalBalance a owl:DatatypeProperty ; rdfs:label "principal balance" ; rdfs:domain :LoanAccount ; rdfs:range xsd:decimal .
+:loanStatus a owl:DatatypeProperty ; rdfs:label "loan status" ; rdfs:domain :LoanAccount ; rdfs:range xsd:string .
+:scheduleVersion a owl:DatatypeProperty ; rdfs:label "schedule version" ; rdfs:domain :RepaymentSchedule ; rdfs:range xsd:string .
+:effectiveDate a owl:DatatypeProperty ; rdfs:label "effective date" ; rdfs:domain :RepaymentSchedule ; rdfs:range xsd:date .
+:dueDate a owl:DatatypeProperty ; rdfs:label "due date" ; rdfs:domain :RepaymentInstallment ; rdfs:range xsd:date .
+:principalDue a owl:DatatypeProperty ; rdfs:label "principal due" ; rdfs:domain :RepaymentInstallment ; rdfs:range xsd:decimal .
+:interestDue a owl:DatatypeProperty ; rdfs:label "interest due" ; rdfs:domain :RepaymentInstallment ; rdfs:range xsd:decimal .
+:installmentStatus a owl:DatatypeProperty ; rdfs:label "installment status" ; rdfs:domain :RepaymentInstallment ; rdfs:range xsd:string .
+:accrualDate a owl:DatatypeProperty ; rdfs:label "accrual date" ; rdfs:domain :InterestAccrual ; rdfs:range xsd:date .
+:accruedAmount a owl:DatatypeProperty ; rdfs:label "accrued amount" ; rdfs:domain :InterestAccrual ; rdfs:range xsd:decimal .
+:interestRate a owl:DatatypeProperty ; rdfs:label "interest rate" ; rdfs:domain :InterestAccrual ; rdfs:range xsd:decimal .
+:collateralReference a owl:DatatypeProperty ; rdfs:label "collateral reference" ; rdfs:domain :CollateralLink ; rdfs:range xsd:string .
+:lienPriority a owl:DatatypeProperty ; rdfs:label "lien priority" ; rdfs:domain :CollateralLink ; rdfs:range xsd:integer .
+:restructureReference a owl:DatatypeProperty ; rdfs:label "restructure reference" ; rdfs:domain :RestructureArrangement ; rdfs:range xsd:string .
+:restructureStatus a owl:DatatypeProperty ; rdfs:label "restructure status" ; rdfs:domain :RestructureArrangement ; rdfs:range xsd:string .
+:quoteReference a owl:DatatypeProperty ; rdfs:label "quote reference" ; rdfs:domain :SettlementQuote ; rdfs:range xsd:string .
+:settlementAmount a owl:DatatypeProperty ; rdfs:label "settlement amount" ; rdfs:domain :SettlementQuote ; rdfs:range xsd:decimal .
+:validUntil a owl:DatatypeProperty ; rdfs:label "valid until" ; rdfs:domain :SettlementQuote ; rdfs:range xsd:date .
+:eventType a owl:DatatypeProperty ; rdfs:label "event type" ; rdfs:domain :LoanServicingEvent ; rdfs:range xsd:string .
+:occurredAt a owl:DatatypeProperty ; rdfs:label "occurred at" ; rdfs:domain :LoanServicingEvent ; rdfs:range xsd:dateTime .
+
+:LoanServicingOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Loan Servicing Officer Role" ;
+    skos:altLabel "Loan Servicing Officer" ;
+    skos:definition "Person role that maintains schedules, accruals, settlements, and servicing events. Bearer: person. Permissions: LoanAccount:read, LoanAccount:write, RepaymentSchedule:read, RepaymentSchedule:write." .
+
+:LoanRestructureApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Loan Restructure Approver Role" ;
+    skos:altLabel "Restructure Approver" ;
+    skos:definition "Person role that approves restructures within delegated authority. Bearer: person. Permissions: RestructureArrangement:read, RestructureArrangement:write, LoanAccount:read." .

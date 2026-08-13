@@ -1,0 +1,66 @@
+@prefix :     <https://ecosystemcode.com/ontology/lms/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/lms#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/lms/banking> a owl:Ontology ;
+    rdfs:label "LMS Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the LMS domain." .
+
+:MandatoryComplianceCourse a owl:Class ;
+    rdfs:subClassOf base:Course ;
+    skos:prefLabel "Mandatory Compliance Course" ;
+    skos:altLabel "Required Compliance Training" ;
+    skos:definition "A course required for a banking role or employee population." .
+
+:RoleCertification a owl:Class ;
+    rdfs:subClassOf base:Certificate ;
+    skos:prefLabel "Role Certification" ;
+    skos:altLabel "Regulated Role Certificate" ;
+    skos:definition "A certificate demonstrating completion or competence required for a regulated role." .
+
+:TrainingAttestation a owl:Class ;
+    skos:prefLabel "Training Attestation" ;
+    skos:altLabel "Policy Attestation" ;
+    skos:definition "An employee attestation acknowledging a policy, conduct, or compliance obligation." .
+
+:RoleReference a owl:Class ;
+    skos:prefLabel "Role Reference" ;
+    skos:definition "A lightweight reference to a role for which training is mandatory." .
+
+:certifiesLearner a owl:ObjectProperty ;
+    rdfs:label "certifies learner" ;
+    rdfs:domain :RoleCertification ;
+    rdfs:range base:Learner ;
+    skos:definition "The learner who holds the role certification." .
+
+:attestedByLearner a owl:ObjectProperty ;
+    rdfs:label "attested by learner" ;
+    rdfs:domain :TrainingAttestation ;
+    rdfs:range base:Learner ;
+    skos:definition "The learner who recorded the training or policy attestation." .
+
+:requiredForRole a owl:ObjectProperty ;
+    rdfs:label "required for role" ;
+    rdfs:domain :MandatoryComplianceCourse ;
+    rdfs:range :RoleReference ;
+    skos:definition "The role for which the compliance course is mandatory." .
+
+:attestationReference a owl:DatatypeProperty ;
+    rdfs:label "attestation reference" ;
+    rdfs:domain :TrainingAttestation ;
+    rdfs:range xsd:string .
+
+:BankLearningComplianceRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Learning Compliance Role" ;
+    skos:definition "Person role that manages mandatory curricula, overdue training, certifications, and attestations. Bearer: person." .
+
+:TrainingAttestationShape a sh:NodeShape ;
+    sh:targetClass :TrainingAttestation ;
+    sh:property [ sh:path :attestationReference ; sh:datatype xsd:string ; sh:minCount 1 ] .

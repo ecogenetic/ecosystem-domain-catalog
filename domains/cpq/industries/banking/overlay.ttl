@@ -1,0 +1,78 @@
+@prefix :     <https://ecosystemcode.com/ontology/cpq/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/cpq#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cpq/banking> a owl:Ontology ;
+    rdfs:label "CPQ Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the CPQ domain." .
+
+:BankingQuote a owl:Class ;
+    rdfs:subClassOf base:Quote ;
+    skos:prefLabel "Banking Quote" ;
+    skos:altLabel "Financial Product Quote" ;
+    skos:definition "A customer-specific quote for a banking product or bundle." .
+
+:RateOffer a owl:Class ;
+    skos:prefLabel "Rate Offer" ;
+    skos:altLabel "Quoted Rate" ;
+    skos:definition "A customer-specific interest or return rate proposed in a banking quote." .
+
+:FeeOffer a owl:Class ;
+    skos:prefLabel "Fee Offer" ;
+    skos:altLabel "Quoted Fee" ;
+    skos:definition "A customer-specific fee arrangement proposed in a banking quote." .
+
+:PricingConcession a owl:Class ;
+    rdfs:subClassOf base:Discount ;
+    skos:prefLabel "Pricing Concession" ;
+    skos:altLabel "Discretionary Concession" ;
+    skos:definition "A discretionary reduction or pricing exception subject to delegated approval." .
+
+:rateOfferForQuote a owl:ObjectProperty ;
+    rdfs:label "rate offer for quote" ;
+    rdfs:domain :RateOffer ;
+    rdfs:range :BankingQuote ;
+    skos:definition "Links a rate offer to the banking quote." .
+
+:feeOfferForQuote a owl:ObjectProperty ;
+    rdfs:label "fee offer for quote" ;
+    rdfs:domain :FeeOffer ;
+    rdfs:range :BankingQuote ;
+    skos:definition "Links a fee offer to the banking quote." .
+
+:concessionForQuote a owl:ObjectProperty ;
+    rdfs:label "concession for quote" ;
+    rdfs:domain :PricingConcession ;
+    rdfs:range :BankingQuote ;
+    skos:definition "Links a pricing concession to the banking quote." .
+
+:quotedRate a owl:DatatypeProperty ;
+    rdfs:label "quoted rate" ;
+    rdfs:domain :RateOffer ;
+    rdfs:range xsd:decimal .
+
+:quotedFee a owl:DatatypeProperty ;
+    rdfs:label "quoted fee" ;
+    rdfs:domain :FeeOffer ;
+    rdfs:range xsd:decimal .
+
+:delegatedAuthorityCode a owl:DatatypeProperty ;
+    rdfs:label "delegated authority code" ;
+    rdfs:domain :PricingConcession ;
+    rdfs:range xsd:string .
+
+:BankPricingApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Pricing Approver" ;
+    skos:altLabel "Bank Pricing Approver Role" ;
+    skos:definition "Approves customer-specific pricing exceptions within delegated authority. Bearer: person." .
+
+:BankingQuoteShape a sh:NodeShape ;
+    sh:targetClass :BankingQuote ;
+    sh:property [ sh:path base:quoteNumber ; sh:datatype xsd:string ; sh:minCount 1 ] .

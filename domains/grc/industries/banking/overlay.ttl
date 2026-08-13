@@ -1,0 +1,74 @@
+@prefix :     <https://ecosystemcode.com/ontology/grc/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/grc#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/grc/banking> a owl:Ontology ;
+    rdfs:label "GRC Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the GRC domain." .
+
+:RegulatoryObligation a owl:Class ;
+    skos:prefLabel "Regulatory Obligation" ;
+    skos:altLabel "Compliance Requirement" ;
+    skos:definition "A requirement imposed by law, regulation, licence, or supervisory rule." .
+
+:ConductRisk a owl:Class ;
+    rdfs:subClassOf base:Risk ;
+    skos:prefLabel "Conduct Risk" ;
+    skos:altLabel "Customer Conduct Risk" ;
+    skos:definition "Risk that customer outcomes or market conduct breach policy or regulation." .
+
+:OperationalRisk a owl:Class ;
+    rdfs:subClassOf base:Risk ;
+    skos:prefLabel "Operational Risk" ;
+    skos:altLabel "Non-Financial Risk" ;
+    skos:definition "Risk arising from failed processes, people, systems, or external events." .
+
+:ComplianceAttestation a owl:Class ;
+    rdfs:subClassOf base:Assessment ;
+    skos:prefLabel "Compliance Attestation" ;
+    skos:altLabel "Control Attestation" ;
+    skos:definition "An attestation that a control or obligation has been reviewed for a period." .
+
+:obligationMandatesControl a owl:ObjectProperty ;
+    rdfs:label "obligation mandates control" ;
+    rdfs:domain :RegulatoryObligation ;
+    rdfs:range base:Control ;
+    skos:definition "Links a regulatory obligation to the control that satisfies it." .
+
+:attestsToObligation a owl:ObjectProperty ;
+    rdfs:label "attests to obligation" ;
+    rdfs:domain :ComplianceAttestation ;
+    rdfs:range :RegulatoryObligation ;
+    skos:definition "Links an attestation to the assessed obligation." .
+
+:obligationReference a owl:DatatypeProperty ;
+    rdfs:label "obligation reference" ;
+    rdfs:domain :RegulatoryObligation ;
+    rdfs:range xsd:string .
+
+:jurisdictionCode a owl:DatatypeProperty ;
+    rdfs:label "jurisdiction code" ;
+    rdfs:domain :RegulatoryObligation ;
+    rdfs:range xsd:string .
+
+:attestationStatus a owl:DatatypeProperty ;
+    rdfs:label "attestation status" ;
+    rdfs:domain :ComplianceAttestation ;
+    rdfs:range xsd:string .
+
+:BankComplianceManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Compliance Manager" ;
+    skos:altLabel "Bank Compliance Manager Role" ;
+    skos:definition "Owns regulatory obligations, controls, attestations, and remediation. Bearer: person." .
+
+:RegulatoryObligationShape a sh:NodeShape ;
+    sh:targetClass :RegulatoryObligation ;
+    sh:property [ sh:path :obligationReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :jurisdictionCode ; sh:datatype xsd:string ; sh:minCount 1 ] .

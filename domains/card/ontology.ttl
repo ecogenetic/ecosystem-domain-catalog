@@ -1,0 +1,121 @@
+@prefix : <https://ecosystemcode.com/ontology/card#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/card> a owl:Ontology ;
+    rdfs:label "CARD Domain Ontology" ;
+    rdfs:comment "Seed ontology for cards and payment instrument lifecycle management." .
+
+:PaymentInstrument a owl:Class ;
+    skos:prefLabel "Payment Instrument" ;
+    skos:altLabel "Payment Credential" ;
+    skos:definition "A reusable instrument used to initiate a payment." .
+
+:CardInstrument a owl:Class ;
+    rdfs:subClassOf :PaymentInstrument ;
+    skos:prefLabel "Card Instrument" ;
+    skos:altLabel "Payment Card", "Bank Card" ;
+    skos:definition "A physical or virtual card instrument issued under an account or card agreement." .
+
+:PaymentToken a owl:Class ;
+    rdfs:subClassOf :PaymentInstrument ;
+    skos:prefLabel "Payment Token" ;
+    skos:altLabel "Wallet Token", "Network Token" ;
+    skos:definition "A tokenised representation of a payment instrument used in a wallet or merchant context." .
+
+:CardAuthorization a owl:Class ;
+    skos:prefLabel "Card Authorization" ;
+    skos:altLabel "Authorisation", "Card Auth" ;
+    skos:definition "A decision to approve or decline a requested card transaction amount." .
+
+:CardClearingRecord a owl:Class ;
+    skos:prefLabel "Card Clearing Record" ;
+    skos:altLabel "Clearing Presentment" ;
+    skos:definition "A clearing record received after authorisation for posting and settlement." .
+
+:CardDispute a owl:Class ;
+    skos:prefLabel "Card Dispute" ;
+    skos:altLabel "Transaction Dispute", "Chargeback Case" ;
+    skos:definition "A customer or bank dispute raised against a card clearing record." .
+
+:CardLimit a owl:Class ;
+    skos:prefLabel "Card Limit" ;
+    skos:altLabel "Usage Limit", "Spend Limit" ;
+    skos:definition "A monetary or usage limit applied to a card instrument." .
+
+:CardLifecycleEvent a owl:Class ;
+    skos:prefLabel "Card Lifecycle Event" ;
+    skos:altLabel "Card Status Event" ;
+    skos:definition "An immutable event recording a material card lifecycle change." .
+
+:tokenizedAs a owl:ObjectProperty ;
+    rdfs:label "tokenized as" ;
+    rdfs:domain :CardInstrument ;
+    rdfs:range :PaymentToken ;
+    skos:definition "Links a card instrument to a tokenised representation." .
+
+:authorizesInstrument a owl:ObjectProperty ;
+    rdfs:label "authorizes instrument" ;
+    rdfs:domain :CardAuthorization ;
+    rdfs:range :CardInstrument ;
+    skos:definition "The card instrument used for the authorization request." .
+
+:clearsAuthorization a owl:ObjectProperty ;
+    rdfs:label "clears authorization" ;
+    rdfs:domain :CardClearingRecord ;
+    rdfs:range :CardAuthorization ;
+    skos:definition "The prior authorization to which the clearing record relates." .
+
+:disputesClearingRecord a owl:ObjectProperty ;
+    rdfs:label "disputes clearing record" ;
+    rdfs:domain :CardDispute ;
+    rdfs:range :CardClearingRecord ;
+    skos:definition "The clearing record challenged by the dispute." .
+
+:limitsInstrument a owl:ObjectProperty ;
+    rdfs:label "limits instrument" ;
+    rdfs:domain :CardLimit ;
+    rdfs:range :CardInstrument ;
+    skos:definition "The card instrument constrained by the limit." .
+
+:recordsLifecycleFor a owl:ObjectProperty ;
+    rdfs:label "records lifecycle for" ;
+    rdfs:domain :CardLifecycleEvent ;
+    rdfs:range :CardInstrument ;
+    skos:definition "The card instrument whose lifecycle change is recorded." .
+
+:instrumentReference a owl:DatatypeProperty ; rdfs:label "instrument reference" ; rdfs:domain :PaymentInstrument ; rdfs:range xsd:string .
+:instrumentStatus a owl:DatatypeProperty ; rdfs:label "instrument status" ; rdfs:domain :PaymentInstrument ; rdfs:range xsd:string .
+:maskedPan a owl:DatatypeProperty ; rdfs:label "masked PAN" ; rdfs:domain :CardInstrument ; rdfs:range xsd:string .
+:expiryDate a owl:DatatypeProperty ; rdfs:label "expiry date" ; rdfs:domain :CardInstrument ; rdfs:range xsd:date .
+:tokenReference a owl:DatatypeProperty ; rdfs:label "token reference" ; rdfs:domain :PaymentToken ; rdfs:range xsd:string .
+:tokenStatus a owl:DatatypeProperty ; rdfs:label "token status" ; rdfs:domain :PaymentToken ; rdfs:range xsd:string .
+:authorizationReference a owl:DatatypeProperty ; rdfs:label "authorization reference" ; rdfs:domain :CardAuthorization ; rdfs:range xsd:string .
+:amount a owl:DatatypeProperty ; rdfs:label "amount" ; rdfs:domain :CardAuthorization ; rdfs:range xsd:decimal .
+:authorizationStatus a owl:DatatypeProperty ; rdfs:label "authorization status" ; rdfs:domain :CardAuthorization ; rdfs:range xsd:string .
+:authorizedAt a owl:DatatypeProperty ; rdfs:label "authorized at" ; rdfs:domain :CardAuthorization ; rdfs:range xsd:dateTime .
+:clearingReference a owl:DatatypeProperty ; rdfs:label "clearing reference" ; rdfs:domain :CardClearingRecord ; rdfs:range xsd:string .
+:clearingAmount a owl:DatatypeProperty ; rdfs:label "clearing amount" ; rdfs:domain :CardClearingRecord ; rdfs:range xsd:decimal .
+:clearedAt a owl:DatatypeProperty ; rdfs:label "cleared at" ; rdfs:domain :CardClearingRecord ; rdfs:range xsd:dateTime .
+:disputeReference a owl:DatatypeProperty ; rdfs:label "dispute reference" ; rdfs:domain :CardDispute ; rdfs:range xsd:string .
+:disputeStatus a owl:DatatypeProperty ; rdfs:label "dispute status" ; rdfs:domain :CardDispute ; rdfs:range xsd:string .
+:disputedAmount a owl:DatatypeProperty ; rdfs:label "disputed amount" ; rdfs:domain :CardDispute ; rdfs:range xsd:decimal .
+:limitType a owl:DatatypeProperty ; rdfs:label "limit type" ; rdfs:domain :CardLimit ; rdfs:range xsd:string .
+:limitAmount a owl:DatatypeProperty ; rdfs:label "limit amount" ; rdfs:domain :CardLimit ; rdfs:range xsd:decimal .
+:eventType a owl:DatatypeProperty ; rdfs:label "event type" ; rdfs:domain :CardLifecycleEvent ; rdfs:range xsd:string .
+:occurredAt a owl:DatatypeProperty ; rdfs:label "occurred at" ; rdfs:domain :CardLifecycleEvent ; rdfs:range xsd:dateTime .
+
+:CardOperationsRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Card Operations Role" ;
+    skos:altLabel "Card Operations Analyst" ;
+    skos:definition "Person role that issues, activates, blocks, replaces, and closes card instruments. Bearer: person. Permissions: CardInstrument:read, CardInstrument:write, CardLifecycleEvent:read, CardLifecycleEvent:write." .
+
+:DisputeAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Dispute Analyst Role" ;
+    skos:altLabel "Chargeback Analyst" ;
+    skos:definition "Person role that investigates and resolves card disputes. Bearer: person. Permissions: CardDispute:read, CardDispute:write, CardClearingRecord:read." .

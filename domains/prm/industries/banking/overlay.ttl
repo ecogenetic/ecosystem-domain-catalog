@@ -1,0 +1,69 @@
+@prefix :     <https://ecosystemcode.com/ontology/prm/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/prm#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/prm/banking> a owl:Ontology ;
+    rdfs:label "PRM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the PRM domain." .
+
+:ThirdPartyProvider a owl:Class ;
+    rdfs:subClassOf base:Partner ;
+    skos:prefLabel "Third Party Provider" ;
+    skos:altLabel "TPP" ;
+    skos:definition "A regulated third party that accesses banking APIs or initiates services with customer permission." .
+
+:CorrespondentBank a owl:Class ;
+    rdfs:subClassOf base:Partner ;
+    skos:prefLabel "Correspondent Bank" ;
+    skos:altLabel "Correspondent" ;
+    skos:definition "A bank providing payment, clearing, settlement, or custody services." .
+
+:BankingAgent a owl:Class ;
+    rdfs:subClassOf base:Partner ;
+    skos:prefLabel "Banking Agent" ;
+    skos:altLabel "Agent" ;
+    skos:definition "An authorised intermediary providing specified banking services on behalf of the bank." .
+
+:OpenBankingCredential a owl:Class ;
+    rdfs:subClassOf base:PartnerCredential ;
+    skos:prefLabel "Open Banking Credential" ;
+    skos:altLabel "TPP Credential" ;
+    skos:definition "A credential authorising a third party to access open-banking capabilities." .
+
+:credentialForProvider a owl:ObjectProperty ;
+    rdfs:label "credential for provider" ;
+    rdfs:domain :OpenBankingCredential ;
+    rdfs:range :ThirdPartyProvider ;
+    skos:definition "Links an open-banking credential to its third-party provider." .
+
+:correspondentUnderAgreement a owl:ObjectProperty ;
+    rdfs:label "correspondent under agreement" ;
+    rdfs:domain :CorrespondentBank ;
+    rdfs:range base:PartnerAgreement ;
+    skos:definition "Links a correspondent bank to its governing agreement." .
+
+:regulatoryRegistration a owl:DatatypeProperty ;
+    rdfs:label "regulatory registration" ;
+    rdfs:domain :ThirdPartyProvider ;
+    rdfs:range xsd:string .
+
+:credentialScope a owl:DatatypeProperty ;
+    rdfs:label "credential scope" ;
+    rdfs:domain :OpenBankingCredential ;
+    rdfs:range xsd:string .
+
+:BankPartnerManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Partner Manager" ;
+    skos:altLabel "Bank Partner Manager Role" ;
+    skos:definition "Onboards and governs TPPs, agents, correspondents, credentials, and partner agreements. Bearer: person." .
+
+:ThirdPartyProviderShape a sh:NodeShape ;
+    sh:targetClass :ThirdPartyProvider ;
+    sh:property [ sh:path :regulatoryRegistration ; sh:datatype xsd:string ; sh:minCount 1 ] .

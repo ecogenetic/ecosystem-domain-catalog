@@ -1,0 +1,64 @@
+@prefix :     <https://ecosystemcode.com/ontology/lns/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/lns#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/lns/banking> a owl:Ontology ;
+    rdfs:label "LNS Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the LNS domain." .
+
+:RetailLoanAccount a owl:Class ;
+    rdfs:subClassOf base:LoanAccount ;
+    skos:prefLabel "Retail Loan Account" ;
+    skos:altLabel "Consumer Loan Account" ;
+    skos:definition "A loan account maintained under a retail lending financial product agreement." .
+
+:HardshipArrangement a owl:Class ;
+    rdfs:subClassOf base:RestructureArrangement ;
+    skos:prefLabel "Hardship Arrangement" ;
+    skos:altLabel "Forbearance Arrangement" ;
+    skos:definition "A regulated restructure arrangement created for a customer experiencing financial difficulty." .
+
+:ArrearsReferral a owl:Class ;
+    skos:prefLabel "Arrears Referral" ;
+    skos:altLabel "Collections Referral" ;
+    skos:definition "An event referring a delinquent loan to credit and collections management." .
+
+:accountUnderAgreement a owl:ObjectProperty ;
+    rdfs:label "account under agreement" ;
+    rdfs:domain :RetailLoanAccount ;
+    rdfs:range bank:FinancialProductAgreement ;
+    rdfs:subPropertyOf bank:accountUnderAgreement ;
+    skos:definition "The retail lending agreement under which the loan account is maintained." .
+
+:modifiesRetailLoan a owl:ObjectProperty ;
+    rdfs:label "modifies retail loan" ;
+    rdfs:domain :HardshipArrangement ;
+    rdfs:range :RetailLoanAccount ;
+    skos:definition "The retail loan account whose terms the hardship arrangement changes." .
+
+:refersLoan a owl:ObjectProperty ;
+    rdfs:label "refers loan" ;
+    rdfs:domain :ArrearsReferral ;
+    rdfs:range :RetailLoanAccount ;
+    skos:definition "The retail loan account referred to collections." .
+
+:referralReason a owl:DatatypeProperty ;
+    rdfs:label "referral reason" ;
+    rdfs:domain :ArrearsReferral ;
+    rdfs:range xsd:string .
+
+:HardshipSpecialistRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Hardship Specialist Role" ;
+    skos:altLabel "Financial Assistance Specialist" ;
+    skos:definition "Person role that assesses hardship requests and records approved customer assistance. Bearer: person." .
+
+:RetailLoanAccountShape a sh:NodeShape ;
+    sh:targetClass :RetailLoanAccount ;
+    sh:property [ sh:path :accountUnderAgreement ; sh:class bank:FinancialProductAgreement ; sh:minCount 1 ; sh:maxCount 1 ] .

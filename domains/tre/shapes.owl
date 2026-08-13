@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:sh="http://www.w3.org/ns/shacl#"
+>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb3">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#amount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryPositionShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb1"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb2"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb3"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb4">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#currencyCode"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb8">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#eligibleAmount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryLimitShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryLimit"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb17"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb18"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb22">
+    <rdf:first>approved</rdf:first>
+    <rdf:rest rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb23"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#MaturityBucketShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#MaturityBucket"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb9"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb10"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb11"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb5">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#fundingReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb19">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#dealReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#InterestRateRiskPositionShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#InterestRateRiskPosition"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb12"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb13"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb1">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#positionReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb15">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#transferRate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb12">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#riskMeasure"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#FundingSourceShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#FundingSource"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb5"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb13">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#riskValue"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb16">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#effectiveDate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb27">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#tradeDate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb20">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#dealStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb21"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb6">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#fundingType"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb2">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#asOfDate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#FundsTransferPriceShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#FundsTransferPrice"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb14"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb15"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb16"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb18">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#limitAmount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb9">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#bucketName"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb10">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#startDays"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb26">
+    <rdf:first>cancelled</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb21">
+    <rdf:first>proposed</rdf:first>
+    <rdf:rest rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb14">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#rateReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb23">
+    <rdf:first>executed</rdf:first>
+    <rdf:rest rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb24"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb17">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#limitReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryDealShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb19"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb20"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb27"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/tre#LiquidityBufferShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/tre#LiquidityBuffer"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb7"/>
+    <sh:property rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb25">
+    <rdf:first>matured</rdf:first>
+    <rdf:rest rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb26"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb24">
+    <rdf:first>settled</rdf:first>
+    <rdf:rest rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb25"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb11">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#endDays"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nb87cde470d994dca8de35d382343d4cfb7">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/tre#bufferReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+</rdf:RDF>

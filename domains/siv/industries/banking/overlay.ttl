@@ -1,0 +1,64 @@
+@prefix :     <https://ecosystemcode.com/ontology/siv/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/siv#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/siv/banking> a owl:Ontology ;
+    rdfs:label "SIV Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the SIV domain." .
+
+:BankingServiceSpecification a owl:Class ;
+    rdfs:subClassOf base:ServiceSpecification ;
+    skos:prefLabel "Banking Service Specification" ;
+    skos:altLabel "Banking Facility Specification" ;
+    skos:definition "A service specification for an operational banking facility." .
+
+:BankingServiceInstance a owl:Class ;
+    rdfs:subClassOf base:ServiceInstance ;
+    skos:prefLabel "Banking Service Instance" ;
+    skos:altLabel "Banking Facility Instance" ;
+    skos:definition "An active operational service made available under a banking agreement." .
+
+:FacilityServiceMapping a owl:Class ;
+    rdfs:subClassOf base:ProductServiceMapping ;
+    skos:prefLabel "Facility Service Mapping" ;
+    skos:altLabel "Product Facility Mapping" ;
+    skos:definition "A mapping from a banking product version to the operational service it enables." .
+
+:serviceUnderAgreement a owl:ObjectProperty ;
+    rdfs:label "service under agreement" ;
+    rdfs:domain :BankingServiceInstance ;
+    rdfs:range bank:FinancialProductAgreement ;
+    skos:definition "The agreement under which the banking service is provided." .
+
+:serviceForAccount a owl:ObjectProperty ;
+    rdfs:label "service for account" ;
+    rdfs:domain :BankingServiceInstance ;
+    rdfs:range bank:FinancialAccount ;
+    skos:definition "The financial account enabled or supported by the service instance." .
+
+:serviceReference a owl:DatatypeProperty ;
+    rdfs:label "service reference" ;
+    rdfs:domain :BankingServiceInstance ;
+    rdfs:range xsd:string .
+
+:serviceStatus a owl:DatatypeProperty ;
+    rdfs:label "service status" ;
+    rdfs:domain :BankingServiceInstance ;
+    rdfs:range xsd:string .
+
+:BankServiceOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Service Owner" ;
+    skos:altLabel "Bank Service Owner Role" ;
+    skos:definition "Owns the operational banking service catalog and live service inventory. Bearer: person." .
+
+:BankingServiceInstanceShape a sh:NodeShape ;
+    sh:targetClass :BankingServiceInstance ;
+    sh:property [ sh:path :serviceReference ; sh:datatype xsd:string ; sh:minCount 1 ] ;
+    sh:property [ sh:path :serviceStatus ; sh:datatype xsd:string ; sh:minCount 1 ] .

@@ -1,0 +1,62 @@
+@prefix :     <https://ecosystemcode.com/ontology/eam/banking#> .
+@prefix base: <https://ecosystemcode.com/ontology/eam#> .
+@prefix bank: <https://ecosystemcode.com/ontology/industry/banking#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/eam/banking> a owl:Ontology ;
+    rdfs:label "EAM Banking Overlay" ;
+    rdfs:comment "Additive banking specialization for the EAM domain." .
+
+:ATMAsset a owl:Class ;
+    rdfs:subClassOf base:Asset ;
+    skos:prefLabel "ATM Asset" ;
+    skos:altLabel "Automated Teller Machine" ;
+    skos:definition "An asset representing an automated teller machine or self-service banking device." .
+
+:BranchTechnologyAsset a owl:Class ;
+    rdfs:subClassOf base:Asset ;
+    skos:prefLabel "Branch Technology Asset" ;
+    skos:altLabel "Branch Equipment" ;
+    skos:definition "An asset supporting branch operations such as teller, queue, security, or cash-handling equipment." .
+
+:CriticalBankingAsset a owl:Class ;
+    rdfs:subClassOf base:Asset ;
+    skos:prefLabel "Critical Banking Asset" ;
+    skos:altLabel "Critical Physical Asset" ;
+    skos:definition "An asset whose loss can materially disrupt a critical banking service." .
+
+:ServiceReference a owl:Class ;
+    skos:prefLabel "Service Reference" ;
+    skos:definition "A lightweight reference to a banking or IT service supported by a physical asset." .
+
+:installedAtBankLocation a owl:ObjectProperty ;
+    rdfs:label "installed at bank location" ;
+    rdfs:domain :ATMAsset ;
+    rdfs:range base:Location ;
+    skos:definition "The branch or site location where the ATM asset is installed." .
+
+:supportsCriticalService a owl:ObjectProperty ;
+    rdfs:label "supports critical service" ;
+    rdfs:domain :CriticalBankingAsset ;
+    rdfs:range :ServiceReference ;
+    skos:definition "The banking or IT service that depends on the critical physical asset." .
+
+:assetCriticality a owl:DatatypeProperty ;
+    rdfs:label "asset criticality" ;
+    rdfs:domain :CriticalBankingAsset ;
+    rdfs:range xsd:string .
+
+:BankAssetManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Bank Asset Manager" ;
+    skos:definition "Person role that governs ATM, branch, and other critical physical banking assets and maintenance plans. Bearer: person." .
+
+:CriticalBankingAssetShape a sh:NodeShape ;
+    sh:targetClass :CriticalBankingAsset ;
+    sh:property [ sh:path :assetCriticality ; sh:datatype xsd:string ; sh:minCount 1 ;
+        sh:in ( "standard" "important" "critical" ) ] .

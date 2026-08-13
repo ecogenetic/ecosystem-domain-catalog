@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#disputedAmount">
+    <rdfs:label>disputed amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardDispute"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:Ontology rdf:about="https://ecosystemcode.com/ontology/card">
+    <rdfs:label>CARD Domain Ontology</rdfs:label>
+    <rdfs:comment>Seed ontology for cards and payment instrument lifecycle management.</rdfs:comment>
+  </owl:Ontology>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#authorizationReference">
+    <rdfs:label>authorization reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#DisputeAnalystRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Dispute Analyst Role</skos:prefLabel>
+    <skos:altLabel>Chargeback Analyst</skos:altLabel>
+    <skos:definition>Person role that investigates and resolves card disputes. Bearer: person. Permissions: CardDispute:read, CardDispute:write, CardClearingRecord:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#clearedAt">
+    <rdfs:label>cleared at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/card#tokenizedAs">
+    <rdfs:label>tokenized as</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/card#PaymentToken"/>
+    <skos:definition>Links a card instrument to a tokenised representation.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#clearingAmount">
+    <rdfs:label>clearing amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/card#clearsAuthorization">
+    <rdfs:label>clears authorization</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <skos:definition>The prior authorization to which the clearing record relates.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#eventType">
+    <rdfs:label>event type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardLifecycleEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#instrumentStatus">
+    <rdfs:label>instrument status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#PaymentInstrument"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#amount">
+    <rdfs:label>amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#tokenStatus">
+    <rdfs:label>token status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#PaymentToken"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#limitAmount">
+    <rdfs:label>limit amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardLimit"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#clearingReference">
+    <rdfs:label>clearing reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/card#authorizesInstrument">
+    <rdfs:label>authorizes instrument</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <skos:definition>The card instrument used for the authorization request.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#authorizationStatus">
+    <rdfs:label>authorization status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/card#limitsInstrument">
+    <rdfs:label>limits instrument</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardLimit"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <skos:definition>The card instrument constrained by the limit.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/card#recordsLifecycleFor">
+    <rdfs:label>records lifecycle for</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardLifecycleEvent"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <skos:definition>The card instrument whose lifecycle change is recorded.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#expiryDate">
+    <rdfs:label>expiry date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#instrumentReference">
+    <rdfs:label>instrument reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#PaymentInstrument"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#limitType">
+    <rdfs:label>limit type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardLimit"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#disputeReference">
+    <rdfs:label>dispute reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardDispute"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#authorizedAt">
+    <rdfs:label>authorized at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#occurredAt">
+    <rdfs:label>occurred at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardLifecycleEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardOperationsRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Card Operations Role</skos:prefLabel>
+    <skos:altLabel>Card Operations Analyst</skos:altLabel>
+    <skos:definition>Person role that issues, activates, blocks, replaces, and closes card instruments. Bearer: person. Permissions: CardInstrument:read, CardInstrument:write, CardLifecycleEvent:read, CardLifecycleEvent:write.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#disputeStatus">
+    <rdfs:label>dispute status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardDispute"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#tokenReference">
+    <rdfs:label>token reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#PaymentToken"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/card#maskedPan">
+    <rdfs:label>masked PAN</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/card#disputesClearingRecord">
+    <rdfs:label>disputes clearing record</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/card#CardDispute"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <skos:definition>The clearing record challenged by the dispute.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardClearingRecord">
+    <skos:prefLabel>Card Clearing Record</skos:prefLabel>
+    <skos:altLabel>Clearing Presentment</skos:altLabel>
+    <skos:definition>A clearing record received after authorisation for posting and settlement.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardLimit">
+    <skos:prefLabel>Card Limit</skos:prefLabel>
+    <skos:altLabel>Usage Limit</skos:altLabel>
+    <skos:altLabel>Spend Limit</skos:altLabel>
+    <skos:definition>A monetary or usage limit applied to a card instrument.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#PaymentInstrument">
+    <skos:prefLabel>Payment Instrument</skos:prefLabel>
+    <skos:altLabel>Payment Credential</skos:altLabel>
+    <skos:definition>A reusable instrument used to initiate a payment.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardDispute">
+    <skos:prefLabel>Card Dispute</skos:prefLabel>
+    <skos:altLabel>Transaction Dispute</skos:altLabel>
+    <skos:altLabel>Chargeback Case</skos:altLabel>
+    <skos:definition>A customer or bank dispute raised against a card clearing record.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardInstrument">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/card#PaymentInstrument"/>
+    <skos:prefLabel>Card Instrument</skos:prefLabel>
+    <skos:altLabel>Payment Card</skos:altLabel>
+    <skos:altLabel>Bank Card</skos:altLabel>
+    <skos:definition>A physical or virtual card instrument issued under an account or card agreement.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardLifecycleEvent">
+    <skos:prefLabel>Card Lifecycle Event</skos:prefLabel>
+    <skos:altLabel>Card Status Event</skos:altLabel>
+    <skos:definition>An immutable event recording a material card lifecycle change.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#CardAuthorization">
+    <skos:prefLabel>Card Authorization</skos:prefLabel>
+    <skos:altLabel>Authorisation</skos:altLabel>
+    <skos:altLabel>Card Auth</skos:altLabel>
+    <skos:definition>A decision to approve or decline a requested card transaction amount.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/card#PaymentToken">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/card#PaymentInstrument"/>
+    <skos:prefLabel>Payment Token</skos:prefLabel>
+    <skos:altLabel>Wallet Token</skos:altLabel>
+    <skos:altLabel>Network Token</skos:altLabel>
+    <skos:definition>A tokenised representation of a payment instrument used in a wallet or merchant context.</skos:definition>
+  </owl:Class>
+</rdf:RDF>

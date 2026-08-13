@@ -1,0 +1,68 @@
+# Generic structured-source mapping for CARD
+# Replace the example legacy namespace with the source-system namespace.
+
+@prefix card:   <https://ecosystemcode.com/ontology/card#> .
+@prefix legacy: <https://example.com/legacy/card#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# Class mappings
+#################################################################
+
+legacy:payment_instruments owl:equivalentClass card:PaymentInstrument .
+legacy:card_instruments owl:equivalentClass card:CardInstrument .
+legacy:payment_tokens owl:equivalentClass card:PaymentToken .
+legacy:card_authorizations owl:equivalentClass card:CardAuthorization .
+legacy:card_clearing_records owl:equivalentClass card:CardClearingRecord .
+legacy:card_disputes owl:equivalentClass card:CardDispute .
+legacy:card_limits owl:equivalentClass card:CardLimit .
+legacy:card_lifecycle_events owl:equivalentClass card:CardLifecycleEvent .
+
+#################################################################
+# Property mappings
+#################################################################
+
+legacy:instrument_reference rdfs:subPropertyOf card:instrumentReference .
+legacy:instrument_status rdfs:subPropertyOf card:instrumentStatus .
+legacy:masked_pan rdfs:subPropertyOf card:maskedPan .
+legacy:expiry_date rdfs:subPropertyOf card:expiryDate .
+legacy:token_reference rdfs:subPropertyOf card:tokenReference .
+legacy:token_status rdfs:subPropertyOf card:tokenStatus .
+legacy:authorization_reference rdfs:subPropertyOf card:authorizationReference .
+legacy:authorization_amount rdfs:subPropertyOf card:amount .
+legacy:authorization_status rdfs:subPropertyOf card:authorizationStatus .
+legacy:authorized_at rdfs:subPropertyOf card:authorizedAt .
+legacy:clearing_reference rdfs:subPropertyOf card:clearingReference .
+legacy:clearing_amount rdfs:subPropertyOf card:clearingAmount .
+legacy:cleared_at rdfs:subPropertyOf card:clearedAt .
+legacy:dispute_reference rdfs:subPropertyOf card:disputeReference .
+legacy:dispute_status rdfs:subPropertyOf card:disputeStatus .
+legacy:disputed_amount rdfs:subPropertyOf card:disputedAmount .
+legacy:limit_type rdfs:subPropertyOf card:limitType .
+legacy:limit_amount rdfs:subPropertyOf card:limitAmount .
+legacy:event_type rdfs:subPropertyOf card:eventType .
+legacy:occurred_at rdfs:subPropertyOf card:occurredAt .
+
+#################################################################
+# Relationship mappings
+#################################################################
+
+legacy:tokenized_as rdfs:subPropertyOf card:tokenizedAs ;
+    rdfs:domain legacy:card_instruments ; rdfs:range legacy:payment_tokens .
+
+legacy:authorizes_instrument rdfs:subPropertyOf card:authorizesInstrument ;
+    rdfs:domain legacy:card_authorizations ; rdfs:range legacy:card_instruments .
+
+legacy:clears_authorization rdfs:subPropertyOf card:clearsAuthorization ;
+    rdfs:domain legacy:card_clearing_records ; rdfs:range legacy:card_authorizations .
+
+legacy:disputes_clearing_record rdfs:subPropertyOf card:disputesClearingRecord ;
+    rdfs:domain legacy:card_disputes ; rdfs:range legacy:card_clearing_records .
+
+legacy:limits_instrument rdfs:subPropertyOf card:limitsInstrument ;
+    rdfs:domain legacy:card_limits ; rdfs:range legacy:card_instruments .
+
+legacy:records_lifecycle_for rdfs:subPropertyOf card:recordsLifecycleFor ;
+    rdfs:domain legacy:card_lifecycle_events ; rdfs:range legacy:card_instruments .

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#records_event_for">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#recordsEventFor"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#loan_servicing_events">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#LoanServicingEvent"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#loan_accounts">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#quote_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#quoteReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#lien_priority">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#lienPriority"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#accrued_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#accruedAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#modifies_loan">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#modifiesLoan"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#restructure_arrangements">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#RestructureArrangement"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/lns#loan_accounts"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#principal_balance">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#principalBalance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#has_repayment_schedule">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#hasRepaymentSchedule"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/lns#loan_accounts"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#repayment_schedules">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentSchedule"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#settlement_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#settlementAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#restructure_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#restructureStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#installment_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#installmentStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#settles_loan">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#settlesLoan"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#settlement_quotes">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#SettlementQuote"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/lns#loan_accounts"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#secures_loan">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#securesLoan"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#collateral_links">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#CollateralLink"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/lns#loan_accounts"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#due_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#dueDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#interest_due">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#interestDue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#loan_account_number">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#loanAccountNumber"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#principal_due">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#principalDue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#comprises_installment">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#comprisesInstallment"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/lns#repayment_schedules"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#repayment_installments">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#accrues_on">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#accruesOn"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/lns#interest_accruals">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/lns#InterestAccrual"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/lns#loan_accounts"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#collateral_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#collateralReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#restructure_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#restructureReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#interest_rate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#interestRate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#occurred_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#occurredAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#event_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#eventType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#schedule_version">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#scheduleVersion"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#valid_until">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#validUntil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#effective_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#effectiveDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#loan_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#loanStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/lns#accrual_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/lns#accrualDate"/>
+  </rdf:Description>
+</rdf:RDF>

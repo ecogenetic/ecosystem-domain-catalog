@@ -40,6 +40,9 @@
 @prefix siv:    <https://ecosystemcode.com/ontology/siv#> .
 @prefix sub:    <https://ecosystemcode.com/ontology/sub#> .
 @prefix wsp:    <https://ecosystemcode.com/ontology/wsp#> .
+@prefix card:   <https://ecosystemcode.com/ontology/card#> .
+@prefix lns:    <https://ecosystemcode.com/ontology/lns#> .
+@prefix tre:    <https://ecosystemcode.com/ontology/tre#> .
 
 <https://ecosystemcode.com/ontology/core-alignments> a owl:Ontology ;
     rdfs:label "Core Entity Alignments" ;
@@ -205,6 +208,22 @@ sam:Outage rdfs:subClassOf core:Incident .
 num:PhysicalSIM rdfs:subClassOf core:Asset .
 
 #################################################################
+# Banking extension cluster (card, lns, tre)
+#################################################################
+
+# Loan accounts remain distinct but are financial-account specializations.
+lns:LoanAccount rdfs:subClassOf core:FinancialAccount .
+
+# A settlement/payoff quote is a specialized customer quote.
+lns:SettlementQuote rdfs:subClassOf core:Quote .
+
+# A card dispute is a managed business case.
+card:CardDispute rdfs:subClassOf core:Case .
+
+# A treasury deal is a specialized financial transaction/trade.
+tre:TreasuryDeal rdfs:subClassOf core:FinancialTransaction .
+
+#################################################################
 # Documented false friends (intentionally NOT aligned)
 #
 # - crm:Account (B2B organisation record), core:CustomerRelationship
@@ -232,6 +251,14 @@ num:PhysicalSIM rdfs:subClassOf core:Asset .
 #   raf:Investigation aligns; the alert itself stays unaligned.
 # - num:MobileNumber / num:ESIMProfile: identifiers and profiles,
 #   not physical assets; only num:PhysicalSIM aligns to core:Asset.
+# - card:PaymentInstrument vs core:Payment: an instrument is a credential
+#   used to initiate payment activity, not the transfer of funds itself.
+# - card:CardInstrument vs core:Asset: cards may be physical or virtual and
+#   are governed as payment instruments; they intentionally stay unaligned.
+# - tre:TreasuryPosition vs core:FinancialAccount: a treasury position is an
+#   aggregated exposure or balance-sheet view, not a ledger-backed account.
+# - lns:CollateralLink vs core:Asset: CollateralLink is a reference/relationship
+#   to collateral, not the collateral asset itself.
 #################################################################
 
 

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#constrains_deal">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#constrainsDeal"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#treasury_limits">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryLimit"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#treasury_deals">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#assigned_maturity_bucket">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#assignedMaturityBucket"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#treasury_positions">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#maturity_buckets">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#MaturityBucket"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#as_of_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#asOfDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#settlement_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#settlementDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#funded_by">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#fundedBy"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/tre#treasury_positions"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#funding_sources">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#FundingSource"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#amount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#changes_position">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#changesPosition"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/tre#treasury_deals"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/tre#treasury_positions"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#risk_measure">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#riskMeasure"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#effective_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#effectiveDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#risk_value">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#riskValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#limit_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#limitAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#liquidity_buffers">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#LiquidityBuffer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#currency_code">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#currencyCode"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#funding_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#fundingReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#deal_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#dealReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#funding_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#fundingType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#priced_by">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#pricedBy"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#interest_rate_risk_positions">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#InterestRateRiskPosition"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/tre#funds_transfer_prices">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/tre#FundsTransferPrice"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#bucket_name">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#bucketName"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#eligible_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#eligibleAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#buffer_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#bufferReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#start_days">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#startDays"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#transfer_rate">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#transferRate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#deal_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#dealStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#maturity_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#maturityDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#trade_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#tradeDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#limit_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#limitReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#end_days">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#endDays"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#position_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#positionReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/tre#rate_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/tre#rateReference"/>
+  </rdf:Description>
+</rdf:RDF>
