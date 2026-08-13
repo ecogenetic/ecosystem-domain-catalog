@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#eligibleAmount">
+    <rdfs:label>eligible amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#LiquidityBuffer"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#limitReference">
+    <rdfs:label>limit reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryLimit"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryDealerRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Treasury Dealer Role</skos:prefLabel>
+    <skos:altLabel>Treasury Dealer</skos:altLabel>
+    <skos:definition>Person role that proposes and executes treasury deals within approved limits. Bearer: person. Permissions: TreasuryDeal:read, TreasuryDeal:write, TreasuryPosition:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#effectiveDate">
+    <rdfs:label>effective date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#FundsTransferPrice"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/tre#constrainsDeal">
+    <rdfs:label>constrains deal</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryLimit"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <skos:definition>Associates a treasury limit with a deal it constrains.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/tre#pricedBy">
+    <rdfs:label>priced by</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#InterestRateRiskPosition"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/tre#FundsTransferPrice"/>
+    <skos:definition>Associates an interest-rate risk position with the funds-transfer price applied to it.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#positionReference">
+    <rdfs:label>position reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#rateReference">
+    <rdfs:label>rate reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#FundsTransferPrice"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/tre#changesPosition">
+    <rdfs:label>changes position</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <skos:definition>Associates a treasury deal with a position it changes.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/tre#fundedBy">
+    <rdfs:label>funded by</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/tre#FundingSource"/>
+    <skos:definition>Associates a treasury position with a source of funding.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#bucketName">
+    <rdfs:label>bucket name</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#MaturityBucket"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#asOfDate">
+    <rdfs:label>as of date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#maturityDate">
+    <rdfs:label>maturity date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#FundingSource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#riskValue">
+    <rdfs:label>risk value</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#InterestRateRiskPosition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#currencyCode">
+    <rdfs:label>currency code</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/tre#assignedMaturityBucket">
+    <rdfs:label>assigned maturity bucket</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/tre#MaturityBucket"/>
+    <skos:definition>Associates a treasury position with the maturity bucket used to aggregate it.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#settlementDate">
+    <rdfs:label>settlement date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#transferRate">
+    <rdfs:label>transfer rate</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#FundsTransferPrice"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#bufferReference">
+    <rdfs:label>buffer reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#LiquidityBuffer"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#tradeDate">
+    <rdfs:label>trade date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#fundingReference">
+    <rdfs:label>funding reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#FundingSource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#limitAmount">
+    <rdfs:label>limit amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryLimit"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:Ontology rdf:about="https://ecosystemcode.com/ontology/tre">
+    <rdfs:label>TRE Domain Ontology</rdfs:label>
+    <rdfs:comment>Seed ontology for treasury and asset/liability management.</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryRiskApproverRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Treasury Risk Approver Role</skos:prefLabel>
+    <skos:altLabel>Treasury Approver</skos:altLabel>
+    <skos:definition>Person role that approves limits and deals requiring escalation. Bearer: person. Permissions: TreasuryLimit:read, TreasuryLimit:write, TreasuryDeal:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#fundingType">
+    <rdfs:label>funding type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#FundingSource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#startDays">
+    <rdfs:label>start days</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#MaturityBucket"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#dealStatus">
+    <rdfs:label>deal status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#endDays">
+    <rdfs:label>end days</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#MaturityBucket"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#dealReference">
+    <rdfs:label>deal reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryDeal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#amount">
+    <rdfs:label>amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/tre#riskMeasure">
+    <rdfs:label>risk measure</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/tre#InterestRateRiskPosition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#FundingSource">
+    <skos:prefLabel>Funding Source</skos:prefLabel>
+    <skos:altLabel>Funding Line</skos:altLabel>
+    <skos:definition>A source of wholesale, deposit, secured, or central-bank funding.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#FundsTransferPrice">
+    <skos:prefLabel>Funds Transfer Price</skos:prefLabel>
+    <skos:altLabel>FTP Rate</skos:altLabel>
+    <skos:definition>An internal transfer-pricing rate applied to products or balances.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#LiquidityBuffer">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <skos:prefLabel>Liquidity Buffer</skos:prefLabel>
+    <skos:altLabel>Liquidity Reserve</skos:altLabel>
+    <skos:definition>A portfolio or reserve maintained to meet liquidity needs.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#MaturityBucket">
+    <skos:prefLabel>Maturity Bucket</skos:prefLabel>
+    <skos:altLabel>Time Bucket</skos:altLabel>
+    <skos:definition>A time bucket used to aggregate expected inflows, outflows, or repricing.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryLimit">
+    <skos:prefLabel>Treasury Limit</skos:prefLabel>
+    <skos:altLabel>Dealing Limit</skos:altLabel>
+    <skos:definition>A risk or dealing limit constraining treasury activity.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryDeal">
+    <skos:prefLabel>Treasury Deal</skos:prefLabel>
+    <skos:altLabel>Treasury Trade</skos:altLabel>
+    <skos:definition>A treasury transaction executed to fund, hedge, invest, or manage liquidity.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#TreasuryPosition">
+    <skos:prefLabel>Treasury Position</skos:prefLabel>
+    <skos:altLabel>ALM Position</skos:altLabel>
+    <skos:definition>An aggregated treasury exposure or balance position at a point in time.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/tre#InterestRateRiskPosition">
+    <rdfs:subClassOf rdf:resource="https://ecosystemcode.com/ontology/tre#TreasuryPosition"/>
+    <skos:prefLabel>Interest Rate Risk Position</skos:prefLabel>
+    <skos:altLabel>IRR Position</skos:altLabel>
+    <skos:definition>A measured exposure to changes in interest rates.</skos:definition>
+  </owl:Class>
+</rdf:RDF>

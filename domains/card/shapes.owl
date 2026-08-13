@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:sh="http://www.w3.org/ns/shacl#"
+>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#CardAuthorizationShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b13"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b14"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b15"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b16"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b22">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#clearingAmount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b27">
+    <rdf:first>investigating</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b28"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b20">
+    <rdf:first>reversed</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#CardInstrumentShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b3"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b13">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#authorizesInstrument"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b34">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#eventType"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b29">
+    <rdf:first>closed</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b30"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b4">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#instrumentStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b5"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b15">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#amount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#CardClearingRecordShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b21"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b3">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#instrumentReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b8">
+    <rdf:first>blocked</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b9"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b33">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#recordsLifecycleFor"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b11">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#tokenReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b14">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#authorizationReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b32">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#limitAmount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#PaymentInstrumentShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#PaymentInstrument"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b1"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b2"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b35">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#occurredAt"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b23">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#disputesClearingRecord"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#CardLimitShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#CardLimit"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b31"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b32"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b5">
+    <rdf:first>requested</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b6"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#CardLifecycleEventShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#CardLifecycleEvent"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b33"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b34"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b35"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b1">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#instrumentReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b19">
+    <rdf:first>declined</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b20"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b25">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#disputeStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b26"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b6">
+    <rdf:first>issued</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b12">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#tokenStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b2">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#instrumentStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b16">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#authorizationStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b17"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b7">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b17">
+    <rdf:first>requested</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b18"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b31">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#limitsInstrument"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b24">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#disputeReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b9">
+    <rdf:first>replaced</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b10"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b21">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/card#clearingReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#PaymentTokenShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#PaymentToken"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b11"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b12"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b10">
+    <rdf:first>closed</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b26">
+    <rdf:first>opened</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b27"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b28">
+    <rdf:first>resolved</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b29"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b30">
+    <rdf:first>rejected</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/card#CardDisputeShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/card#CardDispute"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b23"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b24"/>
+    <sh:property rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b25"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b18">
+    <rdf:first>approved</rdf:first>
+    <rdf:rest rdf:nodeID="n27866bbebce44ae6beb80290acfb9fc7b19"/>
+  </rdf:Description>
+</rdf:RDF>

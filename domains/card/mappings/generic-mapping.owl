@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="https://example.com/legacy/card#clears_authorization">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#clearsAuthorization"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/card#card_clearing_records">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#CardClearingRecord"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/card#card_authorizations">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#CardAuthorization"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#occurred_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#occurredAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#authorized_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#authorizedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#clearing_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#clearingAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#instrument_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#instrumentStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#records_lifecycle_for">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#recordsLifecycleFor"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/card#card_lifecycle_events">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#CardLifecycleEvent"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/card#card_instruments">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#CardInstrument"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#cleared_at">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#clearedAt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#token_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#tokenStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#token_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#tokenReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#authorizes_instrument">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#authorizesInstrument"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/card#card_authorizations"/>
+    <rdfs:range rdf:resource="https://example.com/legacy/card#card_instruments"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#payment_instruments">
+    <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#PaymentInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#authorization_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#authorizationReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#limit_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#limitType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#dispute_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#disputeReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#limits_instrument">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#limitsInstrument"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/card#card_limits">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#CardLimit"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/card#card_instruments"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#dispute_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#disputeStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#disputes_clearing_record">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#disputesClearingRecord"/>
+    <rdfs:domain>
+      <rdf:Description rdf:about="https://example.com/legacy/card#card_disputes">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#CardDispute"/>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="https://example.com/legacy/card#card_clearing_records"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#clearing_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#clearingReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#authorization_status">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#authorizationStatus"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#limit_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#limitAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#instrument_reference">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#instrumentReference"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#tokenized_as">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#tokenizedAs"/>
+    <rdfs:domain rdf:resource="https://example.com/legacy/card#card_instruments"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="https://example.com/legacy/card#payment_tokens">
+        <owl:equivalentClass rdf:resource="https://ecosystemcode.com/ontology/card#PaymentToken"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#expiry_date">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#expiryDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#masked_pan">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#maskedPan"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#disputed_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#disputedAmount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#authorization_amount">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#amount"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.com/legacy/card#event_type">
+    <rdfs:subPropertyOf rdf:resource="https://ecosystemcode.com/ontology/card#eventType"/>
+  </rdf:Description>
+</rdf:RDF>

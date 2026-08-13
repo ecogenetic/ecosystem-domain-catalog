@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:sh="http://www.w3.org/ns/shacl#"
+>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb14">
+    <rdf:first>due</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb15"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb35">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#eventType"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb20">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#accruedAmount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb26">
+    <rdf:first>proposed</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb27"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#RepaymentInstallmentShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb11"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb12"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb1">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#loanAccountNumber"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb30">
+    <rdf:first>cancelled</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#InterestAccrualShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#InterestAccrual"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb18"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb19"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb20"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#RepaymentScheduleShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentSchedule"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb9"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb10"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb9">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#scheduleVersion"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#RestructureArrangementShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#RestructureArrangement"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb23"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb24"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb25"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb29">
+    <rdf:first>completed</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb30"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb25">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#restructureStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb26"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb15">
+    <rdf:first>paid</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb16"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb18">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#accruesOn"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb31">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#settlesLoan"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#LoanServicingEventShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#LoanServicingEvent"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb34"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb35"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb36"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#CollateralLinkShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#CollateralLink"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb21"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb33">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#settlementAmount"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb32">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#quoteReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb21">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#securesLoan"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb6">
+    <rdf:first>settled</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb34">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#recordsEventFor"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb3">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#loanStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb27">
+    <rdf:first>approved</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb28"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb2">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#principalBalance"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb22">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#collateralReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb4">
+    <rdf:first>booked</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb5"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb24">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#restructureReference"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb5">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb6"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#SettlementQuoteShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#SettlementQuote"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb31"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb32"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb33"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb8">
+    <rdf:first>written_off</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb10">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#effectiveDate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb28">
+    <rdf:first>active</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb29"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb7">
+    <rdf:first>closed</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb11">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#dueDate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://ecosystemcode.com/ontology/lns#LoanAccountShape">
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:targetClass rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb1"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb2"/>
+    <sh:property rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb12">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#installmentStatus"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:in rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb13"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb36">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#occurredAt"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb16">
+    <rdf:first>overdue</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb17"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb13">
+    <rdf:first>scheduled</rdf:first>
+    <rdf:rest rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb14"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb23">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#modifiesLoan"/>
+    <sh:class rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb19">
+    <sh:path rdf:resource="https://ecosystemcode.com/ontology/lns#accrualDate"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="nf3900d0d9f604f228d4715eb70bab1dbb17">
+    <rdf:first>waived</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+</rdf:RDF>

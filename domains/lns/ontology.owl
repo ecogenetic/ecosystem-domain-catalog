@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#LoanRestructureApproverRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Loan Restructure Approver Role</skos:prefLabel>
+    <skos:altLabel>Restructure Approver</skos:altLabel>
+    <skos:definition>Person role that approves restructures within delegated authority. Bearer: person. Permissions: RestructureArrangement:read, RestructureArrangement:write, LoanAccount:read.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#loanAccountNumber">
+    <rdfs:label>loan account number</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#interestDue">
+    <rdfs:label>interest due</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#comprisesInstallment">
+    <rdfs:label>comprises installment</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentSchedule"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+    <skos:definition>Associates a repayment schedule with one of its instalments.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#LoanServicingOfficerRole">
+    <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    <skos:prefLabel>Loan Servicing Officer Role</skos:prefLabel>
+    <skos:altLabel>Loan Servicing Officer</skos:altLabel>
+    <skos:definition>Person role that maintains schedules, accruals, settlements, and servicing events. Bearer: person. Permissions: LoanAccount:read, LoanAccount:write, RepaymentSchedule:read, RepaymentSchedule:write.</skos:definition>
+  </owl:Class>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#effectiveDate">
+    <rdfs:label>effective date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentSchedule"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#principalDue">
+    <rdfs:label>principal due</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#hasRepaymentSchedule">
+    <rdfs:label>has repayment schedule</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentSchedule"/>
+    <skos:definition>Associates a loan account with a repayment schedule.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#accruedAmount">
+    <rdfs:label>accrued amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#InterestAccrual"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#accruesOn">
+    <rdfs:label>accrues on</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#InterestAccrual"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <skos:definition>Associates an interest accrual with the loan account it is calculated against.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#collateralReference">
+    <rdfs:label>collateral reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#CollateralLink"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#recordsEventFor">
+    <rdfs:label>records event for</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanServicingEvent"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <skos:definition>Associates a servicing event with the loan account whose history it records.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#scheduleVersion">
+    <rdfs:label>schedule version</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentSchedule"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#occurredAt">
+    <rdfs:label>occurred at</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanServicingEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#dueDate">
+    <rdfs:label>due date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#eventType">
+    <rdfs:label>event type</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanServicingEvent"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#installmentStatus">
+    <rdfs:label>installment status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RepaymentInstallment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Ontology rdf:about="https://ecosystemcode.com/ontology/lns">
+    <rdfs:label>LNS Domain Ontology</rdfs:label>
+    <rdfs:comment>Seed ontology for loan servicing after origination.</rdfs:comment>
+  </owl:Ontology>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#principalBalance">
+    <rdfs:label>principal balance</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#securesLoan">
+    <rdfs:label>secures loan</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#CollateralLink"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <skos:definition>Associates a collateral reference with the loan account it secures.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#quoteReference">
+    <rdfs:label>quote reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#SettlementQuote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#loanStatus">
+    <rdfs:label>loan status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#interestRate">
+    <rdfs:label>interest rate</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#InterestAccrual"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#settlesLoan">
+    <rdfs:label>settles loan</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#SettlementQuote"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <skos:definition>Associates a settlement quote with the loan account it would pay off.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#restructureStatus">
+    <rdfs:label>restructure status</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RestructureArrangement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#settlementAmount">
+    <rdfs:label>settlement amount</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#SettlementQuote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#validUntil">
+    <rdfs:label>valid until</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#SettlementQuote"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#accrualDate">
+    <rdfs:label>accrual date</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#InterestAccrual"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="https://ecosystemcode.com/ontology/lns#modifiesLoan">
+    <rdfs:label>modifies loan</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RestructureArrangement"/>
+    <rdfs:range rdf:resource="https://ecosystemcode.com/ontology/lns#LoanAccount"/>
+    <skos:definition>Associates a restructure arrangement with the loan account whose terms it changes.</skos:definition>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#lienPriority">
+    <rdfs:label>lien priority</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#CollateralLink"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="https://ecosystemcode.com/ontology/lns#restructureReference">
+    <rdfs:label>restructure reference</rdfs:label>
+    <rdfs:domain rdf:resource="https://ecosystemcode.com/ontology/lns#RestructureArrangement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#RestructureArrangement">
+    <skos:prefLabel>Restructure Arrangement</skos:prefLabel>
+    <skos:altLabel>Loan Modification</skos:altLabel>
+    <skos:definition>An approved change to repayment terms for a stressed or modified loan.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#RepaymentSchedule">
+    <skos:prefLabel>Repayment Schedule</skos:prefLabel>
+    <skos:altLabel>Amortization Schedule</skos:altLabel>
+    <skos:definition>The dated schedule of expected repayments for a loan account.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#LoanServicingEvent">
+    <skos:prefLabel>Loan Servicing Event</skos:prefLabel>
+    <skos:altLabel>Servicing Event</skos:altLabel>
+    <skos:definition>An immutable record of a material loan servicing event.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#RepaymentInstallment">
+    <skos:prefLabel>Repayment Installment</skos:prefLabel>
+    <skos:altLabel>Instalment</skos:altLabel>
+    <skos:definition>One scheduled amount due under a repayment schedule.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#InterestAccrual">
+    <skos:prefLabel>Interest Accrual</skos:prefLabel>
+    <skos:altLabel>Accrued Interest</skos:altLabel>
+    <skos:definition>Interest accrued for a period against a loan account.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#CollateralLink">
+    <skos:prefLabel>Collateral Link</skos:prefLabel>
+    <skos:altLabel>Security Reference</skos:altLabel>
+    <skos:definition>A reference linking a loan account to collateral managed or recorded elsewhere.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#SettlementQuote">
+    <skos:prefLabel>Settlement Quote</skos:prefLabel>
+    <skos:altLabel>Payoff Quote</skos:altLabel>
+    <skos:definition>A time-bounded amount required to settle the loan.</skos:definition>
+  </owl:Class>
+  <owl:Class rdf:about="https://ecosystemcode.com/ontology/lns#LoanAccount">
+    <skos:prefLabel>Loan Account</skos:prefLabel>
+    <skos:altLabel>Serviced Loan</skos:altLabel>
+    <skos:definition>The operational servicing record for a booked loan.</skos:definition>
+  </owl:Class>
+</rdf:RDF>
