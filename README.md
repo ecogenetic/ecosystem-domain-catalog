@@ -1,5 +1,7 @@
 # ecosystem-domain-catalog
 
+Live catalog: **[ontology.ecosystem.ai](https://ontology.ecosystem.ai)**
+
 A **living catalog** of business-domain descriptions and seed ontologies: controlled
 vocabulary (domain language), OWL/SKOS (RDF Turtle), and SHACL completeness shapes —
 with industry overlays for banking, insurance, telco, healthcare, and gambling.
