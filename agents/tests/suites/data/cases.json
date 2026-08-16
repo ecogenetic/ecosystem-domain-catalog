@@ -1,0 +1,52 @@
+{
+  "agent": "data",
+  "sourceId": "sample",
+  "cases": [
+    {
+      "id": "data-L1-count-customers",
+      "level": 1,
+      "query": "how many customers do i have",
+      "expect": {
+        "targetClass": "Customer",
+        "count": 4
+      }
+    },
+    {
+      "id": "data-L2-active-customers",
+      "level": 2,
+      "query": "how many active customers",
+      "expect": {
+        "targetClass": "Customer",
+        "filterField": "status",
+        "count": 2
+      }
+    },
+    {
+      "id": "data-L3-orders-month",
+      "level": 3,
+      "query": "how many orders in the last month",
+      "expect": {
+        "targetClass": "Order",
+        "count": 2
+      }
+    },
+    {
+      "id": "data-L4-orders-have-customers",
+      "level": 4,
+      "query": "how many orders have customers",
+      "expect": {
+        "targetClass": "Order",
+        "count": 3
+      }
+    },
+    {
+      "id": "data-L5-active-recent-orders",
+      "level": 5,
+      "query": "how many orders have customers that are active that ordered in the last month",
+      "expect": {
+        "targetClass": "Order",
+        "count": 2
+      }
+    }
+  ]
+}

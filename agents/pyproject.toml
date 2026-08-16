@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecosystem-catalog-agents"
+version = "1.0.0"
+description = "Standalone Catalog and Data MCP/OpenAPI agents for the ecosystem-domain-catalog"
+readme = "README.md"
+requires-python = ">=3.14"
+license = { text = "Apache-2.0" }
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+    "httpx>=0.28.0",
+    "pydantic>=2.10.0",
+    "rdflib>=7.1.0",
+    "pyoxigraph>=0.5.9",
+    "networkx>=3.4.0",
+    "pymongo>=4.10.0",
+    "psycopg[binary]>=3.2.0",
+    "sqlparse>=0.5.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3.0"]
+
+[project.scripts]
+ecosystem-agents = "agents.__main__:main"
+catalog-agent = "agents.catalog_agent.__main__:main"
+data-agent = "agents.data_agent.__main__:main"
+
+[tool.setuptools]
+package-dir = { "agents" = "." }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["catalog_agent*", "data_agent*", "shared*", "tests*"]
+
+[tool.setuptools.package-data]
+"tests" = ["suites/**/*.json", "fixtures/**/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".."]
+addopts = "-q"
+markers = [
+    "llm: requires ECOSYSTEM_LLM_BASE_URL",
+]

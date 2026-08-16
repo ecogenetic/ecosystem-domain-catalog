@@ -1,0 +1,26 @@
+{
+  "lookups": [
+    { "entity": "Customer", "field": "status", "value": "active" },
+    { "entity": "Customer", "field": "status", "value": "inactive" },
+    { "entity": "Order", "field": "status", "value": "open" },
+    { "entity": "Order", "field": "status", "value": "closed" }
+  ],
+  "customer": [
+    { "_id": "c1", "status": "active", "region": "west" },
+    { "_id": "c2", "status": "active", "region": "east" },
+    { "_id": "c3", "status": "inactive", "region": "west" },
+    { "_id": "c4", "status": "inactive", "region": "east" }
+  ],
+  "order": [
+    { "_id": "o1", "customer_id": "c1", "ordered_at": "$recent", "status": "open" },
+    { "_id": "o2", "customer_id": "c2", "ordered_at": "$recent", "status": "open" },
+    { "_id": "o3", "customer_id": "c3", "ordered_at": "$old", "status": "closed" }
+  ],
+  "order_line": [
+    { "_id": "l1", "order_id": "o1", "quantity": 1 },
+    { "_id": "l2", "order_id": "o2", "quantity": 2 }
+  ],
+  "users": [
+    { "_id": "u1", "role": "admin" }
+  ]
+}

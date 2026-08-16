@@ -1,0 +1,32 @@
+name: ecosystem-domain-catalog
+
+services:
+  ecosystem-domain-catalog:
+    build:
+      context: ..
+      dockerfile: agents/Dockerfile
+    image: ecosystem-domain-catalog:local
+    ports:
+      - "8080:8080"
+    environment:
+      CATALOG_ROOT: /app
+      AGENTS_DATA_DIR: /app/agents/data
+      PYTHONPATH: /app
+      ECOSYSTEM_LLM_BASE_URL: ${ECOSYSTEM_LLM_BASE_URL:-}
+      ECOSYSTEM_LLM_MODEL: ${ECOSYSTEM_LLM_MODEL:-}
+      ECOSYSTEM_LLM_API_KEY: ${ECOSYSTEM_LLM_API_KEY:-}
+      AGENTS_CORS_ORIGINS: ${AGENTS_CORS_ORIGINS:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python3",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/v1/health')",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s

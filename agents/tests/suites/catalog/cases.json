@@ -1,0 +1,65 @@
+{
+  "agent": "catalog",
+  "cases": [
+    {
+      "id": "catalog-L1-credit-card",
+      "level": 1,
+      "name": "Exact / directed",
+      "query": "ontology for banking credit card",
+      "domain": "card",
+      "industry": "banking",
+      "includeOntology": true,
+      "expect": {
+        "domainId": "card",
+        "industryId": "banking",
+        "iriContains": "RetailCreditCard",
+        "ontologyPresent": true
+      }
+    },
+    {
+      "id": "catalog-L2-deal-synonym",
+      "level": 2,
+      "name": "Synonym / SKOS",
+      "query": "deal",
+      "expect": {
+        "iriContains": "Opportunity",
+        "domainId": "crm"
+      }
+    },
+    {
+      "id": "catalog-L3-customer-phones",
+      "level": 3,
+      "name": "Multi-concept NL",
+      "query": "my customer buys mobile phones",
+      "expect": {
+        "anyDomain": ["cvm", "crm", "pim", "ecom"],
+        "anyLocalName": ["Customer", "Product"]
+      }
+    },
+    {
+      "id": "catalog-L4-account-homonym",
+      "level": 4,
+      "name": "Homonym",
+      "query": "Account",
+      "expect": {
+        "homonymDomains": ["crm", "fin"],
+        "doNotMerge": true
+      }
+    },
+    {
+      "id": "catalog-L5-overlay-expand",
+      "level": 5,
+      "name": "Overlay + graph expand",
+      "query": "ontology for banking credit card",
+      "domain": "card",
+      "industry": "banking",
+      "includeOntology": true,
+      "expand": true,
+      "expect": {
+        "iriContains": "RetailCreditCard",
+        "expandRel": "subClassOf",
+        "ontologyPresent": true
+      }
+    }
+  ]
+}

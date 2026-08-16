@@ -19,6 +19,10 @@ in [`meta-data/`](meta-data/).
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [meta-data/extension-approaches.md](meta-data/extension-approaches.md).
 
+## Optional agents workbench
+
+[`agents/`](agents/) is a Python 3.14 Catalog + Data workbench (search, map a MongoDB/PostgreSQL/DDL source, ask counts). It does not change this catalog’s contract. See [`agents/README.md`](agents/README.md).
+
 ## Standards stack
 
 | Layer | Technology | Location |
