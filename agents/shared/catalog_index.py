@@ -27,6 +27,24 @@ STOPWORDS = {
 STUB_MARKERS = ("legacy:Entity", ":CoreEntity")
 
 
+def _row_industry_id(row: sqlite3.Row | dict[str, Any]) -> str | None:
+    if isinstance(row, sqlite3.Row):
+        keys = row.keys()
+        if "industry_id" in keys:
+            return row["industry_id"]
+        if "industryId" in keys:
+            return row["industryId"]
+        return None
+    return row.get("industry_id") or row.get("industryId")
+
+
+def industry_filter_allows(industry_id: str | None, industry: str | None) -> bool:
+    """When an industry is selected, only overlay/industry-tagged docs match."""
+    if not industry:
+        return True
+    return industry_id == industry
+
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     h.update(path.read_bytes())
@@ -287,7 +305,7 @@ class CatalogIndex:
             hits = self._token_fallback(terms, industry, domain, limit * 4)
         scored = self._rank(hits, terms, industry, domain, query)
         if not scored:
-            expanded = self._expand_from_terms(terms)
+            expanded = self._expand_from_terms(terms, industry, domain)
             scored = self._rank(expanded, terms, industry, domain, query)
         matches = scored[:limit]
         payload = {
@@ -311,7 +329,7 @@ class CatalogIndex:
         for token in tokenize(text):
             rows = conn.execute(
                 """
-                SELECT iri, domain_id, pref_label, kind FROM docs
+                SELECT iri, domain_id, industry_id, pref_label, kind FROM docs
                 WHERE lower(local_name)=? OR lower(pref_label)=?
                    OR lower(alt_labels) LIKE ?
                 """,
@@ -319,7 +337,7 @@ class CatalogIndex:
             ).fetchall()
             extra = conn.execute(
                 """
-                SELECT iri, domain_id, pref_label, kind FROM docs
+                SELECT iri, domain_id, industry_id, pref_label, kind FROM docs
                 WHERE lower(local_name) LIKE ? OR lower(pref_label) LIKE ?
                 """,
                 (f"%{token}%", f"%{token}%"),
@@ -330,7 +348,7 @@ class CatalogIndex:
                     rows.append(r)
                     seen.add(r["iri"])
             if industry:
-                rows = [r for r in rows if r["domain_id"] == industry or True]
+                rows = [r for r in rows if r["industry_id"] == industry]
             iris = []
             domains = set()
             for r in rows:
@@ -935,7 +953,7 @@ class CatalogIndex:
             sql += " AND (docs.domain_id=? OR docs.kind='mapping')"
             params.append(domain)
         if industry:
-            sql += " AND (docs.industry_id=? OR docs.industry_id IS NULL)"
+            sql += " AND docs.industry_id=?"
             params.append(industry)
         sql += " LIMIT ?"
         params.append(limit)
@@ -962,15 +980,15 @@ class CatalogIndex:
             for r in rows:
                 if domain and r["domain_id"] not in (domain, "core", None) and r["kind"] != "mapping":
                     continue
-                if industry and r["industry_id"] not in (industry, None):
-                    # keep domain-level classes when industry filter is set
-                    if r["industry_id"] not in (industry, None):
-                        continue
+                if industry and not industry_filter_allows(r["industry_id"], industry):
+                    continue
                 hits[r["iri"]] = r
         return list(hits.values())[:limit]
 
-    def _expand_from_terms(self, tokens: list[str]) -> list[sqlite3.Row]:
-        return self._token_fallback(tokens, None, None, 40)
+    def _expand_from_terms(
+        self, tokens: list[str], industry: str | None = None, domain: str | None = None
+    ) -> list[sqlite3.Row]:
+        return self._token_fallback(tokens, industry, domain, 40)
 
     def _exact_name_hits(self, tokens: list[str], industry: str | None, domain: str | None) -> list[sqlite3.Row]:
         conn = self.connect()
@@ -986,6 +1004,8 @@ class CatalogIndex:
             ).fetchall()
             for r in rows:
                 if domain and r["domain_id"] not in (domain, "core", None):
+                    continue
+                if not industry_filter_allows(r["industry_id"], industry):
                     continue
                 hits.append(r)
         return hits
@@ -1009,6 +1029,8 @@ class CatalogIndex:
                 industries = {}
         for row in rows:
             if row["kind"] in {"description", "mapping"} and row["kind"] == "description":
+                continue
+            if not industry_filter_allows(_row_industry_id(row), industry):
                 continue
             doc = self._row_to_match(row)
             score = 0.0

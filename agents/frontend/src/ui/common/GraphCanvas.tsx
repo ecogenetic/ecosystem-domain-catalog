@@ -271,7 +271,7 @@ export function GraphCanvas({
   }, []);
 
   if (!payload?.nodes?.length) {
-    return <p className="muted">Look up a class, then expand its hierarchy.</p>;
+    return <p className="muted">Search the catalog, then expand a term’s neighbourhood.</p>;
   }
 
   return (

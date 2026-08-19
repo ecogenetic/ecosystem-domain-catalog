@@ -13,14 +13,6 @@ export type NavNode = {
   children?: NavNode[];
 };
 
-/** Family chips for Pillar 1 spatial scoping (not 42 domains). */
-export const DOMAIN_FAMILIES: { id: string; label: string; domainIds: string[]; tone: 'crm' | 'core' | 'product' | 'risk' }[] = [
-  { id: 'crm', label: 'CRM', domainIds: ['crm', 'cvm'], tone: 'crm' },
-  { id: 'core', label: 'Core', domainIds: ['core'], tone: 'core' },
-  { id: 'product', label: 'Product', domainIds: ['pim', 'ecom', 'oms', 'cpq', 'plm'], tone: 'product' },
-  { id: 'risk', label: 'Risk', domainIds: ['grc', 'fin', 'lns', 'tre', 'card', 'fms'], tone: 'risk' },
-];
-
 export const NAV: NavNode[] = [
   {
     id: 'ontology',
@@ -31,9 +23,9 @@ export const NAV: NavNode[] = [
       { id: 'overview', label: 'Overview', to: '/', end: true, keywords: ['home', 'lookup'] },
       {
         id: 'classes',
-        label: 'Look up a class',
+        label: 'Search the catalog',
         to: '/ontology/classes',
-        keywords: ['search', 'prefLabel', 'skos'],
+        keywords: ['search', 'prefLabel', 'skos', 'lookup', 'class'],
       },
       {
         id: 'hierarchy',
@@ -321,7 +313,7 @@ export function headerCopy(
     return { title: 'Hierarchy', sub: 'Subclass, mapping, and alignment relations' };
   }
   if (pathname.includes('/classes')) {
-    return { title: 'Look up a class', sub: 'Preferred labels, definitions, and IRIs' };
+    return { title: 'Search the catalog', sub: 'Match a label, synonym, or definition to an IRI' };
   }
-  return { title: 'Ontology building', sub: 'Classes, preferred labels, and relationships' };
+  return { title: 'Search the catalog', sub: 'Match a label, synonym, or definition to an IRI' };
 }

@@ -13,7 +13,8 @@ import { useApp } from '../AppContext';
 import { Card } from '../common/Card';
 import { EmptyState } from '../common/EmptyState';
 import { GraphCanvas } from '../common/GraphCanvas';
-import { DOMAIN_FAMILIES, catalogDomainId, catalogIndustryId } from '../layout/nav';
+import { SearchableSelect } from '../common/SearchableSelect';
+import { catalogDomainId, catalogIndustryId } from '../layout/nav';
 import { ConceptInspector } from './ConceptInspector';
 
 export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
@@ -39,7 +40,6 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
   const [query, setQuery] = useState('');
   const [domain, setDomain] = useState('');
   const [industry, setIndustry] = useState('');
-  const [familyId, setFamilyId] = useState('');
   const [matches, setMatches] = useState<CatalogMatch[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -51,25 +51,21 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     setSearchParams(next, { replace: true });
   };
 
-  const family = DOMAIN_FAMILIES.find((f) => f.id === familyId);
-  const familyDomains = family?.domainIds || null;
-
   const visibleMatches = useMemo(() => {
-    if (!familyDomains) return matches;
-    return matches.filter((m) => m.domainId && familyDomains.includes(m.domainId));
-  }, [matches, familyDomains]);
+    if (!industry) return matches;
+    return matches.filter((m) => m.industryId === industry);
+  }, [matches, industry]);
 
   const filteredGraph = useMemo(() => {
-    if (!graph || !familyDomains) return graph;
+    if (!graph || !industry) return graph;
     return {
       ...graph,
       nodes: (graph.nodes || []).map((n) => {
-        const inFamily =
-          !n.domainId || familyDomains.includes(n.domainId) || n.iri === selected?.iri;
-        return inFamily ? n : { ...n, kind: 'unmapped' };
+        const inIndustry = !n.industryId || n.industryId === industry || n.iri === selected?.iri;
+        return inIndustry ? n : { ...n, kind: 'unmapped' };
       }),
     };
-  }, [graph, familyDomains, selected?.iri]);
+  }, [graph, industry, selected?.iri]);
 
   const scores = visibleMatches.map((m) => m.score || 0);
 
@@ -157,13 +153,11 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     e.currentTarget.form?.requestSubmit();
   }
 
-  function toggleFamily(id: string) {
-    setFamilyId((cur) => (cur === id ? '' : id));
-    const next = DOMAIN_FAMILIES.find((f) => f.id === id);
-    if (next?.domainIds.length === 1) {
-      setDomain(next.domainIds[0]);
-    } else if (!id) {
-      setDomain('');
+  function toggleIndustry(id: string) {
+    const next = industry === id ? '' : id;
+    setIndustry(next);
+    if (query.trim()) {
+      void runSearch(query, { industry: next || undefined, domain: domain || undefined });
     }
   }
 
@@ -178,16 +172,17 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     );
   }
 
-  const familyChips = (
-    <div className="chip-row family-chips">
-      {DOMAIN_FAMILIES.map((f) => (
+  const industryChips = (
+    <div className="chip-row industry-chips">
+      {industries.map((i) => (
         <button
-          key={f.id}
+          key={i.id}
           type="button"
-          className={`chip family-${f.tone}${familyId === f.id ? ' active' : ''}`}
-          onClick={() => toggleFamily(f.id)}
+          className={`chip${industry === i.id ? ' active' : ''}`}
+          title={i.label}
+          onClick={() => toggleIndustry(i.id)}
         >
-          {f.label}
+          {i.label}
         </button>
       ))}
     </div>
@@ -202,7 +197,7 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
         placeholder="Class, preferred label, or definition…"
         rows={2}
       />
-      <button className="send-btn" type="submit" disabled={busy} aria-label="Look up class">
+      <button className="send-btn" type="submit" disabled={busy} aria-label="Search the catalog">
         {busy ? <Loader2 className="spin" size={16} /> : <ArrowUp size={16} />}
       </button>
     </form>
@@ -210,22 +205,23 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
 
   const filters = (
     <div className="filter-row">
-      <select value={domain} onChange={(e) => setDomain(e.target.value)}>
-        <option value="">All domain ontologies</option>
-        {domains.map((d) => (
-          <option key={d.id} value={d.id}>
-            {d.name}
-          </option>
-        ))}
-      </select>
-      <select value={industry} onChange={(e) => setIndustry(e.target.value)}>
-        <option value="">All industry overlays</option>
-        {industries.map((i) => (
-          <option key={i.id} value={i.id}>
-            {i.label}
-          </option>
-        ))}
-      </select>
+      <SearchableSelect
+        value={domain}
+        allLabel="All domain ontologies"
+        placeholder="Search domain ontologies…"
+        ariaLabel="Domain ontology"
+        options={domains.map((d) => ({
+          id: d.id,
+          label: d.acronym ? `${d.acronym} — ${d.name}` : d.name,
+          hint: d.id,
+        }))}
+        onChange={(next) => {
+          setDomain(next);
+          if (query.trim()) {
+            void runSearch(query, { domain: next || undefined, industry: industry || undefined });
+          }
+        }}
+      />
     </div>
   );
 
@@ -233,14 +229,14 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     return (
       <div className="page">
         <div className="hero">
-          <h1>Look up a class</h1>
+          <h1>Search the catalog</h1>
           <p>
-            The catalog exposes the ontology: preferred labels, alternative labels, definitions, and
-            subclass relations. Homonyms stay distinct by domain (crm:Account is not fin:Account).
-            Browse domain ontologies and industry overlays in the left navigation.
+            Match a preferred label, synonym, or definition to a catalog IRI. Homonyms stay distinct
+            by domain (crm:Account is not fin:Account). Optionally scope by domain ontology and
+            industry overlay, then search.
           </p>
           {filters}
-          {familyChips}
+          {industryChips}
           {composer}
           {error && <p className="error">{error}</p>}
         </div>
@@ -254,8 +250,9 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     <div className="page-fill">
       <div className={`workspace${threePane ? ' three-pane' : ' two-pane'}`}>
         <div className="workspace-left">
+          {filters}
+          {industryChips}
           {composer}
-          {familyChips}
           {error && <p className="error">{error}</p>}
           <div className="result-list">
             {visibleMatches.map((m) => {

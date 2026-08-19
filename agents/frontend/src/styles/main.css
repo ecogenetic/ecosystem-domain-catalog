@@ -429,9 +429,66 @@ input:focus, select:focus, textarea:focus {
 .hero { max-width: 760px; margin: 8vh auto 0; text-align: center; }
 .hero h1 { font-size: 28px; margin: 0 0 8px; }
 .hero p { color: var(--text-secondary); margin: 0 0 24px; }
-.chip-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 0 22px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .filter-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-row select { min-width: 160px; }
+.filter-row select, .filter-row .searchable-select { min-width: 220px; }
+.hero .industry-chips { justify-content: center; margin: 0 0 18px; }
+.industry-chips { justify-content: flex-start; margin: 0 0 16px; }
+.workspace-left .filter-row { justify-content: flex-start; margin: 0 0 10px; }
+.workspace-left .chip-row { justify-content: flex-start; }
+
+.searchable-select {
+  position: relative;
+  flex: 1;
+  max-width: 420px;
+}
+.searchable-select input {
+  width: 100%;
+  padding-right: 28px;
+}
+.searchable-select-caret {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.searchable-select-list {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  max-height: 280px;
+  overflow: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-primary);
+  text-align: left;
+}
+.searchable-select-list button {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 8px 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+}
+.searchable-select-list button:hover,
+.searchable-select-list button[aria-selected='true'] {
+  background: var(--bg-hover);
+}
+.searchable-select-empty { padding: 8px 10px; }
 
 .workspace {
   display: grid;
@@ -477,16 +534,6 @@ input:focus, select:focus, textarea:focus {
 .badge.usage-med { border-color: var(--secondary); color: var(--secondary); background: rgba(74, 144, 226, 0.12); }
 .badge.usage-low { color: var(--text-muted); }
 .badge.mapped { border-color: rgba(0, 184, 212, 0.45); color: var(--success); background: rgba(0, 184, 212, 0.12); }
-
-.family-chips { justify-content: flex-start; margin: 12px 0 0; }
-.chip.family-crm { border-color: rgba(var(--primary-rgb), 0.4); }
-.chip.family-crm.active { background: rgba(var(--primary-rgb), 0.18); color: var(--primary-dark); }
-.chip.family-core { border-color: rgba(0, 184, 212, 0.45); }
-.chip.family-core.active { background: rgba(0, 184, 212, 0.16); color: var(--success); }
-.chip.family-product { border-color: rgba(74, 144, 226, 0.5); }
-.chip.family-product.active { background: rgba(74, 144, 226, 0.16); color: var(--secondary); }
-.chip.family-risk { border-color: rgba(var(--danger-rgb), 0.4); }
-.chip.family-risk.active { background: rgba(var(--danger-rgb), 0.12); color: var(--danger); }
 
 .env-pill {
   font-size: 10px;

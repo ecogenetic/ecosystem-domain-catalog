@@ -99,6 +99,15 @@ def test_heal_index_runs(catalog_ready):
     assert result.get("ok")
 
 
+def test_industry_search_is_exclusive(catalog_ready):
+    from agents.catalog_agent.tools import search_catalog
+
+    result = search_catalog(query="Account", industry="banking", limit=20)
+    assert result.get("ok")
+    for match in result.get("matches") or []:
+        assert match.get("industryId") == "banking", match
+
+
 def test_validate_text_homonym(catalog_ready):
     result = validate_text(text="Account")
     statuses = {t["token"]: t["status"] for t in result["terms"]}
