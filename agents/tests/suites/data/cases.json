@@ -42,10 +42,10 @@
     {
       "id": "data-L5-active-recent-orders",
       "level": 5,
-      "query": "how many orders have customers that are active that ordered in the last month",
+      "query": "how many campaigns have male customers that interacted with us over the last month",
       "expect": {
-        "targetClass": "Order",
-        "count": 2
+        "targetClass": "Campaign",
+        "count": 1
       }
     }
   ]

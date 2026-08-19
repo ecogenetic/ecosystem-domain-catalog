@@ -54,7 +54,7 @@ def compile_query_plan(source_id: str, query: str) -> dict[str, Any]:
                     )
 
     if MONTH_RE.search(q):
-        temporal = _first_temporal(mapped)
+        temporal = _first_temporal(mapped, q)
         if temporal:
             start = datetime.now(timezone.utc) - timedelta(days=31)
             filters.append(
@@ -90,11 +90,35 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
     if target_name not in mapped:
         return {"ok": False, "error": "no_target_class"}
 
+    store_filter = _local_filter(plan, target_name)
+    joins = plan.get("joins") or []
+    filters = plan.get("filters") or []
+    foreign_filters = [f for f in filters if f.get("entity") != target_name]
+
+    # Push filters to the store when the plan stays on one collection (Mongo/Postgres/memory).
+    if not joins and not foreign_filters:
+        collection = mapped[target_name]["collection"]
+        for filt in filters:
+            entry = mapped.get(filt["entity"])
+            if not entry:
+                return {"ok": False, "error": "unmapped_field", "unmapped": [filt["entity"]]}
+            if filt["field"] not in _allowed_fields(entry):
+                return {"ok": False, "error": "unmapped_field", "unmapped": [filt["field"]]}
+        result = store.count(collection, store_filter or None)
+        store_info = {
+            "kind": getattr(store, "kind", "memory"),
+            "collection": collection,
+            "filter": store_filter,
+            "joins": [],
+            "pushdown": True,
+        }
+        return {"ok": True, "result": result, "store": store_info, "mongo": store_info}
+
     tables: dict[str, list[dict[str, Any]]] = {}
     for entity, entry in mapped.items():
         tables[entity] = [_with_id(d) for d in store.find(entry["collection"], limit=10000)]
 
-    for filt in plan.get("filters") or []:
+    for filt in filters:
         entity = filt["entity"]
         if entity not in mapped:
             return {"ok": False, "error": "unmapped_field", "unmapped": [entity]}
@@ -112,8 +136,8 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
             docs = [d for d in docs if str(d.get(field) or "") >= bound]
         tables[entity] = docs
 
-    involved = {target_name} | {f["entity"] for f in plan.get("filters") or []}
-    for join in plan.get("joins") or []:
+    involved = {target_name} | {f["entity"] for f in filters}
+    for join in joins:
         involved.add(join.get("from") or "")
         involved.add(join.get("to") or "")
     involved.discard("")
@@ -121,12 +145,12 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
         tables = _apply_joins(tables, mapped, involved)
 
     result = len(tables.get(target_name) or [])
-    store_filter = _local_filter(plan, target_name)
     store_info = {
         "kind": getattr(store, "kind", "memory"),
         "collection": mapped[target_name]["collection"],
         "filter": store_filter,
-        "joins": plan.get("joins") or [],
+        "joins": joins,
+        "pushdown": False,
     }
     return {
         "ok": True,
@@ -195,15 +219,26 @@ def _pick_target(q: str, mapped: list[dict[str, Any]]) -> dict[str, Any] | None:
     return mapped[0] if mapped else None
 
 
-def _first_temporal(mapped: list[dict[str, Any]]) -> dict[str, str] | None:
+def _first_temporal(mapped: list[dict[str, Any]], query: str = "") -> dict[str, str] | None:
+    q = (query or "").lower()
+    ranked: list[tuple[int, dict[str, str]]] = []
     for m in mapped:
+        score = 0
+        if _mentioned(m["entity"], q):
+            score += 5
+        # prefer interaction/event timestamps when the NL mentions interacting
+        if "interact" in q and "interact" in m["entity"].lower():
+            score += 8
+        if "order" in q and "order" in m["entity"].lower():
+            score += 4
         for f in m.get("temporalFields") or []:
-            return {"entity": m["entity"], "field": f}
+            ranked.append((score + 2, {"entity": m["entity"], "field": f}))
         for p in m.get("properties") or []:
             fname = p["field"].lower()
             if fname.endswith("at") or "date" in fname or "time" in fname:
-                return {"entity": m["entity"], "field": p["field"]}
-    return None
+                ranked.append((score + 1, {"entity": m["entity"], "field": p["field"]}))
+    ranked.sort(key=lambda x: -x[0])
+    return ranked[0][1] if ranked else None
 
 
 def _needed_joins(

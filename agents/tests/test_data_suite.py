@@ -36,8 +36,11 @@ def test_introspect_core_collections(catalog_ready):
     assert "customer" in names
     assert "order" in names
     assert "order_line" in names
+    assert "campaign" in names
+    assert "interaction" in names
     customer = next(c for c in schema["collections"] if c["name"] == "customer")
     assert "status" in (customer.get("enumsFromLookups") or {})
+    assert "gender" in (customer.get("enumsFromLookups") or {})
 
 
 def test_mapping_customer_order(catalog_ready):

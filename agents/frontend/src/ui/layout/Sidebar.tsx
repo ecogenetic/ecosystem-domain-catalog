@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  Activity,
   BookOpen,
   ChevronRight,
   Database,
-  Moon,
   PanelLeft,
   PanelLeftClose,
   Search,
-  Sun,
   TerminalSquare,
 } from 'lucide-react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -28,12 +27,13 @@ const ICONS: Record<NavIcon, typeof BookOpen> = {
   book: BookOpen,
   database: Database,
   terminal: TerminalSquare,
+  activity: Activity,
 };
 
 export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
   const { resetCatalog, domains, industries, sessionLibrary } = useApp();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [query, setQuery] = useState('');
   const tree = useMemo(
     () => hydrateNav(domains, industries, sessionLibrary.items),
@@ -46,6 +46,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
     types: false,
     overlays: false,
     data: false,
+    runtime: false,
     developers: false,
   });
 
@@ -81,10 +82,12 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
             const Icon = group.icon ? ICONS[group.icon] : BookOpen;
             const active =
               group.id === 'ontology'
-                ? pathname === '/' || pathname.startsWith('/ontology')
-                : group.id === 'data'
-                  ? pathname.startsWith('/sources')
-                  : pathname.startsWith('/advanced');
+                ? pathname === '/' || (pathname.startsWith('/ontology') && !search.includes('overlay=paths'))
+                : group.id === 'runtime'
+                  ? pathname.startsWith('/ontology/hierarchy') && search.includes('overlay=paths')
+                  : group.id === 'data'
+                    ? pathname.startsWith('/sources')
+                    : pathname.startsWith('/advanced');
             return (
               <NavLink
                 key={group.id}
@@ -99,7 +102,6 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
           })}
         </nav>
         <div className="sidebar-footer">
-          <ThemeButton />
           <Button variant="icon" onClick={onToggle} title="Show sidebar">
             <PanelLeft size={16} />
           </Button>
@@ -142,7 +144,6 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
         {visible.length === 0 && <p className="nav-empty">No matching pages</p>}
       </nav>
       <div className="sidebar-footer">
-        <ThemeButton />
         <Button variant="icon" onClick={onToggle} title="Hide sidebar">
           <PanelLeftClose size={16} />
         </Button>
@@ -195,7 +196,10 @@ function NavBranch({
       >
         <ChevronRight size={14} className={`nav-chevron${expanded ? ' open' : ''}`} />
         {Icon && <Icon size={15} />}
-        <span>{node.label}</span>
+        <span>
+          {node.label}
+          {typeof node.count === 'number' ? ` · ${node.count}` : ''}
+        </span>
       </button>
       {expanded && (
         <div className="nav-children">
@@ -213,14 +217,5 @@ function NavBranch({
         </div>
       )}
     </div>
-  );
-}
-
-function ThemeButton() {
-  const { theme, toggleTheme } = useApp();
-  return (
-    <Button variant="icon" onClick={toggleTheme} title="Theme">
-      {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-    </Button>
   );
 }

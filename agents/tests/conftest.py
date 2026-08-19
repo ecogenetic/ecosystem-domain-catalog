@@ -15,6 +15,17 @@ def catalog_ready():
     idx = get_index()
     count = idx.connect().execute("SELECT COUNT(*) AS c FROM docs").fetchone()["c"]
     health = idx.health()
-    if count < 50 or health.get("missingDomains"):
+    if not idx.nx.nodes:
+        idx._load_graph()
+    has_object_props = any(
+        (d or {}).get("edgeKind") == "objectProperty" for _, _, d in idx.nx.edges(data=True)
+    )
+    opp = "https://ecosystemcode.com/ontology/crm#Opportunity"
+    opp_row = idx.connect().execute("SELECT extra FROM docs WHERE iri=?", (opp,)).fetchone()
+    import json
+
+    opp_extra = json.loads(opp_row["extra"] or "{}") if opp_row else {}
+    has_shapes = bool(opp_extra.get("shapes") or opp_extra.get("lifecycleStates"))
+    if count < 50 or health.get("missingDomains") or not has_object_props or not has_shapes:
         idx.rebuild(incremental=False)
     return idx

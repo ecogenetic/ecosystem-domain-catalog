@@ -399,7 +399,7 @@ class CatalogIndex:
         depth: int = 1,
         rels: list[str] | None = None,
     ) -> dict[str, Any]:
-        allowed = set(rels or ["subClassOf", "equivalentClass", "mapping", "alignment"])
+        allowed = set(rels or ["subClassOf", "equivalentClass", "mapping", "alignment", "objectProperty"])
         if not self.nx.nodes:
             self._load_graph()
         nodes = {iri}
@@ -411,17 +411,15 @@ class CatalogIndex:
                 if node not in self.nx:
                     continue
                 for _, dest, data in self.nx.out_edges(node, data=True):
-                    rel = data.get("rel", "")
-                    if rel not in allowed:
+                    if not self._edge_allowed(data, allowed):
                         continue
                     nxt.add(dest)
-                    edges.append({"from": node, "to": dest, "rel": rel})
+                    edges.append({"from": node, "to": dest, "rel": str(data.get("rel") or "")})
                 for src, _, data in self.nx.in_edges(node, data=True):
-                    rel = data.get("rel", "")
-                    if rel not in allowed:
+                    if not self._edge_allowed(data, allowed):
                         continue
                     nxt.add(src)
-                    edges.append({"from": src, "to": node, "rel": rel})
+                    edges.append({"from": src, "to": node, "rel": str(data.get("rel") or "")})
             nodes |= nxt
             frontier = nxt
         node_docs = []
@@ -432,6 +430,15 @@ class CatalogIndex:
             else:
                 node_docs.append({"iri": n, "kind": "unknown"})
         return {"ok": True, "nodes": node_docs, "edges": edges}
+
+    def _edge_allowed(self, data: dict[str, Any], allowed: set[str]) -> bool:
+        rel = str(data.get("rel") or "")
+        edge_kind = str(data.get("edgeKind") or "")
+        if edge_kind == "objectProperty":
+            return "objectProperty" in allowed
+        if rel in {"domain", "range"}:
+            return False
+        return rel in allowed
 
     def list_domains(self) -> dict[str, Any]:
         self._load_manifests()
@@ -622,8 +629,11 @@ class CatalogIndex:
                 domain_id = parts[parts.index("domains") + 1]
 
         states_by_class: dict[str, list[str]] = {}
+        shapes_by_class: dict[str, list[dict[str, Any]]] = {}
         if kind == "shapes":
-            states_by_class = self._extract_shacl_states(g)
+            shapes_by_class = self._extract_shacl(g)
+            self._apply_shapes_to_docs(shapes_by_class)
+            return
 
         if kind == "mapping":
             self._ingest_mapping(g, rel, domain_id, industry_id, ontology_iri)
@@ -670,6 +680,7 @@ class CatalogIndex:
                 d_id, i_id = domain_from_iri(iri)
                 domains = [str(x) for x in g.objects(subj, RDFS.domain)]
                 ranges = [str(x) for x in g.objects(subj, RDFS.range)]
+                prop_local = local_name(iri)
                 doc = IndexDoc(
                     iri=iri,
                     kind=pkind,
@@ -679,7 +690,7 @@ class CatalogIndex:
                     alt_labels=_lits(g, subj, SKOS.altLabel),
                     definition=_lit(g, subj, SKOS.definition) or _lit(g, subj, RDFS.comment),
                     ontology_iri=ontology_iri,
-                    local_name=local_name(iri),
+                    local_name=prop_local,
                     source_path=rel,
                     extra={"domain": domains, "range": ranges},
                 )
@@ -688,26 +699,81 @@ class CatalogIndex:
                     self.nx.add_edge(iri, d, rel="domain")
                 for r in ranges:
                     self.nx.add_edge(iri, r, rel="range")
+                if pkind == "object_property":
+                    for d in domains:
+                        for r in ranges:
+                            if r.startswith("http://www.w3.org/2001/XMLSchema"):
+                                continue
+                            self.nx.add_edge(d, r, rel=prop_local, edgeKind="objectProperty")
 
         for s, o in g.subject_objects(OWL.equivalentClass):
             self.nx.add_edge(str(s), str(o), rel="equivalentClass")
 
-    def _extract_shacl_states(self, g: Graph) -> dict[str, list[str]]:
+    def _extract_shacl(self, g: Graph) -> dict[str, list[dict[str, Any]]]:
         from rdflib.namespace import Namespace
 
         SH = Namespace("http://www.w3.org/ns/shacl#")
-        out: dict[str, list[str]] = {}
+        out: dict[str, list[dict[str, Any]]] = {}
         for shape in g.subjects(RDF.type, SH.NodeShape):
             targets = [str(t) for t in g.objects(shape, SH.targetClass)]
-            values: list[str] = []
             for prop in g.objects(shape, SH.property):
+                constraint: dict[str, Any] = {}
+                paths = [str(p) for p in g.objects(prop, SH.path)]
+                if paths:
+                    constraint["path"] = local_name(paths[0])
+                    constraint["pathIri"] = paths[0]
+                for mc in g.objects(prop, SH.minCount):
+                    try:
+                        constraint["minCount"] = int(mc)
+                    except (TypeError, ValueError):
+                        pass
+                classes = [str(c) for c in g.objects(prop, SH["class"])]
+                if classes:
+                    constraint["class"] = classes[0]
+                    constraint["classLocal"] = local_name(classes[0])
+                values: list[str] = []
                 for item in g.objects(prop, SH["in"]):
                     for val in g.items(item):
                         if isinstance(val, Literal):
                             values.append(str(val))
-            for t in targets:
                 if values:
-                    out.setdefault(t, []).extend(values)
+                    constraint["in"] = values
+                if not constraint:
+                    continue
+                for t in targets:
+                    out.setdefault(t, []).append(constraint)
+        return out
+
+    def _apply_shapes_to_docs(self, shapes_by_class: dict[str, list[dict[str, Any]]]) -> None:
+        conn = self.connect()
+        for class_iri, shapes in shapes_by_class.items():
+            row = conn.execute("SELECT extra FROM docs WHERE iri=?", (class_iri,)).fetchone()
+            if not row:
+                continue
+            extra = json.loads(row["extra"] or "{}")
+            extra["shapes"] = shapes
+            enums: list[str] = []
+            for s in shapes:
+                for v in s.get("in") or []:
+                    if v not in enums:
+                        enums.append(v)
+            if enums:
+                extra["lifecycleStates"] = enums
+            conn.execute("UPDATE docs SET extra=? WHERE iri=?", (json.dumps(extra), class_iri))
+        conn.commit()
+
+    def _extract_shacl_states(self, g: Graph) -> dict[str, list[str]]:
+        """Backward-compatible lifecycle-only extract."""
+        shapes = self._extract_shacl(g)
+        out: dict[str, list[str]] = {}
+        for iri, constraints in shapes.items():
+            values: list[str] = []
+            for c in constraints:
+                for v in c.get("in") or []:
+                    if v not in values:
+                        values.append(v)
+            if values:
+                out[iri] = values
         return out
 
     def _ingest_mapping(self, g: Graph, rel: str, domain_id: str | None, industry_id: str | None, ontology_iri: str) -> None:
@@ -1048,6 +1114,7 @@ class CatalogIndex:
             "localName": data.get("local_name") or data.get("localName") or local_name(data.get("iri") or ""),
             "coreAlignment": extra.get("coreAlignment") or {"relation": "none"},
             "lifecycleStates": extra.get("lifecycleStates") or [],
+            "shapes": extra.get("shapes") or [],
             "mappings": extra.get("mappings") or [],
             "sourcePath": data.get("source_path") or data.get("sourcePath"),
         }

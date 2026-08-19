@@ -103,8 +103,15 @@ def query_mapped_data(
     use_llm: bool | None = None,
 ) -> dict[str, Any]:
     sid = id or sourceId or ""
-    result = query_mod.query_mapped_data(registry.store(sid), sid, query)
-    if not result.get("ok"):
+    store = registry.store(sid)
+    result = query_mod.query_mapped_data(store, sid, query)
+    needs_heal = (not result.get("ok")) or _empty_when_data_expected(store, result)
+    if needs_heal:
+        diagnose_failure(
+            error=str(result.get("error") or "empty_result"),
+            lastTool="query_mapped_data",
+            lastArgs={"id": sid, "query": query},
+        )
         heal_mapping(id=sid)
         result = query_mod.query_mapped_data(registry.store(sid), sid, query)
         result["healed"] = True
@@ -113,6 +120,22 @@ def query_mapped_data(
 
         result = refine_mapped_query(sid, query, result)
     return result
+
+
+def _empty_when_data_expected(store: Any, result: dict[str, Any]) -> bool:
+    """Heal when the plan succeeded with 0 rows but the target collection has data."""
+    if not result.get("ok"):
+        return False
+    if result.get("result") not in (0, None, [], {}):
+        return False
+    plan = result.get("plan") or {}
+    collection = plan.get("collection") or (result.get("mongo") or {}).get("collection")
+    if not collection:
+        return False
+    try:
+        return store.count(collection) > 0
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def diagnose_failure(error: str = "", lastTool: str = "", lastArgs: dict | None = None) -> dict[str, Any]:

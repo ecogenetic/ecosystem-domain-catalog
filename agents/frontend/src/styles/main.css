@@ -68,7 +68,7 @@ a { color: var(--primary); }
 .app-shell { display: flex; height: 100%; overflow: hidden; background: var(--bg-primary); }
 .app-sidebar {
   width: 272px;
-  background: #06080b;
+  background: var(--bg-secondary);
   border-right: 1px solid rgba(var(--primary-rgb), 0.16);
   padding: 10px;
   display: flex;
@@ -80,6 +80,7 @@ a { color: var(--primary); }
   transition: width 0.18s ease;
 }
 html[data-theme='light'] .app-sidebar { background: #eef2f6; }
+html:not([data-theme='light']) .app-sidebar { background: #06080b; }
 .app-sidebar.collapsed { width: 52px; padding: 10px 6px; }
 .app-sidebar.collapsed .nav-label,
 .app-sidebar.collapsed .brand-text,
@@ -439,6 +440,16 @@ input:focus, select:focus, textarea:focus {
   min-height: 0;
   overflow: hidden;
 }
+.workspace.three-pane .workspace-right.graph-shell {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+.workspace.two-pane .workspace-right.graph-only {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
 .workspace-left, .workspace-right {
   min-height: 0;
   overflow: auto;
@@ -450,6 +461,127 @@ input:focus, select:focus, textarea:focus {
   padding: 0;
 }
 .result-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.card-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+}
+.badge.usage-high { border-color: rgba(var(--primary-rgb), 0.45); color: var(--primary-dark); background: rgba(var(--primary-rgb), 0.12); }
+.badge.usage-med { border-color: var(--secondary); color: var(--secondary); background: rgba(74, 144, 226, 0.12); }
+.badge.usage-low { color: var(--text-muted); }
+.badge.mapped { border-color: rgba(0, 184, 212, 0.45); color: var(--success); background: rgba(0, 184, 212, 0.12); }
+
+.family-chips { justify-content: flex-start; margin: 12px 0 0; }
+.chip.family-crm { border-color: rgba(var(--primary-rgb), 0.4); }
+.chip.family-crm.active { background: rgba(var(--primary-rgb), 0.18); color: var(--primary-dark); }
+.chip.family-core { border-color: rgba(0, 184, 212, 0.45); }
+.chip.family-core.active { background: rgba(0, 184, 212, 0.16); color: var(--success); }
+.chip.family-product { border-color: rgba(74, 144, 226, 0.5); }
+.chip.family-product.active { background: rgba(74, 144, 226, 0.16); color: var(--secondary); }
+.chip.family-risk { border-color: rgba(var(--danger-rgb), 0.4); }
+.chip.family-risk.active { background: rgba(var(--danger-rgb), 0.12); color: var(--danger); }
+
+.env-pill {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+}
+.env-pill.production {
+  border-color: rgba(0, 184, 212, 0.5);
+  color: var(--success);
+  background: rgba(0, 184, 212, 0.12);
+}
+
+.inspector-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.inspector-head h3 { margin: 0; font-size: 16px; }
+.inspector-section { margin-top: 16px; }
+.inspector-section h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.rel-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.graph-toolbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+.graph-toolbar > * { pointer-events: auto; }
+.graph-toolbar-right { display: flex; align-items: center; gap: 8px; }
+.graph-up {
+  position: static;
+  max-width: none;
+}
+.chip.agent-paths-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+}
+.chip.agent-paths-toggle.active {
+  border-color: var(--cta-orange);
+  color: var(--cta-orange-dark);
+  background: rgba(var(--cta-orange-rgb), 0.14);
+}
+.chip.agent-metrics-chip {
+  cursor: default;
+  border-color: rgba(var(--cta-orange-rgb), 0.45);
+  color: var(--cta-orange-dark);
+  background: rgba(var(--cta-orange-rgb), 0.1);
+}
+
+@keyframes agent-path-dash {
+  to { stroke-dashoffset: -20; }
+}
+@keyframes agent-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--cta-orange-rgb), 0.35); }
+  50% { box-shadow: 0 0 0 6px rgba(var(--cta-orange-rgb), 0); }
+}
+.react-flow__edge.agent-path-edge path,
+.agent-path-edge {
+  stroke: var(--cta-orange) !important;
+  stroke-dasharray: 6 4;
+  animation: agent-path-dash 0.8s linear infinite;
+}
+.xy-node.agent-pulse {
+  border-color: var(--cta-orange);
+  animation: agent-pulse 1.6s ease-in-out infinite;
+}
 
 .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
 .tab {
@@ -500,6 +632,9 @@ input:focus, select:focus, textarea:focus {
   min-height: 0;
   overflow: hidden;
 }
+.graph-shell.two-pane {
+  grid-template-columns: 1fr;
+}
 .graph-canvas {
   background: var(--bg-primary);
   min-height: 0;
@@ -509,10 +644,6 @@ input:focus, select:focus, textarea:focus {
 }
 .graph-canvas .react-flow { width: 100%; height: 100%; }
 .graph-up {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 6;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -523,7 +654,6 @@ input:focus, select:focus, textarea:focus {
   padding: 6px 10px;
   font-size: 12px;
   font-weight: 600;
-  max-width: calc(100% - 20px);
 }
 .graph-up:hover {
   border-color: var(--primary);
@@ -595,5 +725,5 @@ input:focus, select:focus, textarea:focus {
 }
 
 @media (max-width: 900px) {
-  .workspace, .graph-shell { grid-template-columns: 1fr; }
+  .workspace, .workspace.three-pane .workspace-right.graph-shell, .graph-shell { grid-template-columns: 1fr; }
 }

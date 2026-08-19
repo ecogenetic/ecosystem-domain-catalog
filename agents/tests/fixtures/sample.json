@@ -2,14 +2,20 @@
   "lookups": [
     { "entity": "Customer", "field": "status", "value": "active" },
     { "entity": "Customer", "field": "status", "value": "inactive" },
+    { "entity": "Customer", "field": "gender", "value": "male" },
+    { "entity": "Customer", "field": "gender", "value": "female" },
     { "entity": "Order", "field": "status", "value": "open" },
-    { "entity": "Order", "field": "status", "value": "closed" }
+    { "entity": "Order", "field": "status", "value": "closed" },
+    { "entity": "Interaction", "field": "channel", "value": "email" },
+    { "entity": "Interaction", "field": "channel", "value": "web" },
+    { "entity": "Campaign", "field": "status", "value": "running" },
+    { "entity": "Campaign", "field": "status", "value": "ended" }
   ],
   "customer": [
-    { "_id": "c1", "status": "active", "region": "west" },
-    { "_id": "c2", "status": "active", "region": "east" },
-    { "_id": "c3", "status": "inactive", "region": "west" },
-    { "_id": "c4", "status": "inactive", "region": "east" }
+    { "_id": "c1", "status": "active", "gender": "male", "region": "west" },
+    { "_id": "c2", "status": "active", "gender": "female", "region": "east" },
+    { "_id": "c3", "status": "inactive", "gender": "male", "region": "west" },
+    { "_id": "c4", "status": "inactive", "gender": "female", "region": "east" }
   ],
   "order": [
     { "_id": "o1", "customer_id": "c1", "ordered_at": "$recent", "status": "open" },
@@ -19,6 +25,15 @@
   "order_line": [
     { "_id": "l1", "order_id": "o1", "quantity": 1 },
     { "_id": "l2", "order_id": "o2", "quantity": 2 }
+  ],
+  "campaign": [
+    { "_id": "camp1", "status": "running", "name": "Spring" },
+    { "_id": "camp2", "status": "ended", "name": "Winter" }
+  ],
+  "interaction": [
+    { "_id": "i1", "customer_id": "c1", "campaign_id": "camp1", "occurred_at": "$recent", "channel": "email" },
+    { "_id": "i2", "customer_id": "c2", "campaign_id": "camp1", "occurred_at": "$recent", "channel": "web" },
+    { "_id": "i3", "customer_id": "c3", "campaign_id": "camp2", "occurred_at": "$old", "channel": "email" }
   ],
   "users": [
     { "_id": "u1", "role": "admin" }

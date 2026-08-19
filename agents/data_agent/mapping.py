@@ -24,6 +24,7 @@ EXPLICIT = {
     "Consent": ["crm:ConsentRecord"],
     "Channel": ["cvm:Channel"],
     "Event": ["cvm:CustomerEvent"],
+    "Interaction": ["cvm:CustomerEvent", "crm:Activity"],
 }
 
 

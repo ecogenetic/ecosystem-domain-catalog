@@ -1,13 +1,20 @@
 import { ArrowUp, Loader2 } from 'lucide-react';
-import { FormEvent, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { FormEvent, KeyboardEvent, useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { catalogApi } from '../../adapters/catalogApi';
-import { CATALOG_EXAMPLES, ontologyKindLabel, type CatalogMatch } from '../../contracts/catalog';
+import {
+  EXPAND_RELS,
+  isMapped,
+  ontologyKindLabel,
+  scoreBand,
+  type CatalogMatch,
+} from '../../contracts/catalog';
 import { useApp } from '../AppContext';
 import { Card } from '../common/Card';
 import { EmptyState } from '../common/EmptyState';
 import { GraphCanvas } from '../common/GraphCanvas';
-import { catalogDomainId, catalogIndustryId } from '../layout/nav';
+import { DOMAIN_FAMILIES, catalogDomainId, catalogIndustryId } from '../layout/nav';
+import { ConceptInspector } from './ConceptInspector';
 
 export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
   const {
@@ -26,14 +33,45 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
   } = useApp();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const domainId = catalogDomainId(pathname);
   const industryId = catalogIndustryId(pathname);
   const [query, setQuery] = useState('');
   const [domain, setDomain] = useState('');
   const [industry, setIndustry] = useState('');
+  const [familyId, setFamilyId] = useState('');
   const [matches, setMatches] = useState<CatalogMatch[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const agentPaths = searchParams.get('overlay') === 'paths';
+  const setAgentPaths = (on: boolean) => {
+    const next = new URLSearchParams(searchParams);
+    if (on) next.set('overlay', 'paths');
+    else next.delete('overlay');
+    setSearchParams(next, { replace: true });
+  };
+
+  const family = DOMAIN_FAMILIES.find((f) => f.id === familyId);
+  const familyDomains = family?.domainIds || null;
+
+  const visibleMatches = useMemo(() => {
+    if (!familyDomains) return matches;
+    return matches.filter((m) => m.domainId && familyDomains.includes(m.domainId));
+  }, [matches, familyDomains]);
+
+  const filteredGraph = useMemo(() => {
+    if (!graph || !familyDomains) return graph;
+    return {
+      ...graph,
+      nodes: (graph.nodes || []).map((n) => {
+        const inFamily =
+          !n.domainId || familyDomains.includes(n.domainId) || n.iri === selected?.iri;
+        return inFamily ? n : { ...n, kind: 'unmapped' };
+      }),
+    };
+  }, [graph, familyDomains, selected?.iri]);
+
+  const scores = visibleMatches.map((m) => m.score || 0);
 
   async function runSearch(text: string, extra?: { domain?: string; industry?: string }) {
     const q = text.trim();
@@ -51,7 +89,21 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
       });
       const next = result.matches || [];
       setMatches(next);
-      if (next[0]) await explore(next[0]);
+      // Domain/industry routes open three-pane with the top hit; class search stays two-pane until select.
+      const autoSelect = Boolean(extra?.domain || extra?.industry || domain || industry);
+      if (next[0] && autoSelect) {
+        setSelected(next[0]);
+        const g = await catalogApi.expand(next[0].iri, 1, [...EXPAND_RELS]);
+        setGraph(g);
+      } else {
+        setSelected(null);
+        if (next[0]) {
+          const g = await catalogApi.expand(next[0].iri, 1, [...EXPAND_RELS]);
+          setGraph(g);
+        } else {
+          setGraph(null);
+        }
+      }
     } catch {
       setError('Could not reach the catalog. Check that the agents gateway is running, then try again.');
     } finally {
@@ -75,7 +127,6 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
       setQuery(label);
       void runSearch(label, { industry: industryId, domain: undefined });
     }
-    // Search is driven by the URL; runSearch is stable enough for this mount/route change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [domainId, industryId, domains, industries]);
 
@@ -87,7 +138,7 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     }
     setSelected(match);
     try {
-      const g = await catalogApi.expand(match.iri, 1, ['subClassOf', 'mapping', 'alignment']);
+      const g = await catalogApi.expand(match.iri, 1, [...EXPAND_RELS]);
       setGraph(g);
     } catch {
       setGraph({ nodes: [match], edges: [] });
@@ -98,6 +149,22 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     e.preventDefault();
     if (mode === 'overview') navigate('/ontology/classes');
     void runSearch(query);
+  }
+
+  function onComposerKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key !== 'Enter' || e.shiftKey || e.nativeEvent.isComposing) return;
+    e.preventDefault();
+    e.currentTarget.form?.requestSubmit();
+  }
+
+  function toggleFamily(id: string) {
+    setFamilyId((cur) => (cur === id ? '' : id));
+    const next = DOMAIN_FAMILIES.find((f) => f.id === id);
+    if (next?.domainIds.length === 1) {
+      setDomain(next.domainIds[0]);
+    } else if (!id) {
+      setDomain('');
+    }
   }
 
   if (catalogOk === false) {
@@ -111,11 +178,27 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     );
   }
 
+  const familyChips = (
+    <div className="chip-row family-chips">
+      {DOMAIN_FAMILIES.map((f) => (
+        <button
+          key={f.id}
+          type="button"
+          className={`chip family-${f.tone}${familyId === f.id ? ' active' : ''}`}
+          onClick={() => toggleFamily(f.id)}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+  );
+
   const composer = (
     <form className="composer" onSubmit={onSubmit}>
       <textarea
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={onComposerKeyDown}
         placeholder="Class, preferred label, or definition…"
         rows={2}
       />
@@ -146,27 +229,6 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
     </div>
   );
 
-  const examples = (
-    <div className="chip-row">
-      {CATALOG_EXAMPLES.map((ex) => (
-        <button
-          key={ex.label}
-          className="chip"
-          type="button"
-          onClick={() => {
-            setQuery(ex.query);
-            if (ex.domain) setDomain(ex.domain);
-            if (ex.industry) setIndustry(ex.industry);
-            navigate('/ontology/classes');
-            void runSearch(ex.query, { domain: ex.domain, industry: ex.industry });
-          }}
-        >
-          {ex.label}
-        </button>
-      ))}
-    </div>
-  );
-
   if (mode === 'overview') {
     return (
       <div className="page">
@@ -178,67 +240,69 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
             Browse domain ontologies and industry overlays in the left navigation.
           </p>
           {filters}
+          {familyChips}
           {composer}
-          {examples}
           {error && <p className="error">{error}</p>}
         </div>
       </div>
     );
   }
 
+  const threePane = Boolean(selected);
+
   return (
     <div className="page-fill">
-      <div className="workspace">
+      <div className={`workspace${threePane ? ' three-pane' : ' two-pane'}`}>
         <div className="workspace-left">
           {composer}
+          {familyChips}
           {error && <p className="error">{error}</p>}
           <div className="result-list">
-            {matches.map((m) => (
-              <Card key={m.iri} interactive onClick={() => void explore(m)}>
-                <h3>{m.prefLabel || m.localName}</h3>
-                <p className="muted">
-                  {ontologyKindLabel(m.kind)}
-                  {m.domainId ? ` · ${m.domainId}` : ''}
-                  {m.industryId ? ` · ${m.industryId}` : ''}
-                </p>
-                <p>{m.definition || 'No definition on this class.'}</p>
-              </Card>
-            ))}
+            {visibleMatches.map((m) => {
+              const band = scoreBand(m.score, scores);
+              return (
+                <Card key={m.iri} interactive onClick={() => void explore(m)}>
+                  <div className="card-badges">
+                    {band && <span className={`badge usage-${band.toLowerCase()}`}>Usage: {band}</span>}
+                    {isMapped(m) && <span className="badge mapped">Mapped</span>}
+                  </div>
+                  <h3>{m.prefLabel || m.localName}</h3>
+                  <p className="muted">
+                    {ontologyKindLabel(m.kind)}
+                    {m.domainId ? ` · ${m.domainId}` : ''}
+                    {m.industryId ? ` · ${m.industryId}` : ''}
+                  </p>
+                  <p>{m.definition || 'No definition on this class.'}</p>
+                </Card>
+              );
+            })}
           </div>
         </div>
-        <div className="workspace-right graph-shell">
+        <div className={`workspace-right${threePane ? ' graph-shell' : ' graph-only'}`}>
           <GraphCanvas
-            payload={graph}
+            payload={filteredGraph}
+            agentPaths={agentPaths}
+            onAgentPathsChange={setAgentPaths}
+            showMetricsChip={!threePane}
             onSelect={(n) => void explore(n, true)}
-            onGoUp={() => restoreGraphUp()}
-            canGoUp={graphTrail.length > 0}
+            onGoUp={() => {
+              if (!restoreGraphUp() && selected) setSelected(null);
+            }}
+            canGoUp={graphTrail.length > 0 || Boolean(selected)}
             upLabel={
               graphTrail[graphTrail.length - 1]?.selected.prefLabel ||
-              graphTrail[graphTrail.length - 1]?.selected.localName
+              graphTrail[graphTrail.length - 1]?.selected.localName ||
+              (selected ? 'Results' : undefined)
             }
           />
-          <aside className="graph-inspector">
-            {selected ? (
-              <>
-                <h3>{selected.prefLabel || selected.localName}</h3>
-                <p className="muted">
-                  {ontologyKindLabel(selected.kind)}
-                  {selected.domainId ? ` · ontology ${selected.domainId}` : ''}
-                </p>
-                <p>{selected.definition || 'No definition on this class.'}</p>
-                {(selected.altLabels || []).length > 0 && (
-                  <p className="muted">skos:altLabel — {(selected.altLabels || []).join(', ')}</p>
-                )}
-                <details>
-                  <summary className="muted">IRI and local name</summary>
-                  <p className="muted">{selected.iri}</p>
-                  {selected.localName ? <p className="muted">{selected.localName}</p> : null}
-                </details>
-              </>
-            ) : (
-              <p className="muted">Select a class to see preferred label, definition, and IRI.</p>
-            )}
-          </aside>
+          {threePane && selected ? (
+            <ConceptInspector
+              selected={selected}
+              graph={filteredGraph}
+              agentPaths={agentPaths}
+              onClose={() => setSelected(null)}
+            />
+          ) : null}
         </div>
       </div>
     </div>

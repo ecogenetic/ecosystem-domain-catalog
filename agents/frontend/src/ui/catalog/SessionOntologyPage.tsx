@@ -21,6 +21,7 @@ import { EmptyState } from '../common/EmptyState';
 import { GraphCanvas } from '../common/GraphCanvas';
 import { TurtleView } from '../common/TurtleView';
 import { catalogSessionId } from '../layout/nav';
+import { ConceptInspector } from './ConceptInspector';
 
 const SAMPLE = `@prefix : <https://example.com/ontology/demo#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -71,6 +72,7 @@ export function SessionOntologyPage() {
   const [selected, setSelected] = useState<CatalogMatch | null>(active?.classes[0] || null);
   const [focused, setFocused] = useState<GraphPayload | null>(active?.graph || null);
   const [trail, setTrail] = useState<CatalogMatch[]>([]);
+  const [agentPaths, setAgentPaths] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const uploadTargetRef = useRef<string | null>(null);
 
@@ -316,7 +318,7 @@ export function SessionOntologyPage() {
             rows={10}
             placeholder="@prefix : <https://example.com/ontology/mine#> ."
           />
-          <Button variant="cta" disabled={busy} type="submit">
+          <Button variant="primary" disabled={busy} type="submit">
             Add pasted Turtle
           </Button>
         </form>
@@ -407,6 +409,8 @@ export function SessionOntologyPage() {
               {graphView.nodes?.length ? (
                 <GraphCanvas
                   payload={graphView}
+                  agentPaths={agentPaths}
+                  onAgentPathsChange={setAgentPaths}
                   onSelect={(n) => openClass(n, true)}
                   onGoUp={goUp}
                   canGoUp={trail.length > 0}
@@ -417,84 +421,79 @@ export function SessionOntologyPage() {
                   <EmptyState title="No classes" body="This file parsed, but it has no owl:Class or rdfs:Class terms to draw." />
                 </div>
               )}
-              <aside className="graph-inspector">
-                {selected ? (
-                  <>
-                    <h3>{selected.prefLabel || selected.localName}</h3>
-                    <p className="muted">
-                      {sessionIris.has(selected.iri) ? ontologyKindLabel(selected.kind) : 'catalog class'}
-                      {selected.domainId ? ` · ${selected.domainId}` : ''}
-                    </p>
-                    <p>{selected.definition || 'No definition on this class.'}</p>
-                    {(selected.altLabels || []).length > 0 && (
-                      <p className="muted">skos:altLabel — {(selected.altLabels || []).join(', ')}</p>
-                    )}
-                    <details>
-                      <summary className="muted">IRI</summary>
-                      <p className="muted">{selected.iri}</p>
-                    </details>
-                    {sessionIris.has(selected.iri) && selectedMatch && (
-                      <div className="match-block">
-                        <h3>Match to {domainId || 'a domain'}</h3>
-                        {selectedMatch.status === 'none' || !(selectedMatch.alternatives || []).length ? (
-                          <p className="muted">No catalog class was proposed. Choose a domain and run Propose matches.</p>
-                        ) : (
-                          <>
-                            <label className="session-match-label">
-                              Catalog class
-                              <select
-                                value={selectedMatch.catalogIri || ''}
-                                onChange={(e) => setMatchChoice(selected.iri, e.target.value)}
-                              >
-                                {(selectedMatch.alternatives || []).map((alt) => (
-                                  <option key={alt.iri} value={alt.iri}>
-                                    {alt.prefLabel || alt.iri} {alt.domainId ? `(${alt.domainId})` : ''}
-                                  </option>
-                                ))}
-                              </select>
-                            </label>
-                            {selectedMatch.catalogDefinition && (
-                              <p className="muted">{selectedMatch.catalogDefinition}</p>
-                            )}
-                            <div className="session-alt">
-                              {selectedMatch.status !== 'accepted' && (
-                                <Button variant="primary" onClick={() => acceptMatch(selected.iri)}>
-                                  Accept match
-                                </Button>
+              {selected ? (
+                <ConceptInspector
+                  selected={selected}
+                  graph={graphView}
+                  agentPaths={agentPaths}
+                  fetchCatalog={!sessionIris.has(selected.iri)}
+                  footer={
+                    <>
+                      {sessionIris.has(selected.iri) && selectedMatch && (
+                        <div className="match-block">
+                          <h4>Match to {domainId || 'a domain'}</h4>
+                          {selectedMatch.status === 'none' || !(selectedMatch.alternatives || []).length ? (
+                            <p className="muted">No catalog class was proposed. Choose a domain and run Propose matches.</p>
+                          ) : (
+                            <>
+                              <label className="session-match-label">
+                                Catalog class
+                                <select
+                                  value={selectedMatch.catalogIri || ''}
+                                  onChange={(e) => setMatchChoice(selected.iri, e.target.value)}
+                                >
+                                  {(selectedMatch.alternatives || []).map((alt) => (
+                                    <option key={alt.iri} value={alt.iri}>
+                                      {alt.prefLabel || alt.iri} {alt.domainId ? `(${alt.domainId})` : ''}
+                                    </option>
+                                  ))}
+                                </select>
+                              </label>
+                              {selectedMatch.catalogDefinition && (
+                                <p className="muted">{selectedMatch.catalogDefinition}</p>
                               )}
-                              <Button onClick={() => rejectMatch(selected.iri)}>Not this</Button>
-                              {selectedMatch.catalogDomain && (
-                                <Button onClick={() => navigate(`/ontology/domains/${selectedMatch.catalogDomain}`)}>
-                                  Open domain
-                                </Button>
+                              <div className="session-alt">
+                                {selectedMatch.status !== 'accepted' && (
+                                  <Button variant="primary" onClick={() => acceptMatch(selected.iri)}>
+                                    Accept match
+                                  </Button>
+                                )}
+                                <Button onClick={() => rejectMatch(selected.iri)}>Not this</Button>
+                                {selectedMatch.catalogDomain && (
+                                  <Button onClick={() => navigate(`/ontology/domains/${selectedMatch.catalogDomain}`)}>
+                                    Open domain
+                                  </Button>
+                                )}
+                              </div>
+                              {selectedMatch.status === 'accepted' && (
+                                <p className="session-match-ok">Accepted for this tab only.</p>
                               )}
-                            </div>
-                            {selectedMatch.status === 'accepted' && (
-                              <p className="session-match-ok">Accepted for this tab only.</p>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    )}
-                    {!sessionIris.has(selected.iri) && selected.domainId && (
-                      <div className="match-block">
-                        <p className="muted">This node is a catalog class from a match you accepted.</p>
-                        <Button onClick={() => navigate(`/ontology/domains/${selected.domainId}`)}>
-                          Open {selected.domainId}
-                        </Button>
-                      </div>
-                    )}
-                    {active.turtle ? (
-                      <details>
-                        <summary className="muted">Turtle in this tab</summary>
-                        <TurtleView turtle={active.turtle} />
-                      </details>
-                    ) : null}
-                  </>
-                ) : (
+                            </>
+                          )}
+                        </div>
+                      )}
+                      {!sessionIris.has(selected.iri) && selected.domainId && (
+                        <div className="match-block">
+                          <p className="muted">This node is a catalog class from a match you accepted.</p>
+                          <Button onClick={() => navigate(`/ontology/domains/${selected.domainId}`)}>
+                            Open {selected.domainId}
+                          </Button>
+                        </div>
+                      )}
+                      {active.turtle ? (
+                        <details>
+                          <summary className="muted">Turtle in this tab</summary>
+                          <TurtleView turtle={active.turtle} />
+                        </details>
+                      ) : null}
+                    </>
+                  }
+                />
+              ) : (
+                <aside className="graph-inspector">
                   <p className="muted">Select a class from the list or the graph.</p>
-                )}
-              </aside>
+                </aside>
+              )}
             </div>
           </div>
         </>

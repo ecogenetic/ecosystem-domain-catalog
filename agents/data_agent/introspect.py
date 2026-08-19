@@ -85,7 +85,7 @@ def introspect(store: DocumentStore, sample_size: int = 20) -> dict[str, Any]:
         entity = entity_from_collection(name)
         enums = dict(lookups_enums.get(entity) or {})
         for key in list(fields):
-            if key.lower() in {"status", "state", "region", "channel"} and key not in enums:
+            if key.lower() in {"status", "state", "region", "channel", "gender", "segment"} and key not in enums:
                 values = [str(v) for v in store.distinct(name, key) if v is not None]
                 if 0 < len(values) <= 24:
                     enums[key] = values

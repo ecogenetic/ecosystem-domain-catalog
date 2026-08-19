@@ -26,7 +26,7 @@ CREATE TABLE "order" (
 type SourceKind = 'mongodb' | 'postgresql' | 'ddl';
 
 export function DataWizard() {
-  const { useLlm, dataOk, sourceId, setSourceId, domains } = useApp();
+  const { useLlm, dataOk, sourceId, setSourceId, setSourceKind, domains } = useApp();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const step = DATA_STEPS.indexOf(dataStepFromPath(pathname));
@@ -70,6 +70,7 @@ export function DataWizard() {
         return;
       }
       setSourceId(res.sourceId);
+      setSourceKind(sample ? 'memory' : kind === 'ddl' ? 'ddl' : kind);
       setSchemaOnly(Boolean(res.schemaOnly));
       navigate('/sources/understand');
       const schema = await dataApi.introspect(res.sourceId);
@@ -161,7 +162,7 @@ export function DataWizard() {
       {step > 0 && !sourceId ? (
         <EmptyState
           title="Connect a source first"
-          body="Open Connect in the left navigation, then attach MongoDB, PostgreSQL, DDL, or sample data."
+          body="Open Data sources in the left navigation, then attach MongoDB, PostgreSQL, DDL, or sample data."
         />
       ) : null}
 
@@ -204,7 +205,7 @@ export function DataWizard() {
             </>
           )}
           <div style={{ display: 'flex', gap: 8 }}>
-            <Button variant="cta" disabled={busy} onClick={() => void connect(false)}>
+            <Button variant="primary" disabled={busy} onClick={() => void connect(false)}>
               {busy ? <Loader2 className="spin" size={16} /> : null} Connect
             </Button>
             <Button onClick={() => void connect(true)}>Use sample data</Button>
@@ -263,7 +264,7 @@ export function DataWizard() {
               ))}
             </select>
           </div>
-          <Button variant="cta" disabled={busy} onClick={() => void mapNow()}>
+          <Button variant="primary" disabled={busy} onClick={() => void mapNow()}>
             Match to catalog
           </Button>
         </Card>

@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { catalogApi } from '../../adapters/catalogApi';
-import { ontologyKindLabel, type CatalogMatch, type GraphPayload } from '../../contracts/catalog';
+import { EXPAND_RELS, type CatalogMatch, type GraphPayload } from '../../contracts/catalog';
 import { useApp } from '../AppContext';
 import { Button } from '../common/Button';
 import { EmptyState } from '../common/EmptyState';
 import { GraphCanvas } from '../common/GraphCanvas';
 import { TurtleView } from '../common/TurtleView';
+import { ConceptInspector } from './ConceptInspector';
 
 const RELS = [
   { id: 'subClassOf', label: 'rdfs:subClassOf' },
   { id: 'equivalentClass', label: 'owl:equivalentClass' },
   { id: 'mapping', label: 'mapped to' },
   { id: 'alignment', label: 'aligned with' },
+  { id: 'objectProperty', label: 'object property' },
 ];
 const NODE_CAP = 150;
 
@@ -39,8 +42,16 @@ export function GraphPanel({ advanced }: { advanced?: boolean }) {
     restoreGraphUp,
     clearGraphTrail,
   } = useApp();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const agentPaths = searchParams.get('overlay') === 'paths';
+  const setAgentPaths = (on: boolean) => {
+    const next = new URLSearchParams(searchParams);
+    if (on) next.set('overlay', 'paths');
+    else next.delete('overlay');
+    setSearchParams(next, { replace: true });
+  };
   const [depth, setDepth] = useState(2);
-  const [rels, setRels] = useState<string[]>(['subClassOf', 'mapping', 'alignment']);
+  const [rels, setRels] = useState<string[]>([...EXPAND_RELS]);
   const [turtle, setTurtle] = useState('');
   const [truncated, setTruncated] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -118,10 +129,11 @@ export function GraphPanel({ advanced }: { advanced?: boolean }) {
   }, [selected]);
 
   const hasGraph = Boolean(graph?.nodes?.length);
+  const threePane = Boolean(selected);
 
   return (
     <div className="page-fill">
-      <div className="graph-shell">
+      <div className={threePane ? 'graph-shell' : 'graph-shell two-pane'}>
         <div className="graph-col">
           <div className="filter-row" style={{ justifyContent: 'flex-start', padding: 12 }}>
             <select
@@ -202,15 +214,21 @@ export function GraphPanel({ advanced }: { advanced?: boolean }) {
           {hasGraph ? (
             <GraphCanvas
               payload={graph}
+              agentPaths={agentPaths}
+              onAgentPathsChange={setAgentPaths}
+              showMetricsChip={!threePane}
               onSelect={(n) => {
                 if (selected && n.iri !== selected.iri) recordGraphDrill();
                 void expand(n, 1);
               }}
-              onGoUp={() => restoreGraphUp()}
-              canGoUp={graphTrail.length > 0}
+              onGoUp={() => {
+                if (!restoreGraphUp()) setSelected(null);
+              }}
+              canGoUp={graphTrail.length > 0 || Boolean(selected)}
               upLabel={
                 graphTrail[graphTrail.length - 1]?.selected.prefLabel ||
-                graphTrail[graphTrail.length - 1]?.selected.localName
+                graphTrail[graphTrail.length - 1]?.selected.localName ||
+                (selected ? 'Results' : undefined)
               }
             />
           ) : (
@@ -222,28 +240,22 @@ export function GraphPanel({ advanced }: { advanced?: boolean }) {
             </div>
           )}
         </div>
-        <aside className="graph-inspector">
-          {selected ? (
-            <>
-              <h3>{selected.prefLabel || selected.localName}</h3>
-              <p className="muted">
-                {ontologyKindLabel(selected.kind)}
-                {selected.domainId ? ` · ontology ${selected.domainId}` : ''}
-              </p>
-              <p>{selected.definition || 'No definition on this class.'}</p>
-              {(selected.altLabels || []).length > 0 && (
-                <p className="muted">skos:altLabel — {(selected.altLabels || []).join(', ')}</p>
-              )}
-              <details>
-                <summary className="muted">IRI and Turtle</summary>
-                <p className="muted">{selected.iri}</p>
-                {turtle ? <TurtleView turtle={turtle} /> : null}
-              </details>
-            </>
-          ) : (
-            <p className="muted">Pick a domain, then a class. The graph shows subclass, mapping, and alignment relations.</p>
-          )}
-        </aside>
+        {threePane && selected ? (
+          <ConceptInspector
+            selected={selected}
+            graph={graph}
+            agentPaths={agentPaths}
+            onClose={() => setSelected(null)}
+            footer={
+              turtle ? (
+                <details>
+                  <summary className="muted">Domain Turtle</summary>
+                  <TurtleView turtle={turtle} />
+                </details>
+              ) : null
+            }
+          />
+        ) : null}
       </div>
     </div>
   );

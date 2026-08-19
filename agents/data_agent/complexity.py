@@ -123,8 +123,8 @@ def export_rerun_suite(source_id: str, include_unsupported: bool = False) -> dic
             "expect": {"targetClass": "Order"},
         },
         5: {
-            "query": "how many orders have customers that are active that ordered in the last month",
-            "expect": {"targetClass": "Order"},
+            "query": "how many campaigns have male customers that interacted with us over the last month",
+            "expect": {"targetClass": "Campaign"},
         },
     }
     for level, tmpl in templates.items():

@@ -20,6 +20,8 @@ type Ctx = {
   dataOk: boolean | null;
   sourceId: string;
   setSourceId: (id: string) => void;
+  sourceKind: string;
+  setSourceKind: (kind: string) => void;
   selected: CatalogMatch | null;
   setSelected: (m: CatalogMatch | null) => void;
   graph: GraphPayload | null;
@@ -41,11 +43,12 @@ const AppCtx = createContext<Ctx | null>(null);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [useLlm, setUseLlm] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>(() =>
-    document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark',
+    document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
   );
   const [catalogOk, setCatalogOk] = useState<boolean | null>(null);
   const [dataOk, setDataOk] = useState<boolean | null>(null);
   const [sourceId, setSourceId] = useState('');
+  const [sourceKind, setSourceKind] = useState('');
   const [selected, setSelected] = useState<CatalogMatch | null>(null);
   const [graph, setGraph] = useState<GraphPayload | null>(null);
   const [catalogKey, setCatalogKey] = useState(0);
@@ -82,6 +85,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       dataOk,
       sourceId,
       setSourceId,
+      sourceKind,
+      setSourceKind,
       selected,
       setSelected,
       graph,
@@ -115,7 +120,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setSessionLibraryState(next);
       },
     }),
-    [useLlm, theme, catalogOk, dataOk, sourceId, selected, graph, catalogKey, domains, industries, graphTrail, sessionLibrary],
+    [useLlm, theme, catalogOk, dataOk, sourceId, sourceKind, selected, graph, catalogKey, domains, industries, graphTrail, sessionLibrary],
   );
 
   return <AppCtx.Provider value={value}>{children}</AppCtx.Provider>;

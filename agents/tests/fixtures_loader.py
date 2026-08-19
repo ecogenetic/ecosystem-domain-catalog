@@ -17,6 +17,7 @@ SAMPLE_DDL = """
 CREATE TABLE customer (
   id TEXT PRIMARY KEY,
   status TEXT,
+  gender TEXT,
   region TEXT
 );
 CREATE TABLE "order" (
@@ -29,6 +30,18 @@ CREATE TABLE order_line (
   id TEXT PRIMARY KEY,
   order_id TEXT REFERENCES "order"(id),
   quantity INTEGER
+);
+CREATE TABLE campaign (
+  id TEXT PRIMARY KEY,
+  status TEXT,
+  name TEXT
+);
+CREATE TABLE interaction (
+  id TEXT PRIMARY KEY,
+  customer_id TEXT REFERENCES customer(id),
+  campaign_id TEXT REFERENCES campaign(id),
+  occurred_at TIMESTAMP,
+  channel TEXT
 );
 """
 
@@ -62,7 +75,7 @@ def expected_counts() -> dict[int, int]:
         2: 2,  # active customers
         3: 2,  # orders last month
         4: 3,  # orders that have customers
-        5: 2,  # orders with active customers in the last month
+        5: 1,  # campaigns with male customers who interacted last month
     }
 
 

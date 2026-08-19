@@ -19,7 +19,7 @@ import {
   type NodeProps,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { CornerLeftUp } from 'lucide-react';
+import { Activity, CornerLeftUp } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CatalogMatch, GraphPayload } from '../../contracts/catalog';
 
@@ -30,16 +30,23 @@ const REL_LABEL: Record<string, string> = {
   alignment: 'aligned with',
 };
 
+const STRUCTURAL = new Set(['subClassOf', 'equivalentClass', 'alignment']);
+
 const NODE_W = 168;
 const NODE_H = 52;
 const LEVEL_GAP_Y = 140;
 const SIBLING_GAP_X = 200;
 
-type ConceptData = { label: string; sub?: string; muted?: boolean };
+type ConceptData = { label: string; sub?: string; muted?: boolean; pulse?: boolean };
+type EdgeData = { rel: string; hot?: boolean };
+
+function isHotPathRel(rel: string): boolean {
+  return rel === 'mapping' || !STRUCTURAL.has(rel);
+}
 
 function ConceptNode({ data }: NodeProps<Node<ConceptData>>) {
   return (
-    <div className={`xy-node${data.muted ? ' muted' : ''}`}>
+    <div className={`xy-node${data.muted ? ' muted' : ''}${data.pulse ? ' agent-pulse' : ''}`}>
       <Handle type="source" position={Position.Top} id="top" />
       <Handle type="source" position={Position.Right} id="right" />
       <Handle type="source" position={Position.Bottom} id="bottom" />
@@ -52,13 +59,30 @@ function ConceptNode({ data }: NodeProps<Node<ConceptData>>) {
 
 const NODE_TYPES = { concept: ConceptNode };
 
-function LabeledSmoothStep({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, label, style }: EdgeProps) {
+function LabeledSmoothStep({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  label,
+  style,
+  data,
+}: EdgeProps<Edge<EdgeData>>) {
+  const hot = Boolean(data?.hot);
   const [edgePath, labelX, labelY] = getSmoothStepPath({
-    sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    sourcePosition,
+    targetPosition,
   });
   return (
     <>
-      <BaseEdge id={id} path={edgePath} style={style} />
+      <BaseEdge id={id} path={edgePath} style={style} className={hot ? 'agent-path-edge' : undefined} />
       {label && (
         <EdgeLabelRenderer>
           <div
@@ -102,11 +126,14 @@ function attachHandles(nodes: Node<ConceptData>[], edges: Edge[]): Edge[] {
   });
 }
 
-function layout(payload: GraphPayload): { nodes: Node<ConceptData>[]; edges: Edge[] } {
+function layout(
+  payload: GraphPayload,
+  agentPaths: boolean,
+): { nodes: Node<ConceptData>[]; edges: Edge[]; hotEdgeCount: number; hotNodeCount: number } {
   const raw = payload.nodes || [];
   const rawEdges = payload.edges || [];
 
-  if (raw.length === 0) return { nodes: [], edges: [] };
+  if (raw.length === 0) return { nodes: [], edges: [], hotEdgeCount: 0, hotNodeCount: 0 };
 
   const childrenMap = new Map<string, string[]>();
   const parentSet = new Set<string>();
@@ -155,6 +182,15 @@ function layout(payload: GraphPayload): { nodes: Node<ConceptData>[]; edges: Edg
     }
   }
 
+  const hotIris = new Set<string>();
+  let hotEdgeCount = 0;
+  for (const e of rawEdges) {
+    if (!isHotPathRel(e.rel)) continue;
+    hotEdgeCount += 1;
+    hotIris.add(e.from);
+    hotIris.add(e.to);
+  }
+
   const nodes: Node<ConceptData>[] = raw.map((n) => ({
     id: n.iri,
     type: 'concept',
@@ -163,21 +199,33 @@ function layout(payload: GraphPayload): { nodes: Node<ConceptData>[]; edges: Edg
       label: n.prefLabel || n.localName || n.iri.split('#').pop() || n.iri,
       sub: n.domainId || n.kind,
       muted: n.kind === 'unmapped',
+      pulse: agentPaths && hotIris.has(n.iri),
     },
     sourcePosition: Position.Right,
     targetPosition: Position.Left,
   }));
 
-  const edges: Edge[] = rawEdges.map((e, i) => ({
-    id: `${e.from}-${e.to}-${e.rel}-${i}`,
-    source: e.from,
-    target: e.to,
-    label: REL_LABEL[e.rel] || e.rel,
-    type: 'labeled',
-    style: { stroke: '#00aeef' },
-  }));
+  const edges: Edge<EdgeData>[] = rawEdges.map((e, i) => {
+    const hot = agentPaths && isHotPathRel(e.rel);
+    return {
+      id: `${e.from}-${e.to}-${e.rel}-${i}`,
+      source: e.from,
+      target: e.to,
+      label: REL_LABEL[e.rel] || e.rel,
+      type: 'labeled',
+      style: hot
+        ? { stroke: 'var(--cta-orange)', strokeWidth: 2, strokeDasharray: '6 4' }
+        : { stroke: 'var(--primary)', strokeWidth: 1.5 },
+      data: { rel: e.rel, hot },
+    };
+  });
 
-  return { nodes, edges: attachHandles(nodes, edges) };
+  return {
+    nodes,
+    edges: attachHandles(nodes, edges),
+    hotEdgeCount,
+    hotNodeCount: hotIris.size,
+  };
 }
 
 export function GraphCanvas({
@@ -186,22 +234,33 @@ export function GraphCanvas({
   onGoUp,
   canGoUp,
   upLabel,
+  agentPaths = false,
+  onAgentPathsChange,
+  showMetricsChip = false,
 }: {
   payload: GraphPayload | null;
   onSelect?: (node: CatalogMatch) => void;
   onGoUp?: () => void;
   canGoUp?: boolean;
   upLabel?: string;
+  agentPaths?: boolean;
+  onAgentPathsChange?: (on: boolean) => void;
+  /** Compact path counts when inspector is closed (two-pane). */
+  showMetricsChip?: boolean;
 }) {
   const byIri = useMemo(() => new Map((payload?.nodes || []).map((n) => [n.iri, n])), [payload]);
   const [nodes, setNodes] = useState<Node<ConceptData>[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [metrics, setMetrics] = useState({ hotEdgeCount: 0, hotNodeCount: 0 });
 
   useEffect(() => {
-    const next = payload ? layout(payload) : { nodes: [], edges: [] };
+    const next = payload
+      ? layout(payload, agentPaths)
+      : { nodes: [], edges: [], hotEdgeCount: 0, hotNodeCount: 0 };
     setNodes(next.nodes);
     setEdges(next.edges);
-  }, [payload]);
+    setMetrics({ hotEdgeCount: next.hotEdgeCount, hotNodeCount: next.hotNodeCount });
+  }, [payload, agentPaths]);
 
   const onNodesChange = useCallback((changes: NodeChange<Node<ConceptData>>[]) => {
     setNodes((current) => {
@@ -217,12 +276,34 @@ export function GraphCanvas({
 
   return (
     <div className="graph-canvas">
-      {onGoUp && canGoUp ? (
-        <button type="button" className="graph-up" onClick={onGoUp} title="Up to previous class">
-          <CornerLeftUp size={14} />
-          {upLabel ? `Up to ${upLabel}` : 'Up'}
-        </button>
-      ) : null}
+      <div className="graph-toolbar">
+        {onGoUp && canGoUp ? (
+          <button type="button" className="graph-up" onClick={onGoUp} title="Up to previous class">
+            <CornerLeftUp size={14} />
+            {upLabel ? `Up to ${upLabel}` : 'Up'}
+          </button>
+        ) : (
+          <span />
+        )}
+        <div className="graph-toolbar-right">
+          {showMetricsChip && agentPaths ? (
+            <span className="chip agent-metrics-chip" title="Graph-derived path counts">
+              {metrics.hotEdgeCount} paths · {metrics.hotNodeCount} classes
+            </span>
+          ) : null}
+          {onAgentPathsChange ? (
+            <button
+              type="button"
+              className={`chip agent-paths-toggle${agentPaths ? ' active' : ''}`}
+              onClick={() => onAgentPathsChange(!agentPaths)}
+              title="Highlight object-property and mapping edges"
+            >
+              <Activity size={12} />
+              Agent paths
+            </button>
+          ) : null}
+        </div>
+      </div>
       <ReactFlowProvider>
         <ReactFlow
           nodes={nodes}
@@ -241,7 +322,7 @@ export function GraphCanvas({
           proOptions={{ hideAttribution: true }}
           defaultEdgeOptions={{ type: 'labeled' }}
         >
-          <Background color="#2a2d35" gap={18} />
+          <Background color="var(--border-color)" gap={18} />
           <MiniMap pannable zoomable />
           <Controls>
             {onGoUp ? (

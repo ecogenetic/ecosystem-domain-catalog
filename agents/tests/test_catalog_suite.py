@@ -63,6 +63,30 @@ def test_validate_iris_strips_unknown(catalog_ready):
     assert "https://example.com/not-a-term" in checked["invalid"]
 
 
+def test_expand_object_property_edges(catalog_ready):
+    iri = "https://ecosystemcode.com/ontology/crm#Opportunity"
+    expanded = expand_graph(iri=iri, depth=1, rels=["objectProperty"])
+    assert expanded["ok"]
+    prop_edges = [e for e in expanded["edges"] if e.get("rel") and e["rel"] not in {"subClassOf", "mapping", "alignment", "equivalentClass"}]
+    assert prop_edges, "CRM Opportunity should have at least one objectProperty class–class edge"
+    assert any(e["from"] == iri or e["to"] == iri for e in prop_edges)
+
+
+def test_opportunity_shapes_on_concept(catalog_ready):
+    from agents.catalog_agent.tools import get_concept
+
+    iri = "https://ecosystemcode.com/ontology/crm#Opportunity"
+    concept = get_concept(iri=iri)
+    assert concept.get("ok") is not False
+    shapes = concept.get("shapes") or []
+    lifecycle = concept.get("lifecycleStates") or []
+    assert shapes or lifecycle, "Opportunity should expose SHACL shapes or lifecycle states"
+    if shapes:
+        assert any(s.get("in") or s.get("minCount") is not None or s.get("class") for s in shapes)
+    if lifecycle:
+        assert "won" in lifecycle or "lead" in lifecycle
+
+
 def test_expand_customer_subclass(catalog_ready):
     iri = "https://ecosystemcode.com/ontology/cvm#Customer"
     expanded = expand_graph(iri=iri, depth=1, rels=["subClassOf"])

@@ -1,6 +1,6 @@
 # TESTS.md — last run report
 
-Recorded 2026-08-15. Rerun the suites with the commands below; this file is a report, not the source of the cases.
+Recorded 2026-08-19. Rerun the suites with the commands below; this file is a report, not the source of the cases.
 
 ## Commands
 
@@ -19,13 +19,13 @@ LLM planner: only when `ECOSYSTEM_LLM_BASE_URL` is set. `test_llm_suite.py` skip
 
 ## Pytest — deterministic (`-m "not llm"`)
 
-- Platform: darwin, Python 3.14.6, pytest 9.0.2
-- Result: **23 passed** in ~2s
+- Platform: darwin, Python 3.14.7, pytest 9.0.2
+- Result: **26 passed** in ~2s
 - `test_catalog_suite.py`: 8 passed (index coverage, stub skip, L1–L5 suite, IRI validation, expand, heal)
 - `test_complexity.py`: 1 passed (mapping-graph evidence, maxJoinPath ≥ 2)
 - `test_data_suite.py`: 7 passed (introspect, map, ontology labels, L1–L5 counts, unmapped reject, complexity=5)
 - `test_ddl.py`: 2 passed (CREATE TABLE parse, schema-only connect/map)
-- `test_http_apps.py`: 5 passed (catalog search, gateway one-port, MCP JSON Schema, OpenAPI plan paths, source/ontology HTTP routes)
+- `test_http_apps.py`: 8 passed (catalog search, gateway one-port, MCP JSON Schema, OpenAPI plan paths, source/ontology HTTP routes, preview ontology)
 
 ## Pytest — LLM (`test_llm_suite.py`)
 
@@ -55,7 +55,7 @@ LLM planner: only when `ECOSYSTEM_LLM_BASE_URL` is set. `test_llm_suite.py` skip
 | 2 | data-L2-active-customers | how many active customers | 2 | pass |
 | 3 | data-L3-orders-month | how many orders in the last month | 2 | pass |
 | 4 | data-L4-orders-have-customers | how many orders have customers | 3 | pass |
-| 5 | data-L5-active-recent-orders | orders with active customers in the last month | 2 | pass |
+| 5 | data-L5-active-recent-orders | campaigns with male customers that interacted last month | 1 | pass |
 
 ## Complexity from mapping (`sample`)
 
@@ -65,20 +65,28 @@ LLM planner: only when `ECOSYSTEM_LLM_BASE_URL` is set. `test_llm_suite.py` skip
   "maxLevel": 5,
   "supportedLevels": [1, 2, 3, 4, 5],
   "evidence": {
-    "mappedClasses": 3,
-    "mappedProperties": 7,
-    "enumFields": ["Customer.status", "Customer.region", "Order.status"],
-    "temporalFields": ["Order.ordered_at"],
-    "maxJoinPath": 2
+    "mappedClasses": 5,
+    "mappedProperties": 14,
+    "enumFields": [
+      "Campaign.status",
+      "Customer.status",
+      "Customer.gender",
+      "Customer.region",
+      "Interaction.channel",
+      "Order.status"
+    ],
+    "temporalFields": ["Interaction.occurred_at", "Order.ordered_at"],
+    "maxJoinPath": 3,
+    "joinPaths": [["Campaign", "Interaction", "Customer"]]
   },
   "unsupported": []
 }
 ```
 
-DDL sources are schema-only (`count` 0). Mapping still runs; Ask is disabled until a live store or sample data is connected. Unsupported levels are stored as `{status: "skipped", reason}` in `agents/data/sources/{id}/rerun_suite.json`.
+Fixtures include gender, interaction timestamps, and campaign–customer–interaction links. DDL sources are schema-only (`count` 0). Mapping still runs; Ask is disabled until a live store or sample data is connected. Unsupported levels are stored as `{status: "skipped", reason}` in `agents/data/sources/{id}/rerun_suite.json`.
 
 ## Example payloads
 
 Catalog L1 top match: `https://ecosystemcode.com/ontology/card/banking#RetailCreditCard` (prefLabel Retail Credit Card, industry banking). Ontology Turtle for the CARD banking overlay is included when `includeOntology` is true.
 
-Data L5 compiled plan: `targetClass=Order`, filters `Customer.status=active` and `Order.ordered_at >= (now-31d)`, join Order↔Customer on `customer_id`.
+Data L5 compiled plan: `targetClass=Campaign`, filters `Customer.gender=male` and `Interaction.occurred_at >= (now-31d)`, joins Interaction↔Customer and Interaction↔Campaign.

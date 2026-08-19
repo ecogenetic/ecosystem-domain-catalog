@@ -1,4 +1,4 @@
-export type NavIcon = 'book' | 'database' | 'terminal';
+export type NavIcon = 'book' | 'database' | 'terminal' | 'activity';
 
 export type NavNode = {
   id: string;
@@ -7,10 +7,19 @@ export type NavNode = {
   to?: string;
   icon?: NavIcon;
   end?: boolean;
+  count?: number;
   dynamic?: 'domains' | 'industries' | 'session';
   keywords?: string[];
   children?: NavNode[];
 };
+
+/** Family chips for Pillar 1 spatial scoping (not 42 domains). */
+export const DOMAIN_FAMILIES: { id: string; label: string; domainIds: string[]; tone: 'crm' | 'core' | 'product' | 'risk' }[] = [
+  { id: 'crm', label: 'CRM', domainIds: ['crm', 'cvm'], tone: 'crm' },
+  { id: 'core', label: 'Core', domainIds: ['core'], tone: 'core' },
+  { id: 'product', label: 'Product', domainIds: ['pim', 'ecom', 'oms', 'cpq', 'plm'], tone: 'product' },
+  { id: 'risk', label: 'Risk', domainIds: ['grc', 'fin', 'lns', 'tre', 'card', 'fms'], tone: 'risk' },
+];
 
 export const NAV: NavNode[] = [
   {
@@ -62,10 +71,24 @@ export const NAV: NavNode[] = [
     icon: 'database',
     to: '/sources/connect',
     children: [
-      { id: 'connect', label: 'Connect', to: '/sources/connect', keywords: ['mongodb', 'postgresql', 'ddl'] },
-      { id: 'understand', label: 'Understand', to: '/sources/understand', keywords: ['introspect', 'schema'] },
-      { id: 'map', label: 'Map', to: '/sources/map', keywords: ['coverage', 'catalog'] },
-      { id: 'ask', label: 'Ask', to: '/sources/ask', keywords: ['query', 'count'] },
+      { id: 'connect', label: 'Data sources', to: '/sources/connect', keywords: ['mongodb', 'postgresql', 'ddl', 'connect'] },
+      { id: 'understand', label: 'Schema profiler', to: '/sources/understand', keywords: ['introspect', 'schema', 'understand'] },
+      { id: 'map', label: 'Field mapping', to: '/sources/map', keywords: ['coverage', 'catalog', 'map'] },
+      { id: 'ask', label: 'Query', to: '/sources/ask', keywords: ['query', 'count', 'ask'] },
+    ],
+  },
+  {
+    id: 'runtime',
+    label: 'Runtime',
+    icon: 'activity',
+    to: '/ontology/hierarchy?overlay=paths',
+    children: [
+      {
+        id: 'agent-paths',
+        label: 'Agent paths',
+        to: '/ontology/hierarchy?overlay=paths',
+        keywords: ['runtime', 'overlay', 'execution', 'agent'],
+      },
     ],
   },
   {
@@ -92,12 +115,12 @@ export function hydrateNav(
   industries: IndustryRef[],
   sessionItems: SessionNavRef[] = [],
 ): NavNode[] {
-  return NAV.map((group) => ({
-    ...group,
-    children: group.children?.map((child) => {
+  return NAV.map((group) => {
+    const children = group.children?.map((child) => {
       if (child.dynamic === 'domains') {
         return {
           ...child,
+          count: domains.length,
           children: domains.map((d) => ({
             id: `domain-${d.id}`,
             label: d.acronym || d.id.toUpperCase(),
@@ -110,6 +133,7 @@ export function hydrateNav(
       if (child.dynamic === 'industries') {
         return {
           ...child,
+          count: industries.length,
           children: industries.map((i) => ({
             id: `industry-${i.id}`,
             label: i.label,
@@ -122,6 +146,7 @@ export function hydrateNav(
       if (child.dynamic === 'session') {
         return {
           ...child,
+          count: sessionItems.length,
           children: [
             {
               id: 'yours-add',
@@ -141,15 +166,20 @@ export function hydrateNav(
         };
       }
       return child;
-    }),
-  }));
+    });
+    let count: number | undefined;
+    if (group.id === 'ontology') count = domains.length;
+    if (group.id === 'data') count = 4;
+    return { ...group, count, children };
+  });
 }
 
 export function pathIsActive(to: string | undefined, pathname: string, end?: boolean): boolean {
   if (!to) return false;
-  if (to === '/') return pathname === '/' || pathname === '/ontology';
-  if (end) return pathname === to;
-  return pathname === to || pathname.startsWith(`${to}/`);
+  const pathOnly = to.split('?')[0];
+  if (pathOnly === '/') return pathname === '/' || pathname === '/ontology';
+  if (end) return pathname === pathOnly;
+  return pathname === pathOnly || pathname.startsWith(`${pathOnly}/`);
 }
 
 export function nodeMatches(node: NavNode, q: string): boolean {
@@ -256,10 +286,10 @@ export function headerCopy(
   if (pathname.startsWith('/sources')) {
     const step = dataStepFromPath(pathname);
     const copy: Record<DataStep, { title: string; sub: string }> = {
-      connect: { title: 'Connect', sub: 'MongoDB, PostgreSQL, DDL, or sample data' },
-      understand: { title: 'Understand', sub: 'Business collections found in the source' },
-      map: { title: 'Map', sub: 'Match collections to catalog classes' },
-      ask: { title: 'Ask', sub: 'Count through mapped fields only' },
+      connect: { title: 'Data sources', sub: 'MongoDB, PostgreSQL, DDL, or sample data' },
+      understand: { title: 'Schema profiler', sub: 'Business collections found in the source' },
+      map: { title: 'Field mapping', sub: 'Match collections to catalog classes' },
+      ask: { title: 'Query', sub: 'Count through mapped fields only' },
     };
     return copy[step];
   }
