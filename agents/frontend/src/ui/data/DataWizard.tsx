@@ -2,7 +2,12 @@ import { ArrowUp, Loader2 } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { dataApi } from '../../adapters/dataApi';
-import { DATA_EXAMPLES, type QueryResult } from '../../contracts/data';
+import {
+  DATA_EXAMPLES,
+  type MappingHomonym,
+  type MappingReadiness,
+  type QueryResult,
+} from '../../contracts/data';
 import { useApp } from '../AppContext';
 import { Button } from '../common/Button';
 import { Card } from '../common/Card';
@@ -25,6 +30,25 @@ CREATE TABLE "order" (
 
 type SourceKind = 'mongodb' | 'postgresql' | 'ddl';
 
+function queryErrorMessage(answer: QueryResult): string {
+  if (answer.error === 'mapping_not_ready') return 'Resolve every ambiguous or unmatched source entity before querying.';
+  if (answer.error === 'ambiguous_target_class') return `Name one business entity to count: ${(answer.targetCandidates || []).join(', ')}.`;
+  if (answer.error === 'no_target_class') return 'Name the mapped business entity you want to count.';
+  if (answer.error === 'unmapped_field') return 'The question uses a field that is not present in the reviewed mapping.';
+  if (answer.error === 'unmapped_relationship') return 'The reviewed mapping has no join path for the entities in this question.';
+  if (answer.error === 'unsupported_operator' || answer.error === 'unsupported_aggregate') {
+    return 'That calculation is not supported by the verified query executor.';
+  }
+  if (answer.error === 'incomplete_execution') {
+    return `The local join would exceed the verified limit of ${answer.maxRowsPerEntity ?? 10_000} rows per entity.`;
+  }
+  return answer.error || 'That question is outside the mapped data.';
+}
+
+function homonymOptions(homonym: MappingHomonym): NonNullable<MappingHomonym['options']> {
+  return homonym.options?.length ? homonym.options : homonym.candidates.map((iri) => ({ iri }));
+}
+
 export function DataWizard() {
   const { useLlm, dataOk, sourceId, setSourceId, setSourceKind, domains } = useApp();
   const { pathname } = useLocation();
@@ -39,6 +63,9 @@ export function DataWizard() {
   const [collections, setCollections] = useState<{ name: string; entity?: string; count?: number; infrastructure?: boolean }[]>([]);
   const [mapped, setMapped] = useState<{ entity: string; collection?: string; prefLabel?: string; catalogDomain?: string; joins?: { field: string; targetEntity: string }[] }[]>([]);
   const [unmapped, setUnmapped] = useState<{ entity: string; reason?: string }[]>([]);
+  const [homonyms, setHomonyms] = useState<MappingHomonym[]>([]);
+  const [mappingSelections, setMappingSelections] = useState<Record<string, string>>({});
+  const [readiness, setReadiness] = useState<MappingReadiness | null>(null);
   const [coverage, setCoverage] = useState<number | null>(null);
   const [preferDomain, setPreferDomain] = useState('');
   const [query, setQuery] = useState('');
@@ -72,6 +99,14 @@ export function DataWizard() {
       setSourceId(res.sourceId);
       setSourceKind(sample ? 'memory' : kind === 'ddl' ? 'ddl' : kind);
       setSchemaOnly(Boolean(res.schemaOnly));
+      setMapped([]);
+      setUnmapped([]);
+      setHomonyms([]);
+      setMappingSelections({});
+      setReadiness(null);
+      setCoverage(null);
+      setAnswer(null);
+      setJoinGraph(null);
       navigate('/sources/understand');
       const schema = await dataApi.introspect(res.sourceId);
       setCollections((schema.collections || []).filter((c) => !c.infrastructure));
@@ -82,17 +117,20 @@ export function DataWizard() {
     }
   }
 
-  async function mapNow() {
+  async function mapNow(selections: Record<string, string> = mappingSelections) {
     setBusy(true);
     setError('');
     try {
       await dataApi.generateOntology(sourceId);
-      await dataApi.validateOntology(sourceId);
-      const mappedRes = await dataApi.map(sourceId, preferDomain);
+      const validation = await dataApi.validateOntology(sourceId);
+      if (!validation.ok) throw new Error('Generated source ontology did not validate.');
+      const mappedRes = await dataApi.map(sourceId, preferDomain, selections);
       setMapped(mappedRes.mapped || []);
       setUnmapped(mappedRes.unmapped || []);
+      setHomonyms(mappedRes.homonyms || []);
       const cov = await dataApi.coverage(sourceId);
       setCoverage(cov.coveragePct);
+      setReadiness(mappedRes.readiness || cov.readiness || null);
       const nodes = [
         ...(mappedRes.mapped || []).map((m) => ({
           iri: m.catalogIri || m.entity,
@@ -117,7 +155,7 @@ export function DataWizard() {
       setJoinGraph({ nodes, edges });
       navigate('/sources/map');
     } catch {
-      setError('Mapping failed. Try Advanced → heal_mapping.');
+      setError('Mapping failed. Review the source profile and catalog choices, then try again.');
     } finally {
       setBusy(false);
     }
@@ -282,17 +320,62 @@ export function DataWizard() {
                 </div>
               </div>
             )}
+            {readiness && (
+              <Card>
+                <h3>{readiness.readyForQuery ? 'Mapping ready' : 'Mapping review required'}</h3>
+                <p className="muted">
+                  {readiness.catalogAligned} catalog aligned · {readiness.ambiguous} ambiguous · {readiness.unresolved} unresolved
+                </p>
+              </Card>
+            )}
             {mapped.map((m) => (
               <Card key={m.entity}>
                 <h3>{m.prefLabel || m.entity}</h3>
-                <p>{m.catalogDomain || m.collection}</p>
+                <p>{m.catalogDomain || m.collection} · catalog aligned</p>
               </Card>
             ))}
-            {unmapped.length > 0 && (
-              <Button onClick={() => void dataApi.heal(sourceId).then(() => mapNow())}>Fix unmatched</Button>
+            {homonyms.map((homonym) => (
+              <Card key={homonym.entity}>
+                <h3>Choose the meaning of {homonym.entity}</h3>
+                <p className="muted">The source name matches more than one catalog concept. It will not be selected automatically.</p>
+                <select
+                  aria-label={`Catalog concept for ${homonym.entity}`}
+                  value={mappingSelections[homonym.entity] || ''}
+                  onChange={(event) =>
+                    setMappingSelections((current) => ({ ...current, [homonym.entity]: event.target.value }))
+                  }
+                >
+                  <option value="">Choose a catalog concept…</option>
+                  {homonymOptions(homonym).map((option) => (
+                    <option key={option.iri} value={option.iri}>
+                      {option.prefLabel || option.iri.split('#').at(-1)}{option.domainId ? ` — ${option.domainId}` : ''}
+                    </option>
+                  ))}
+                </select>
+              </Card>
+            ))}
+            {unmapped
+              .filter((item) => item.reason !== 'ambiguous_catalog_class' && item.reason !== 'invalid_catalog_selection')
+              .map((item) => (
+                <Card key={`${item.entity}-${item.reason || 'unmatched'}`}>
+                  <h3>Unmatched: {item.entity}</h3>
+                  <p className="muted">{item.reason || 'No catalog class could be verified.'}</p>
+                </Card>
+              ))}
+            {homonyms.length > 0 && (
+              <Button
+                variant="primary"
+                disabled={busy || homonyms.some((item) => !mappingSelections[item.entity])}
+                onClick={() => void mapNow(mappingSelections)}
+              >
+                Apply catalog choices
+              </Button>
             )}
-            <Button variant="primary" onClick={() => navigate('/sources/ask')}>
-              {schemaOnly ? 'Review mapping' : 'Ask a question'}
+            {unmapped.some((item) => item.reason !== 'ambiguous_catalog_class') && (
+              <Button onClick={() => void dataApi.heal(sourceId).then(() => mapNow())}>Retry unmatched</Button>
+            )}
+            <Button variant="primary" disabled={!readiness?.readyForQuery} onClick={() => navigate('/sources/ask')}>
+              {!readiness?.readyForQuery ? 'Resolve mapping before query' : schemaOnly ? 'Review mapping' : 'Ask a question'}
             </Button>
           </div>
           <div className="workspace-right">
@@ -328,7 +411,7 @@ export function DataWizard() {
                   <h3>{answer.ok === false ? 'Could not count that' : `${answer.result ?? 0}`}</h3>
                   <p>
                     {answer.ok === false
-                      ? answer.error || 'That question is outside the mapped data.'
+                      ? queryErrorMessage(answer)
                       : `We counted ${answer.plan?.targetClass || 'records'} using only mapped fields.`}
                   </p>
                   <details>

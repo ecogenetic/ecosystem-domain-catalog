@@ -4,7 +4,7 @@ from __future__ import annotations
 from agents.data_agent.ddl import parse_ddl
 from agents.data_agent.registry import connect
 from agents.data_agent.tools import introspect_schema, map_to_catalog
-from agents.tests.fixtures_loader import SAMPLE_DDL
+from agents.tests.fixtures_loader import SAMPLE_DDL, sample_mapping_selections
 
 
 def test_parse_sample_ddl():
@@ -25,7 +25,7 @@ def test_ddl_connect_and_map(catalog_ready):
     assert schema["schemaOnly"] is True
     customer = next(c for c in schema["collections"] if c["name"] == "customer")
     assert customer["count"] == 0
-    mapped = map_to_catalog(id="sample-ddl")
+    mapped = map_to_catalog(id="sample-ddl", selections=sample_mapping_selections())
     entities = {m["entity"] for m in mapped["mapped"]}
     assert "Customer" in entities
     assert "Order" in entities

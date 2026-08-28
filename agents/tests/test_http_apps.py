@@ -63,6 +63,7 @@ def test_source_path_and_ontology_routes(catalog_ready):
     from agents.catalog_agent.app import app as catalog_app
     from agents.data_agent.app import app as data_app
     from agents.data_agent.registry import connect
+    from agents.tests.fixtures_loader import sample_mapping_selections
 
     ont = TestClient(catalog_app).get("/v1/ontology/card", params={"industry": "banking"}).json()
     assert ont.get("ok") is True
@@ -73,8 +74,15 @@ def test_source_path_and_ontology_routes(catalog_ready):
     schema = client.post("/v1/sources/sample/introspect", json={}).json()
     names = {c["name"] for c in schema.get("collections") or []}
     assert "customer" in names
-    mapped = client.post("/v1/sources/sample/map", json={}).json()
+    proposed = client.post("/v1/sources/sample/map", json={}).json()
+    assert proposed["readiness"]["readyForQuery"] is False
+    assert proposed["homonyms"]
+    mapped = client.post(
+        "/v1/sources/sample/map",
+        json={"selections": sample_mapping_selections()},
+    ).json()
     assert mapped.get("mapped")
+    assert mapped["readiness"]["readyForQuery"] is True
     counted = client.post("/v1/sources/sample/query", json={"query": "how many customers do i have"}).json()
     assert counted.get("result") == 4
     assert counted.get("store")

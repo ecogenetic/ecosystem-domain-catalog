@@ -12,6 +12,7 @@ from agents.data_agent.store import DocumentStore
 
 MONTH_RE = re.compile(r"last month|past month|previous month|over the last month", re.I)
 HOW_MANY_RE = re.compile(r"how many\s+([a-z0-9_]+)", re.I)
+MAX_LOCAL_JOIN_ROWS = 10_000
 
 
 def compile_query_plan(source_id: str, query: str) -> dict[str, Any]:
@@ -19,13 +20,25 @@ def compile_query_plan(source_id: str, query: str) -> dict[str, Any]:
     mapped = mapping.get("mapped") or []
     if not mapped:
         return {"ok": False, "error": "no_mapping"}
+    if not _mapping_ready(mapping):
+        return {
+            "ok": False,
+            "error": "mapping_not_ready",
+            "readiness": mapping.get("readiness"),
+            "unmapped": mapping.get("unmapped") or [],
+            "homonyms": mapping.get("homonyms") or [],
+        }
     q = query.lower()
-    target = _pick_target(q, mapped)
+    target, target_candidates = _pick_target(q, mapped)
     if not target:
+        if target_candidates:
+            return {
+                "ok": False,
+                "error": "ambiguous_target_class",
+                "targetCandidates": target_candidates,
+            }
         return {"ok": False, "error": "no_target_class"}
     filters: list[dict[str, Any]] = []
-    unmapped: list[str] = []
-
     for entity_entry in mapped:
         enums = entity_entry.get("enums") or {}
         for field, values in enums.items():
@@ -66,7 +79,14 @@ def compile_query_plan(source_id: str, query: str) -> dict[str, Any]:
                 }
             )
 
-    joins = _needed_joins(target, filters, mapped, q)
+    joins, disconnected = _needed_joins(target, filters, mapped, q)
+    if disconnected:
+        return {
+            "ok": False,
+            "error": "unmapped_relationship",
+            "targetClass": target["entity"],
+            "unmappedRelationships": disconnected,
+        }
     plan = {
         "ok": True,
         "targetClass": target["entity"],
@@ -75,25 +95,44 @@ def compile_query_plan(source_id: str, query: str) -> dict[str, Any]:
         "joins": joins,
         "aggregate": "count",
     }
-    if unmapped:
-        plan = {"ok": False, "error": "unmapped_field", "unmapped": unmapped, **plan}
-        plan["ok"] = False
     return plan
 
 
 def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any]) -> dict[str, Any]:
-    if plan.get("error") == "unmapped_field" and not plan.get("ok", True):
-        return {"ok": False, "error": "unmapped_field", "unmapped": plan.get("unmapped")}
+    if not plan.get("ok", True):
+        return {
+            "ok": False,
+            "error": plan.get("error") or "invalid_plan",
+            "unmapped": plan.get("unmapped"),
+        }
     mapping = load_mapping(source_id)
+    if not _mapping_ready(mapping):
+        return {"ok": False, "error": "mapping_not_ready", "readiness": mapping.get("readiness")}
     mapped = {m["entity"]: m for m in mapping.get("mapped") or []}
     target_name = plan.get("targetClass")
     if target_name not in mapped:
         return {"ok": False, "error": "no_target_class"}
+    if plan.get("aggregate", "count") != "count":
+        return {"ok": False, "error": "unsupported_aggregate"}
 
-    store_filter = _local_filter(plan, target_name)
     joins = plan.get("joins") or []
     filters = plan.get("filters") or []
+    invalid_filter = _validate_filters(filters, mapped)
+    if invalid_filter:
+        return invalid_filter
+    invalid_join = _validate_joins(joins, mapped)
+    if invalid_join:
+        return invalid_join
     foreign_filters = [f for f in filters if f.get("entity") != target_name]
+    if foreign_filters and not joins:
+        return {
+            "ok": False,
+            "error": "unmapped_relationship",
+            "unmappedRelationships": [
+                {"from": target_name, "to": filt.get("entity")} for filt in foreign_filters
+            ],
+        }
+    store_filter = _local_filter(plan, target_name)
 
     # Push filters to the store when the plan stays on one collection (Mongo/Postgres/memory).
     if not joins and not foreign_filters:
@@ -111,12 +150,39 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
             "filter": store_filter,
             "joins": [],
             "pushdown": True,
+            "complete": True,
         }
         return {"ok": True, "result": result, "store": store_info, "mongo": store_info}
 
+    involved = {target_name} | {f["entity"] for f in filters}
+    for join in joins:
+        involved.add(join.get("from") or "")
+        involved.add(join.get("to") or "")
+    involved.discard("")
+
+    row_counts: dict[str, int] = {}
+    for entity in involved:
+        entry = mapped.get(entity)
+        if not entry:
+            return {"ok": False, "error": "unmapped_field", "unmapped": [entity]}
+        row_counts[entity] = store.count(entry["collection"])
+    over_limit = {entity: count for entity, count in row_counts.items() if count > MAX_LOCAL_JOIN_ROWS}
+    if over_limit:
+        return {
+            "ok": False,
+            "error": "incomplete_execution",
+            "reason": "local_join_row_limit",
+            "maxRowsPerEntity": MAX_LOCAL_JOIN_ROWS,
+            "rowCounts": over_limit,
+        }
+
     tables: dict[str, list[dict[str, Any]]] = {}
-    for entity, entry in mapped.items():
-        tables[entity] = [_with_id(d) for d in store.find(entry["collection"], limit=10000)]
+    for entity in involved:
+        entry = mapped[entity]
+        tables[entity] = [
+            _with_id(d)
+            for d in store.find(entry["collection"], limit=max(1, row_counts[entity]))
+        ]
 
     for filt in filters:
         entity = filt["entity"]
@@ -136,11 +202,6 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
             docs = [d for d in docs if str(d.get(field) or "") >= bound]
         tables[entity] = docs
 
-    involved = {target_name} | {f["entity"] for f in filters}
-    for join in joins:
-        involved.add(join.get("from") or "")
-        involved.add(join.get("to") or "")
-    involved.discard("")
     if len(involved) > 1:
         tables = _apply_joins(tables, mapped, involved)
 
@@ -151,6 +212,7 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
         "filter": store_filter,
         "joins": joins,
         "pushdown": False,
+        "complete": True,
     }
     return {
         "ok": True,
@@ -163,12 +225,7 @@ def execute_query_plan(store: DocumentStore, source_id: str, plan: dict[str, Any
 def query_mapped_data(store: DocumentStore, source_id: str, query: str) -> dict[str, Any]:
     plan = compile_query_plan(source_id, query)
     if not plan.get("ok", True):
-        if plan.get("error") == "unmapped_field":
-            plan.pop("error", None)
-            plan["filters"] = [f for f in plan.get("filters") or [] if f.get("field") not in (plan.get("unmapped") or [])]
-            plan["ok"] = True
-        else:
-            return plan
+        return plan
     executed = execute_query_plan(store, source_id, plan)
     if not executed.get("ok"):
         executed["plan"] = plan
@@ -195,14 +252,17 @@ def _allowed_fields(entry: dict[str, Any]) -> set[str]:
     return allowed
 
 
-def _pick_target(q: str, mapped: list[dict[str, Any]]) -> dict[str, Any] | None:
+def _pick_target(
+    q: str,
+    mapped: list[dict[str, Any]],
+) -> tuple[dict[str, Any] | None, list[str]]:
     how = HOW_MANY_RE.search(q)
     if how:
         stem = how.group(1).rstrip("s").lower()
         for m in mapped:
             name = m["entity"].lower()
             if name == stem or name == how.group(1).lower() or name.rstrip("s") == stem:
-                return m
+                return m, []
     ranked = []
     for m in mapped:
         score = 0
@@ -215,8 +275,19 @@ def _pick_target(q: str, mapped: list[dict[str, Any]]) -> dict[str, Any] | None:
         ranked.append((score, m))
     ranked.sort(key=lambda x: -x[0])
     if ranked and ranked[0][0] > 0:
-        return ranked[0][1]
-    return mapped[0] if mapped else None
+        top_score = ranked[0][0]
+        tied = [item[1] for item in ranked if item[0] == top_score]
+        if len(tied) == 1:
+            return tied[0], []
+        return None, [item["entity"] for item in tied]
+    return None, []
+
+
+def _mapping_ready(mapping: dict[str, Any]) -> bool:
+    readiness = mapping.get("readiness")
+    if isinstance(readiness, dict) and "readyForQuery" in readiness:
+        return bool(readiness.get("readyForQuery"))
+    return bool(mapping.get("mapped")) and not (mapping.get("unmapped") or mapping.get("homonyms"))
 
 
 def _first_temporal(mapped: list[dict[str, Any]], query: str = "") -> dict[str, str] | None:
@@ -246,25 +317,103 @@ def _needed_joins(
     filters: list[dict[str, Any]],
     mapped: list[dict[str, Any]],
     query: str = "",
-) -> list[dict[str, Any]]:
+) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
     mentioned = {m["entity"] for m in mapped if _mentioned(m["entity"], query)}
-    entities = {target["entity"]} | {f["entity"] for f in filters} | mentioned
-    by_name = {m["entity"]: m for m in mapped}
-    joins: list[dict[str, Any]] = []
-    for entity, entry in by_name.items():
-        for j in entry.get("joins") or []:
-            other = j.get("targetEntity")
-            if entity in entities and other in entities:
-                joins.append({"from": entity, "to": other, "field": j["field"]})
-    uniq = []
-    seen = set()
-    for j in joins:
-        key = (j.get("from"), j.get("to"), j.get("field"))
-        if key in seen:
+    required = {target["entity"]} | {f["entity"] for f in filters} | mentioned
+    graph: dict[str, list[tuple[str, dict[str, Any]]]] = {m["entity"]: [] for m in mapped}
+    for entry in mapped:
+        source = entry["entity"]
+        for raw_join in entry.get("joins") or []:
+            destination = _mapped_entity_name(raw_join.get("targetEntity"), mapped)
+            if not destination:
+                continue
+            join = {"from": source, "to": destination, "field": raw_join["field"]}
+            graph[source].append((destination, join))
+            graph[destination].append((source, join))
+
+    selected: list[dict[str, Any]] = []
+    seen_edges: set[tuple[str, str, str]] = set()
+    disconnected: list[dict[str, str]] = []
+    start = target["entity"]
+    for destination in sorted(required - {start}):
+        path = _shortest_join_path(graph, start, destination)
+        if path is None:
+            disconnected.append({"from": start, "to": destination})
             continue
-        seen.add(key)
-        uniq.append(j)
-    return uniq
+        for join in path:
+            key = (join["from"], join["to"], join["field"])
+            if key not in seen_edges:
+                seen_edges.add(key)
+                selected.append(join)
+    return selected, disconnected
+
+
+def _shortest_join_path(
+    graph: dict[str, list[tuple[str, dict[str, Any]]]],
+    start: str,
+    destination: str,
+) -> list[dict[str, Any]] | None:
+    queue: list[tuple[str, list[dict[str, Any]]]] = [(start, [])]
+    visited = {start}
+    while queue:
+        node, path = queue.pop(0)
+        if node == destination:
+            return path
+        for neighbor, join in graph.get(node, []):
+            if neighbor in visited:
+                continue
+            visited.add(neighbor)
+            queue.append((neighbor, [*path, join]))
+    return None
+
+
+def _mapped_entity_name(value: Any, mapped: list[dict[str, Any]]) -> str | None:
+    wanted = str(value or "").lower()
+    return next((item["entity"] for item in mapped if item["entity"].lower() == wanted), None)
+
+
+def _validate_filters(
+    filters: list[dict[str, Any]],
+    mapped: dict[str, dict[str, Any]],
+) -> dict[str, Any] | None:
+    for filt in filters:
+        entity = filt.get("entity")
+        field = filt.get("field")
+        if entity not in mapped:
+            return {"ok": False, "error": "unmapped_field", "unmapped": [entity]}
+        if field not in _allowed_fields(mapped[entity]):
+            return {"ok": False, "error": "unmapped_field", "unmapped": [field]}
+        if filt.get("op") not in {"eq", "gte"}:
+            return {
+                "ok": False,
+                "error": "unsupported_operator",
+                "operator": filt.get("op"),
+            }
+        if "value" not in filt:
+            return {"ok": False, "error": "invalid_filter", "field": field}
+    return None
+
+
+def _validate_joins(
+    joins: list[dict[str, Any]],
+    mapped: dict[str, dict[str, Any]],
+) -> dict[str, Any] | None:
+    allowed = {
+        (entry["entity"], str(join.get("targetEntity") or ""), join.get("field"))
+        for entry in mapped.values()
+        for join in entry.get("joins") or []
+    }
+    for join in joins:
+        key = (join.get("from"), join.get("to"), join.get("field"))
+        if key not in allowed:
+            return {
+                "ok": False,
+                "error": "unmapped_relationship",
+                "unmappedRelationships": [
+                    {"from": str(key[0] or ""), "to": str(key[1] or "")}
+                ],
+            }
+    return None
 
 
 def _mentioned(entity: str, query: str) -> bool:

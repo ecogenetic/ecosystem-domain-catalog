@@ -72,9 +72,9 @@ legacy:campaign_budget rdfs:subPropertyOf cvm:campaignBudget .
 legacy:segment_id rdfs:subPropertyOf cvm:assignedToSegment .
 legacy:customer_id_value_score rdfs:subPropertyOf cvm:scoresCustomer .
 legacy:customer_id_churn rdfs:subPropertyOf cvm:assessesCustomer .
-legacy:campaign_segment_id rdfs:subPropertyOf cvm:targetedAtSegment .
+legacy:campaign_segment_id rdfs:subPropertyOf cvm:targetsSegment .
 legacy:campaign_offer_id rdfs:subPropertyOf cvm:deliversOffer .
-legacy:offer_segment_id rdfs:subPropertyOf cvm:targetsSegment .
+legacy:offer_segment_id rdfs:subPropertyOf cvm:targetedAtSegment .
 legacy:customer_price_plan_id rdfs:subPropertyOf cvm:subscribedToPricePlan .
 legacy:event_customer_id rdfs:subPropertyOf cvm:recordedForCustomer .
 legacy:nba_offer_id rdfs:subPropertyOf cvm:recommendsOffer .
