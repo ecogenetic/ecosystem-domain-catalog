@@ -1,11 +1,12 @@
-import { ArrowUp, Loader2 } from 'lucide-react';
-import { FormEvent, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ArrowUp, Download, Loader2 } from 'lucide-react';
+import { FormEvent, useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { dataApi } from '../../adapters/dataApi';
 import {
   DATA_EXAMPLES,
   type MappingHomonym,
   type MappingReadiness,
+  type PhysicalModel,
   type QueryResult,
 } from '../../contracts/data';
 import { useApp } from '../AppContext';
@@ -50,9 +51,10 @@ function homonymOptions(homonym: MappingHomonym): NonNullable<MappingHomonym['op
 }
 
 export function DataWizard() {
-  const { useLlm, dataOk, sourceId, setSourceId, setSourceKind, domains } = useApp();
+  const { useLlm, dataOk, sourceId, setSourceId, setSourceKind, domains, industries } = useApp();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const step = DATA_STEPS.indexOf(dataStepFromPath(pathname));
   const [kind, setKind] = useState<SourceKind>('mongodb');
   const [uri, setUri] = useState('mongodb://localhost:27017');
@@ -68,12 +70,29 @@ export function DataWizard() {
   const [readiness, setReadiness] = useState<MappingReadiness | null>(null);
   const [coverage, setCoverage] = useState<number | null>(null);
   const [preferDomain, setPreferDomain] = useState('');
+  const [genDomain, setGenDomain] = useState(searchParams.get('domain') || '');
+  const [genIndustry, setGenIndustry] = useState(searchParams.get('industry') || '');
+  const [genTurtle, setGenTurtle] = useState('');
+  const [genDdl, setGenDdl] = useState('');
+  const [genModel, setGenModel] = useState<PhysicalModel | null>(null);
   const [query, setQuery] = useState('');
   const [answer, setAnswer] = useState<QueryResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [preview, setPreview] = useState<{ collection: string; documents: unknown[] } | null>(null);
   const [joinGraph, setJoinGraph] = useState<GraphPayload | null>(null);
+
+  useEffect(() => {
+    const d = searchParams.get('domain');
+    if (d) setGenDomain(d);
+    const i = searchParams.get('industry');
+    if (i) setGenIndustry(i);
+    const stored = sessionStorage.getItem('ecosystem.generate.turtle');
+    if (stored) {
+      setGenTurtle(stored);
+      sessionStorage.removeItem('ecosystem.generate.turtle');
+    }
+  }, [searchParams]);
 
   if (dataOk === false) {
     return (
@@ -194,17 +213,166 @@ export function DataWizard() {
     }
   }
 
+  async function generateFromOntology(openAsSource = false) {
+    setBusy(true);
+    setError('');
+    try {
+      const sid = genDomain ? `gen-${genDomain}${genIndustry ? `-${genIndustry}` : ''}` : 'gen-session';
+      if (!genDomain && !genTurtle.trim()) {
+        setError('Choose a catalog domain or paste session Turtle.');
+        return;
+      }
+      const ddlPreview = await dataApi.generateDdl({
+        domainId: genDomain || undefined,
+        industry: genIndustry || undefined,
+        turtle: genTurtle.trim() || undefined,
+      });
+      setGenDdl(ddlPreview.ddl || '');
+      setGenModel(ddlPreview.model || null);
+      if (openAsSource) {
+        const res = await dataApi.materialize({
+          sourceId: sid,
+          domainId: genDomain || undefined,
+          industry: genIndustry || undefined,
+          turtle: genTurtle.trim() || undefined,
+          autoMap: true,
+          preferDomain: genDomain || undefined,
+        });
+        if (!res.ok) {
+          setError('Could not materialize schema.');
+          return;
+        }
+        setSourceId(res.sourceId || sid);
+        setSourceKind('ddl');
+        setSchemaOnly(true);
+        setGenDdl(res.ddl || '');
+        const mapping = res.mapping || {};
+        setMapped((mapping.mapped as typeof mapped) || []);
+        setHomonyms(mapping.homonyms || []);
+        setReadiness(mapping.readiness || null);
+        navigate('/sources/map');
+      }
+    } catch {
+      setError('Generation failed. Check domain selection or Turtle syntax.');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function downloadText(filename: string, text: string) {
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const generateStep = step === 0;
+  const connectStep = step === 1;
+  const understandStep = step === 2;
+  const mapStep = step === 3;
+  const askStep = step === 4;
+
   return (
     <div className="page">
       {error && <p className="error">{error}</p>}
-      {step > 0 && !sourceId ? (
+      {step > 1 && !sourceId ? (
         <EmptyState
           title="Connect a source first"
           body="Open Data sources in the left navigation, then attach MongoDB, PostgreSQL, DDL, or sample data."
         />
       ) : null}
 
-      {step === 0 && (
+      {generateStep && (
+        <Card>
+          <h3>Generate schema from ontology</h3>
+          <p className="muted">
+            Compile catalog OWL + SHACL into PostgreSQL DDL and Mongo JSON Schema. On the public site this produces
+            downloadable artefacts only — live database connect works when you run the gateway locally.
+          </p>
+          <div className="form-group">
+            <label>Catalog domain</label>
+            <select value={genDomain} onChange={(e) => setGenDomain(e.target.value)}>
+              <option value="">Session Turtle only</option>
+              {domains.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name || d.id}
+                </option>
+              ))}
+            </select>
+          </div>
+          {genDomain && (
+            <div className="form-group">
+              <label>Industry overlay (optional)</label>
+              <select value={genIndustry} onChange={(e) => setGenIndustry(e.target.value)}>
+                <option value="">Base domain only</option>
+                {industries.map((i) => (
+                  <option key={i.id} value={i.id}>
+                    {i.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {!genDomain && (
+            <div className="form-group">
+              <label>Session Turtle (optional)</label>
+              <textarea
+                value={genTurtle}
+                onChange={(e) => setGenTurtle(e.target.value)}
+                rows={8}
+                placeholder="@prefix : <https://example.com/ontology/mine#> ."
+              />
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <Button variant="primary" disabled={busy} onClick={() => void generateFromOntology(false)}>
+              {busy ? <Loader2 className="spin" size={16} /> : null} Preview DDL
+            </Button>
+            <Button disabled={busy} onClick={() => void generateFromOntology(true)}>
+              Open as data source
+            </Button>
+            {genDdl && (
+              <Button onClick={() => downloadText(`${genDomain || 'session'}.sql`, genDdl)}>
+                <Download size={14} /> Download SQL
+              </Button>
+            )}
+          </div>
+          {genModel?.tables && (
+            <details open style={{ marginTop: 16 }}>
+              <summary className="muted">{genModel.tableCount ?? genModel.tables.length} tables</summary>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Table</th>
+                    <th>Class</th>
+                    <th>Columns</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {genModel.tables.map((t) => (
+                    <tr key={t.table}>
+                      <td>{t.table}</td>
+                      <td>{t.entity}</td>
+                      <td>{(t.columns || []).map((c) => c.name).join(', ')}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </details>
+          )}
+          {genDdl && (
+            <details style={{ marginTop: 12 }}>
+              <summary className="muted">PostgreSQL DDL</summary>
+              <pre className="pre">{genDdl}</pre>
+            </details>
+          )}
+        </Card>
+      )}
+
+      {connectStep && (
         <Card>
           <h3>Where is the data?</h3>
           <p className="muted">Connect MongoDB or PostgreSQL, or upload CREATE TABLE statements. Sample data works without a database.</p>
@@ -251,7 +419,7 @@ export function DataWizard() {
         </Card>
       )}
 
-      {step === 1 && sourceId && (
+      {understandStep && sourceId && (
         <Card>
           <h3>Here is what we found</h3>
           <p className="muted">Business collections only. Infrastructure tables are hidden.</p>
@@ -308,7 +476,7 @@ export function DataWizard() {
         </Card>
       )}
 
-      {step === 2 && sourceId && (
+      {mapStep && sourceId && (
         <div className="workspace" style={{ minHeight: 480 }}>
           <div className="workspace-left">
             <h3>Matched to the catalog</h3>
@@ -384,7 +552,7 @@ export function DataWizard() {
         </div>
       )}
 
-      {step === 3 && sourceId && (
+      {askStep && sourceId && (
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           {schemaOnly ? (
             <Card>

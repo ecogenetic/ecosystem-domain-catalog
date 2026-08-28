@@ -378,6 +378,15 @@ export function SessionOntologyPage() {
               {matching ? <Loader2 className="spin" size={14} /> : null}
               {matching ? 'Proposing…' : 'Propose matches'}
             </Button>
+            <Button
+              disabled={!active.turtle}
+              onClick={() => {
+                sessionStorage.setItem('ecosystem.generate.turtle', active.turtle);
+                navigate('/sources/generate');
+              }}
+            >
+              Generate schema
+            </Button>
             <span className="muted">
               {acceptedCount} accepted · this tab only
             </span>

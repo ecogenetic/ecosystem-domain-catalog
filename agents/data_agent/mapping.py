@@ -262,23 +262,45 @@ def _candidates(idx, entity: str, prefer_domain: str | None) -> list[dict[str, A
         doc = idx.get_concept(iri)
         if doc.get("ok"):
             found.append(doc)
-    search = idx.search(entity, domain=prefer_domain, limit=8)
-    for m in search.get("matches") or []:
-        if m.get("kind") not in {"class", "overlay_class"}:
-            continue
-        wanted = entity.strip().lower()
-        exact_names = {
-            local_name(m.get("iri") or "").strip().lower(),
-            str(m.get("prefLabel") or "").strip().lower(),
-            *{str(label).strip().lower() for label in m.get("altLabels") or []},
-        }
-        # Keep real homonyms, but exclude fuzzy neighbors such as
-        # CustomerAccount, WorkOrder, and CampaignMember.
-        if wanted not in exact_names:
-            continue
-        if m.get("iri") not in {f.get("iri") for f in found}:
-            found.append(m)
+    for term in _entity_search_terms(entity):
+        search = idx.search(term, domain=prefer_domain, limit=8)
+        for m in search.get("matches") or []:
+            if m.get("kind") not in {"class", "overlay_class"}:
+                continue
+            wanted = term.strip().lower()
+            exact_names = {
+                local_name(m.get("iri") or "").strip().lower(),
+                str(m.get("prefLabel") or "").strip().lower(),
+                *{str(label).strip().lower() for label in m.get("altLabels") or []},
+            }
+            # Keep real homonyms, but exclude fuzzy neighbors such as
+            # CustomerAccount, WorkOrder, and CampaignMember.
+            if wanted not in exact_names:
+                continue
+            if m.get("iri") not in {f.get("iri") for f in found}:
+                found.append(m)
     return found
+
+
+def _entity_search_terms(entity: str) -> list[str]:
+    """Exact labels plus a conservative singular form for plural table names."""
+    terms = [entity]
+    if entity.endswith("ies") and len(entity) > 3:
+        terms.append(entity[:-3] + "y")
+    elif entity.endswith("ses") and len(entity) > 3:
+        terms.append(entity[:-2])
+    elif entity.endswith("s") and len(entity) > 1 and not entity.endswith("ss"):
+        terms.append(entity[:-1])
+    # de-dupe preserving order
+    out: list[str] = []
+    seen: set[str] = set()
+    for t in terms:
+        key = t.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(t)
+    return out
 
 
 def _unique_candidates(candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:

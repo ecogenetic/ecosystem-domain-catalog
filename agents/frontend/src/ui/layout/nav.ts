@@ -63,6 +63,7 @@ export const NAV: NavNode[] = [
     icon: 'database',
     to: '/sources/connect',
     children: [
+      { id: 'generate', label: 'From ontology', to: '/sources/generate', keywords: ['generate', 'ddl', 'schema', 'ontology'] },
       { id: 'connect', label: 'Data sources', to: '/sources/connect', keywords: ['mongodb', 'postgresql', 'ddl', 'connect'] },
       { id: 'understand', label: 'Schema profiler', to: '/sources/understand', keywords: ['introspect', 'schema', 'understand'] },
       { id: 'map', label: 'Field mapping', to: '/sources/map', keywords: ['coverage', 'catalog', 'map'] },
@@ -161,7 +162,7 @@ export function hydrateNav(
     });
     let count: number | undefined;
     if (group.id === 'ontology') count = domains.length;
-    if (group.id === 'data') count = 4;
+    if (group.id === 'data') count = 5;
     return { ...group, count, children };
   });
 }
@@ -239,7 +240,7 @@ export function catalogSessionId(pathname: string): string {
   return m?.[1] || '';
 }
 
-export const DATA_STEPS = ['connect', 'understand', 'map', 'ask'] as const;
+export const DATA_STEPS = ['generate', 'connect', 'understand', 'map', 'ask'] as const;
 export type DataStep = (typeof DATA_STEPS)[number];
 
 export function dataStepFromPath(pathname: string): DataStep {
@@ -278,9 +279,10 @@ export function headerCopy(
   if (pathname.startsWith('/sources')) {
     const step = dataStepFromPath(pathname);
     const copy: Record<DataStep, { title: string; sub: string }> = {
+      generate: { title: 'From ontology', sub: 'Generate PostgreSQL DDL and Mongo schema from catalog or session OWL' },
       connect: { title: 'Data sources', sub: 'MongoDB, PostgreSQL, DDL, or sample data' },
       understand: { title: 'Schema profiler', sub: 'Business collections found in the source' },
-      map: { title: 'Field mapping', sub: 'Match collections to catalog classes' },
+      map: { title: 'Field mapping', sub: 'Match collections and fields to catalog ontology' },
       ask: { title: 'Query', sub: 'Count through mapped fields only' },
     };
     return copy[step];

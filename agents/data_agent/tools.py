@@ -7,9 +7,13 @@ from typing import Any
 
 from agents.data_agent import complexity as complexity_mod
 from agents.data_agent import mapping as mapping_mod
+from agents.data_agent import materialize as materialize_mod
 from agents.data_agent import ontology as ontology_mod
+from agents.data_agent import physical as physical_mod
 from agents.data_agent import query as query_mod
 from agents.data_agent import registry
+from agents.data_agent.emit_mongo import generate_mongo_schema
+from agents.data_agent.emit_sql import generate_ddl
 from agents.data_agent.introspect import introspect
 from agents.data_agent.store import PII_EXCLUDE
 from agents.shared.catalog_index import get_index
@@ -65,14 +69,18 @@ def map_to_catalog(
     preferDomain: str | None = None,
     prefer_domain: str | None = None,
     selections: dict[str, str] | None = None,
+    overrides: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     sid = id or sourceId or ""
     schema = registry.get(sid).get("schema") or introspect_schema(id=sid)
+    merged_selections = dict(selections or {})
+    if overrides and overrides.get("classes"):
+        merged_selections.update(overrides["classes"])
     result = mapping_mod.map_to_catalog(
         sid,
         schema,
         prefer_domain=preferDomain or prefer_domain,
-        selections=selections,
+        selections=merged_selections or None,
     )
     complexity_mod.assess_complexity(sid)
     complexity_mod.export_rerun_suite(sid, include_unsupported=True)
@@ -87,6 +95,69 @@ def heal_mapping(id: str | None = None, sourceId: str | None = None, collection:
     sid = id or sourceId or ""
     schema = registry.get(sid).get("schema") or introspect_schema(id=sid)
     return mapping_mod.heal_mapping(sid, schema, collection=collection)
+
+
+def set_mapping_override(id: str | None = None, sourceId: str | None = None, overrides: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Pin class mappings via selections and re-run map_to_catalog."""
+    sid = id or sourceId or ""
+    classes = (overrides or {}).get("classes") or {}
+    return map_to_catalog(id=sid, selections=classes, overrides=overrides)
+
+
+def compile_physical_model(
+    domainId: str | None = None,
+    domain_id: str | None = None,
+    industry: str | None = None,
+    turtle: str | None = None,
+) -> dict[str, Any]:
+    return physical_mod.compile_physical_model(domain_id=domainId or domain_id, industry=industry, turtle=turtle)
+
+
+def generate_ddl_from_model(
+    domainId: str | None = None,
+    domain_id: str | None = None,
+    industry: str | None = None,
+    turtle: str | None = None,
+    model: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    compiled = model or compile_physical_model(domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle)
+    ddl = generate_ddl(compiled)
+    return {"ok": True, "ddl": ddl, "model": compiled, "tableCount": compiled.get("tableCount", 0)}
+
+
+def generate_mongo_schema_from_model(
+    domainId: str | None = None,
+    domain_id: str | None = None,
+    industry: str | None = None,
+    turtle: str | None = None,
+    model: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    compiled = model or compile_physical_model(domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle)
+    schema = generate_mongo_schema(compiled)
+    return {"ok": True, **schema, "model": compiled}
+
+
+def materialize_source(
+    sourceId: str | None = None,
+    source_id: str | None = None,
+    domainId: str | None = None,
+    domain_id: str | None = None,
+    industry: str | None = None,
+    turtle: str | None = None,
+    autoMap: bool = False,
+    auto_map: bool | None = None,
+    preferDomain: str | None = None,
+    prefer_domain: str | None = None,
+) -> dict[str, Any]:
+    sid = sourceId or source_id or f"gen-{domainId or domain_id or 'session'}"
+    return materialize_mod.materialize_source(
+        sid,
+        domain_id=domainId or domain_id,
+        industry=industry,
+        turtle=turtle,
+        auto_map=autoMap or bool(auto_map),
+        prefer_domain=preferDomain or prefer_domain,
+    )
 
 
 def compile_query_plan(id: str | None = None, sourceId: str | None = None, query: str = "") -> dict[str, Any]:
@@ -152,6 +223,11 @@ def data_tools() -> list[ToolSpec]:
         ToolSpec(name="map_to_catalog", description="Propose source-to-catalog alignments and require explicit homonym choices", method="POST", path="/v1/sources/{id}/map", handler=map_to_catalog),
         ToolSpec(name="mapping_coverage", description="Coverage and gaps after mapping", method="GET", path="/v1/sources/{id}/coverage", handler=mapping_coverage),
         ToolSpec(name="heal_mapping", description="Repair unmapped collections via SKOS/core", method="POST", path="/v1/sources/{id}/heal-mapping", handler=heal_mapping),
+        ToolSpec(name="set_mapping_override", description="Pin class or field mappings (homonym override)", method="POST", path="/v1/sources/{id}/overrides", handler=set_mapping_override),
+        ToolSpec(name="compile_physical_model", description="Compile OWL+SHACL into a physical model", method="POST", path="/v1/physical/compile", handler=compile_physical_model),
+        ToolSpec(name="generate_ddl", description="PostgreSQL DDL from domain or session ontology", method="POST", path="/v1/physical/ddl", handler=generate_ddl_from_model),
+        ToolSpec(name="generate_mongo_schema", description="Mongo JSON Schema from domain or session ontology", method="POST", path="/v1/physical/mongo-schema", handler=generate_mongo_schema_from_model),
+        ToolSpec(name="materialize_source", description="Write DDL artefacts and register as schema-only source", method="POST", path="/v1/physical/materialize", handler=materialize_source),
         ToolSpec(name="compile_query_plan", description="Compile NL to a sandboxed query plan", method="POST", path="/v1/sources/{id}/compile", handler=compile_query_plan),
         ToolSpec(name="execute_query_plan", description="Execute a mapped query plan", method="POST", path="/v1/sources/{id}/execute", handler=execute_query_plan),
         ToolSpec(name="assess_complexity", description="Five-level complexity from the mapping graph", method="GET", path="/v1/sources/{id}/complexity", handler=assess_complexity),

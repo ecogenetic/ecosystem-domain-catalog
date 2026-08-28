@@ -70,7 +70,7 @@ cd agents/frontend && npm install && npm run dev
 - Data Swagger: `http://127.0.0.1:8080/data/docs`
 - MCP JSON-RPC: `POST /catalog/mcp` and `POST /data/mcp`
 
-The workbench has three spaces: **Ontology** (class lookup and hierarchy), **Your data** (connect → understand → map → ask), and **Advanced** (every tool, JSON playground, MCP, both Swagger UIs).
+The workbench has three spaces: **Ontology** (class lookup and hierarchy), **Your data** (from ontology → connect → understand → map → ask), and **Advanced** (every tool, JSON playground, MCP, both Swagger UIs).
 
 ### Docker
 
@@ -141,10 +141,27 @@ Other tools: `index_health`, `heal_index`, `validate_text`, `get_concept`, `get_
 
 ## Data Agent — how to use
 
-Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, propose mappings, resolve every ambiguity, and query. Mapping is graph-first (curated candidates, SKOS, and local names). Optionally pass `preferDomain`; an explicit `selections` object overrides it. After `map_to_catalog`, complexity is scored from the **mapping graph**.
+Two directions:
+
+1. **Data → ontology** — connect a source, introspect, propose mappings, resolve every ambiguity, and query through the mapping.
+2. **Ontology → data** — compile catalog or session OWL + SHACL into PostgreSQL DDL and Mongo JSON Schema; download artefacts or **materialize** as a schema-only source for round-trip mapping.
+
+**Hosted site (`ontology.ecosystem.ai`):** generation produces downloadable DDL/JSON only. Live MongoDB/PostgreSQL connect works when you run the gateway locally (or `host.docker.internal` in Docker). The public site never runs `CREATE DATABASE` against a visitor URI.
+
+Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, propose mappings, resolve every ambiguity, and query. Mapping is graph-first (curated candidates, SKOS, local names, and `domains/{id}/mappings/generic-mapping.ttl` when `preferDomain` is set). Optionally pass `preferDomain`; an explicit `selections` object overrides it. After `map_to_catalog`, complexity is scored from the **mapping graph**.
 
 ```bash
-# MongoDB
+# Generate PostgreSQL DDL from CRM ontology
+curl -X POST http://127.0.0.1:8080/data/v1/physical/ddl \
+  -H 'Content-Type: application/json' \
+  -d '{"domainId":"crm"}'
+
+# Materialize as schema-only source and auto-map back to catalog
+curl -X POST http://127.0.0.1:8080/data/v1/physical/materialize \
+  -H 'Content-Type: application/json' \
+  -d '{"sourceId":"gen-crm","domainId":"crm","autoMap":true,"preferDomain":"crm"}'
+
+# MongoDB (local gateway only)
 curl -X POST http://127.0.0.1:8080/data/v1/sources/connect \
   -d '{"kind":"mongodb","uri":"mongodb://localhost:27017","database":"mydb"}' \
   -H 'Content-Type: application/json'
@@ -223,7 +240,7 @@ Search and mapped query stay graph-first. Pass `useLlm: true` to re-rank catalog
 agents/
   gateway.py         one-port FastAPI: /catalog + /data + optional SPA
   catalog_agent/     FastAPI + MCP + tools
-  data_agent/        introspect, OWL gen, mapping, NL query
+  data_agent/        introspect, OWL gen, physical model, mapping, NL query
   shared/            LLM client, catalog graph, planner loop, dual server
   frontend/          React workbench (Ontology, Your data, Advanced)
   tests/suites/      stored L1–L5 cases

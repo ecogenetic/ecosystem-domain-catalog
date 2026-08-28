@@ -16,6 +16,7 @@ import { GraphCanvas } from '../common/GraphCanvas';
 import { SearchableSelect } from '../common/SearchableSelect';
 import { catalogDomainId, catalogIndustryId } from '../layout/nav';
 import { ConceptInspector } from './ConceptInspector';
+import { Button } from '../common/Button';
 
 export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
   const {
@@ -222,6 +223,15 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
           }
         }}
       />
+      {domainId && (
+        <Button
+          onClick={() =>
+            navigate(`/sources/generate?domain=${encodeURIComponent(domainId)}${industry ? `&industry=${encodeURIComponent(industry)}` : ''}`)
+          }
+        >
+          Generate schema
+        </Button>
+      )}
     </div>
   );
 

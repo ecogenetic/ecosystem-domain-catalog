@@ -5,6 +5,14 @@ export type CollectionInfo = {
   infrastructure?: boolean;
 };
 
+export type MappedProperty = {
+  field: string;
+  property?: string;
+  propertyIri?: string;
+  mapped?: boolean;
+  enums?: string[];
+};
+
 export type MappedEntity = {
   entity: string;
   collection?: string;
@@ -13,6 +21,8 @@ export type MappedEntity = {
   prefLabel?: string;
   alignmentStatus?: 'catalog_aligned';
   mappingRelation?: 'rdfs:subClassOf';
+  propertyCoveragePct?: number;
+  properties?: MappedProperty[];
   joins?: { field: string; targetEntity: string; targetCollection?: string }[];
 };
 
@@ -30,6 +40,19 @@ export type MappingHomonym = {
   reason?: string;
   candidates: string[];
   options?: { iri: string; domainId?: string; prefLabel?: string }[];
+};
+
+export type PhysicalModel = {
+  ok?: boolean;
+  domainId?: string;
+  industryId?: string;
+  tableCount?: number;
+  tables?: {
+    entity: string;
+    table: string;
+    classIri?: string;
+    columns?: { name: string; sqlType?: string; kind?: string; nullable?: boolean; enum?: string[] }[];
+  }[];
 };
 
 export type QueryResult = {
