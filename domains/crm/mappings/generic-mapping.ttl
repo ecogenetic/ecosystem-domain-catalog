@@ -190,8 +190,8 @@ legacy:assignment_case_ref rdfs:subPropertyOf crm:assignsCase ;
 legacy:consent_party_ref rdfs:subPropertyOf crm:recordsConsentFor ;
     rdfs:domain legacy:consents_table ; rdfs:range legacy:parties_table .
 
-legacy:campaign_member_campaign_ref rdfs:subPropertyOf crm:hasCampaignMember ;
-    rdfs:domain legacy:campaigns_table ; rdfs:range legacy:campaign_members_table .
+legacy:campaign_member_campaign_ref rdfs:subPropertyOf crm:memberOfCampaign ;
+    rdfs:domain legacy:campaign_members_table ; rdfs:range legacy:campaigns_table .
 
 legacy:campaign_member_party_ref rdfs:subPropertyOf crm:representsParty ;
     rdfs:domain legacy:campaign_members_table ; rdfs:range legacy:parties_table .
@@ -235,8 +235,8 @@ legacy:transition_from_stage_ref rdfs:subPropertyOf crm:fromPipelineStage ;
 legacy:transition_to_stage_ref rdfs:subPropertyOf crm:toPipelineStage ;
     rdfs:domain legacy:stage_transitions_table ; rdfs:range legacy:pipeline_stages_table .
 
-legacy:opportunity_line_opportunity_ref rdfs:subPropertyOf crm:hasOpportunityLine ;
-    rdfs:domain legacy:opportunities_table ; rdfs:range legacy:opportunity_lines_table .
+legacy:opportunity_line_opportunity_ref rdfs:subPropertyOf crm:partOfOpportunity ;
+    rdfs:domain legacy:opportunity_lines_table ; rdfs:range legacy:opportunities_table .
 
 legacy:opportunity_line_product_ref rdfs:subPropertyOf crm:forOpportunityProduct ;
     rdfs:domain legacy:opportunity_lines_table ; rdfs:range legacy:products_table .

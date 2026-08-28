@@ -33,7 +33,7 @@ NL query through mapped collections only   ← Data Agent
 
 The catalog graph is a processing pipeline: **extract** file hashes → **transform** Turtle/markdown → **load** SQLite FTS5 + rdflib + NetworkX → **validate** coverage → **heal** quarantined or stale files. Name collisions (`crm:Account` vs `fin:Account`) stay distinct homonyms; joins use `core/alignments.ttl` only. Stub mappings (`legacy:Entity` ↔ `:CoreEntity`) are not indexed.
 
-Self-heal (max two repairs per request): stale index rebuild, empty search via `expand_graph`, invalid IRIs stripped, mapping gaps repaired via SKOS/core (never auto-collapsed homonyms), query plans rewritten onto mapped fields only.
+Catalog-index recovery remains available for stale indexes and invalid IRIs. Data queries are deliberately fail-closed: mapping gaps and homonyms require review, zero-row results remain valid answers, and failed queries are never repaired and silently rerun.
 
 ## Requirements
 
@@ -141,7 +141,7 @@ Other tools: `index_health`, `heal_index`, `validate_text`, `get_concept`, `get_
 
 ## Data Agent — how to use
 
-Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, map, and query. Mapping is graph-first (SKOS / local name). Optionally pass `preferDomain`. After `map_to_catalog`, complexity is scored from the **mapping graph**.
+Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, propose mappings, resolve every ambiguity, and query. Mapping is graph-first (curated candidates, SKOS, and local names). Optionally pass `preferDomain`; an explicit `selections` object overrides it. After `map_to_catalog`, complexity is scored from the **mapping graph**.
 
 ```bash
 # MongoDB
@@ -166,12 +166,19 @@ curl -X POST http://127.0.0.1:8080/data/v1/sources/connect \
 
 curl -X POST http://127.0.0.1:8080/data/v1/sources/sample/introspect
 curl -X POST http://127.0.0.1:8080/data/v1/sources/sample/generate-ontology
+# First call proposes mappings and returns readiness, homonyms, and candidate IRIs.
 curl -X POST http://127.0.0.1:8080/data/v1/sources/sample/map -H 'Content-Type: application/json' -d '{}'
+
+# Resolve every reported homonym explicitly. Repeat entries for all candidates returned by the first call.
+curl -X POST http://127.0.0.1:8080/data/v1/sources/sample/map \
+  -H 'Content-Type: application/json' \
+  -d '{"selections":{"Campaign":"https://ecosystemcode.com/ontology/cvm#Campaign","Customer":"https://ecosystemcode.com/ontology/cvm#Customer","Interaction":"https://ecosystemcode.com/ontology/cvm#CustomerEvent","Order":"https://ecosystemcode.com/ontology/core#Order","OrderLine":"https://ecosystemcode.com/ontology/core#OrderLine"}}'
+
 curl -X POST http://127.0.0.1:8080/data/v1/sources/sample/query \
   -d '{"query":"how many customers do i have","useLlm":false}' -H 'Content-Type: application/json'
 ```
 
-Query compilation is sandboxed: only mapped collections and fields are allowed. Unmapped fields are rejected.
+Query compilation is sandboxed: only reviewed classes, source fields, operators, aggregates, and join paths are allowed. Ambiguous targets, unmapped fields, disconnected relationships, unsupported operations, and oversized local joins are rejected. Local multi-collection execution is limited to 10,000 rows per involved entity so truncation can never masquerade as a complete answer.
 
 ## Five complexity levels
 

@@ -79,13 +79,13 @@ def rerun(agent: str = "all", source_id: str = "sample", use_llm: bool = False) 
 def _ensure_fixture_source(source_id: str) -> None:
     from agents.data_agent.registry import register
     from agents.data_agent.tools import generate_source_ontology, introspect_schema, map_to_catalog
-    from agents.tests.fixtures_loader import memory_sample_store
+    from agents.tests.fixtures_loader import memory_sample_store, sample_mapping_selections
 
     store = memory_sample_store()
     register(source_id, store, {"kind": "memory"})
     introspect_schema(id=source_id)
     generate_source_ontology(id=source_id)
-    map_to_catalog(id=source_id)
+    map_to_catalog(id=source_id, selections=sample_mapping_selections())
 
 
 def _check_catalog(result: dict[str, Any], expect: dict[str, Any], case: dict[str, Any]) -> tuple[bool, list[str]]:

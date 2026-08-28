@@ -1,4 +1,4 @@
-import type { QueryResult } from '../contracts/data';
+import type { MappedEntity, MappingHomonym, MappingReadiness, QueryResult } from '../contracts/data';
 import { dataPath, request } from './http';
 
 function sourceUrl(sourceId: string, suffix: string): string {
@@ -23,14 +23,15 @@ export const dataApi = {
       body: JSON.stringify({ collection, limit }),
     }),
   generateOntology: (id: string) => request(sourceUrl(id, '/generate-ontology'), { method: 'POST', body: '{}' }),
-  validateOntology: (id: string) => request(sourceUrl(id, '/validate-ontology'), { method: 'POST', body: '{}' }),
-  map: (id: string, preferDomain = '') =>
+  validateOntology: (id: string) => request<{ ok: boolean; errors?: unknown[] }>(sourceUrl(id, '/validate-ontology'), { method: 'POST', body: '{}' }),
+  map: (id: string, preferDomain = '', selections: Record<string, string> = {}) =>
     request<{
-      mapped: { entity: string; collection?: string; catalogIri?: string; catalogDomain?: string; prefLabel?: string; joins?: { field: string; targetEntity: string }[] }[];
+      mapped: MappedEntity[];
       unmapped?: { entity: string; collection?: string; reason?: string }[];
-      homonyms?: unknown[];
-    }>(sourceUrl(id, '/map'), { method: 'POST', body: JSON.stringify({ preferDomain }) }),
-  coverage: (id: string) => request<{ coveragePct: number; gaps?: unknown[]; mappedCount?: number }>(sourceUrl(id, '/coverage')),
+      homonyms?: MappingHomonym[];
+      readiness?: MappingReadiness;
+    }>(sourceUrl(id, '/map'), { method: 'POST', body: JSON.stringify({ preferDomain, selections }) }),
+  coverage: (id: string) => request<{ coveragePct: number; gaps?: unknown[]; mappedCount?: number; readiness?: MappingReadiness }>(sourceUrl(id, '/coverage')),
   heal: (id: string) => request(sourceUrl(id, '/heal-mapping'), { method: 'POST', body: '{}' }),
   query: (id: string, query: string, useLlm = false) =>
     request<QueryResult>(sourceUrl(id, '/query'), { method: 'POST', body: JSON.stringify({ query, useLlm }) }),

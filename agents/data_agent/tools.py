@@ -59,10 +59,21 @@ def validate_source_ontology(id: str | None = None, sourceId: str | None = None)
     return result
 
 
-def map_to_catalog(id: str | None = None, sourceId: str | None = None, preferDomain: str | None = None, prefer_domain: str | None = None) -> dict[str, Any]:
+def map_to_catalog(
+    id: str | None = None,
+    sourceId: str | None = None,
+    preferDomain: str | None = None,
+    prefer_domain: str | None = None,
+    selections: dict[str, str] | None = None,
+) -> dict[str, Any]:
     sid = id or sourceId or ""
     schema = registry.get(sid).get("schema") or introspect_schema(id=sid)
-    result = mapping_mod.map_to_catalog(sid, schema, prefer_domain=preferDomain or prefer_domain)
+    result = mapping_mod.map_to_catalog(
+        sid,
+        schema,
+        prefer_domain=preferDomain or prefer_domain,
+        selections=selections,
+    )
     complexity_mod.assess_complexity(sid)
     complexity_mod.export_rerun_suite(sid, include_unsupported=True)
     return result
@@ -105,41 +116,21 @@ def query_mapped_data(
     sid = id or sourceId or ""
     store = registry.store(sid)
     result = query_mod.query_mapped_data(store, sid, query)
-    needs_heal = (not result.get("ok")) or _empty_when_data_expected(store, result)
-    if needs_heal:
-        diagnose_failure(
-            error=str(result.get("error") or "empty_result"),
-            lastTool="query_mapped_data",
-            lastArgs={"id": sid, "query": query},
-        )
-        heal_mapping(id=sid)
-        result = query_mod.query_mapped_data(registry.store(sid), sid, query)
-        result["healed"] = True
-    if useLlm or bool(use_llm):
+    if result.get("ok") and (useLlm or bool(use_llm)):
         from agents.shared.llm_plan import refine_mapped_query
 
         result = refine_mapped_query(sid, query, result)
     return result
 
 
-def _empty_when_data_expected(store: Any, result: dict[str, Any]) -> bool:
-    """Heal when the plan succeeded with 0 rows but the target collection has data."""
-    if not result.get("ok"):
-        return False
-    if result.get("result") not in (0, None, [], {}):
-        return False
-    plan = result.get("plan") or {}
-    collection = plan.get("collection") or (result.get("mongo") or {}).get("collection")
-    if not collection:
-        return False
-    try:
-        return store.count(collection) > 0
-    except Exception:  # noqa: BLE001
-        return False
-
-
 def diagnose_failure(error: str = "", lastTool: str = "", lastArgs: dict | None = None) -> dict[str, Any]:
     err = (error or "").lower()
+    if "mapping_not_ready" in err or "ambiguous" in err:
+        return {"ok": True, "cause": "mapping_review_required", "suggestedTool": "map_to_catalog", "suggestedArgs": lastArgs or {}}
+    if "relationship" in err:
+        return {"ok": True, "cause": "relationship_mapping_gap", "suggestedTool": "map_to_catalog", "suggestedArgs": lastArgs or {}}
+    if "operator" in err or "aggregate" in err:
+        return {"ok": True, "cause": "unsupported_query_operation", "suggestedTool": None, "suggestedArgs": {}}
     if "unmapped" in err:
         return {"ok": True, "cause": "mapping_gap", "suggestedTool": "heal_mapping", "suggestedArgs": lastArgs or {}}
     if "ontology" in err:
@@ -158,14 +149,14 @@ def data_tools() -> list[ToolSpec]:
         ToolSpec(name="sample_records", description="Sample documents from a collection", method="POST", path="/v1/sources/{id}/sample", handler=sample_records),
         ToolSpec(name="generate_source_ontology", description="Generate internal OWL/SKOS from the schema", method="POST", path="/v1/sources/{id}/generate-ontology", handler=generate_source_ontology),
         ToolSpec(name="validate_source_ontology", description="Require prefLabel and definition on generated classes", method="POST", path="/v1/sources/{id}/validate-ontology", handler=validate_source_ontology),
-        ToolSpec(name="map_to_catalog", description="Map source classes onto catalog IRIs", method="POST", path="/v1/sources/{id}/map", handler=map_to_catalog),
+        ToolSpec(name="map_to_catalog", description="Propose source-to-catalog alignments and require explicit homonym choices", method="POST", path="/v1/sources/{id}/map", handler=map_to_catalog),
         ToolSpec(name="mapping_coverage", description="Coverage and gaps after mapping", method="GET", path="/v1/sources/{id}/coverage", handler=mapping_coverage),
         ToolSpec(name="heal_mapping", description="Repair unmapped collections via SKOS/core", method="POST", path="/v1/sources/{id}/heal-mapping", handler=heal_mapping),
         ToolSpec(name="compile_query_plan", description="Compile NL to a sandboxed query plan", method="POST", path="/v1/sources/{id}/compile", handler=compile_query_plan),
         ToolSpec(name="execute_query_plan", description="Execute a mapped query plan", method="POST", path="/v1/sources/{id}/execute", handler=execute_query_plan),
         ToolSpec(name="assess_complexity", description="Five-level complexity from the mapping graph", method="GET", path="/v1/sources/{id}/complexity", handler=assess_complexity),
         ToolSpec(name="export_rerun_suite", description="Write rerun_suite.json for this source", method="POST", path="/v1/sources/{id}/tests/export", handler=export_rerun_suite),
-        ToolSpec(name="query_mapped_data", description="Natural-language query through the mapping", method="POST", path="/v1/sources/{id}/query", handler=query_mapped_data),
+        ToolSpec(name="query_mapped_data", description="Natural-language query through a complete reviewed mapping", method="POST", path="/v1/sources/{id}/query", handler=query_mapped_data),
         ToolSpec(name="diagnose_failure", description="Suggest a heal tool after a failure", method="POST", path="/v1/diagnose", handler=diagnose_failure),
         ToolSpec(name="validate_iris", description="Keep only IRIs that exist in the catalog graph", method="POST", path="/v1/iris/validate", handler=validate_iris),
     ]

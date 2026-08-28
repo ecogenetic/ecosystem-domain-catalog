@@ -203,9 +203,11 @@ class PostgresStore(DocumentStore):
         return [r["table_name"] for r in rows]
 
     def count(self, collection: str, filt: dict[str, Any] | None = None) -> int:
-        if filt:
-            return len(self.find(collection, filt, limit=100000))
-        row = self._conn.execute(f"SELECT COUNT(*) AS c FROM {_ident(collection)}").fetchone()
+        where_sql, params = _sql_where(filt)
+        row = self._conn.execute(
+            f"SELECT COUNT(*) AS c FROM {_ident(collection)}{where_sql}",
+            params,
+        ).fetchone()
         return int((row or {}).get("c") or 0)
 
     def find(
@@ -215,12 +217,12 @@ class PostgresStore(DocumentStore):
         limit: int = 50,
         projection: dict[str, int] | None = None,
     ) -> list[dict[str, Any]]:
+        where_sql, params = _sql_where(filt)
         rows = self._conn.execute(
-            f"SELECT * FROM {_ident(collection)} LIMIT %s", (int(limit),)
+            f"SELECT * FROM {_ident(collection)}{where_sql} LIMIT %s",
+            (*params, int(limit)),
         ).fetchall()
         docs = [_normalize_row(dict(r)) for r in rows]
-        if filt:
-            docs = [d for d in docs if _match(d, filt)]
         return [_project(d, projection) for d in docs]
 
     def distinct(self, collection: str, field: str) -> list[Any]:
@@ -306,6 +308,57 @@ class DdlStore(DocumentStore):
 
 def _ident(name: str) -> str:
     return '"' + str(name).replace('"', '""') + '"'
+
+
+def _sql_where(filt: dict[str, Any] | None) -> tuple[str, tuple[Any, ...]]:
+    if not filt:
+        return "", ()
+    clause, params = _sql_clause(filt)
+    return f" WHERE {clause}", tuple(params)
+
+
+def _sql_clause(filt: dict[str, Any]) -> tuple[str, list[Any]]:
+    clauses: list[str] = []
+    params: list[Any] = []
+    for key, expected in filt.items():
+        if key in {"$and", "$or"}:
+            parts = expected if isinstance(expected, list) else []
+            if not parts:
+                raise ValueError(f"{key} requires at least one filter")
+            nested = [_sql_clause(part) for part in parts]
+            joiner = " AND " if key == "$and" else " OR "
+            clauses.append("(" + joiner.join(item[0] for item in nested) + ")")
+            for _, nested_params in nested:
+                params.extend(nested_params)
+            continue
+        if key.startswith("$"):
+            raise ValueError(f"unsupported filter operator: {key}")
+
+        column = _ident(key)
+        if not isinstance(expected, dict):
+            clauses.append(f"{column} = %s")
+            params.append(expected)
+            continue
+
+        for operator, value in expected.items():
+            sql_operator = {
+                "$eq": "=",
+                "$gte": ">=",
+                "$lte": "<=",
+                "$gt": ">",
+            }.get(operator)
+            if sql_operator:
+                clauses.append(f"{column} {sql_operator} %s")
+                params.append(value)
+                continue
+            if operator == "$in" and isinstance(value, list) and value:
+                clauses.append(f"{column} IN (" + ", ".join(["%s"] * len(value)) + ")")
+                params.extend(value)
+                continue
+            raise ValueError(f"unsupported filter operator: {operator}")
+    if not clauses:
+        raise ValueError("empty filter")
+    return " AND ".join(clauses), params
 
 
 def _normalize_row(doc: dict[str, Any]) -> dict[str, Any]:

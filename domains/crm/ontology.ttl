@@ -709,7 +709,15 @@
 :hasCampaignMember a owl:ObjectProperty ;
     rdfs:label "has campaign member" ;
     rdfs:domain :Campaign ;
-    rdfs:range :CampaignMember .
+    rdfs:range :CampaignMember ;
+    owl:inverseOf :memberOfCampaign .
+
+:memberOfCampaign a owl:ObjectProperty ;
+    rdfs:label "member of campaign" ;
+    rdfs:domain :CampaignMember ;
+    rdfs:range :Campaign ;
+    owl:inverseOf :hasCampaignMember ;
+    skos:definition "The campaign to which a campaign-member record belongs." .
 
 :representsParty a owl:ObjectProperty ;
     rdfs:label "represents party" ;
@@ -744,7 +752,15 @@
 :hasOpportunityLine a owl:ObjectProperty ;
     rdfs:label "has opportunity line" ;
     rdfs:domain :Opportunity ;
-    rdfs:range :OpportunityLine .
+    rdfs:range :OpportunityLine ;
+    owl:inverseOf :partOfOpportunity .
+
+:partOfOpportunity a owl:ObjectProperty ;
+    rdfs:label "part of opportunity" ;
+    rdfs:domain :OpportunityLine ;
+    rdfs:range :Opportunity ;
+    owl:inverseOf :hasOpportunityLine ;
+    skos:definition "The opportunity to which an opportunity-line record belongs." .
 
 :forOpportunityProduct a owl:ObjectProperty ;
     rdfs:label "for opportunity product" ;

@@ -50,13 +50,13 @@ def test_catalog_suite_with_llm(catalog_ready, live_llm):
 def test_data_suite_with_llm(catalog_ready, live_llm):
     from agents.data_agent.registry import register
     from agents.data_agent.tools import generate_source_ontology, introspect_schema, map_to_catalog
-    from agents.tests.fixtures_loader import memory_sample_store
+    from agents.tests.fixtures_loader import memory_sample_store, sample_mapping_selections
 
     store = memory_sample_store()
     register(SOURCE, store, {"kind": "memory"})
     introspect_schema(id=SOURCE)
     generate_source_ontology(id=SOURCE)
-    map_to_catalog(id=SOURCE)
+    map_to_catalog(id=SOURCE, selections=sample_mapping_selections())
 
     suite = load_suite("data")
     failures = []

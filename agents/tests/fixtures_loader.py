@@ -45,6 +45,19 @@ CREATE TABLE interaction (
 );
 """
 
+SAMPLE_MAPPING_SELECTIONS = {
+    "Campaign": "https://ecosystemcode.com/ontology/cvm#Campaign",
+    "Customer": "https://ecosystemcode.com/ontology/cvm#Customer",
+    "Interaction": "https://ecosystemcode.com/ontology/cvm#CustomerEvent",
+    "Order": "https://ecosystemcode.com/ontology/core#Order",
+    "OrderLine": "https://ecosystemcode.com/ontology/core#OrderLine",
+}
+
+
+def sample_mapping_selections() -> dict[str, str]:
+    """Reviewed catalog choices used by the deterministic sample source."""
+    return dict(SAMPLE_MAPPING_SELECTIONS)
+
 
 def sample_fixture() -> dict[str, list[dict[str, Any]]]:
     now = datetime.now(timezone.utc)

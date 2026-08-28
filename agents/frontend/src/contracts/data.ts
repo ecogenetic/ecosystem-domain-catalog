@@ -11,7 +11,25 @@ export type MappedEntity = {
   catalogIri?: string;
   catalogDomain?: string;
   prefLabel?: string;
+  alignmentStatus?: 'catalog_aligned';
+  mappingRelation?: 'rdfs:subClassOf';
   joins?: { field: string; targetEntity: string; targetCollection?: string }[];
+};
+
+export type MappingReadiness = {
+  status: 'ready' | 'needs_review';
+  readyForQuery: boolean;
+  catalogAligned: number;
+  unresolved: number;
+  ambiguous: number;
+};
+
+export type MappingHomonym = {
+  entity: string;
+  collection?: string;
+  reason?: string;
+  candidates: string[];
+  options?: { iri: string; domainId?: string; prefLabel?: string }[];
 };
 
 export type QueryResult = {
@@ -25,6 +43,15 @@ export type QueryResult = {
     joins?: { from: string; to: string; field: string }[];
   };
   error?: string;
+  reason?: string;
+  readiness?: MappingReadiness;
+  unmapped?: (string | { entity?: string; reason?: string })[];
+  homonyms?: MappingHomonym[];
+  targetCandidates?: string[];
+  unmappedRelationships?: { from: string; to: string }[];
+  operator?: string;
+  maxRowsPerEntity?: number;
+  rowCounts?: Record<string, number>;
   llm?: { used?: boolean };
 };
 

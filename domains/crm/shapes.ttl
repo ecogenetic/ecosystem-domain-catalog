@@ -39,11 +39,18 @@
 
 :OpportunityShape a sh:NodeShape ;
     sh:targetClass :Opportunity ;
-    sh:property [
-        sh:path :pursuedWithAccount ;
-        sh:class :Account ;
-        sh:minCount 1 ;
-    ] ;
+    sh:or (
+        [ sh:property [
+            sh:path :pursuedForRelationship ;
+            sh:class :CustomerRelationship ;
+            sh:minCount 1 ;
+        ] ]
+        [ sh:property [
+            sh:path :pursuedWithAccount ;
+            sh:class :Account ;
+            sh:minCount 1 ;
+        ] ]
+    ) ;
     sh:property [
         sh:path :amount ;
         sh:datatype xsd:decimal ;
@@ -120,11 +127,18 @@
 
 :ContractShape a sh:NodeShape ;
     sh:targetClass :Contract ;
-    sh:property [
-        sh:path :governsAccount ;
-        sh:class :Account ;
-        sh:minCount 1 ;
-    ] ;
+    sh:or (
+        [ sh:property [
+            sh:path :governsRelationship ;
+            sh:class :CustomerRelationship ;
+            sh:minCount 1 ;
+        ] ]
+        [ sh:property [
+            sh:path :governsAccount ;
+            sh:class :Account ;
+            sh:minCount 1 ;
+        ] ]
+    ) ;
     sh:property [
         sh:path :contractNumber ;
         sh:datatype xsd:string ;
@@ -139,11 +153,18 @@
 
 :CaseShape a sh:NodeShape ;
     sh:targetClass :Case ;
-    sh:property [
-        sh:path :raisedByContact ;
-        sh:class :Contact ;
-        sh:minCount 1 ;
-    ] ;
+    sh:or (
+        [ sh:property [
+            sh:path :raisedByParty ;
+            sh:class :Party ;
+            sh:minCount 1 ;
+        ] ]
+        [ sh:property [
+            sh:path :raisedByContact ;
+            sh:class :Contact ;
+            sh:minCount 1 ;
+        ] ]
+    ) ;
     sh:property [
         sh:path :caseNumber ;
         sh:datatype xsd:string ;
@@ -166,6 +187,7 @@
 
 :CampaignMemberShape a sh:NodeShape ;
     sh:targetClass :CampaignMember ;
+    sh:property [ sh:path :memberOfCampaign ; sh:class :Campaign ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path :representsParty ; sh:class :Party ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path :memberStatus ; sh:datatype xsd:string ; sh:minCount 1 ;
         sh:in ( "targeted" "delivered" "responded" "no_response" "suppressed" ) ] .
@@ -178,6 +200,7 @@
 
 :OpportunityLineShape a sh:NodeShape ;
     sh:targetClass :OpportunityLine ;
+    sh:property [ sh:path :partOfOpportunity ; sh:class :Opportunity ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path :forOpportunityProduct ; sh:class :Product ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path :opportunityQuantity ; sh:datatype xsd:decimal ; sh:minCount 1 ; sh:minInclusive 0 ] ;
     sh:property [ sh:path :expectedRevenue ; sh:datatype xsd:decimal ; sh:minInclusive 0 ] .
