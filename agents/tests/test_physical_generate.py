@@ -48,9 +48,10 @@ def test_materialize_crm_maps_back(catalog_ready):
     assert "Account" in catalog_classes
     account = next(m for m in mapped if local_name(m.get("catalogIri") or "") == "Account")
     assert "crm" in (account.get("catalogIri") or "")
-    # Property-level IRIs are optional; class alignment is required for round-trip.
     props = {p["field"]: p for p in account.get("properties") or []}
-    assert "account_name" in props or any(p.get("field") for p in account.get("properties") or [])
+    assert "account_name" in props
+    assert props["account_name"].get("mapped") is True
+    assert props["account_name"].get("propertyIri") == "https://ecosystemcode.com/ontology/crm#accountName"
 
 
 def test_example_sql_schema_maps_to_crm(catalog_ready):
@@ -69,6 +70,22 @@ def test_example_sql_schema_maps_to_crm(catalog_ready):
     assert "Contact" in catalog_classes or "Lead" in catalog_classes
 
 
+def test_generic_mapping_ttl_binds_property_iri(catalog_ready):
+    from agents.data_agent.mapping import _load_generic_mapping
+
+    hints = _load_generic_mapping("crm")
+    assert hints["classes"]["accounts_table"] == "https://ecosystemcode.com/ontology/crm#Account"
+    assert hints["classes"]["account"] == "https://ecosystemcode.com/ontology/crm#Account"
+    assert hints["properties"]["account_name"] == "https://ecosystemcode.com/ontology/crm#accountName"
+    assert hints["properties"]["campaign_member_campaign_ref"] == (
+        "https://ecosystemcode.com/ontology/crm#memberOfCampaign"
+    )
+
+    cvm = _load_generic_mapping("cvm")
+    assert cvm["properties"]["campaign_segment_id"] == "https://ecosystemcode.com/ontology/cvm#targetsSegment"
+    assert cvm["properties"]["offer_segment_id"] == "https://ecosystemcode.com/ontology/cvm#targetedAtSegment"
+
+
 def test_generate_ddl_endpoint(catalog_ready):
     from agents.data_agent.tools import generate_ddl_from_model
 
@@ -77,3 +94,4 @@ def test_generate_ddl_endpoint(catalog_ready):
     assert "CREATE TABLE" in out["ddl"]
     assert out["tableCount"] >= 10
     assert out["model"]["domainId"] == "crm"
+

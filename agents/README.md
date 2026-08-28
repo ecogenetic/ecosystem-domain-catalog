@@ -148,7 +148,7 @@ Two directions:
 
 **Hosted site (`ontology.ecosystem.ai`):** generation produces downloadable DDL/JSON only. Live MongoDB/PostgreSQL connect works when you run the gateway locally (or `host.docker.internal` in Docker). The public site never runs `CREATE DATABASE` against a visitor URI.
 
-Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, propose mappings, resolve every ambiguity, and query. Mapping is graph-first (curated candidates, SKOS, local names, and `domains/{id}/mappings/generic-mapping.ttl` when `preferDomain` is set). Optionally pass `preferDomain`; an explicit `selections` object overrides it. After `map_to_catalog`, complexity is scored from the **mapping graph**.
+Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, propose mappings, resolve every ambiguity, and query. Mapping is graph-first: curated `EXPLICIT` candidates, SKOS/local-name search, and—when `preferDomain` is set—class/`owl:equivalentClass` plus field/`rdfs:subPropertyOf` hints from `domains/{id}/mappings/generic-mapping.ttl`. Mapped fields carry catalog `propertyIri` when a hint or exact catalog property match is found; unresolved field names stay name-only (`mapped: false`). Optionally pass `preferDomain`; an explicit `selections` object overrides it. After `map_to_catalog`, complexity is scored from the **mapping graph**.
 
 ```bash
 # Generate PostgreSQL DDL from CRM ontology
