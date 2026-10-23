@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/bks/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/bks#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bks/software> a owl:Ontology ;
+    rdfs:label "BKS Software Overlay" ;
+    rdfs:comment "Software-company specialization of Backend Services." .
+
+:ProductBackendService a owl:Class ;
+    rdfs:subClassOf base:BackendService ;
+    skos:prefLabel "Product Backend Service" ;
+    skos:definition "A backend service that implements one product edition." .
+
+:implementsProductEdition a owl:ObjectProperty ;
+    rdfs:label "implements product edition" ;
+    rdfs:domain :ProductBackendService ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product backend service with the product edition it implements." .
+
+:productBackendServiceId a owl:DatatypeProperty ;
+    rdfs:label "product backend service id" ;
+    rdfs:domain :ProductBackendService ;
+    rdfs:range xsd:string .
+
+:ProductBackendLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Backend Lead" ;
+    skos:altLabel "Product Backend Lead Role" ;
+    skos:definition "Owns the backend service for a product edition. Bearer: person. Permissions: BackendService:read, BackendService:write, ApiContract:read, ApiContract:write." .
+
+:ProductBackendServiceShape a sh:NodeShape ;
+    sh:targetClass :ProductBackendService ;
+    sh:property [
+        sh:path :implementsProductEdition ;
+        sh:minCount 1 ;
+    ] .

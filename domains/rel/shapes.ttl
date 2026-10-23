@@ -1,0 +1,92 @@
+@prefix :    <https://ecosystemcode.com/ontology/rel#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:SourceRepositoryShape a sh:NodeShape ;
+    sh:targetClass :SourceRepository ;
+    sh:property [
+        sh:path :sourceRepositoryId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :repositoryName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:BuildShape a sh:NodeShape ;
+    sh:targetClass :Build ;
+    sh:property [
+        sh:path :buildId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :buildNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ReleaseShape a sh:NodeShape ;
+    sh:targetClass :Release ;
+    sh:property [
+        sh:path :releaseId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :releaseName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :releaseStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "planned" "built" "deployed" "rolledBack" "retired" ) ;
+    ] .
+
+:DeploymentShape a sh:NodeShape ;
+    sh:targetClass :Deployment ;
+    sh:property [
+        sh:path :deploymentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :deployedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+:ReleaseTargetShape a sh:NodeShape ;
+    sh:targetClass :ReleaseTarget ;
+    sh:property [
+        sh:path :releaseTargetId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :environmentCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :targetName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ChangeSetShape a sh:NodeShape ;
+    sh:targetClass :ChangeSet ;
+    sh:property [
+        sh:path :changeSetId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :changeSummary ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

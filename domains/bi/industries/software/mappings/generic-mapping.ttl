@@ -1,0 +1,11 @@
+# Software industry mapping for BI
+@prefix sw: <https://ecosystemcode.com/ontology/bi/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_usage_metric owl:equivalentClass sw:ProductUsageMetric .
+legacy:product_usage_metric_id rdfs:subPropertyOf sw:productUsageMetricId .
+legacy:adoption_dashboard owl:equivalentClass sw:AdoptionDashboard .
+legacy:adoption_dashboard_id rdfs:subPropertyOf sw:adoptionDashboardId .
+legacy:displays_product_usage_metric rdfs:subPropertyOf sw:displaysProductUsageMetric .

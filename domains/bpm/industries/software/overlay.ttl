@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/bpm/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/bpm#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bpm/software> a owl:Ontology ;
+    rdfs:label "BPM Software Overlay" ;
+    rdfs:comment "Software-company specialization of BPM." .
+
+:ReleaseApprovalCase a owl:Class ;
+    rdfs:subClassOf base:Case ;
+    skos:prefLabel "Release Approval Case" ;
+    skos:definition "A case that approves a software release for a release target." .
+
+:ArchitectureDecisionTask a owl:Class ;
+    rdfs:subClassOf base:Task ;
+    skos:prefLabel "Architecture Decision Task" ;
+    skos:definition "A human task that records an architecture decision inside a case." .
+
+:decidesReleaseApproval a owl:ObjectProperty ;
+    rdfs:label "decides release approval" ;
+    rdfs:domain :ArchitectureDecisionTask ;
+    rdfs:range :ReleaseApprovalCase ;
+    skos:definition "Associates architecture decision task with ReleaseApprovalCase." .
+
+:releaseApprovalCaseId a owl:DatatypeProperty ;
+    rdfs:label "release approval case id" ;
+    rdfs:domain :ReleaseApprovalCase ;
+    rdfs:range xsd:string .
+
+:architectureDecisionTaskId a owl:DatatypeProperty ;
+    rdfs:label "architecture decision task id" ;
+    rdfs:domain :ArchitectureDecisionTask ;
+    rdfs:range xsd:string .
+
+:ReleaseProcessOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Release Process Owner" ;
+    skos:altLabel "Release Process Owner Role" ;
+    skos:definition "Owns the workflow that approves software releases. Bearer: person. Permissions: Case:read, Case:write, Task:read, Task:write." .
+
+:ReleaseApprovalCaseShape a sh:NodeShape ;
+    sh:targetClass :ReleaseApprovalCase ;
+    sh:property [
+        sh:path :releaseApprovalCaseId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

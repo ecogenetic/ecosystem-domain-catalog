@@ -1,0 +1,70 @@
+@prefix :    <https://ecosystemcode.com/ontology/siv/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/siv#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/siv/software> a owl:Ontology ;
+    rdfs:label "SIV Software Overlay" ;
+    rdfs:comment "Software-company specialization of SIV." .
+
+:ApplicationServiceInstance a owl:Class ;
+    rdfs:subClassOf base:ServiceInstance ;
+    skos:prefLabel "Application Service Instance" ;
+    skos:definition "A deployed occurrence of a software application. Distinct from the backend service definition." .
+
+:DeployedServiceComponent a owl:Class ;
+    rdfs:subClassOf base:ServiceComponent ;
+    skos:prefLabel "Deployed Service Component" ;
+    skos:definition "A component running inside an application service instance." .
+
+:containsDeployedServiceComponent a owl:ObjectProperty ;
+    rdfs:label "contains deployed service component" ;
+    rdfs:domain :ApplicationServiceInstance ;
+    rdfs:range :DeployedServiceComponent ;
+    skos:definition "Associates application service instance with DeployedServiceComponent." .
+
+:applicationServiceInstanceId a owl:DatatypeProperty ;
+    rdfs:label "application service instance id" ;
+    rdfs:domain :ApplicationServiceInstance ;
+    rdfs:range xsd:string .
+
+:applicationReference a owl:DatatypeProperty ;
+    rdfs:label "application reference" ;
+    rdfs:domain :ApplicationServiceInstance ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the software application this instance runs. The application stays owned by its application domain." .
+
+:deploymentReference a owl:DatatypeProperty ;
+    rdfs:label "deployment reference" ;
+    rdfs:domain :ApplicationServiceInstance ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the deployment that placed this service instance. The deployment stays owned by release management." .
+
+:deployedServiceComponentId a owl:DatatypeProperty ;
+    rdfs:label "deployed service component id" ;
+    rdfs:domain :DeployedServiceComponent ;
+    rdfs:range xsd:string .
+
+:ApplicationInventoryManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Application Inventory Manager" ;
+    skos:altLabel "Application Inventory Manager Role" ;
+    skos:definition "Records deployed application service instances. Bearer: person. Permissions: ServiceInstance:read, ServiceInstance:write, ServiceComponent:read, ServiceComponent:write." .
+
+:ApplicationServiceInstanceShape a sh:NodeShape ;
+    sh:targetClass :ApplicationServiceInstance ;
+    sh:property [
+        sh:path :applicationServiceInstanceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :applicationReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

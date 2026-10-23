@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/bi/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/bi#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/bi/software> a owl:Ontology ;
+    rdfs:label "BI Software Overlay" ;
+    rdfs:comment "Software-company specialization of BI." .
+
+:ProductUsageMetric a owl:Class ;
+    rdfs:subClassOf base:Metric ;
+    skos:prefLabel "Product Usage Metric" ;
+    skos:definition "A metric of product adoption, usage, or reliability." .
+
+:AdoptionDashboard a owl:Class ;
+    rdfs:subClassOf base:Dashboard ;
+    skos:prefLabel "Adoption Dashboard" ;
+    skos:definition "A dashboard that displays product usage metrics." .
+
+:displaysProductUsageMetric a owl:ObjectProperty ;
+    rdfs:label "displays product usage metric" ;
+    rdfs:domain :AdoptionDashboard ;
+    rdfs:range :ProductUsageMetric ;
+    skos:definition "Associates adoption dashboard with ProductUsageMetric." .
+
+:productUsageMetricId a owl:DatatypeProperty ;
+    rdfs:label "product usage metric id" ;
+    rdfs:domain :ProductUsageMetric ;
+    rdfs:range xsd:string .
+
+:adoptionDashboardId a owl:DatatypeProperty ;
+    rdfs:label "adoption dashboard id" ;
+    rdfs:domain :AdoptionDashboard ;
+    rdfs:range xsd:string .
+
+:ProductAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Analyst" ;
+    skos:altLabel "Product Analyst Role" ;
+    skos:definition "Defines product usage metrics and adoption dashboards. Bearer: person. Permissions: Metric:read, Metric:write, Dashboard:read, Dashboard:write." .
+
+:ProductUsageMetricShape a sh:NodeShape ;
+    sh:targetClass :ProductUsageMetric ;
+    sh:property [
+        sh:path :productUsageMetricId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

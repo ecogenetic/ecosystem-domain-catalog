@@ -1,0 +1,11 @@
+# Software industry mapping for CMS
+@prefix sw: <https://ecosystemcode.com/ontology/cms/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:developer_doc_content owl:equivalentClass sw:DeveloperDocContent .
+legacy:developer_doc_content_id rdfs:subPropertyOf sw:developerDocContentId .
+legacy:api_documentation_page owl:equivalentClass sw:ApiDocumentationPage .
+legacy:api_documentation_page_id rdfs:subPropertyOf sw:apiDocumentationPageId .
+legacy:publishes_developer_doc rdfs:subPropertyOf sw:publishesDeveloperDoc .

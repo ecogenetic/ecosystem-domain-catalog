@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/dbs/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/dbs#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/dbs/software> a owl:Ontology ;
+    rdfs:label "DBS Software Overlay" ;
+    rdfs:comment "Software-company specialization of Database and Data Store Management." .
+
+:ProductDataStore a owl:Class ;
+    rdfs:subClassOf base:DataStore ;
+    skos:prefLabel "Product Data Store" ;
+    skos:definition "A data store that holds data for one product edition." .
+
+:storesProductEdition a owl:ObjectProperty ;
+    rdfs:label "stores product edition" ;
+    rdfs:domain :ProductDataStore ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product data store with the product edition whose data it holds." .
+
+:productDataStoreId a owl:DatatypeProperty ;
+    rdfs:label "product data store id" ;
+    rdfs:domain :ProductDataStore ;
+    rdfs:range xsd:string .
+
+:ProductDataOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Data Owner" ;
+    skos:altLabel "Product Data Owner Role" ;
+    skos:definition "Owns the data store for a product edition. Bearer: person. Permissions: DataStore:read, DataStore:write, AccessGrant:read." .
+
+:ProductDataStoreShape a sh:NodeShape ;
+    sh:targetClass :ProductDataStore ;
+    sh:property [
+        sh:path :storesProductEdition ;
+        sh:minCount 1 ;
+    ] .

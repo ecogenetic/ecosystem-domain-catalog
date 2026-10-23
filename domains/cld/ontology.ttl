@@ -1,0 +1,155 @@
+@prefix : <https://ecosystemcode.com/ontology/cld#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/cld> a owl:Ontology ;
+    rdfs:label "CLD Domain Ontology" ;
+    rdfs:comment "Governs cloud accounts, landing zones, regions, network segments, cloud environments, and the shared services those environments use." .
+
+#################################################################
+# Classes
+#################################################################
+
+:CloudAccount a owl:Class ;
+    skos:prefLabel "Cloud Account" ;
+    skos:definition "A provider administrative and billing boundary. Distinct from a customer account and from a financial account." .
+:LandingZone a owl:Class ;
+    skos:prefLabel "Landing Zone" ;
+    skos:definition "A governed cloud foundation of accounts, networks, and guardrails for a product or platform." .
+:CloudRegion a owl:Class ;
+    skos:prefLabel "Cloud Region" ;
+    skos:definition "A provider region in which a landing zone is placed." .
+:NetworkSegment a owl:Class ;
+    skos:prefLabel "Network Segment" ;
+    skos:definition "A network boundary inside a landing zone, such as a virtual network or subnet group." .
+:CloudEnvironment a owl:Class ;
+    skos:prefLabel "Cloud Environment" ;
+    skos:definition "An environment inside a landing zone, such as development, test, or production. Distinct from a release target." .
+:SharedCloudService a owl:Class ;
+    skos:prefLabel "Shared Cloud Service" ;
+    skos:definition "A platform service, such as identity or logging, offered to cloud environments." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:hostedInCloudAccount a owl:ObjectProperty ;
+    rdfs:label "hosted in cloud account" ;
+    rdfs:domain :LandingZone ;
+    rdfs:range :CloudAccount ;
+    skos:definition "Places a landing zone in the cloud account that hosts it." .
+:placedInCloudRegion a owl:ObjectProperty ;
+    rdfs:label "placed in cloud region" ;
+    rdfs:domain :LandingZone ;
+    rdfs:range :CloudRegion ;
+    skos:definition "Places a landing zone in a cloud region." .
+:segmentsLandingZone a owl:ObjectProperty ;
+    rdfs:label "segments landing zone" ;
+    rdfs:domain :NetworkSegment ;
+    rdfs:range :LandingZone ;
+    skos:definition "Associates a network segment with the landing zone it divides." .
+:usesLandingZone a owl:ObjectProperty ;
+    rdfs:label "uses landing zone" ;
+    rdfs:domain :CloudEnvironment ;
+    rdfs:range :LandingZone ;
+    skos:definition "Associates a cloud environment with the landing zone it runs in." .
+:servesCloudEnvironment a owl:ObjectProperty ;
+    rdfs:label "serves cloud environment" ;
+    rdfs:domain :SharedCloudService ;
+    rdfs:range :CloudEnvironment ;
+    skos:definition "Associates a shared cloud service with a cloud environment that uses it." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:cloudAccountId a owl:DatatypeProperty ;
+    rdfs:label "cloud account id" ;
+    rdfs:domain :CloudAccount ;
+    rdfs:range xsd:string .
+:landingZoneId a owl:DatatypeProperty ;
+    rdfs:label "landing zone id" ;
+    rdfs:domain :LandingZone ;
+    rdfs:range xsd:string .
+:cloudRegionId a owl:DatatypeProperty ;
+    rdfs:label "cloud region id" ;
+    rdfs:domain :CloudRegion ;
+    rdfs:range xsd:string .
+:networkSegmentId a owl:DatatypeProperty ;
+    rdfs:label "network segment id" ;
+    rdfs:domain :NetworkSegment ;
+    rdfs:range xsd:string .
+:cloudEnvironmentId a owl:DatatypeProperty ;
+    rdfs:label "cloud environment id" ;
+    rdfs:domain :CloudEnvironment ;
+    rdfs:range xsd:string .
+:sharedCloudServiceId a owl:DatatypeProperty ;
+    rdfs:label "shared cloud service id" ;
+    rdfs:domain :SharedCloudService ;
+    rdfs:range xsd:string .
+:landingZoneStatus a owl:DatatypeProperty ;
+    rdfs:label "landing zone status" ;
+    rdfs:domain :LandingZone ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of landing zone: designed, provisioned, active, retired." .
+
+:accountName a owl:DatatypeProperty ;
+    rdfs:label "account name" ;
+    rdfs:domain :CloudAccount ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the cloud account." .
+
+:providerName a owl:DatatypeProperty ;
+    rdfs:label "provider name" ;
+    rdfs:domain :CloudAccount ;
+    rdfs:range xsd:string ;
+    skos:definition "The cloud provider that operates the account." .
+
+:zoneName a owl:DatatypeProperty ;
+    rdfs:label "zone name" ;
+    rdfs:domain :LandingZone ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the landing zone." .
+
+:regionCode a owl:DatatypeProperty ;
+    rdfs:label "region code" ;
+    rdfs:domain :CloudRegion ;
+    rdfs:range xsd:string ;
+    skos:definition "The provider region code." .
+
+:segmentName a owl:DatatypeProperty ;
+    rdfs:label "segment name" ;
+    rdfs:domain :NetworkSegment ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the network segment." .
+
+:environmentName a owl:DatatypeProperty ;
+    rdfs:label "environment name" ;
+    rdfs:domain :CloudEnvironment ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the cloud environment, such as development, test, or production." .
+
+:environmentCode a owl:DatatypeProperty ;
+    rdfs:label "environment code" ;
+    rdfs:domain :CloudEnvironment ;
+    rdfs:range xsd:string ;
+    skos:definition "Shared code used to correlate this cloud environment with a release target. The two records stay distinct." .
+
+:serviceName a owl:DatatypeProperty ;
+    rdfs:label "service name" ;
+    rdfs:domain :SharedCloudService ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the shared cloud service." .
+
+#################################################################
+# Roles
+#################################################################
+
+:CloudArchitectRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Cloud Architect" ;
+    skos:altLabel "Cloud Architect Role" ;
+    skos:definition "Designs landing zones, cloud environments, and network guardrails. Bearer: person. Permissions: LandingZone:read, LandingZone:write, CloudEnvironment:read, CloudEnvironment:write, NetworkSegment:read." .

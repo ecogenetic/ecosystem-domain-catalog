@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/crm/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/crm#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/crm/software> a owl:Ontology ;
+    rdfs:label "CRM Software Overlay" ;
+    rdfs:comment "Software-company specialization of CRM." .
+
+:SoftwareAccount a owl:Class ;
+    rdfs:subClassOf base:Account ;
+    skos:prefLabel "Software Account" ;
+    skos:definition "An organisation account that buys or uses software. Distinct from a financial account and from a cloud account." .
+
+:ProductSubscriptionOpportunity a owl:Class ;
+    rdfs:subClassOf base:Opportunity ;
+    skos:prefLabel "Product Subscription Opportunity" ;
+    skos:definition "An opportunity to sell or expand a software subscription." .
+
+:qualifiesSoftwareAccount a owl:ObjectProperty ;
+    rdfs:label "qualifies software account" ;
+    rdfs:domain :ProductSubscriptionOpportunity ;
+    rdfs:range :SoftwareAccount ;
+    skos:definition "Associates product subscription opportunity with SoftwareAccount." .
+
+:softwareAccountId a owl:DatatypeProperty ;
+    rdfs:label "software account id" ;
+    rdfs:domain :SoftwareAccount ;
+    rdfs:range xsd:string .
+
+:productSubscriptionOpportunityId a owl:DatatypeProperty ;
+    rdfs:label "product subscription opportunity id" ;
+    rdfs:domain :ProductSubscriptionOpportunity ;
+    rdfs:range xsd:string .
+
+:SoftwareAccountExecutiveRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Software Account Executive" ;
+    skos:altLabel "Software Account Executive Role" ;
+    skos:definition "Owns software customer accounts and subscription opportunities. Bearer: person. Permissions: Account:read, Account:write, Opportunity:read, Opportunity:write." .
+
+:SoftwareAccountShape a sh:NodeShape ;
+    sh:targetClass :SoftwareAccount ;
+    sh:property [
+        sh:path :softwareAccountId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

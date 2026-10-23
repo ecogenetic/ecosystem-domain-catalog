@@ -1,0 +1,11 @@
+# Software industry mapping for ERP
+@prefix sw: <https://ecosystemcode.com/ontology/erp/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:subscription_sales_order owl:equivalentClass sw:SubscriptionSalesOrder .
+legacy:subscription_sales_order_id rdfs:subPropertyOf sw:subscriptionSalesOrderId .
+legacy:software_vendor owl:equivalentClass sw:SoftwareVendor .
+legacy:software_vendor_id rdfs:subPropertyOf sw:softwareVendorId .
+legacy:contracted_through_software_vendor rdfs:subPropertyOf sw:contractedThroughSoftwareVendor .

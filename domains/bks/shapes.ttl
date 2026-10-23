@@ -1,0 +1,79 @@
+@prefix :    <https://ecosystemcode.com/ontology/bks#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:BackendServiceShape a sh:NodeShape ;
+    sh:targetClass :BackendService ;
+    sh:property [
+        sh:path :backendServiceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :serviceName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ApiContractShape a sh:NodeShape ;
+    sh:targetClass :ApiContract ;
+    sh:property [
+        sh:path :apiContractId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contractName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :apiContractStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "published" "deprecated" ) ;
+    ] .
+
+:ApiEndpointShape a sh:NodeShape ;
+    sh:targetClass :ApiEndpoint ;
+    sh:property [
+        sh:path :apiEndpointId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :endpointPath ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :httpMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServiceBindingShape a sh:NodeShape ;
+    sh:targetClass :ServiceBinding ;
+    sh:property [
+        sh:path :serviceBindingId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :environmentCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ApiConsumerShape a sh:NodeShape ;
+    sh:targetClass :ApiConsumer ;
+    sh:property [
+        sh:path :apiConsumerId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :consumerName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

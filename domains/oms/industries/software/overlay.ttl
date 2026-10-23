@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/oms/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/oms#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/oms/software> a owl:Ontology ;
+    rdfs:label "OMS Software Overlay" ;
+    rdfs:comment "Software-company specialization of OMS." .
+
+:EntitlementOrder a owl:Class ;
+    rdfs:subClassOf base:Order ;
+    skos:prefLabel "Entitlement Order" ;
+    skos:definition "An order whose fulfilment grants or changes a software entitlement." .
+
+:LicenseFulfilment a owl:Class ;
+    rdfs:subClassOf base:Fulfillment ;
+    skos:prefLabel "License Fulfilment" ;
+    skos:definition "Fulfilment that completes when the license entitlement is granted." .
+
+:fulfilsEntitlementOrder a owl:ObjectProperty ;
+    rdfs:label "fulfils entitlement order" ;
+    rdfs:domain :LicenseFulfilment ;
+    rdfs:range :EntitlementOrder ;
+    skos:definition "Associates license fulfilment with EntitlementOrder." .
+
+:entitlementOrderId a owl:DatatypeProperty ;
+    rdfs:label "entitlement order id" ;
+    rdfs:domain :EntitlementOrder ;
+    rdfs:range xsd:string .
+
+:licenseFulfilmentId a owl:DatatypeProperty ;
+    rdfs:label "license fulfilment id" ;
+    rdfs:domain :LicenseFulfilment ;
+    rdfs:range xsd:string .
+
+:LicenseOrderManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "License Order Manager" ;
+    skos:altLabel "License Order Manager Role" ;
+    skos:definition "Manages orders that grant software entitlements. Bearer: person. Permissions: Order:read, Order:write, Fulfillment:read, Fulfillment:write." .
+
+:EntitlementOrderShape a sh:NodeShape ;
+    sh:targetClass :EntitlementOrder ;
+    sh:property [
+        sh:path :entitlementOrderId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

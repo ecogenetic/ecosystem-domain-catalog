@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/arc/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/arc#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/arc/software> a owl:Ontology ;
+    rdfs:label "ARC Software Overlay" ;
+    rdfs:comment "Software-company specialization of Architecture Management." .
+
+:ProductArchitectureDecision a owl:Class ;
+    rdfs:subClassOf base:ArchitectureDecision ;
+    skos:prefLabel "Product Architecture Decision" ;
+    skos:definition "An architecture decision made for a named product edition." .
+
+:governsProductEdition a owl:ObjectProperty ;
+    rdfs:label "governs product edition" ;
+    rdfs:domain :ProductArchitectureDecision ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product architecture decision with the product edition it governs." .
+
+:productArchitectureDecisionId a owl:DatatypeProperty ;
+    rdfs:label "product architecture decision id" ;
+    rdfs:domain :ProductArchitectureDecision ;
+    rdfs:range xsd:string .
+
+:ProductArchitectRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Architect" ;
+    skos:altLabel "Product Architect Role" ;
+    skos:definition "Owns architecture decisions for a product edition. Bearer: person. Permissions: ArchitectureDecision:read, ArchitectureDecision:write, SystemContext:read." .
+
+:ProductArchitectureDecisionShape a sh:NodeShape ;
+    sh:targetClass :ProductArchitectureDecision ;
+    sh:property [
+        sh:path :governsProductEdition ;
+        sh:minCount 1 ;
+    ] .

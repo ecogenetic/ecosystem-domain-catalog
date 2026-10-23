@@ -1,0 +1,59 @@
+@prefix :    <https://ecosystemcode.com/ontology/sam/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/sam#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/sam/software> a owl:Ontology ;
+    rdfs:label "SAM Software Overlay" ;
+    rdfs:comment "Software-company specialization of SAM." .
+
+:ApplicationAlarm a owl:Class ;
+    rdfs:subClassOf base:ServiceAlarm ;
+    skos:prefLabel "Application Alarm" ;
+    skos:definition "A service alarm raised for a software application." .
+
+:TenantImpact a owl:Class ;
+    rdfs:subClassOf base:CustomerImpact ;
+    skos:prefLabel "Tenant Impact" ;
+    skos:definition "Customer impact expressed as affected software tenants." .
+
+:affectsSoftwareTenant a owl:ObjectProperty ;
+    rdfs:label "affects software tenant" ;
+    rdfs:domain :TenantImpact ;
+    rdfs:range sw:SoftwareTenant ;
+    skos:definition "Associates tenant impact with the software tenant that is affected." .
+
+:assessesApplicationAlarm a owl:ObjectProperty ;
+    rdfs:label "assesses application alarm" ;
+    rdfs:domain :TenantImpact ;
+    rdfs:range :ApplicationAlarm ;
+    skos:definition "Associates tenant impact with ApplicationAlarm." .
+
+:applicationAlarmId a owl:DatatypeProperty ;
+    rdfs:label "application alarm id" ;
+    rdfs:domain :ApplicationAlarm ;
+    rdfs:range xsd:string .
+
+:tenantImpactId a owl:DatatypeProperty ;
+    rdfs:label "tenant impact id" ;
+    rdfs:domain :TenantImpact ;
+    rdfs:range xsd:string .
+
+:ApplicationAssuranceAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Application Assurance Analyst" ;
+    skos:altLabel "Application Assurance Analyst Role" ;
+    skos:definition "Correlates application alarms to tenant impact. Bearer: person. Permissions: ServiceAlarm:read, CustomerImpact:read, CustomerImpact:write, AssuranceCase:write." .
+
+:ApplicationAlarmShape a sh:NodeShape ;
+    sh:targetClass :ApplicationAlarm ;
+    sh:property [
+        sh:path :applicationAlarmId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

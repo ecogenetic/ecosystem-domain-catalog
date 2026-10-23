@@ -1,0 +1,33 @@
+# Generic source mapping for CLD
+@prefix : <https://ecosystemcode.com/ontology/cld#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:cloud_account owl:equivalentClass :CloudAccount .
+legacy:cloud_account_id rdfs:subPropertyOf :cloudAccountId .
+legacy:landing_zone owl:equivalentClass :LandingZone .
+legacy:landing_zone_id rdfs:subPropertyOf :landingZoneId .
+legacy:cloud_region owl:equivalentClass :CloudRegion .
+legacy:cloud_region_id rdfs:subPropertyOf :cloudRegionId .
+legacy:network_segment owl:equivalentClass :NetworkSegment .
+legacy:network_segment_id rdfs:subPropertyOf :networkSegmentId .
+legacy:cloud_environment owl:equivalentClass :CloudEnvironment .
+legacy:cloud_environment_id rdfs:subPropertyOf :cloudEnvironmentId .
+legacy:shared_cloud_service owl:equivalentClass :SharedCloudService .
+legacy:shared_cloud_service_id rdfs:subPropertyOf :sharedCloudServiceId .
+
+legacy:hosted_in_cloud_account rdfs:subPropertyOf :hostedInCloudAccount .
+legacy:placed_in_cloud_region rdfs:subPropertyOf :placedInCloudRegion .
+legacy:segments_landing_zone rdfs:subPropertyOf :segmentsLandingZone .
+legacy:uses_landing_zone rdfs:subPropertyOf :usesLandingZone .
+legacy:serves_cloud_environment rdfs:subPropertyOf :servesCloudEnvironment .
+legacy:landing_zone_status rdfs:subPropertyOf :landingZoneStatus .
+legacy:account_name rdfs:subPropertyOf :accountName .
+legacy:provider_name rdfs:subPropertyOf :providerName .
+legacy:zone_name rdfs:subPropertyOf :zoneName .
+legacy:region_code rdfs:subPropertyOf :regionCode .
+legacy:segment_name rdfs:subPropertyOf :segmentName .
+legacy:environment_name rdfs:subPropertyOf :environmentName .
+legacy:environment_code rdfs:subPropertyOf :environmentCode .
+legacy:service_name rdfs:subPropertyOf :serviceName .

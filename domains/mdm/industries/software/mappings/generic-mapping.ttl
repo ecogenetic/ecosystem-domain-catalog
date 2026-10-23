@@ -1,0 +1,11 @@
+# Software industry mapping for MDM
+@prefix sw: <https://ecosystemcode.com/ontology/mdm/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:customer_tenant_master owl:equivalentClass sw:CustomerTenantMaster .
+legacy:customer_tenant_master_id rdfs:subPropertyOf sw:customerTenantMasterId .
+legacy:product_master_record owl:equivalentClass sw:ProductMasterRecord .
+legacy:product_master_record_id rdfs:subPropertyOf sw:productMasterRecordId .
+legacy:links_product_master rdfs:subPropertyOf sw:linksProductMaster .

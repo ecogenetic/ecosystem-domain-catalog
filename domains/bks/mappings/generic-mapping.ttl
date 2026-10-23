@@ -1,0 +1,30 @@
+# Generic source mapping for BKS
+@prefix : <https://ecosystemcode.com/ontology/bks#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:backend_service owl:equivalentClass :BackendService .
+legacy:backend_service_id rdfs:subPropertyOf :backendServiceId .
+legacy:api_contract owl:equivalentClass :ApiContract .
+legacy:api_contract_id rdfs:subPropertyOf :apiContractId .
+legacy:api_endpoint owl:equivalentClass :ApiEndpoint .
+legacy:api_endpoint_id rdfs:subPropertyOf :apiEndpointId .
+legacy:service_binding owl:equivalentClass :ServiceBinding .
+legacy:service_binding_id rdfs:subPropertyOf :serviceBindingId .
+legacy:api_consumer owl:equivalentClass :ApiConsumer .
+legacy:api_consumer_id rdfs:subPropertyOf :apiConsumerId .
+
+legacy:specifies_backend_service rdfs:subPropertyOf :specifiesBackendService .
+legacy:exposes_api_contract rdfs:subPropertyOf :exposesApiContract .
+legacy:binds_backend_service rdfs:subPropertyOf :bindsBackendService .
+legacy:consumes_api_endpoint rdfs:subPropertyOf :consumesApiEndpoint .
+legacy:api_contract_status rdfs:subPropertyOf :apiContractStatus .
+legacy:service_name rdfs:subPropertyOf :serviceName .
+legacy:product_edition_code rdfs:subPropertyOf :productEditionCode .
+legacy:contract_name rdfs:subPropertyOf :contractName .
+legacy:interface_contract_reference rdfs:subPropertyOf :interfaceContractReference .
+legacy:http_method rdfs:subPropertyOf :httpMethod .
+legacy:endpoint_path rdfs:subPropertyOf :endpointPath .
+legacy:environment_code rdfs:subPropertyOf :environmentCode .
+legacy:consumer_name rdfs:subPropertyOf :consumerName .

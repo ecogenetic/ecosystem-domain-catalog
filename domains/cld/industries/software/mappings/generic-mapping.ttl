@@ -1,0 +1,9 @@
+# Software industry mapping for CLD
+@prefix sw: <https://ecosystemcode.com/ontology/cld/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_landing_zone owl:equivalentClass sw:ProductLandingZone .
+legacy:product_landing_zone_id rdfs:subPropertyOf sw:productLandingZoneId .
+legacy:lands_product_edition rdfs:subPropertyOf sw:landsProductEdition .

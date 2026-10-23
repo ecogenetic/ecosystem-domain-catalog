@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/grc/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/grc#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/grc/software> a owl:Ontology ;
+    rdfs:label "GRC Software Overlay" ;
+    rdfs:comment "Software-company specialization of GRC." .
+
+:SecurityControl a owl:Class ;
+    rdfs:subClassOf base:Control ;
+    skos:prefLabel "Security Control" ;
+    skos:definition "A control that protects software, customer data, or the production platform." .
+
+:SocEvidence a owl:Class ;
+    rdfs:subClassOf base:Evidence ;
+    skos:prefLabel "SOC Evidence" ;
+    skos:definition "Evidence collected to show a security control operated for a stated period." .
+
+:evidencesSecurityControl a owl:ObjectProperty ;
+    rdfs:label "evidences security control" ;
+    rdfs:domain :SocEvidence ;
+    rdfs:range :SecurityControl ;
+    skos:definition "Associates soc evidence with SecurityControl." .
+
+:securityControlId a owl:DatatypeProperty ;
+    rdfs:label "security control id" ;
+    rdfs:domain :SecurityControl ;
+    rdfs:range xsd:string .
+
+:socEvidenceId a owl:DatatypeProperty ;
+    rdfs:label "soc evidence id" ;
+    rdfs:domain :SocEvidence ;
+    rdfs:range xsd:string .
+
+:SecurityComplianceOfficerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Security Compliance Officer" ;
+    skos:altLabel "Security Compliance Officer Role" ;
+    skos:definition "Maps security controls and collects operating evidence. Bearer: person. Permissions: Control:read, Control:write, Evidence:read, Evidence:write, Policy:read." .
+
+:SecurityControlShape a sh:NodeShape ;
+    sh:targetClass :SecurityControl ;
+    sh:property [
+        sh:path :securityControlId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

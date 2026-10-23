@@ -1,0 +1,54 @@
+@prefix : <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://ecosystemcode.com/ontology/industry/software> a owl:Ontology ;
+    rdfs:label "Software Industry Common Concepts" ;
+    rdfs:comment "Shared software-company concepts reused across domain overlays: customer tenants, product editions, and environment references." .
+
+:SoftwareTenant a owl:Class ;
+    skos:prefLabel "Software Tenant" ;
+    skos:altLabel "Customer Tenant", "Usage Tenant" ;
+    skos:definition "The isolated usage context in which a customer organisation consumes a software product. Distinct from the legal party and from a license agreement." .
+
+:ProductEdition a owl:Class ;
+    skos:prefLabel "Product Edition" ;
+    skos:altLabel "Edition", "Plan Edition" ;
+    skos:definition "A named sellable edition of a software product, used as an immutable input to quotes, licenses, architecture, and releases." .
+
+:EnvironmentReference a owl:Class ;
+    skos:prefLabel "Environment Reference" ;
+    skos:altLabel "Environment Correlation" ;
+    skos:definition "A shared reference to an environment identifier so domains can correlate a cloud environment with a release target without treating them as the same object." .
+
+:tenantUsesProductEdition a owl:ObjectProperty ;
+    rdfs:label "tenant uses product edition" ;
+    rdfs:domain :SoftwareTenant ;
+    rdfs:range  :ProductEdition ;
+    skos:definition "Associates a software tenant with the product edition it is entitled to use." .
+
+:editionRunsInEnvironment a owl:ObjectProperty ;
+    rdfs:label "edition runs in environment" ;
+    rdfs:domain :ProductEdition ;
+    rdfs:range  :EnvironmentReference ;
+    skos:definition "Correlates a product edition with an environment reference where a release of that edition runs." .
+
+:tenantId a owl:DatatypeProperty ;
+    rdfs:label "tenant id" ;
+    rdfs:domain :SoftwareTenant ;
+    rdfs:range  xsd:string ;
+    skos:definition "Stable identifier of the software tenant." .
+
+:editionCode a owl:DatatypeProperty ;
+    rdfs:label "edition code" ;
+    rdfs:domain :ProductEdition ;
+    rdfs:range  xsd:string ;
+    skos:definition "Stable code of the product edition." .
+
+:environmentCode a owl:DatatypeProperty ;
+    rdfs:label "environment code" ;
+    rdfs:domain :EnvironmentReference ;
+    rdfs:range  xsd:string ;
+    skos:definition "Shared environment identifier used to correlate cloud environments and release targets." .

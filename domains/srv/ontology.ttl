@@ -1,0 +1,155 @@
+@prefix : <https://ecosystemcode.com/ontology/srv#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/srv> a owl:Ontology ;
+    rdfs:label "SRV Domain Ontology" ;
+    rdfs:comment "Tracks compute hosts, clusters, runtimes, server images, capacity pools, and availability targets for software workloads." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ComputeHost a owl:Class ;
+    skos:prefLabel "Compute Host" ;
+    skos:definition "A virtual or physical server that runs software. Distinct from an enterprise physical-asset work order." .
+:ComputeCluster a owl:Class ;
+    skos:prefLabel "Compute Cluster" ;
+    skos:definition "A managed group of compute hosts that run a workload together." .
+:Runtime a owl:Class ;
+    skos:prefLabel "Runtime" ;
+    skos:definition "The execution runtime installed on a compute host, such as a container runtime or language runtime." .
+:ServerImage a owl:Class ;
+    skos:prefLabel "Server Image" ;
+    skos:definition "A versioned image from which a compute host is built." .
+:CapacityPool a owl:Class ;
+    skos:prefLabel "Capacity Pool" ;
+    skos:definition "A named pool of compute capacity allocated to hosts." .
+:AvailabilityTarget a owl:Class ;
+    skos:prefLabel "Availability Target" ;
+    skos:definition "The availability commitment a compute cluster is expected to meet." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:memberOfComputeCluster a owl:ObjectProperty ;
+    rdfs:label "member of compute cluster" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range :ComputeCluster ;
+    skos:definition "Associates a compute host with the cluster it belongs to." .
+:runsRuntime a owl:ObjectProperty ;
+    rdfs:label "runs runtime" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range :Runtime ;
+    skos:definition "Associates a compute host with the runtime it runs." .
+:builtFromServerImage a owl:ObjectProperty ;
+    rdfs:label "built from server image" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range :ServerImage ;
+    skos:definition "Associates a compute host with the server image it was built from." .
+:allocatesComputeHost a owl:ObjectProperty ;
+    rdfs:label "allocates compute host" ;
+    rdfs:domain :CapacityPool ;
+    rdfs:range :ComputeHost ;
+    skos:definition "Associates a capacity pool with the compute hosts it allocates." .
+:coversComputeCluster a owl:ObjectProperty ;
+    rdfs:label "covers compute cluster" ;
+    rdfs:domain :AvailabilityTarget ;
+    rdfs:range :ComputeCluster ;
+    skos:definition "Associates an availability target with the compute cluster it covers." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:computeHostId a owl:DatatypeProperty ;
+    rdfs:label "compute host id" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range xsd:string .
+:computeClusterId a owl:DatatypeProperty ;
+    rdfs:label "compute cluster id" ;
+    rdfs:domain :ComputeCluster ;
+    rdfs:range xsd:string .
+:runtimeId a owl:DatatypeProperty ;
+    rdfs:label "runtime id" ;
+    rdfs:domain :Runtime ;
+    rdfs:range xsd:string .
+:serverImageId a owl:DatatypeProperty ;
+    rdfs:label "server image id" ;
+    rdfs:domain :ServerImage ;
+    rdfs:range xsd:string .
+:capacityPoolId a owl:DatatypeProperty ;
+    rdfs:label "capacity pool id" ;
+    rdfs:domain :CapacityPool ;
+    rdfs:range xsd:string .
+:availabilityTargetId a owl:DatatypeProperty ;
+    rdfs:label "availability target id" ;
+    rdfs:domain :AvailabilityTarget ;
+    rdfs:range xsd:string .
+:computeHostStatus a owl:DatatypeProperty ;
+    rdfs:label "compute host status" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of compute host: provisioned, active, drained, decommissioned." .
+
+:hostName a owl:DatatypeProperty ;
+    rdfs:label "host name" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the compute host." .
+
+:environmentCode a owl:DatatypeProperty ;
+    rdfs:label "environment code" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range xsd:string ;
+    skos:definition "Shared code of the environment where this host runs. It correlates to a cloud environment and a release target without merging those records." .
+
+:applicationReference a owl:DatatypeProperty ;
+    rdfs:label "application reference" ;
+    rdfs:domain :ComputeHost ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the software application this host runs." .
+
+:clusterName a owl:DatatypeProperty ;
+    rdfs:label "cluster name" ;
+    rdfs:domain :ComputeCluster ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the compute cluster." .
+
+:runtimeName a owl:DatatypeProperty ;
+    rdfs:label "runtime name" ;
+    rdfs:domain :Runtime ;
+    rdfs:range xsd:string ;
+    skos:definition "The name and kind of runtime." .
+
+:imageName a owl:DatatypeProperty ;
+    rdfs:label "image name" ;
+    rdfs:domain :ServerImage ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the server image." .
+
+:poolName a owl:DatatypeProperty ;
+    rdfs:label "pool name" ;
+    rdfs:domain :CapacityPool ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the capacity pool." .
+
+:availabilityPercent a owl:DatatypeProperty ;
+    rdfs:label "availability percent" ;
+    rdfs:domain :AvailabilityTarget ;
+    rdfs:range xsd:decimal ;
+    skos:definition "The availability percentage the cluster is expected to meet." .
+
+#################################################################
+# Roles
+#################################################################
+
+:PlatformEngineerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Platform Engineer" ;
+    skos:altLabel "Platform Engineer Role" ;
+    skos:definition "Provisions hosts, manages images, and drains capacity. Bearer: person. Permissions: ComputeHost:read, ComputeHost:write, ComputeCluster:read, ServerImage:read, ServerImage:write." .

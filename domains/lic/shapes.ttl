@@ -1,0 +1,97 @@
+@prefix :    <https://ecosystemcode.com/ontology/lic#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:LicenseAgreementShape a sh:NodeShape ;
+    sh:targetClass :LicenseAgreement ;
+    sh:property [
+        sh:path :licenseAgreementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :customerReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :productEditionCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :licenseAgreementStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "quoted" "active" "suspended" "expired" ) ;
+    ] .
+
+:EntitlementShape a sh:NodeShape ;
+    sh:targetClass :Entitlement ;
+    sh:property [
+        sh:path :entitlementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :quantity ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :entitlementName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SeatAllocationShape a sh:NodeShape ;
+    sh:targetClass :SeatAllocation ;
+    sh:property [
+        sh:path :seatAllocationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :assigneeReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:FeatureAccessShape a sh:NodeShape ;
+    sh:targetClass :FeatureAccess ;
+    sh:property [
+        sh:path :featureAccessId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :featureCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:UsageMeterShape a sh:NodeShape ;
+    sh:targetClass :UsageMeter ;
+    sh:property [
+        sh:path :usageMeterId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :consumedQuantity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .
+
+:LicenseKeyShape a sh:NodeShape ;
+    sh:targetClass :LicenseKey ;
+    sh:property [
+        sh:path :licenseKeyId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :keyValue ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

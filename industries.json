@@ -24,6 +24,11 @@
       "id": "gambling",
       "label": "Gaming & Gambling",
       "description": "Licensed betting and gaming operators: players, wagers, wallets, bonusing, responsible gambling, and licensing compliance."
+    },
+    {
+      "id": "software",
+      "label": "Software",
+      "description": "Product and platform companies: tenants, product editions, applications, architecture, cloud platforms, releases, and license entitlements."
     }
   ]
 }

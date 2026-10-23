@@ -1,0 +1,34 @@
+# Generic source mapping for REL
+@prefix : <https://ecosystemcode.com/ontology/rel#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:source_repository owl:equivalentClass :SourceRepository .
+legacy:source_repository_id rdfs:subPropertyOf :sourceRepositoryId .
+legacy:build owl:equivalentClass :Build .
+legacy:build_id rdfs:subPropertyOf :buildId .
+legacy:release owl:equivalentClass :Release .
+legacy:release_id rdfs:subPropertyOf :releaseId .
+legacy:deployment owl:equivalentClass :Deployment .
+legacy:deployment_id rdfs:subPropertyOf :deploymentId .
+legacy:release_target owl:equivalentClass :ReleaseTarget .
+legacy:release_target_id rdfs:subPropertyOf :releaseTargetId .
+legacy:change_set owl:equivalentClass :ChangeSet .
+legacy:change_set_id rdfs:subPropertyOf :changeSetId .
+
+legacy:produced_from_source_repository rdfs:subPropertyOf :producedFromSourceRepository .
+legacy:packages_build rdfs:subPropertyOf :packagesBuild .
+legacy:includes_change_set rdfs:subPropertyOf :includesChangeSet .
+legacy:deploys_release rdfs:subPropertyOf :deploysRelease .
+legacy:targets_release_target rdfs:subPropertyOf :targetsReleaseTarget .
+legacy:release_status rdfs:subPropertyOf :releaseStatus .
+legacy:repository_name rdfs:subPropertyOf :repositoryName .
+legacy:application_reference rdfs:subPropertyOf :applicationReference .
+legacy:build_number rdfs:subPropertyOf :buildNumber .
+legacy:release_name rdfs:subPropertyOf :releaseName .
+legacy:application_reference rdfs:subPropertyOf :applicationReference .
+legacy:deployed_at rdfs:subPropertyOf :deployedAt .
+legacy:target_name rdfs:subPropertyOf :targetName .
+legacy:environment_code rdfs:subPropertyOf :environmentCode .
+legacy:change_summary rdfs:subPropertyOf :changeSummary .

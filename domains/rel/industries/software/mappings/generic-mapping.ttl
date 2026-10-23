@@ -1,0 +1,9 @@
+# Software industry mapping for REL
+@prefix sw: <https://ecosystemcode.com/ontology/rel/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_release owl:equivalentClass sw:ProductRelease .
+legacy:product_release_id rdfs:subPropertyOf sw:productReleaseId .
+legacy:releases_product_edition rdfs:subPropertyOf sw:releasesProductEdition .

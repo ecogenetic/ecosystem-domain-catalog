@@ -1,0 +1,143 @@
+@prefix : <https://ecosystemcode.com/ontology/bks#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/bks> a owl:Ontology ;
+    rdfs:label "BKS Domain Ontology" ;
+    rdfs:comment "Defines backend services, API contracts, endpoints, service bindings, and the consumers that call them." .
+
+#################################################################
+# Classes
+#################################################################
+
+:BackendService a owl:Class ;
+    skos:prefLabel "Backend Service" ;
+    skos:definition "A server-side software application that exposes behavior through an API. Distinct from a deployed service instance and from an IT service." .
+:ApiContract a owl:Class ;
+    skos:prefLabel "API Contract" ;
+    skos:definition "The versioned contract a backend service publishes." .
+:ApiEndpoint a owl:Class ;
+    skos:prefLabel "API Endpoint" ;
+    skos:definition "One operation exposed by an API contract." .
+:ServiceBinding a owl:Class ;
+    skos:prefLabel "Service Binding" ;
+    skos:definition "A binding that connects a backend service to the runtime it is offered on." .
+:ApiConsumer a owl:Class ;
+    skos:prefLabel "API Consumer" ;
+    skos:definition "A system or application permitted to call an API endpoint." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:specifiesBackendService a owl:ObjectProperty ;
+    rdfs:label "specifies backend service" ;
+    rdfs:domain :ApiContract ;
+    rdfs:range :BackendService ;
+    skos:definition "Associates an API contract with the backend service it specifies." .
+:exposesApiContract a owl:ObjectProperty ;
+    rdfs:label "exposes API contract" ;
+    rdfs:domain :ApiEndpoint ;
+    rdfs:range :ApiContract ;
+    skos:definition "Associates an API endpoint with the API contract it exposes." .
+:bindsBackendService a owl:ObjectProperty ;
+    rdfs:label "binds backend service" ;
+    rdfs:domain :ServiceBinding ;
+    rdfs:range :BackendService ;
+    skos:definition "Associates a service binding with the backend service it binds." .
+:consumesApiEndpoint a owl:ObjectProperty ;
+    rdfs:label "consumes API endpoint" ;
+    rdfs:domain :ApiConsumer ;
+    rdfs:range :ApiEndpoint ;
+    skos:definition "Associates an API consumer with an API endpoint it consumes." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:backendServiceId a owl:DatatypeProperty ;
+    rdfs:label "backend service id" ;
+    rdfs:domain :BackendService ;
+    rdfs:range xsd:string .
+:apiContractId a owl:DatatypeProperty ;
+    rdfs:label "api contract id" ;
+    rdfs:domain :ApiContract ;
+    rdfs:range xsd:string .
+:apiEndpointId a owl:DatatypeProperty ;
+    rdfs:label "api endpoint id" ;
+    rdfs:domain :ApiEndpoint ;
+    rdfs:range xsd:string .
+:serviceBindingId a owl:DatatypeProperty ;
+    rdfs:label "service binding id" ;
+    rdfs:domain :ServiceBinding ;
+    rdfs:range xsd:string .
+:apiConsumerId a owl:DatatypeProperty ;
+    rdfs:label "api consumer id" ;
+    rdfs:domain :ApiConsumer ;
+    rdfs:range xsd:string .
+:apiContractStatus a owl:DatatypeProperty ;
+    rdfs:label "api contract status" ;
+    rdfs:domain :ApiContract ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of API contract: draft, published, deprecated." .
+
+:serviceName a owl:DatatypeProperty ;
+    rdfs:label "service name" ;
+    rdfs:domain :BackendService ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the backend service." .
+
+:productEditionCode a owl:DatatypeProperty ;
+    rdfs:label "product edition code" ;
+    rdfs:domain :BackendService ;
+    rdfs:range xsd:string ;
+    skos:definition "Code of the product edition this service implements." .
+
+:contractName a owl:DatatypeProperty ;
+    rdfs:label "contract name" ;
+    rdfs:domain :ApiContract ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the API contract." .
+
+:interfaceContractReference a owl:DatatypeProperty ;
+    rdfs:label "interface contract reference" ;
+    rdfs:domain :ApiContract ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the architecture interface contract this API contract realizes. The architecture contract stays owned by architecture management." .
+
+:httpMethod a owl:DatatypeProperty ;
+    rdfs:label "HTTP method" ;
+    rdfs:domain :ApiEndpoint ;
+    rdfs:range xsd:string ;
+    skos:definition "The HTTP method of the endpoint." .
+
+:endpointPath a owl:DatatypeProperty ;
+    rdfs:label "endpoint path" ;
+    rdfs:domain :ApiEndpoint ;
+    rdfs:range xsd:string ;
+    skos:definition "The path of the endpoint." .
+
+:environmentCode a owl:DatatypeProperty ;
+    rdfs:label "environment code" ;
+    rdfs:domain :ServiceBinding ;
+    rdfs:range xsd:string ;
+    skos:definition "Shared code of the environment this binding offers the service in." .
+
+:consumerName a owl:DatatypeProperty ;
+    rdfs:label "consumer name" ;
+    rdfs:domain :ApiConsumer ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the API consumer." .
+
+#################################################################
+# Roles
+#################################################################
+
+:BackendLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Backend Lead" ;
+    skos:altLabel "Backend Lead Role" ;
+    skos:definition "Owns backend services, API contracts, and consumer bindings. Bearer: person. Permissions: BackendService:read, BackendService:write, ApiContract:read, ApiContract:write, ApiEndpoint:read." .

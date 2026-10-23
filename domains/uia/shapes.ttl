@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/uia#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ClientApplicationShape a sh:NodeShape ;
+    sh:targetClass :ClientApplication ;
+    sh:property [
+        sh:path :clientApplicationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :applicationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :clientApplicationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "draft" "released" "deprecated" ) ;
+    ] .
+
+:ScreenShape a sh:NodeShape ;
+    sh:targetClass :Screen ;
+    sh:property [
+        sh:path :screenId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :screenName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:UiComponentShape a sh:NodeShape ;
+    sh:targetClass :UiComponent ;
+    sh:property [
+        sh:path :uiComponentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :componentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DesignSystemShape a sh:NodeShape ;
+    sh:targetClass :DesignSystem ;
+    sh:property [
+        sh:path :designSystemId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :systemName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:NavigationFlowShape a sh:NodeShape ;
+    sh:targetClass :NavigationFlow ;
+    sh:property [
+        sh:path :navigationFlowId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :flowName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AccessibilityRequirementShape a sh:NodeShape ;
+    sh:targetClass :AccessibilityRequirement ;
+    sh:property [
+        sh:path :accessibilityRequirementId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :requirementName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

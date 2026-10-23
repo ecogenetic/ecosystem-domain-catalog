@@ -1,0 +1,9 @@
+# Software industry mapping for SRV
+@prefix sw: <https://ecosystemcode.com/ontology/srv/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:application_compute_host owl:equivalentClass sw:ApplicationComputeHost .
+legacy:application_compute_host_id rdfs:subPropertyOf sw:applicationComputeHostId .
+legacy:hosts_product_edition rdfs:subPropertyOf sw:hostsProductEdition .

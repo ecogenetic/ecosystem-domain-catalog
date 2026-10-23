@@ -1,0 +1,9 @@
+# Software industry mapping for DBS
+@prefix sw: <https://ecosystemcode.com/ontology/dbs/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_data_store owl:equivalentClass sw:ProductDataStore .
+legacy:product_data_store_id rdfs:subPropertyOf sw:productDataStoreId .
+legacy:stores_product_edition rdfs:subPropertyOf sw:storesProductEdition .

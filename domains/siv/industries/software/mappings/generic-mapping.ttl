@@ -1,0 +1,13 @@
+# Software industry mapping for SIV
+@prefix sw: <https://ecosystemcode.com/ontology/siv/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:application_service_instance owl:equivalentClass sw:ApplicationServiceInstance .
+legacy:application_service_instance_id rdfs:subPropertyOf sw:applicationServiceInstanceId .
+legacy:deployed_service_component owl:equivalentClass sw:DeployedServiceComponent .
+legacy:deployed_service_component_id rdfs:subPropertyOf sw:deployedServiceComponentId .
+legacy:contains_deployed_service_component rdfs:subPropertyOf sw:containsDeployedServiceComponent .
+legacy:application_reference rdfs:subPropertyOf sw:applicationReference .
+legacy:deployment_reference rdfs:subPropertyOf sw:deploymentReference .

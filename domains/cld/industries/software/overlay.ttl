@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/cld/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/cld#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cld/software> a owl:Ontology ;
+    rdfs:label "CLD Software Overlay" ;
+    rdfs:comment "Software-company specialization of Cloud Architecture." .
+
+:ProductLandingZone a owl:Class ;
+    rdfs:subClassOf base:LandingZone ;
+    skos:prefLabel "Product Landing Zone" ;
+    skos:definition "A landing zone dedicated to one product edition." .
+
+:landsProductEdition a owl:ObjectProperty ;
+    rdfs:label "lands product edition" ;
+    rdfs:domain :ProductLandingZone ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product landing zone with the product edition it hosts." .
+
+:productLandingZoneId a owl:DatatypeProperty ;
+    rdfs:label "product landing zone id" ;
+    rdfs:domain :ProductLandingZone ;
+    rdfs:range xsd:string .
+
+:ProductCloudArchitectRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Cloud Architect" ;
+    skos:altLabel "Product Cloud Architect Role" ;
+    skos:definition "Owns the landing zone for a product edition. Bearer: person. Permissions: LandingZone:read, LandingZone:write, CloudEnvironment:read." .
+
+:ProductLandingZoneShape a sh:NodeShape ;
+    sh:targetClass :ProductLandingZone ;
+    sh:property [
+        sh:path :landsProductEdition ;
+        sh:minCount 1 ;
+    ] .

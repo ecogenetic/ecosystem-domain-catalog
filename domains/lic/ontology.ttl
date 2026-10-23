@@ -1,0 +1,155 @@
+@prefix : <https://ecosystemcode.com/ontology/lic#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/lic> a owl:Ontology ;
+    rdfs:label "LIC Domain Ontology" ;
+    rdfs:comment "Manages license agreements, entitlements, seat allocations, feature access, usage meters, and license keys for software products." .
+
+#################################################################
+# Classes
+#################################################################
+
+:LicenseAgreement a owl:Class ;
+    skos:prefLabel "License Agreement" ;
+    skos:definition "A contract specialization that grants a customer the right to use a software product edition." .
+:Entitlement a owl:Class ;
+    skos:prefLabel "Entitlement" ;
+    skos:definition "A right, under a license agreement, to a feature, a seat count, or a metered capacity." .
+:SeatAllocation a owl:Class ;
+    skos:prefLabel "Seat Allocation" ;
+    skos:definition "An assignment of one entitlement seat to a person or tenant." .
+:FeatureAccess a owl:Class ;
+    skos:prefLabel "Feature Access" ;
+    skos:definition "A feature that an entitlement turns on." .
+:UsageMeter a owl:Class ;
+    skos:prefLabel "Usage Meter" ;
+    skos:definition "A measure of consumed capacity against an entitlement." .
+:LicenseKey a owl:Class ;
+    skos:prefLabel "License Key" ;
+    skos:definition "A credential that identifies a license agreement. Distinct from the agreement itself." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:grantedByLicenseAgreement a owl:ObjectProperty ;
+    rdfs:label "granted by license agreement" ;
+    rdfs:domain :Entitlement ;
+    rdfs:range :LicenseAgreement ;
+    skos:definition "Associates an entitlement with the license agreement that grants it." .
+:consumesEntitlement a owl:ObjectProperty ;
+    rdfs:label "consumes entitlement" ;
+    rdfs:domain :SeatAllocation ;
+    rdfs:range :Entitlement ;
+    skos:definition "Associates a seat allocation with the entitlement it consumes." .
+:enabledByEntitlement a owl:ObjectProperty ;
+    rdfs:label "enabled by entitlement" ;
+    rdfs:domain :FeatureAccess ;
+    rdfs:range :Entitlement ;
+    skos:definition "Associates feature access with the entitlement that enables it." .
+:measuresEntitlement a owl:ObjectProperty ;
+    rdfs:label "measures entitlement" ;
+    rdfs:domain :UsageMeter ;
+    rdfs:range :Entitlement ;
+    skos:definition "Associates a usage meter with the entitlement it measures." .
+:identifiesLicenseAgreement a owl:ObjectProperty ;
+    rdfs:label "identifies license agreement" ;
+    rdfs:domain :LicenseKey ;
+    rdfs:range :LicenseAgreement ;
+    skos:definition "Associates a license key with the license agreement it identifies." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:licenseAgreementId a owl:DatatypeProperty ;
+    rdfs:label "license agreement id" ;
+    rdfs:domain :LicenseAgreement ;
+    rdfs:range xsd:string .
+:entitlementId a owl:DatatypeProperty ;
+    rdfs:label "entitlement id" ;
+    rdfs:domain :Entitlement ;
+    rdfs:range xsd:string .
+:seatAllocationId a owl:DatatypeProperty ;
+    rdfs:label "seat allocation id" ;
+    rdfs:domain :SeatAllocation ;
+    rdfs:range xsd:string .
+:featureAccessId a owl:DatatypeProperty ;
+    rdfs:label "feature access id" ;
+    rdfs:domain :FeatureAccess ;
+    rdfs:range xsd:string .
+:usageMeterId a owl:DatatypeProperty ;
+    rdfs:label "usage meter id" ;
+    rdfs:domain :UsageMeter ;
+    rdfs:range xsd:string .
+:licenseKeyId a owl:DatatypeProperty ;
+    rdfs:label "license key id" ;
+    rdfs:domain :LicenseKey ;
+    rdfs:range xsd:string .
+:licenseAgreementStatus a owl:DatatypeProperty ;
+    rdfs:label "license agreement status" ;
+    rdfs:domain :LicenseAgreement ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of license agreement: quoted, active, suspended, expired." .
+
+:productEditionCode a owl:DatatypeProperty ;
+    rdfs:label "product edition code" ;
+    rdfs:domain :LicenseAgreement ;
+    rdfs:range xsd:string ;
+    skos:definition "Code of the product edition this agreement licenses." .
+
+:customerReference a owl:DatatypeProperty ;
+    rdfs:label "customer reference" ;
+    rdfs:domain :LicenseAgreement ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the customer party or relationship. The party stays owned by customer management." .
+
+:entitlementName a owl:DatatypeProperty ;
+    rdfs:label "entitlement name" ;
+    rdfs:domain :Entitlement ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the entitlement." .
+
+:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity" ;
+    rdfs:domain :Entitlement ;
+    rdfs:range xsd:integer ;
+    skos:definition "The number of seats or units granted." .
+
+:assigneeReference a owl:DatatypeProperty ;
+    rdfs:label "assignee reference" ;
+    rdfs:domain :SeatAllocation ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the person or tenant assigned the seat." .
+
+:featureCode a owl:DatatypeProperty ;
+    rdfs:label "feature code" ;
+    rdfs:domain :FeatureAccess ;
+    rdfs:range xsd:string ;
+    skos:definition "The feature this access turns on." .
+
+:consumedQuantity a owl:DatatypeProperty ;
+    rdfs:label "consumed quantity" ;
+    rdfs:domain :UsageMeter ;
+    rdfs:range xsd:decimal ;
+    skos:definition "The quantity consumed against the entitlement." .
+
+:keyValue a owl:DatatypeProperty ;
+    rdfs:label "key value" ;
+    rdfs:domain :LicenseKey ;
+    rdfs:range xsd:string ;
+    skos:definition "The credential value that identifies the license agreement." .
+
+#################################################################
+# Roles
+#################################################################
+
+:LicenseAdministratorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "License Administrator" ;
+    skos:altLabel "License Administrator Role" ;
+    skos:definition "Issues license agreements, entitlements, and seat allocations. Bearer: person. Permissions: LicenseAgreement:read, LicenseAgreement:write, Entitlement:read, Entitlement:write, SeatAllocation:read, SeatAllocation:write." .

@@ -1,0 +1,161 @@
+@prefix : <https://ecosystemcode.com/ontology/arc#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/arc> a owl:Ontology ;
+    rdfs:label "ARC Domain Ontology" ;
+    rdfs:comment "Records architecture decisions, system contexts, structural components, interface contracts, viewpoints, and the principles those decisions cite." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ArchitectureDecision a owl:Class ;
+    skos:prefLabel "Architecture Decision" ;
+    skos:definition "A recorded structural choice, its rationale, and the context it governs." .
+:SystemContext a owl:Class ;
+    skos:prefLabel "System Context" ;
+    skos:definition "The bounded system, its users, and the external systems an architecture describes." .
+:ArchitectureComponent a owl:Class ;
+    skos:prefLabel "Architecture Component" ;
+    skos:definition "A structural part of a system context. Distinct from a user-interface widget." .
+:InterfaceContract a owl:Class ;
+    skos:prefLabel "Interface Contract" ;
+    skos:definition "The agreed boundary through which an architecture component is used." .
+:Viewpoint a owl:Class ;
+    skos:prefLabel "Viewpoint" ;
+    skos:definition "A stakeholder view of a system context, such as context, container, or deployment." .
+:ArchitecturePrinciple a owl:Class ;
+    skos:prefLabel "Architecture Principle" ;
+    skos:definition "A standing rule that architecture decisions are expected to cite." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:appliesToSystemContext a owl:ObjectProperty ;
+    rdfs:label "applies to system context" ;
+    rdfs:domain :ArchitectureDecision ;
+    rdfs:range :SystemContext ;
+    skos:definition "Associates an architecture decision with the system context it governs." .
+:belongsToSystemContext a owl:ObjectProperty ;
+    rdfs:label "belongs to system context" ;
+    rdfs:domain :ArchitectureComponent ;
+    rdfs:range :SystemContext ;
+    skos:definition "Places an architecture component inside a system context." .
+:exposesArchitectureComponent a owl:ObjectProperty ;
+    rdfs:label "exposes architecture component" ;
+    rdfs:domain :InterfaceContract ;
+    rdfs:range :ArchitectureComponent ;
+    skos:definition "Binds an interface contract to the architecture component it exposes." .
+:describesSystemContext a owl:ObjectProperty ;
+    rdfs:label "describes system context" ;
+    rdfs:domain :Viewpoint ;
+    rdfs:range :SystemContext ;
+    skos:definition "Associates a viewpoint with the system context it describes." .
+:citesArchitecturePrinciple a owl:ObjectProperty ;
+    rdfs:label "cites architecture principle" ;
+    rdfs:domain :ArchitectureDecision ;
+    rdfs:range :ArchitecturePrinciple ;
+    skos:definition "Records the architecture principle an architecture decision cites." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:architectureDecisionId a owl:DatatypeProperty ;
+    rdfs:label "architecture decision id" ;
+    rdfs:domain :ArchitectureDecision ;
+    rdfs:range xsd:string .
+:systemContextId a owl:DatatypeProperty ;
+    rdfs:label "system context id" ;
+    rdfs:domain :SystemContext ;
+    rdfs:range xsd:string .
+:architectureComponentId a owl:DatatypeProperty ;
+    rdfs:label "architecture component id" ;
+    rdfs:domain :ArchitectureComponent ;
+    rdfs:range xsd:string .
+:interfaceContractId a owl:DatatypeProperty ;
+    rdfs:label "interface contract id" ;
+    rdfs:domain :InterfaceContract ;
+    rdfs:range xsd:string .
+:viewpointId a owl:DatatypeProperty ;
+    rdfs:label "viewpoint id" ;
+    rdfs:domain :Viewpoint ;
+    rdfs:range xsd:string .
+:architecturePrincipleId a owl:DatatypeProperty ;
+    rdfs:label "architecture principle id" ;
+    rdfs:domain :ArchitecturePrinciple ;
+    rdfs:range xsd:string .
+:architectureDecisionStatus a owl:DatatypeProperty ;
+    rdfs:label "architecture decision status" ;
+    rdfs:domain :ArchitectureDecision ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of architecture decision: proposed, accepted, superseded, rejected." .
+
+:decisionTitle a owl:DatatypeProperty ;
+    rdfs:label "decision title" ;
+    rdfs:domain :ArchitectureDecision ;
+    rdfs:range xsd:string ;
+    skos:definition "The short title of the architecture decision." .
+
+:rationale a owl:DatatypeProperty ;
+    rdfs:label "rationale" ;
+    rdfs:domain :ArchitectureDecision ;
+    rdfs:range xsd:string ;
+    skos:definition "Why the decision was taken, including the options considered." .
+
+:contextName a owl:DatatypeProperty ;
+    rdfs:label "context name" ;
+    rdfs:domain :SystemContext ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the system context." .
+
+:componentName a owl:DatatypeProperty ;
+    rdfs:label "component name" ;
+    rdfs:domain :ArchitectureComponent ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the architecture component." .
+
+:applicationReference a owl:DatatypeProperty ;
+    rdfs:label "application reference" ;
+    rdfs:domain :ArchitectureComponent ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the software application this component structures. The application stays owned by its application domain." .
+
+:contractName a owl:DatatypeProperty ;
+    rdfs:label "contract name" ;
+    rdfs:domain :InterfaceContract ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the interface contract." .
+
+:apiContractReference a owl:DatatypeProperty ;
+    rdfs:label "API contract reference" ;
+    rdfs:domain :InterfaceContract ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the backend API contract that realizes this interface. The API contract stays owned by backend services." .
+
+:viewpointName a owl:DatatypeProperty ;
+    rdfs:label "viewpoint name" ;
+    rdfs:domain :Viewpoint ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the viewpoint." .
+
+:principleName a owl:DatatypeProperty ;
+    rdfs:label "principle name" ;
+    rdfs:domain :ArchitecturePrinciple ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the architecture principle." .
+
+#################################################################
+# Roles
+#################################################################
+
+:EnterpriseArchitectRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Enterprise Architect" ;
+    skos:altLabel "Enterprise Architect Role" ;
+    skos:definition "Owns architecture decisions, system contexts, and interface contracts. Bearer: person. Permissions: ArchitectureDecision:read, ArchitectureDecision:write, SystemContext:read, SystemContext:write, InterfaceContract:read." .

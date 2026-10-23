@@ -1,0 +1,34 @@
+# Generic source mapping for DBS
+@prefix : <https://ecosystemcode.com/ontology/dbs#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:data_store owl:equivalentClass :DataStore .
+legacy:data_store_id rdfs:subPropertyOf :dataStoreId .
+legacy:database_schema owl:equivalentClass :DatabaseSchema .
+legacy:database_schema_id rdfs:subPropertyOf :databaseSchemaId .
+legacy:database_instance owl:equivalentClass :DatabaseInstance .
+legacy:database_instance_id rdfs:subPropertyOf :databaseInstanceId .
+legacy:backup_policy owl:equivalentClass :BackupPolicy .
+legacy:backup_policy_id rdfs:subPropertyOf :backupPolicyId .
+legacy:access_grant owl:equivalentClass :AccessGrant .
+legacy:access_grant_id rdfs:subPropertyOf :accessGrantId .
+legacy:data_product owl:equivalentClass :DataProduct .
+legacy:data_product_id rdfs:subPropertyOf :dataProductId .
+
+legacy:defines_data_store rdfs:subPropertyOf :definesDataStore .
+legacy:hosts_database_schema rdfs:subPropertyOf :hostsDatabaseSchema .
+legacy:protects_database_instance rdfs:subPropertyOf :protectsDatabaseInstance .
+legacy:grants_data_store rdfs:subPropertyOf :grantsDataStore .
+legacy:served_by_data_store rdfs:subPropertyOf :servedByDataStore .
+legacy:database_instance_status rdfs:subPropertyOf :databaseInstanceStatus .
+legacy:store_name rdfs:subPropertyOf :storeName .
+legacy:environment_code rdfs:subPropertyOf :environmentCode .
+legacy:schema_name rdfs:subPropertyOf :schemaName .
+legacy:instance_name rdfs:subPropertyOf :instanceName .
+legacy:host_reference rdfs:subPropertyOf :hostReference .
+legacy:retention_days rdfs:subPropertyOf :retentionDays .
+legacy:subject_reference rdfs:subPropertyOf :subjectReference .
+legacy:access_purpose rdfs:subPropertyOf :accessPurpose .
+legacy:data_product_name rdfs:subPropertyOf :dataProductName .

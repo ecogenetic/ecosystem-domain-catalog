@@ -1,0 +1,11 @@
+# Software industry mapping for ECOM
+@prefix sw: <https://ecosystemcode.com/ontology/ecom/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:digital_product_order owl:equivalentClass sw:DigitalProductOrder .
+legacy:digital_product_order_id rdfs:subPropertyOf sw:digitalProductOrderId .
+legacy:software_fulfilment owl:equivalentClass sw:SoftwareFulfilment .
+legacy:software_fulfilment_id rdfs:subPropertyOf sw:softwareFulfilmentId .
+legacy:fulfils_digital_product_order rdfs:subPropertyOf sw:fulfilsDigitalProductOrder .

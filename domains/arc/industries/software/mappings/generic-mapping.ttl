@@ -1,0 +1,9 @@
+# Software industry mapping for ARC
+@prefix sw: <https://ecosystemcode.com/ontology/arc/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_architecture_decision owl:equivalentClass sw:ProductArchitectureDecision .
+legacy:product_architecture_decision_id rdfs:subPropertyOf sw:productArchitectureDecisionId .
+legacy:governs_product_edition rdfs:subPropertyOf sw:governsProductEdition .

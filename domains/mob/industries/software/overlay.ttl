@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/mob/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/mob#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/mob/software> a owl:Ontology ;
+    rdfs:label "MOB Software Overlay" ;
+    rdfs:comment "Software-company specialization of Mobile Applications." .
+
+:ProductMobileApplication a owl:Class ;
+    rdfs:subClassOf base:MobileApplication ;
+    skos:prefLabel "Product Mobile Application" ;
+    skos:definition "A mobile application that presents one product edition." .
+
+:presentsMobileEdition a owl:ObjectProperty ;
+    rdfs:label "presents mobile edition" ;
+    rdfs:domain :ProductMobileApplication ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product mobile application with the product edition it presents." .
+
+:productMobileApplicationId a owl:DatatypeProperty ;
+    rdfs:label "product mobile application id" ;
+    rdfs:domain :ProductMobileApplication ;
+    rdfs:range xsd:string .
+
+:ProductMobileLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Mobile Lead" ;
+    skos:altLabel "Product Mobile Lead Role" ;
+    skos:definition "Owns the mobile application for a product edition. Bearer: person. Permissions: MobileApplication:read, MobileApplication:write, MobileRelease:read, MobileRelease:write." .
+
+:ProductMobileApplicationShape a sh:NodeShape ;
+    sh:targetClass :ProductMobileApplication ;
+    sh:property [
+        sh:path :presentsMobileEdition ;
+        sh:minCount 1 ;
+    ] .

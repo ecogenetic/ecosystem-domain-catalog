@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/rel/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/rel#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/rel/software> a owl:Ontology ;
+    rdfs:label "REL Software Overlay" ;
+    rdfs:comment "Software-company specialization of Release and Deployment." .
+
+:ProductRelease a owl:Class ;
+    rdfs:subClassOf base:Release ;
+    skos:prefLabel "Product Release" ;
+    skos:definition "A release of one product edition." .
+
+:releasesProductEdition a owl:ObjectProperty ;
+    rdfs:label "releases product edition" ;
+    rdfs:domain :ProductRelease ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product release with the product edition it releases." .
+
+:productReleaseId a owl:DatatypeProperty ;
+    rdfs:label "product release id" ;
+    rdfs:domain :ProductRelease ;
+    rdfs:range xsd:string .
+
+:ProductReleaseManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Release Manager" ;
+    skos:altLabel "Product Release Manager Role" ;
+    skos:definition "Owns releases of a product edition. Bearer: person. Permissions: Release:read, Release:write, Deployment:read, Deployment:write." .
+
+:ProductReleaseShape a sh:NodeShape ;
+    sh:targetClass :ProductRelease ;
+    sh:property [
+        sh:path :releasesProductEdition ;
+        sh:minCount 1 ;
+    ] .

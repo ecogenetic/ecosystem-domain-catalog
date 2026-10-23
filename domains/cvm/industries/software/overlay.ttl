@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/cvm/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/cvm#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cvm/software> a owl:Ontology ;
+    rdfs:label "CVM Software Overlay" ;
+    rdfs:comment "Software-company specialization of CVM." .
+
+:ProductLedSegment a owl:Class ;
+    rdfs:subClassOf base:Segment ;
+    skos:prefLabel "Product Led Segment" ;
+    skos:definition "A customer segment defined by product adoption or expansion potential." .
+
+:SeatExpansionOffer a owl:Class ;
+    rdfs:subClassOf base:Offer ;
+    skos:prefLabel "Seat Expansion Offer" ;
+    skos:definition "An offer to expand seats or features for a software tenant." .
+
+:targetsProductLedSegment a owl:ObjectProperty ;
+    rdfs:label "targets product led segment" ;
+    rdfs:domain :SeatExpansionOffer ;
+    rdfs:range :ProductLedSegment ;
+    skos:definition "Associates seat expansion offer with ProductLedSegment." .
+
+:productLedSegmentId a owl:DatatypeProperty ;
+    rdfs:label "product led segment id" ;
+    rdfs:domain :ProductLedSegment ;
+    rdfs:range xsd:string .
+
+:seatExpansionOfferId a owl:DatatypeProperty ;
+    rdfs:label "seat expansion offer id" ;
+    rdfs:domain :SeatExpansionOffer ;
+    rdfs:range xsd:string .
+
+:ProductGrowthAnalystRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product Growth Analyst" ;
+    skos:altLabel "Product Growth Analyst Role" ;
+    skos:definition "Scores expansion and churn for software tenants. Bearer: person. Permissions: Segment:read, Offer:read, Offer:write, ChurnRisk:read." .
+
+:ProductLedSegmentShape a sh:NodeShape ;
+    sh:targetClass :ProductLedSegment ;
+    sh:property [
+        sh:path :productLedSegmentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

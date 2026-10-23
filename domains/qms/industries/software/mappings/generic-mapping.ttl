@@ -1,0 +1,11 @@
+# Software industry mapping for QMS
+@prefix sw: <https://ecosystemcode.com/ontology/qms/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:release_inspection owl:equivalentClass sw:ReleaseInspection .
+legacy:release_inspection_id rdfs:subPropertyOf sw:releaseInspectionId .
+legacy:defect_non_conformance owl:equivalentClass sw:DefectNonConformance .
+legacy:defect_non_conformance_id rdfs:subPropertyOf sw:defectNonConformanceId .
+legacy:finds_defect_non_conformance rdfs:subPropertyOf sw:findsDefectNonConformance .

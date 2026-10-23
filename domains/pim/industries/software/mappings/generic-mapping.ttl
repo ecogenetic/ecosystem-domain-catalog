@@ -1,0 +1,11 @@
+# Software industry mapping for PIM
+@prefix sw: <https://ecosystemcode.com/ontology/pim/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:software_edition_product owl:equivalentClass sw:SoftwareEditionProduct .
+legacy:software_edition_product_id rdfs:subPropertyOf sw:softwareEditionProductId .
+legacy:edition_attribute owl:equivalentClass sw:EditionAttribute .
+legacy:edition_attribute_id rdfs:subPropertyOf sw:editionAttributeId .
+legacy:describes_software_edition rdfs:subPropertyOf sw:describesSoftwareEdition .

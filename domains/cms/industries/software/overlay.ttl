@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/cms/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/cms#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cms/software> a owl:Ontology ;
+    rdfs:label "CMS Software Overlay" ;
+    rdfs:comment "Software-company specialization of CMS." .
+
+:DeveloperDocContent a owl:Class ;
+    rdfs:subClassOf base:Content ;
+    skos:prefLabel "Developer Doc Content" ;
+    skos:definition "Content that explains a software product or API. Distinct from a configuration item." .
+
+:ApiDocumentationPage a owl:Class ;
+    rdfs:subClassOf base:Page ;
+    skos:prefLabel "API Documentation Page" ;
+    skos:definition "A page that publishes developer documentation for an API." .
+
+:publishesDeveloperDoc a owl:ObjectProperty ;
+    rdfs:label "publishes developer doc" ;
+    rdfs:domain :ApiDocumentationPage ;
+    rdfs:range :DeveloperDocContent ;
+    skos:definition "Associates api documentation page with DeveloperDocContent." .
+
+:developerDocContentId a owl:DatatypeProperty ;
+    rdfs:label "developer doc content id" ;
+    rdfs:domain :DeveloperDocContent ;
+    rdfs:range xsd:string .
+
+:apiDocumentationPageId a owl:DatatypeProperty ;
+    rdfs:label "api documentation page id" ;
+    rdfs:domain :ApiDocumentationPage ;
+    rdfs:range xsd:string .
+
+:DeveloperDocAuthorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Developer Doc Author" ;
+    skos:altLabel "Developer Doc Author Role" ;
+    skos:definition "Writes and publishes product and API documentation. Bearer: person. Permissions: Content:read, Content:write, Page:read, Page:write." .
+
+:DeveloperDocContentShape a sh:NodeShape ;
+    sh:targetClass :DeveloperDocContent ;
+    sh:property [
+        sh:path :developerDocContentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/cpq/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/cpq#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/cpq/software> a owl:Ontology ;
+    rdfs:label "CPQ Software Overlay" ;
+    rdfs:comment "Software-company specialization of CPQ." .
+
+:EditionBundle a owl:Class ;
+    rdfs:subClassOf base:Bundle ;
+    skos:prefLabel "Edition Bundle" ;
+    skos:definition "A bundle of product editions priced together." .
+
+:SeatPriceRule a owl:Class ;
+    rdfs:subClassOf base:PriceRule ;
+    skos:prefLabel "Seat Price Rule" ;
+    skos:definition "A price rule that prices seats or usage for a software edition." .
+
+:pricesEditionBundle a owl:ObjectProperty ;
+    rdfs:label "prices edition bundle" ;
+    rdfs:domain :SeatPriceRule ;
+    rdfs:range :EditionBundle ;
+    skos:definition "Associates seat price rule with EditionBundle." .
+
+:editionBundleId a owl:DatatypeProperty ;
+    rdfs:label "edition bundle id" ;
+    rdfs:domain :EditionBundle ;
+    rdfs:range xsd:string .
+
+:seatPriceRuleId a owl:DatatypeProperty ;
+    rdfs:label "seat price rule id" ;
+    rdfs:domain :SeatPriceRule ;
+    rdfs:range xsd:string .
+
+:SoftwarePricingApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Software Pricing Approver" ;
+    skos:altLabel "Software Pricing Approver Role" ;
+    skos:definition "Approves seat and usage prices for a product edition. Bearer: person. Permissions: PriceRule:read, PriceRule:write, Quote:read, Approval:write." .
+
+:EditionBundleShape a sh:NodeShape ;
+    sh:targetClass :EditionBundle ;
+    sh:property [
+        sh:path :editionBundleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

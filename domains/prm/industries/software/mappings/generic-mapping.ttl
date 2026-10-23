@@ -1,0 +1,11 @@
+# Software industry mapping for PRM
+@prefix sw: <https://ecosystemcode.com/ontology/prm/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:marketplace_partner owl:equivalentClass sw:MarketplacePartner .
+legacy:marketplace_partner_id rdfs:subPropertyOf sw:marketplacePartnerId .
+legacy:integration_agreement owl:equivalentClass sw:IntegrationAgreement .
+legacy:integration_agreement_id rdfs:subPropertyOf sw:integrationAgreementId .
+legacy:governs_marketplace_partner rdfs:subPropertyOf sw:governsMarketplacePartner .

@@ -1,0 +1,11 @@
+# Software industry mapping for PLM
+@prefix sw: <https://ecosystemcode.com/ontology/plm/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:software_revision owl:equivalentClass sw:SoftwareRevision .
+legacy:software_revision_id rdfs:subPropertyOf sw:softwareRevisionId .
+legacy:release_engineering_change owl:equivalentClass sw:ReleaseEngineeringChange .
+legacy:release_engineering_change_id rdfs:subPropertyOf sw:releaseEngineeringChangeId .
+legacy:revises_software_revision rdfs:subPropertyOf sw:revisesSoftwareRevision .

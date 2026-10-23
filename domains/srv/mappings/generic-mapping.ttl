@@ -1,0 +1,33 @@
+# Generic source mapping for SRV
+@prefix : <https://ecosystemcode.com/ontology/srv#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:compute_host owl:equivalentClass :ComputeHost .
+legacy:compute_host_id rdfs:subPropertyOf :computeHostId .
+legacy:compute_cluster owl:equivalentClass :ComputeCluster .
+legacy:compute_cluster_id rdfs:subPropertyOf :computeClusterId .
+legacy:runtime owl:equivalentClass :Runtime .
+legacy:runtime_id rdfs:subPropertyOf :runtimeId .
+legacy:server_image owl:equivalentClass :ServerImage .
+legacy:server_image_id rdfs:subPropertyOf :serverImageId .
+legacy:capacity_pool owl:equivalentClass :CapacityPool .
+legacy:capacity_pool_id rdfs:subPropertyOf :capacityPoolId .
+legacy:availability_target owl:equivalentClass :AvailabilityTarget .
+legacy:availability_target_id rdfs:subPropertyOf :availabilityTargetId .
+
+legacy:member_of_compute_cluster rdfs:subPropertyOf :memberOfComputeCluster .
+legacy:runs_runtime rdfs:subPropertyOf :runsRuntime .
+legacy:built_from_server_image rdfs:subPropertyOf :builtFromServerImage .
+legacy:allocates_compute_host rdfs:subPropertyOf :allocatesComputeHost .
+legacy:covers_compute_cluster rdfs:subPropertyOf :coversComputeCluster .
+legacy:compute_host_status rdfs:subPropertyOf :computeHostStatus .
+legacy:host_name rdfs:subPropertyOf :hostName .
+legacy:environment_code rdfs:subPropertyOf :environmentCode .
+legacy:application_reference rdfs:subPropertyOf :applicationReference .
+legacy:cluster_name rdfs:subPropertyOf :clusterName .
+legacy:runtime_name rdfs:subPropertyOf :runtimeName .
+legacy:image_name rdfs:subPropertyOf :imageName .
+legacy:pool_name rdfs:subPropertyOf :poolName .
+legacy:availability_percent rdfs:subPropertyOf :availabilityPercent .

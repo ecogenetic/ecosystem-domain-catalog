@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "2.0.0",
+  "catalogVersion": "2.1.0",
   "domains": [
     {
       "id": "crm",
@@ -47,12 +47,13 @@
         "banking",
         "gambling",
         "healthcare",
-        "telco"
+        "telco",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "3.0.0"
+      "version": "3.1.0"
     },
     {
       "id": "cvm",
@@ -91,12 +92,13 @@
         "banking",
         "gambling",
         "insurance",
-        "telco"
+        "telco",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.2"
+      "version": "1.3.0"
     },
     {
       "id": "erp",
@@ -132,12 +134,13 @@
       "workflow": "Create requisition \u2192 approve \u2192 raise purchase order \u2192 receive goods \u2192 three-way match invoice \u2192 pay vendor \u2192 post to ledger",
       "statefulEntity": "PurchaseOrder (draft \u2192 approved \u2192 received \u2192 invoiced \u2192 closed)",
       "industries": [
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "hcm",
@@ -164,12 +167,13 @@
       "statefulEntity": "LeaveRequest (submitted \u2192 approved \u2192 rejected \u2192 reflected in payroll)",
       "industries": [
         "healthcare",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "scm",
@@ -288,12 +292,13 @@
       "workflow": "Receive order \u2192 allocate inventory \u2192 pick and pack \u2192 ship \u2192 process return if needed",
       "statefulEntity": "Order (received \u2192 allocated \u2192 fulfilled \u2192 shipped \u2192 returned)",
       "industries": [
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "plm",
@@ -319,12 +324,13 @@
       "workflow": "Create part \u2192 define BOM \u2192 submit engineering change \u2192 review \u2192 release revision",
       "statefulEntity": "EngineeringChange (draft \u2192 review \u2192 approved \u2192 released)",
       "industries": [
-        "telco"
+        "telco",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "pim",
@@ -351,12 +357,13 @@
       "statefulEntity": "Product (draft \u2192 enriched \u2192 approved \u2192 published)",
       "industries": [
         "telco",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "mdm",
@@ -382,12 +389,13 @@
       "workflow": "Ingest source record \u2192 match and merge \u2192 steward review \u2192 publish golden record",
       "statefulEntity": "GoldenRecord (ingested \u2192 matched \u2192 stewarded \u2192 published)",
       "industries": [
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "bpm",
@@ -414,12 +422,13 @@
       "statefulEntity": "Case (started \u2192 in progress \u2192 decision \u2192 closed)",
       "industries": [
         "healthcare",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "grc",
@@ -446,12 +455,13 @@
       "statefulEntity": "AuditFinding (identified \u2192 remediated \u2192 verified \u2192 closed)",
       "industries": [
         "insurance",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "eam",
@@ -540,12 +550,13 @@
       "workflow": "Schedule inspection \u2192 record sample \u2192 raise non-conformance \u2192 initiate CAPA \u2192 verify effectiveness",
       "statefulEntity": "NonConformance (recorded \u2192 CAPA initiated \u2192 verified \u2192 closed)",
       "industries": [
-        "healthcare"
+        "healthcare",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "cms",
@@ -572,12 +583,13 @@
       "statefulEntity": "Content (draft \u2192 review \u2192 approved \u2192 published)",
       "industries": [
         "gambling",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "bi",
@@ -603,12 +615,13 @@
       "workflow": "Model dataset \u2192 define metric \u2192 build dashboard \u2192 share report \u2192 refresh on schedule",
       "statefulEntity": "Report (defined \u2192 scheduled \u2192 refreshed \u2192 archived)",
       "industries": [
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "itsm",
@@ -635,12 +648,13 @@
       "statefulEntity": "Incident (logged \u2192 in progress \u2192 resolved \u2192 closed)",
       "industries": [
         "telco",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "lms",
@@ -667,12 +681,13 @@
       "statefulEntity": "Enrollment (enrolled \u2192 in progress \u2192 completed \u2192 certified)",
       "industries": [
         "healthcare",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "cpq",
@@ -699,12 +714,13 @@
       "statefulEntity": "Quote (configured \u2192 priced \u2192 submitted \u2192 approved/rejected)",
       "industries": [
         "telco",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.2.0"
+      "version": "1.3.0"
     },
     {
       "id": "fms",
@@ -737,12 +753,13 @@
       "workflow": "Post to GL \u2192 record AP/Purchase Ledger invoice \u2192 approve payment \u2192 post AR/Sales Ledger receipt \u2192 reconcile subledgers \u2192 close fiscal period",
       "statefulEntity": "JournalEntry (draft \u2192 posted \u2192 reconciled \u2192 period closed)",
       "industries": [
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "ccm",
@@ -866,12 +883,13 @@
       "statefulEntity": "Order (cart \u2192 paid \u2192 fulfilled \u2192 delivered)",
       "industries": [
         "banking",
-        "telco"
+        "telco",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "pos",
@@ -1027,12 +1045,13 @@
       "statefulEntity": "ServiceInstance (designed \u2192 reserved \u2192 active \u2192 suspended \u2192 retired)",
       "industries": [
         "telco",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "prv",
@@ -1260,12 +1279,13 @@
       "statefulEntity": "ServiceAlarm (raised \u2192 acknowledged \u2192 correlated \u2192 cleared \u2192 escalated)",
       "industries": [
         "telco",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "prm",
@@ -1294,12 +1314,13 @@
       "statefulEntity": "Partner (prospective \u2192 onboarding \u2192 active \u2192 suspended \u2192 terminated)",
       "industries": [
         "telco",
-        "banking"
+        "banking",
+        "software"
       ],
       "hasDescription": true,
       "hasOntology": true,
       "hasShapes": true,
-      "version": "1.1.0"
+      "version": "1.2.0"
     },
     {
       "id": "card",
@@ -1399,6 +1420,284 @@
       "hasOntology": true,
       "hasShapes": true,
       "version": "1.0.0"
+    },
+    {
+      "id": "arc",
+      "acronym": "ARC",
+      "name": "Architecture Management",
+      "description": "Architecture Management",
+      "icon": "Boxes",
+      "chips": [
+        "ArchitectureDecision",
+        "SystemContext",
+        "ArchitectureComponent"
+      ],
+      "entities": [
+        "ArchitectureDecision",
+        "SystemContext",
+        "ArchitectureComponent",
+        "InterfaceContract",
+        "Viewpoint",
+        "ArchitecturePrinciple"
+      ],
+      "capability": "record architecture decisions against a system context, define structural components and interface contracts, and cite the principles a viewpoint must satisfy",
+      "benefit": "product and platform teams share one traceable structure for how the software is shaped and why",
+      "workflow": "Describe system context \u2192 propose decision \u2192 define components \u2192 publish interface contracts \u2192 accept or supersede",
+      "statefulEntity": "ArchitectureDecision (proposed \u2192 accepted \u2192 superseded/rejected)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "cld",
+      "acronym": "CLD",
+      "name": "Cloud Architecture",
+      "description": "Cloud Architecture",
+      "icon": "CloudCog",
+      "chips": [
+        "CloudAccount",
+        "LandingZone",
+        "CloudRegion"
+      ],
+      "entities": [
+        "CloudAccount",
+        "LandingZone",
+        "CloudRegion",
+        "NetworkSegment",
+        "CloudEnvironment",
+        "SharedCloudService"
+      ],
+      "capability": "design cloud accounts and landing zones, place them in regions, segment networks, and record the cloud environments shared services support",
+      "benefit": "platform teams keep a controlled map of where software is allowed to run",
+      "workflow": "Open cloud account \u2192 design landing zone \u2192 place region and network \u2192 provision environment \u2192 activate shared services \u2192 retire",
+      "statefulEntity": "LandingZone (designed \u2192 provisioned \u2192 active \u2192 retired)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "srv",
+      "acronym": "SRV",
+      "name": "Server and Compute Management",
+      "description": "Server and Compute Management",
+      "icon": "Server",
+      "chips": [
+        "ComputeHost",
+        "ComputeCluster",
+        "Runtime"
+      ],
+      "entities": [
+        "ComputeHost",
+        "ComputeCluster",
+        "Runtime",
+        "ServerImage",
+        "CapacityPool",
+        "AvailabilityTarget"
+      ],
+      "capability": "provision compute hosts and clusters, record the runtime and image they use, and allocate capacity against an availability target",
+      "benefit": "platform teams know which compute runs a product and can drain it without losing the record",
+      "workflow": "Define cluster \u2192 build image \u2192 provision host \u2192 run runtime \u2192 allocate capacity \u2192 drain or decommission",
+      "statefulEntity": "ComputeHost (provisioned \u2192 active \u2192 drained \u2192 decommissioned)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "dbs",
+      "acronym": "DBS",
+      "name": "Database and Data Store Management",
+      "description": "Database and Data Store Management",
+      "icon": "Database",
+      "chips": [
+        "DataStore",
+        "DatabaseSchema",
+        "DatabaseInstance"
+      ],
+      "entities": [
+        "DataStore",
+        "DatabaseSchema",
+        "DatabaseInstance",
+        "BackupPolicy",
+        "AccessGrant",
+        "DataProduct"
+      ],
+      "capability": "register data stores and schemas, run database instances, apply backup policy, and grant access for data products",
+      "benefit": "data and product teams share one record of where software data lives and who may use it",
+      "workflow": "Define data store \u2192 publish schema \u2192 provision instance \u2192 apply backup policy \u2192 grant access \u2192 retire",
+      "statefulEntity": "DatabaseInstance (provisioned \u2192 online \u2192 maintenance \u2192 retired)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "rel",
+      "acronym": "REL",
+      "name": "Release and Deployment",
+      "description": "Release and Deployment",
+      "icon": "Rocket",
+      "chips": [
+        "SourceRepository",
+        "Build",
+        "Release"
+      ],
+      "entities": [
+        "SourceRepository",
+        "Build",
+        "Release",
+        "Deployment",
+        "ReleaseTarget",
+        "ChangeSet"
+      ],
+      "capability": "version source in a repository, build a release from a change set, and deploy that release to a release target",
+      "benefit": "delivery teams can show what was built, where it was deployed, and how it was rolled back",
+      "workflow": "Commit repository \u2192 build \u2192 assemble release \u2192 choose release target \u2192 deploy \u2192 roll back or retire",
+      "statefulEntity": "Release (planned \u2192 built \u2192 deployed \u2192 rolledBack/retired)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "lic",
+      "acronym": "LIC",
+      "name": "Licensing and Entitlements",
+      "description": "Licensing and Entitlements",
+      "icon": "KeySquare",
+      "chips": [
+        "LicenseAgreement",
+        "Entitlement",
+        "SeatAllocation"
+      ],
+      "entities": [
+        "LicenseAgreement",
+        "Entitlement",
+        "SeatAllocation",
+        "FeatureAccess",
+        "UsageMeter",
+        "LicenseKey"
+      ],
+      "capability": "issue license agreements, grant entitlements for seats and features, meter usage, and suspend or expire the agreement",
+      "benefit": "commercial and product teams enforce what a customer may use without copying the customer record",
+      "workflow": "Quote license \u2192 activate agreement \u2192 grant entitlement \u2192 allocate seats \u2192 meter usage \u2192 suspend or expire",
+      "statefulEntity": "LicenseAgreement (quoted \u2192 active \u2192 suspended \u2192 expired)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "uia",
+      "acronym": "UIA",
+      "name": "User Interface Applications",
+      "description": "User Interface Applications",
+      "icon": "AppWindow",
+      "chips": [
+        "ClientApplication",
+        "Screen",
+        "UiComponent"
+      ],
+      "entities": [
+        "ClientApplication",
+        "Screen",
+        "UiComponent",
+        "DesignSystem",
+        "NavigationFlow",
+        "AccessibilityRequirement"
+      ],
+      "capability": "define client applications, compose screens from user-interface components, adopt a design system, and record accessibility requirements",
+      "benefit": "product teams share the client application structure customers actually use",
+      "workflow": "Define client application \u2192 adopt design system \u2192 compose screens \u2192 connect navigation \u2192 meet accessibility \u2192 release or deprecate",
+      "statefulEntity": "ClientApplication (draft \u2192 released \u2192 deprecated)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "mob",
+      "acronym": "MOB",
+      "name": "Mobile Applications",
+      "description": "Mobile Applications",
+      "icon": "Smartphone",
+      "chips": [
+        "MobileApplication",
+        "AppStoreListing",
+        "DevicePlatform"
+      ],
+      "entities": [
+        "MobileApplication",
+        "AppStoreListing",
+        "DevicePlatform",
+        "MobileRelease",
+        "PushChannel",
+        "StoreReview"
+      ],
+      "capability": "publish mobile applications to a device platform, submit mobile releases for store review, and operate push channels",
+      "benefit": "mobile teams keep store distribution, review outcome, and the released binary on one record",
+      "workflow": "Define mobile application \u2192 target platform \u2192 build release \u2192 submit to store \u2192 release or retire",
+      "statefulEntity": "MobileRelease (built \u2192 submitted \u2192 released \u2192 retired)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
+    },
+    {
+      "id": "bks",
+      "acronym": "BKS",
+      "name": "Backend Services",
+      "description": "Backend Services",
+      "icon": "ServerCog",
+      "chips": [
+        "BackendService",
+        "ApiContract",
+        "ApiEndpoint"
+      ],
+      "entities": [
+        "BackendService",
+        "ApiContract",
+        "ApiEndpoint",
+        "ServiceBinding",
+        "ApiConsumer"
+      ],
+      "capability": "define backend services, publish API contracts and endpoints, and bind the consumers allowed to call them",
+      "benefit": "product and platform teams share the service definition separately from the deployed service instance",
+      "workflow": "Define backend service \u2192 draft API contract \u2192 publish endpoints \u2192 bind consumers \u2192 deprecate the contract",
+      "statefulEntity": "ApiContract (draft \u2192 published \u2192 deprecated)",
+      "industries": [
+        "software"
+      ],
+      "hasDescription": true,
+      "hasOntology": true,
+      "hasShapes": true,
+      "version": "1.1.0"
     }
   ]
 }

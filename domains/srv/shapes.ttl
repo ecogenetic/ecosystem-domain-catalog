@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/srv#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ComputeHostShape a sh:NodeShape ;
+    sh:targetClass :ComputeHost ;
+    sh:property [
+        sh:path :computeHostId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :hostName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :computeHostStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "provisioned" "active" "drained" "decommissioned" ) ;
+    ] .
+
+:ComputeClusterShape a sh:NodeShape ;
+    sh:targetClass :ComputeCluster ;
+    sh:property [
+        sh:path :computeClusterId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :clusterName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:RuntimeShape a sh:NodeShape ;
+    sh:targetClass :Runtime ;
+    sh:property [
+        sh:path :runtimeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :runtimeName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ServerImageShape a sh:NodeShape ;
+    sh:targetClass :ServerImage ;
+    sh:property [
+        sh:path :serverImageId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :imageName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CapacityPoolShape a sh:NodeShape ;
+    sh:targetClass :CapacityPool ;
+    sh:property [
+        sh:path :capacityPoolId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :poolName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AvailabilityTargetShape a sh:NodeShape ;
+    sh:targetClass :AvailabilityTarget ;
+    sh:property [
+        sh:path :availabilityTargetId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :availabilityPercent ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] .

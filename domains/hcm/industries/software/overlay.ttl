@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/hcm/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/hcm#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/hcm/software> a owl:Ontology ;
+    rdfs:label "HCM Software Overlay" ;
+    rdfs:comment "Software-company specialization of HCM." .
+
+:EngineerEmployee a owl:Class ;
+    rdfs:subClassOf base:Employee ;
+    skos:prefLabel "Engineer Employee" ;
+    skos:definition "An employee who designs, builds, or operates software." .
+
+:EngineeringPosition a owl:Class ;
+    rdfs:subClassOf base:Position ;
+    skos:prefLabel "Engineering Position" ;
+    skos:definition "A position in a product, platform, or architecture team." .
+
+:holdsEngineeringPosition a owl:ObjectProperty ;
+    rdfs:label "holds engineering position" ;
+    rdfs:domain :EngineerEmployee ;
+    rdfs:range :EngineeringPosition ;
+    skos:definition "Associates engineer employee with EngineeringPosition." .
+
+:engineerEmployeeId a owl:DatatypeProperty ;
+    rdfs:label "engineer employee id" ;
+    rdfs:domain :EngineerEmployee ;
+    rdfs:range xsd:string .
+
+:engineeringPositionId a owl:DatatypeProperty ;
+    rdfs:label "engineering position id" ;
+    rdfs:domain :EngineeringPosition ;
+    rdfs:range xsd:string .
+
+:EngineeringManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Engineering Manager" ;
+    skos:altLabel "Engineering Manager Role" ;
+    skos:definition "Manages engineering positions and the employees who hold them. Bearer: person. Permissions: Employee:read, Position:read, Position:write, Appraisal:read." .
+
+:EngineerEmployeeShape a sh:NodeShape ;
+    sh:targetClass :EngineerEmployee ;
+    sh:property [
+        sh:path :engineerEmployeeId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

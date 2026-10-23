@@ -1,0 +1,9 @@
+# Software industry mapping for UIA
+@prefix sw: <https://ecosystemcode.com/ontology/uia/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_client_application owl:equivalentClass sw:ProductClientApplication .
+legacy:product_client_application_id rdfs:subPropertyOf sw:productClientApplicationId .
+legacy:presents_product_edition rdfs:subPropertyOf sw:presentsProductEdition .

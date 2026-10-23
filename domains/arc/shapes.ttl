@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/arc#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ArchitectureDecisionShape a sh:NodeShape ;
+    sh:targetClass :ArchitectureDecision ;
+    sh:property [
+        sh:path :architectureDecisionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :decisionTitle ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :architectureDecisionStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "proposed" "accepted" "superseded" "rejected" ) ;
+    ] .
+
+:SystemContextShape a sh:NodeShape ;
+    sh:targetClass :SystemContext ;
+    sh:property [
+        sh:path :systemContextId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contextName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ArchitectureComponentShape a sh:NodeShape ;
+    sh:targetClass :ArchitectureComponent ;
+    sh:property [
+        sh:path :architectureComponentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :componentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:InterfaceContractShape a sh:NodeShape ;
+    sh:targetClass :InterfaceContract ;
+    sh:property [
+        sh:path :interfaceContractId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :contractName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ViewpointShape a sh:NodeShape ;
+    sh:targetClass :Viewpoint ;
+    sh:property [
+        sh:path :viewpointId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :viewpointName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:ArchitecturePrincipleShape a sh:NodeShape ;
+    sh:targetClass :ArchitecturePrinciple ;
+    sh:property [
+        sh:path :architecturePrincipleId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :principleName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

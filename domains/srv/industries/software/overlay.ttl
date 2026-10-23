@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/srv/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/srv#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/srv/software> a owl:Ontology ;
+    rdfs:label "SRV Software Overlay" ;
+    rdfs:comment "Software-company specialization of Server and Compute Management." .
+
+:ApplicationComputeHost a owl:Class ;
+    rdfs:subClassOf base:ComputeHost ;
+    skos:prefLabel "Application Compute Host" ;
+    skos:definition "A compute host assigned to run one software application." .
+
+:hostsProductEdition a owl:ObjectProperty ;
+    rdfs:label "hosts product edition" ;
+    rdfs:domain :ApplicationComputeHost ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates an application compute host with the product edition it runs." .
+
+:applicationComputeHostId a owl:DatatypeProperty ;
+    rdfs:label "application compute host id" ;
+    rdfs:domain :ApplicationComputeHost ;
+    rdfs:range xsd:string .
+
+:ApplicationPlatformEngineerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Application Platform Engineer" ;
+    skos:altLabel "Application Platform Engineer Role" ;
+    skos:definition "Assigns compute hosts to a product edition. Bearer: person. Permissions: ComputeHost:read, ComputeHost:write, ComputeCluster:read." .
+
+:ApplicationComputeHostShape a sh:NodeShape ;
+    sh:targetClass :ApplicationComputeHost ;
+    sh:property [
+        sh:path :hostsProductEdition ;
+        sh:minCount 1 ;
+    ] .

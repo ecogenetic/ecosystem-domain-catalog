@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/erp/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/erp#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/erp/software> a owl:Ontology ;
+    rdfs:label "ERP Software Overlay" ;
+    rdfs:comment "Software-company specialization of ERP." .
+
+:SubscriptionSalesOrder a owl:Class ;
+    rdfs:subClassOf base:SalesOrder ;
+    skos:prefLabel "Subscription Sales Order" ;
+    skos:definition "A sales order for a recurring software subscription." .
+
+:SoftwareVendor a owl:Class ;
+    rdfs:subClassOf base:Vendor ;
+    skos:prefLabel "Software Vendor" ;
+    skos:definition "A vendor that supplies software, cloud, or implementation services to the company." .
+
+:contractedThroughSoftwareVendor a owl:ObjectProperty ;
+    rdfs:label "contracted through software vendor" ;
+    rdfs:domain :SubscriptionSalesOrder ;
+    rdfs:range :SoftwareVendor ;
+    skos:definition "Associates subscription sales order with SoftwareVendor." .
+
+:subscriptionSalesOrderId a owl:DatatypeProperty ;
+    rdfs:label "subscription sales order id" ;
+    rdfs:domain :SubscriptionSalesOrder ;
+    rdfs:range xsd:string .
+
+:softwareVendorId a owl:DatatypeProperty ;
+    rdfs:label "software vendor id" ;
+    rdfs:domain :SoftwareVendor ;
+    rdfs:range xsd:string .
+
+:SubscriptionFinanceClerkRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Subscription Finance Clerk" ;
+    skos:altLabel "Subscription Finance Clerk Role" ;
+    skos:definition "Records subscription sales orders and their invoices. Bearer: person. Permissions: SalesOrder:read, SalesOrder:write, CustomerInvoice:read." .
+
+:SubscriptionSalesOrderShape a sh:NodeShape ;
+    sh:targetClass :SubscriptionSalesOrder ;
+    sh:property [
+        sh:path :subscriptionSalesOrderId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

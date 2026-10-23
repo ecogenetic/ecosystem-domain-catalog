@@ -304,3 +304,22 @@
     rdfs:domain :CustomerRelationship ;
     rdfs:range :Customer ;
     skos:definition "The customer party participating in the managed relationship." .
+
+#################################################################
+# Software company composition
+#################################################################
+
+:SoftwareApplication a owl:Class ;
+    skos:prefLabel "Software Application" ;
+    skos:altLabel "Application" ;
+    skos:definition "A built software product that users or other systems invoke, including user-interface, mobile, and backend applications." .
+
+:RuntimeEnvironment a owl:Class ;
+    skos:prefLabel "Runtime Environment" ;
+    skos:altLabel "Execution Environment" ;
+    skos:definition "A place where software executes. A cloud environment and a release target are distinct specializations correlated by identifier." .
+
+:Deployment a owl:Class ;
+    skos:prefLabel "Deployment" ;
+    skos:altLabel "Software Deployment" ;
+    skos:definition "The placement of a software release onto a release target so a service instance can run." .

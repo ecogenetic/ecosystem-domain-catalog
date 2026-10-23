@@ -1,0 +1,161 @@
+@prefix : <https://ecosystemcode.com/ontology/dbs#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/dbs> a owl:Ontology ;
+    rdfs:label "DBS Domain Ontology" ;
+    rdfs:comment "Governs data stores, schemas, database instances, backup policies, access grants, and the data products those stores serve." .
+
+#################################################################
+# Classes
+#################################################################
+
+:DataStore a owl:Class ;
+    skos:prefLabel "Data Store" ;
+    skos:definition "A logical store of software data, such as a database, cache, or object collection." .
+:DatabaseSchema a owl:Class ;
+    skos:prefLabel "Database Schema" ;
+    skos:definition "The versioned structure that defines a data store." .
+:DatabaseInstance a owl:Class ;
+    skos:prefLabel "Database Instance" ;
+    skos:definition "A running database that hosts a schema. Distinct from a physical asset and from a product." .
+:BackupPolicy a owl:Class ;
+    skos:prefLabel "Backup Policy" ;
+    skos:definition "The rule for how a database instance is backed up and restored." .
+:AccessGrant a owl:Class ;
+    skos:prefLabel "Access Grant" ;
+    skos:definition "A permission for a subject to use a data store." .
+:DataProduct a owl:Class ;
+    skos:prefLabel "Data Product" ;
+    skos:definition "A governed data set served from a data store for other teams or products to consume." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:definesDataStore a owl:ObjectProperty ;
+    rdfs:label "defines data store" ;
+    rdfs:domain :DatabaseSchema ;
+    rdfs:range :DataStore ;
+    skos:definition "Associates a database schema with the data store it defines." .
+:hostsDatabaseSchema a owl:ObjectProperty ;
+    rdfs:label "hosts database schema" ;
+    rdfs:domain :DatabaseInstance ;
+    rdfs:range :DatabaseSchema ;
+    skos:definition "Associates a database instance with the schema it hosts." .
+:protectsDatabaseInstance a owl:ObjectProperty ;
+    rdfs:label "protects database instance" ;
+    rdfs:domain :BackupPolicy ;
+    rdfs:range :DatabaseInstance ;
+    skos:definition "Associates a backup policy with the database instance it protects." .
+:grantsDataStore a owl:ObjectProperty ;
+    rdfs:label "grants data store" ;
+    rdfs:domain :AccessGrant ;
+    rdfs:range :DataStore ;
+    skos:definition "Associates an access grant with the data store it permits." .
+:servedByDataStore a owl:ObjectProperty ;
+    rdfs:label "served by data store" ;
+    rdfs:domain :DataProduct ;
+    rdfs:range :DataStore ;
+    skos:definition "Associates a data product with the data store that serves it." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:dataStoreId a owl:DatatypeProperty ;
+    rdfs:label "data store id" ;
+    rdfs:domain :DataStore ;
+    rdfs:range xsd:string .
+:databaseSchemaId a owl:DatatypeProperty ;
+    rdfs:label "database schema id" ;
+    rdfs:domain :DatabaseSchema ;
+    rdfs:range xsd:string .
+:databaseInstanceId a owl:DatatypeProperty ;
+    rdfs:label "database instance id" ;
+    rdfs:domain :DatabaseInstance ;
+    rdfs:range xsd:string .
+:backupPolicyId a owl:DatatypeProperty ;
+    rdfs:label "backup policy id" ;
+    rdfs:domain :BackupPolicy ;
+    rdfs:range xsd:string .
+:accessGrantId a owl:DatatypeProperty ;
+    rdfs:label "access grant id" ;
+    rdfs:domain :AccessGrant ;
+    rdfs:range xsd:string .
+:dataProductId a owl:DatatypeProperty ;
+    rdfs:label "data product id" ;
+    rdfs:domain :DataProduct ;
+    rdfs:range xsd:string .
+:databaseInstanceStatus a owl:DatatypeProperty ;
+    rdfs:label "database instance status" ;
+    rdfs:domain :DatabaseInstance ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of database instance: provisioned, online, maintenance, retired." .
+
+:storeName a owl:DatatypeProperty ;
+    rdfs:label "store name" ;
+    rdfs:domain :DataStore ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the data store." .
+
+:environmentCode a owl:DatatypeProperty ;
+    rdfs:label "environment code" ;
+    rdfs:domain :DataStore ;
+    rdfs:range xsd:string ;
+    skos:definition "Shared code of the environment where this data store runs." .
+
+:schemaName a owl:DatatypeProperty ;
+    rdfs:label "schema name" ;
+    rdfs:domain :DatabaseSchema ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the database schema." .
+
+:instanceName a owl:DatatypeProperty ;
+    rdfs:label "instance name" ;
+    rdfs:domain :DatabaseInstance ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the running database instance." .
+
+:hostReference a owl:DatatypeProperty ;
+    rdfs:label "host reference" ;
+    rdfs:domain :DatabaseInstance ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the compute host this instance runs on. The host stays owned by server management." .
+
+:retentionDays a owl:DatatypeProperty ;
+    rdfs:label "retention days" ;
+    rdfs:domain :BackupPolicy ;
+    rdfs:range xsd:integer ;
+    skos:definition "How many days a backup is retained." .
+
+:subjectReference a owl:DatatypeProperty ;
+    rdfs:label "subject reference" ;
+    rdfs:domain :AccessGrant ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the person, service, or tenant granted access." .
+
+:accessPurpose a owl:DatatypeProperty ;
+    rdfs:label "access purpose" ;
+    rdfs:domain :AccessGrant ;
+    rdfs:range xsd:string ;
+    skos:definition "The purpose for which access is granted." .
+
+:dataProductName a owl:DatatypeProperty ;
+    rdfs:label "data product name" ;
+    rdfs:domain :DataProduct ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the data product." .
+
+#################################################################
+# Roles
+#################################################################
+
+:DataPlatformOwnerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Data Platform Owner" ;
+    skos:altLabel "Data Platform Owner Role" ;
+    skos:definition "Owns data stores, schemas, backup policy, and access grants. Bearer: person. Permissions: DataStore:read, DataStore:write, DatabaseInstance:read, DatabaseInstance:write, AccessGrant:read, AccessGrant:write." .

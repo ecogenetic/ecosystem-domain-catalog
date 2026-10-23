@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/pim/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/pim#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/pim/software> a owl:Ontology ;
+    rdfs:label "PIM Software Overlay" ;
+    rdfs:comment "Software-company specialization of PIM." .
+
+:SoftwareEditionProduct a owl:Class ;
+    rdfs:subClassOf base:Product ;
+    skos:prefLabel "Software Edition Product" ;
+    skos:definition "A catalog product that represents a sellable software edition." .
+
+:EditionAttribute a owl:Class ;
+    rdfs:subClassOf base:Attribute ;
+    skos:prefLabel "Edition Attribute" ;
+    skos:definition "An attribute that describes a software edition product, such as seat model or deployment form." .
+
+:describesSoftwareEdition a owl:ObjectProperty ;
+    rdfs:label "describes software edition" ;
+    rdfs:domain :EditionAttribute ;
+    rdfs:range :SoftwareEditionProduct ;
+    skos:definition "Associates edition attribute with SoftwareEditionProduct." .
+
+:softwareEditionProductId a owl:DatatypeProperty ;
+    rdfs:label "software edition product id" ;
+    rdfs:domain :SoftwareEditionProduct ;
+    rdfs:range xsd:string .
+
+:editionAttributeId a owl:DatatypeProperty ;
+    rdfs:label "edition attribute id" ;
+    rdfs:domain :EditionAttribute ;
+    rdfs:range xsd:string .
+
+:SoftwareMerchandiserRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Software Merchandiser" ;
+    skos:altLabel "Software Merchandiser Role" ;
+    skos:definition "Publishes software edition products in the catalog. Bearer: person. Permissions: Product:read, Product:write, Attribute:read, Publication:write." .
+
+:SoftwareEditionProductShape a sh:NodeShape ;
+    sh:targetClass :SoftwareEditionProduct ;
+    sh:property [
+        sh:path :softwareEditionProductId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/fms/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/fms#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/fms/software> a owl:Ontology ;
+    rdfs:label "FMS Software Overlay" ;
+    rdfs:comment "Software-company specialization of FMS." .
+
+:DeferredRevenueJournal a owl:Class ;
+    rdfs:subClassOf base:JournalEntry ;
+    skos:prefLabel "Deferred Revenue Journal" ;
+    skos:definition "A journal entry that defers or recognises software subscription revenue." .
+
+:SubscriptionCustomerInvoice a owl:Class ;
+    rdfs:subClassOf base:CustomerInvoice ;
+    skos:prefLabel "Subscription Customer Invoice" ;
+    skos:definition "A customer invoice for a software subscription period." .
+
+:recognisesSubscriptionInvoice a owl:ObjectProperty ;
+    rdfs:label "recognises subscription invoice" ;
+    rdfs:domain :DeferredRevenueJournal ;
+    rdfs:range :SubscriptionCustomerInvoice ;
+    skos:definition "Associates deferred revenue journal with SubscriptionCustomerInvoice." .
+
+:deferredRevenueJournalId a owl:DatatypeProperty ;
+    rdfs:label "deferred revenue journal id" ;
+    rdfs:domain :DeferredRevenueJournal ;
+    rdfs:range xsd:string .
+
+:subscriptionCustomerInvoiceId a owl:DatatypeProperty ;
+    rdfs:label "subscription customer invoice id" ;
+    rdfs:domain :SubscriptionCustomerInvoice ;
+    rdfs:range xsd:string .
+
+:SubscriptionAccountantRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Subscription Accountant" ;
+    skos:altLabel "Subscription Accountant Role" ;
+    skos:definition "Posts subscription invoices and deferred revenue. Bearer: person. Permissions: JournalEntry:read, JournalEntry:write, CustomerInvoice:read, CustomerInvoice:write." .
+
+:DeferredRevenueJournalShape a sh:NodeShape ;
+    sh:targetClass :DeferredRevenueJournal ;
+    sh:property [
+        sh:path :deferredRevenueJournalId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

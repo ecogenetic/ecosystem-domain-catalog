@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/plm/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/plm#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/plm/software> a owl:Ontology ;
+    rdfs:label "PLM Software Overlay" ;
+    rdfs:comment "Software-company specialization of PLM." .
+
+:SoftwareRevision a owl:Class ;
+    rdfs:subClassOf base:Revision ;
+    skos:prefLabel "Software Revision" ;
+    skos:definition "A revision of a software product definition." .
+
+:ReleaseEngineeringChange a owl:Class ;
+    rdfs:subClassOf base:EngineeringChange ;
+    skos:prefLabel "Release Engineering Change" ;
+    skos:definition "An engineering change that prepares a software revision for release." .
+
+:revisesSoftwareRevision a owl:ObjectProperty ;
+    rdfs:label "revises software revision" ;
+    rdfs:domain :ReleaseEngineeringChange ;
+    rdfs:range :SoftwareRevision ;
+    skos:definition "Associates release engineering change with SoftwareRevision." .
+
+:softwareRevisionId a owl:DatatypeProperty ;
+    rdfs:label "software revision id" ;
+    rdfs:domain :SoftwareRevision ;
+    rdfs:range xsd:string .
+
+:releaseEngineeringChangeId a owl:DatatypeProperty ;
+    rdfs:label "release engineering change id" ;
+    rdfs:domain :ReleaseEngineeringChange ;
+    rdfs:range xsd:string .
+
+:SoftwareChangeApproverRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Software Change Approver" ;
+    skos:altLabel "Software Change Approver Role" ;
+    skos:definition "Approves engineering changes to a software revision. Bearer: person. Permissions: EngineeringChange:read, EngineeringChange:write, Revision:read, Revision:write." .
+
+:SoftwareRevisionShape a sh:NodeShape ;
+    sh:targetClass :SoftwareRevision ;
+    sh:property [
+        sh:path :softwareRevisionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

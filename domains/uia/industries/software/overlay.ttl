@@ -1,0 +1,42 @@
+@prefix :    <https://ecosystemcode.com/ontology/uia/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/uia#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/uia/software> a owl:Ontology ;
+    rdfs:label "UIA Software Overlay" ;
+    rdfs:comment "Software-company specialization of User Interface Applications." .
+
+:ProductClientApplication a owl:Class ;
+    rdfs:subClassOf base:ClientApplication ;
+    skos:prefLabel "Product Client Application" ;
+    skos:definition "A client application that presents one product edition." .
+
+:presentsProductEdition a owl:ObjectProperty ;
+    rdfs:label "presents product edition" ;
+    rdfs:domain :ProductClientApplication ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a product client application with the product edition it presents." .
+
+:productClientApplicationId a owl:DatatypeProperty ;
+    rdfs:label "product client application id" ;
+    rdfs:domain :ProductClientApplication ;
+    rdfs:range xsd:string .
+
+:ProductUiLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Product UI Lead" ;
+    skos:altLabel "Product UI Lead Role" ;
+    skos:definition "Owns the client application for a product edition. Bearer: person. Permissions: ClientApplication:read, ClientApplication:write, Screen:read, Screen:write." .
+
+:ProductClientApplicationShape a sh:NodeShape ;
+    sh:targetClass :ProductClientApplication ;
+    sh:property [
+        sh:path :presentsProductEdition ;
+        sh:minCount 1 ;
+    ] .

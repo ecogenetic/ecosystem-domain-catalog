@@ -1,0 +1,32 @@
+# Generic source mapping for MOB
+@prefix : <https://ecosystemcode.com/ontology/mob#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:mobile_application owl:equivalentClass :MobileApplication .
+legacy:mobile_application_id rdfs:subPropertyOf :mobileApplicationId .
+legacy:app_store_listing owl:equivalentClass :AppStoreListing .
+legacy:app_store_listing_id rdfs:subPropertyOf :appStoreListingId .
+legacy:device_platform owl:equivalentClass :DevicePlatform .
+legacy:device_platform_id rdfs:subPropertyOf :devicePlatformId .
+legacy:mobile_release owl:equivalentClass :MobileRelease .
+legacy:mobile_release_id rdfs:subPropertyOf :mobileReleaseId .
+legacy:push_channel owl:equivalentClass :PushChannel .
+legacy:push_channel_id rdfs:subPropertyOf :pushChannelId .
+legacy:store_review owl:equivalentClass :StoreReview .
+legacy:store_review_id rdfs:subPropertyOf :storeReviewId .
+
+legacy:publishes_mobile_application rdfs:subPropertyOf :publishesMobileApplication .
+legacy:targets_device_platform rdfs:subPropertyOf :targetsDevicePlatform .
+legacy:releases_mobile_application rdfs:subPropertyOf :releasesMobileApplication .
+legacy:notifies_mobile_application rdfs:subPropertyOf :notifiesMobileApplication .
+legacy:reviews_app_store_listing rdfs:subPropertyOf :reviewsAppStoreListing .
+legacy:mobile_release_status rdfs:subPropertyOf :mobileReleaseStatus .
+legacy:application_name rdfs:subPropertyOf :applicationName .
+legacy:product_edition_code rdfs:subPropertyOf :productEditionCode .
+legacy:listing_name rdfs:subPropertyOf :listingName .
+legacy:platform_name rdfs:subPropertyOf :platformName .
+legacy:version_name rdfs:subPropertyOf :versionName .
+legacy:channel_name rdfs:subPropertyOf :channelName .
+legacy:review_outcome rdfs:subPropertyOf :reviewOutcome .

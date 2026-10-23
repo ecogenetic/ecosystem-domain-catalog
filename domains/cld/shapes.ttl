@@ -1,0 +1,97 @@
+@prefix :    <https://ecosystemcode.com/ontology/cld#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:CloudAccountShape a sh:NodeShape ;
+    sh:targetClass :CloudAccount ;
+    sh:property [
+        sh:path :cloudAccountId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :providerName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :accountName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:LandingZoneShape a sh:NodeShape ;
+    sh:targetClass :LandingZone ;
+    sh:property [
+        sh:path :landingZoneId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :zoneName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :landingZoneStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "designed" "provisioned" "active" "retired" ) ;
+    ] .
+
+:CloudRegionShape a sh:NodeShape ;
+    sh:targetClass :CloudRegion ;
+    sh:property [
+        sh:path :cloudRegionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :regionCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:NetworkSegmentShape a sh:NodeShape ;
+    sh:targetClass :NetworkSegment ;
+    sh:property [
+        sh:path :networkSegmentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :segmentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:CloudEnvironmentShape a sh:NodeShape ;
+    sh:targetClass :CloudEnvironment ;
+    sh:property [
+        sh:path :cloudEnvironmentId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :environmentCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :environmentName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:SharedCloudServiceShape a sh:NodeShape ;
+    sh:targetClass :SharedCloudService ;
+    sh:property [
+        sh:path :sharedCloudServiceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :serviceName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

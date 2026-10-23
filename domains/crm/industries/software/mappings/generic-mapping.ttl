@@ -1,0 +1,53 @@
+# Software company integration mapping for CRM
+# Commercial records stay in CRM. Operational records are mapped to their owning domains.
+
+@prefix sw:  <https://ecosystemcode.com/ontology/crm/software#> .
+@prefix crm: <https://ecosystemcode.com/ontology/crm#> .
+@prefix arc: <https://ecosystemcode.com/ontology/arc#> .
+@prefix bks: <https://ecosystemcode.com/ontology/bks#> .
+@prefix cld: <https://ecosystemcode.com/ontology/cld#> .
+@prefix dbs: <https://ecosystemcode.com/ontology/dbs#> .
+@prefix lic: <https://ecosystemcode.com/ontology/lic#> .
+@prefix mob: <https://ecosystemcode.com/ontology/mob#> .
+@prefix rel: <https://ecosystemcode.com/ontology/rel#> .
+@prefix srv: <https://ecosystemcode.com/ontology/srv#> .
+@prefix uia: <https://ecosystemcode.com/ontology/uia#> .
+@prefix legacy: <https://example.com/legacy/software-crm#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:software_accounts owl:equivalentClass sw:SoftwareAccount .
+legacy:software_account_id rdfs:subPropertyOf sw:softwareAccountId .
+legacy:product_subscription_opportunities owl:equivalentClass sw:ProductSubscriptionOpportunity .
+legacy:product_subscription_opportunity_id rdfs:subPropertyOf sw:productSubscriptionOpportunityId .
+legacy:qualifies_software_account rdfs:subPropertyOf sw:qualifiesSoftwareAccount .
+legacy:opportunities owl:equivalentClass crm:Opportunity .
+
+legacy:license_agreements owl:equivalentClass lic:LicenseAgreement .
+legacy:license_agreement_id rdfs:subPropertyOf lic:licenseAgreementId .
+legacy:entitlements owl:equivalentClass lic:Entitlement .
+legacy:entitlement_id rdfs:subPropertyOf lic:entitlementId .
+legacy:client_applications owl:equivalentClass uia:ClientApplication .
+legacy:client_application_id rdfs:subPropertyOf uia:clientApplicationId .
+legacy:mobile_applications owl:equivalentClass mob:MobileApplication .
+legacy:mobile_application_id rdfs:subPropertyOf mob:mobileApplicationId .
+legacy:backend_services owl:equivalentClass bks:BackendService .
+legacy:backend_service_id rdfs:subPropertyOf bks:backendServiceId .
+legacy:api_contracts owl:equivalentClass bks:ApiContract .
+legacy:api_contract_id rdfs:subPropertyOf bks:apiContractId .
+legacy:architecture_decisions owl:equivalentClass arc:ArchitectureDecision .
+legacy:architecture_decision_id rdfs:subPropertyOf arc:architectureDecisionId .
+legacy:cloud_accounts owl:equivalentClass cld:CloudAccount .
+legacy:cloud_account_id rdfs:subPropertyOf cld:cloudAccountId .
+legacy:cloud_environments owl:equivalentClass cld:CloudEnvironment .
+legacy:cloud_environment_id rdfs:subPropertyOf cld:cloudEnvironmentId .
+legacy:database_instances owl:equivalentClass dbs:DatabaseInstance .
+legacy:database_instance_id rdfs:subPropertyOf dbs:databaseInstanceId .
+legacy:compute_hosts owl:equivalentClass srv:ComputeHost .
+legacy:compute_host_id rdfs:subPropertyOf srv:computeHostId .
+legacy:releases owl:equivalentClass rel:Release .
+legacy:release_id rdfs:subPropertyOf rel:releaseId .
+legacy:deployments owl:equivalentClass rel:Deployment .
+legacy:deployment_id rdfs:subPropertyOf rel:deploymentId .
+legacy:release_targets owl:equivalentClass rel:ReleaseTarget .
+legacy:release_target_id rdfs:subPropertyOf rel:releaseTargetId .

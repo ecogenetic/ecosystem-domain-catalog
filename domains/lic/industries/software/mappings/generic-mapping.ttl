@@ -1,0 +1,10 @@
+# Software industry mapping for LIC
+@prefix sw: <https://ecosystemcode.com/ontology/lic/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:saa_s_license_agreement owl:equivalentClass sw:SaaSLicenseAgreement .
+legacy:saa_s_license_agreement_id rdfs:subPropertyOf sw:saaSLicenseAgreementId .
+legacy:covers_software_tenant rdfs:subPropertyOf sw:coversSoftwareTenant .
+legacy:licenses_product_edition rdfs:subPropertyOf sw:licensesProductEdition .

@@ -1,0 +1,11 @@
+# Software industry mapping for CVM
+@prefix sw: <https://ecosystemcode.com/ontology/cvm/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_led_segment owl:equivalentClass sw:ProductLedSegment .
+legacy:product_led_segment_id rdfs:subPropertyOf sw:productLedSegmentId .
+legacy:seat_expansion_offer owl:equivalentClass sw:SeatExpansionOffer .
+legacy:seat_expansion_offer_id rdfs:subPropertyOf sw:seatExpansionOfferId .
+legacy:targets_product_led_segment rdfs:subPropertyOf sw:targetsProductLedSegment .

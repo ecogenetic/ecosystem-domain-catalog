@@ -1,0 +1,87 @@
+@prefix :    <https://ecosystemcode.com/ontology/mob#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:MobileApplicationShape a sh:NodeShape ;
+    sh:targetClass :MobileApplication ;
+    sh:property [
+        sh:path :mobileApplicationId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :applicationName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:AppStoreListingShape a sh:NodeShape ;
+    sh:targetClass :AppStoreListing ;
+    sh:property [
+        sh:path :appStoreListingId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :listingName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DevicePlatformShape a sh:NodeShape ;
+    sh:targetClass :DevicePlatform ;
+    sh:property [
+        sh:path :devicePlatformId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :platformName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:MobileReleaseShape a sh:NodeShape ;
+    sh:targetClass :MobileRelease ;
+    sh:property [
+        sh:path :mobileReleaseId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :versionName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :mobileReleaseStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "built" "submitted" "released" "retired" ) ;
+    ] .
+
+:PushChannelShape a sh:NodeShape ;
+    sh:targetClass :PushChannel ;
+    sh:property [
+        sh:path :pushChannelId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :channelName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:StoreReviewShape a sh:NodeShape ;
+    sh:targetClass :StoreReview ;
+    sh:property [
+        sh:path :storeReviewId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :reviewOutcome ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

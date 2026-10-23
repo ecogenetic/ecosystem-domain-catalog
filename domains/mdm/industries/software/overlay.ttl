@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/mdm/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/mdm#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/mdm/software> a owl:Ontology ;
+    rdfs:label "MDM Software Overlay" ;
+    rdfs:comment "Software-company specialization of MDM." .
+
+:CustomerTenantMaster a owl:Class ;
+    rdfs:subClassOf base:MasterRecord ;
+    skos:prefLabel "Customer Tenant Master" ;
+    skos:definition "The mastered record for a software customer tenant." .
+
+:ProductMasterRecord a owl:Class ;
+    rdfs:subClassOf base:MasterRecord ;
+    skos:prefLabel "Product Master Record" ;
+    skos:definition "The mastered record for a software product edition." .
+
+:linksProductMaster a owl:ObjectProperty ;
+    rdfs:label "links product master" ;
+    rdfs:domain :CustomerTenantMaster ;
+    rdfs:range :ProductMasterRecord ;
+    skos:definition "Associates customer tenant master with ProductMasterRecord." .
+
+:customerTenantMasterId a owl:DatatypeProperty ;
+    rdfs:label "customer tenant master id" ;
+    rdfs:domain :CustomerTenantMaster ;
+    rdfs:range xsd:string .
+
+:productMasterRecordId a owl:DatatypeProperty ;
+    rdfs:label "product master record id" ;
+    rdfs:domain :ProductMasterRecord ;
+    rdfs:range xsd:string .
+
+:SoftwareDataStewardRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Software Data Steward" ;
+    skos:altLabel "Software Data Steward Role" ;
+    skos:definition "Stewards customer-tenant and product-edition master records. Bearer: person. Permissions: MasterRecord:read, MasterRecord:write, MatchRule:read." .
+
+:CustomerTenantMasterShape a sh:NodeShape ;
+    sh:targetClass :CustomerTenantMaster ;
+    sh:property [
+        sh:path :customerTenantMasterId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

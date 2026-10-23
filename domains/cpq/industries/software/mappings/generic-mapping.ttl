@@ -1,0 +1,11 @@
+# Software industry mapping for CPQ
+@prefix sw: <https://ecosystemcode.com/ontology/cpq/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:edition_bundle owl:equivalentClass sw:EditionBundle .
+legacy:edition_bundle_id rdfs:subPropertyOf sw:editionBundleId .
+legacy:seat_price_rule owl:equivalentClass sw:SeatPriceRule .
+legacy:seat_price_rule_id rdfs:subPropertyOf sw:seatPriceRuleId .
+legacy:prices_edition_bundle rdfs:subPropertyOf sw:pricesEditionBundle .

@@ -1,0 +1,149 @@
+@prefix : <https://ecosystemcode.com/ontology/uia#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/uia> a owl:Ontology ;
+    rdfs:label "UIA Domain Ontology" ;
+    rdfs:comment "Describes client applications, screens, user-interface components, design systems, navigation flows, and accessibility requirements." .
+
+#################################################################
+# Classes
+#################################################################
+
+:ClientApplication a owl:Class ;
+    skos:prefLabel "Client Application" ;
+    skos:definition "A user-interface application people use in a browser or desktop client." .
+:Screen a owl:Class ;
+    skos:prefLabel "Screen" ;
+    skos:definition "A page or view inside a client application." .
+:UiComponent a owl:Class ;
+    skos:prefLabel "Ui Component" ;
+    skos:definition "A reusable screen widget. Distinct from an architecture component." .
+:DesignSystem a owl:Class ;
+    skos:prefLabel "Design System" ;
+    skos:definition "The shared visual and interaction rules a client application adopts." .
+:NavigationFlow a owl:Class ;
+    skos:prefLabel "Navigation Flow" ;
+    skos:definition "A path that connects screens inside a client application." .
+:AccessibilityRequirement a owl:Class ;
+    skos:prefLabel "Accessibility Requirement" ;
+    skos:definition "A requirement a screen must meet so people can use it." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:belongsToClientApplication a owl:ObjectProperty ;
+    rdfs:label "belongs to client application" ;
+    rdfs:domain :Screen ;
+    rdfs:range :ClientApplication ;
+    skos:definition "Associates a screen with the client application that owns it." .
+:composesScreen a owl:ObjectProperty ;
+    rdfs:label "composes screen" ;
+    rdfs:domain :UiComponent ;
+    rdfs:range :Screen ;
+    skos:definition "Associates a user-interface component with a screen it composes." .
+:adoptsDesignSystem a owl:ObjectProperty ;
+    rdfs:label "adopts design system" ;
+    rdfs:domain :ClientApplication ;
+    rdfs:range :DesignSystem ;
+    skos:definition "Associates a client application with the design system it adopts." .
+:connectsScreen a owl:ObjectProperty ;
+    rdfs:label "connects screen" ;
+    rdfs:domain :NavigationFlow ;
+    rdfs:range :Screen ;
+    skos:definition "Associates a navigation flow with a screen it connects." .
+:constrainsScreen a owl:ObjectProperty ;
+    rdfs:label "constrains screen" ;
+    rdfs:domain :AccessibilityRequirement ;
+    rdfs:range :Screen ;
+    skos:definition "Associates an accessibility requirement with a screen it constrains." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:clientApplicationId a owl:DatatypeProperty ;
+    rdfs:label "client application id" ;
+    rdfs:domain :ClientApplication ;
+    rdfs:range xsd:string .
+:screenId a owl:DatatypeProperty ;
+    rdfs:label "screen id" ;
+    rdfs:domain :Screen ;
+    rdfs:range xsd:string .
+:uiComponentId a owl:DatatypeProperty ;
+    rdfs:label "ui component id" ;
+    rdfs:domain :UiComponent ;
+    rdfs:range xsd:string .
+:designSystemId a owl:DatatypeProperty ;
+    rdfs:label "design system id" ;
+    rdfs:domain :DesignSystem ;
+    rdfs:range xsd:string .
+:navigationFlowId a owl:DatatypeProperty ;
+    rdfs:label "navigation flow id" ;
+    rdfs:domain :NavigationFlow ;
+    rdfs:range xsd:string .
+:accessibilityRequirementId a owl:DatatypeProperty ;
+    rdfs:label "accessibility requirement id" ;
+    rdfs:domain :AccessibilityRequirement ;
+    rdfs:range xsd:string .
+:clientApplicationStatus a owl:DatatypeProperty ;
+    rdfs:label "client application status" ;
+    rdfs:domain :ClientApplication ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of client application: draft, released, deprecated." .
+
+:applicationName a owl:DatatypeProperty ;
+    rdfs:label "application name" ;
+    rdfs:domain :ClientApplication ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the client application." .
+
+:productEditionCode a owl:DatatypeProperty ;
+    rdfs:label "product edition code" ;
+    rdfs:domain :ClientApplication ;
+    rdfs:range xsd:string ;
+    skos:definition "Code of the product edition this application presents." .
+
+:screenName a owl:DatatypeProperty ;
+    rdfs:label "screen name" ;
+    rdfs:domain :Screen ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the screen." .
+
+:componentName a owl:DatatypeProperty ;
+    rdfs:label "component name" ;
+    rdfs:domain :UiComponent ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the user-interface component." .
+
+:systemName a owl:DatatypeProperty ;
+    rdfs:label "system name" ;
+    rdfs:domain :DesignSystem ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the design system." .
+
+:flowName a owl:DatatypeProperty ;
+    rdfs:label "flow name" ;
+    rdfs:domain :NavigationFlow ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the navigation flow." .
+
+:requirementName a owl:DatatypeProperty ;
+    rdfs:label "requirement name" ;
+    rdfs:domain :AccessibilityRequirement ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the accessibility requirement." .
+
+#################################################################
+# Roles
+#################################################################
+
+:UiLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "UI Lead" ;
+    skos:altLabel "UI Lead Role" ;
+    skos:definition "Owns client applications, screens, and accessibility requirements. Bearer: person. Permissions: ClientApplication:read, ClientApplication:write, Screen:read, Screen:write, AccessibilityRequirement:read, AccessibilityRequirement:write." .

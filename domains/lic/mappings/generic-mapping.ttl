@@ -1,0 +1,33 @@
+# Generic source mapping for LIC
+@prefix : <https://ecosystemcode.com/ontology/lic#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:license_agreement owl:equivalentClass :LicenseAgreement .
+legacy:license_agreement_id rdfs:subPropertyOf :licenseAgreementId .
+legacy:entitlement owl:equivalentClass :Entitlement .
+legacy:entitlement_id rdfs:subPropertyOf :entitlementId .
+legacy:seat_allocation owl:equivalentClass :SeatAllocation .
+legacy:seat_allocation_id rdfs:subPropertyOf :seatAllocationId .
+legacy:feature_access owl:equivalentClass :FeatureAccess .
+legacy:feature_access_id rdfs:subPropertyOf :featureAccessId .
+legacy:usage_meter owl:equivalentClass :UsageMeter .
+legacy:usage_meter_id rdfs:subPropertyOf :usageMeterId .
+legacy:license_key owl:equivalentClass :LicenseKey .
+legacy:license_key_id rdfs:subPropertyOf :licenseKeyId .
+
+legacy:granted_by_license_agreement rdfs:subPropertyOf :grantedByLicenseAgreement .
+legacy:consumes_entitlement rdfs:subPropertyOf :consumesEntitlement .
+legacy:enabled_by_entitlement rdfs:subPropertyOf :enabledByEntitlement .
+legacy:measures_entitlement rdfs:subPropertyOf :measuresEntitlement .
+legacy:identifies_license_agreement rdfs:subPropertyOf :identifiesLicenseAgreement .
+legacy:license_agreement_status rdfs:subPropertyOf :licenseAgreementStatus .
+legacy:product_edition_code rdfs:subPropertyOf :productEditionCode .
+legacy:customer_reference rdfs:subPropertyOf :customerReference .
+legacy:entitlement_name rdfs:subPropertyOf :entitlementName .
+legacy:quantity rdfs:subPropertyOf :quantity .
+legacy:assignee_reference rdfs:subPropertyOf :assigneeReference .
+legacy:feature_code rdfs:subPropertyOf :featureCode .
+legacy:consumed_quantity rdfs:subPropertyOf :consumedQuantity .
+legacy:key_value rdfs:subPropertyOf :keyValue .

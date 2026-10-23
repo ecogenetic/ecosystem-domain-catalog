@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/lic/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/lic#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/lic/software> a owl:Ontology ;
+    rdfs:label "LIC Software Overlay" ;
+    rdfs:comment "Software-company specialization of Licensing and Entitlements." .
+
+:SaaSLicenseAgreement a owl:Class ;
+    rdfs:subClassOf base:LicenseAgreement ;
+    skos:prefLabel "SaaS License Agreement" ;
+    skos:definition "A license agreement for a software tenant on a product edition." .
+
+
+:coversSoftwareTenant a owl:ObjectProperty ;
+    rdfs:label "covers software tenant" ;
+    rdfs:domain :SaaSLicenseAgreement ;
+    rdfs:range sw:SoftwareTenant ;
+    skos:definition "Associates a SaaS license agreement with the software tenant it covers." .
+
+:licensesProductEdition a owl:ObjectProperty ;
+    rdfs:label "licenses product edition" ;
+    rdfs:domain :SaaSLicenseAgreement ;
+    rdfs:range sw:ProductEdition ;
+    skos:definition "Associates a SaaS license agreement with the product edition it licenses." .
+
+:saaSLicenseAgreementId a owl:DatatypeProperty ;
+    rdfs:label "SaaS license agreement id" ;
+    rdfs:domain :SaaSLicenseAgreement ;
+    rdfs:range xsd:string .
+
+:SaaSLicenseAdministratorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "SaaS License Administrator" ;
+    skos:altLabel "SaaS License Administrator Role" ;
+    skos:definition "Issues tenant license agreements. Bearer: person. Permissions: LicenseAgreement:read, LicenseAgreement:write, Entitlement:read, Entitlement:write." .
+
+:SaaSLicenseAgreementShape a sh:NodeShape ;
+    sh:targetClass :SaaSLicenseAgreement ;
+    sh:property [
+        sh:path :coversSoftwareTenant ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :licensesProductEdition ;
+        sh:minCount 1 ;
+    ] .

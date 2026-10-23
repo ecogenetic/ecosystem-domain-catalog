@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/lms/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/lms#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/lms/software> a owl:Ontology ;
+    rdfs:label "LMS Software Overlay" ;
+    rdfs:comment "Software-company specialization of LMS." .
+
+:ProductEnablementCourse a owl:Class ;
+    rdfs:subClassOf base:Course ;
+    skos:prefLabel "Product Enablement Course" ;
+    skos:definition "A course that teaches a software product edition." .
+
+:CertificationEnrollment a owl:Class ;
+    rdfs:subClassOf base:Enrollment ;
+    skos:prefLabel "Certification Enrollment" ;
+    skos:definition "An enrollment that can yield a product certification." .
+
+:certifiesProductEnablement a owl:ObjectProperty ;
+    rdfs:label "certifies product enablement" ;
+    rdfs:domain :CertificationEnrollment ;
+    rdfs:range :ProductEnablementCourse ;
+    skos:definition "Associates certification enrollment with ProductEnablementCourse." .
+
+:productEnablementCourseId a owl:DatatypeProperty ;
+    rdfs:label "product enablement course id" ;
+    rdfs:domain :ProductEnablementCourse ;
+    rdfs:range xsd:string .
+
+:certificationEnrollmentId a owl:DatatypeProperty ;
+    rdfs:label "certification enrollment id" ;
+    rdfs:domain :CertificationEnrollment ;
+    rdfs:range xsd:string .
+
+:EnablementInstructorRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Enablement Instructor" ;
+    skos:altLabel "Enablement Instructor Role" ;
+    skos:definition "Publishes product enablement courses and certifications. Bearer: person. Permissions: Course:read, Course:write, Enrollment:read, Certificate:write." .
+
+:ProductEnablementCourseShape a sh:NodeShape ;
+    sh:targetClass :ProductEnablementCourse ;
+    sh:property [
+        sh:path :productEnablementCourseId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

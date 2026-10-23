@@ -1,0 +1,92 @@
+@prefix :    <https://ecosystemcode.com/ontology/dbs#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:DataStoreShape a sh:NodeShape ;
+    sh:targetClass :DataStore ;
+    sh:property [
+        sh:path :dataStoreId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :storeName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DatabaseSchemaShape a sh:NodeShape ;
+    sh:targetClass :DatabaseSchema ;
+    sh:property [
+        sh:path :databaseSchemaId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :schemaName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DatabaseInstanceShape a sh:NodeShape ;
+    sh:targetClass :DatabaseInstance ;
+    sh:property [
+        sh:path :databaseInstanceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :instanceName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :databaseInstanceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ( "provisioned" "online" "maintenance" "retired" ) ;
+    ] .
+
+:BackupPolicyShape a sh:NodeShape ;
+    sh:targetClass :BackupPolicy ;
+    sh:property [
+        sh:path :backupPolicyId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :retentionDays ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+    ] .
+
+:AccessGrantShape a sh:NodeShape ;
+    sh:targetClass :AccessGrant ;
+    sh:property [
+        sh:path :accessGrantId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :accessPurpose ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :subjectReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+:DataProductShape a sh:NodeShape ;
+    sh:targetClass :DataProduct ;
+    sh:property [
+        sh:path :dataProductId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path :dataProductName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

@@ -1,0 +1,53 @@
+@prefix :    <https://ecosystemcode.com/ontology/qms/software#> .
+@prefix base: <https://ecosystemcode.com/ontology/qms#> .
+@prefix sw:  <https://ecosystemcode.com/ontology/industry/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+
+<https://ecosystemcode.com/ontology/qms/software> a owl:Ontology ;
+    rdfs:label "QMS Software Overlay" ;
+    rdfs:comment "Software-company specialization of QMS." .
+
+:ReleaseInspection a owl:Class ;
+    rdfs:subClassOf base:Inspection ;
+    skos:prefLabel "Release Inspection" ;
+    skos:definition "An inspection performed before a software release is deployed." .
+
+:DefectNonConformance a owl:Class ;
+    rdfs:subClassOf base:NonConformance ;
+    skos:prefLabel "Defect Non Conformance" ;
+    skos:definition "A defect found in a release inspection." .
+
+:findsDefectNonConformance a owl:ObjectProperty ;
+    rdfs:label "finds defect non conformance" ;
+    rdfs:domain :ReleaseInspection ;
+    rdfs:range :DefectNonConformance ;
+    skos:definition "Associates release inspection with DefectNonConformance." .
+
+:releaseInspectionId a owl:DatatypeProperty ;
+    rdfs:label "release inspection id" ;
+    rdfs:domain :ReleaseInspection ;
+    rdfs:range xsd:string .
+
+:defectNonConformanceId a owl:DatatypeProperty ;
+    rdfs:label "defect non conformance id" ;
+    rdfs:domain :DefectNonConformance ;
+    rdfs:range xsd:string .
+
+:ReleaseQualityManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Release Quality Manager" ;
+    skos:altLabel "Release Quality Manager Role" ;
+    skos:definition "Accepts release inspections and defect closure. Bearer: person. Permissions: Inspection:read, Inspection:write, NonConformance:read, CAPA:read." .
+
+:ReleaseInspectionShape a sh:NodeShape ;
+    sh:targetClass :ReleaseInspection ;
+    sh:property [
+        sh:path :releaseInspectionId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .

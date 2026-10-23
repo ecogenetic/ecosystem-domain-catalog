@@ -1,0 +1,11 @@
+# Software industry mapping for OMS
+@prefix sw: <https://ecosystemcode.com/ontology/oms/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:entitlement_order owl:equivalentClass sw:EntitlementOrder .
+legacy:entitlement_order_id rdfs:subPropertyOf sw:entitlementOrderId .
+legacy:license_fulfilment owl:equivalentClass sw:LicenseFulfilment .
+legacy:license_fulfilment_id rdfs:subPropertyOf sw:licenseFulfilmentId .
+legacy:fulfils_entitlement_order rdfs:subPropertyOf sw:fulfilsEntitlementOrder .

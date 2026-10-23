@@ -43,6 +43,15 @@
 @prefix card:   <https://ecosystemcode.com/ontology/card#> .
 @prefix lns:    <https://ecosystemcode.com/ontology/lns#> .
 @prefix tre:    <https://ecosystemcode.com/ontology/tre#> .
+@prefix arc:    <https://ecosystemcode.com/ontology/arc#> .
+@prefix bks:    <https://ecosystemcode.com/ontology/bks#> .
+@prefix cld:    <https://ecosystemcode.com/ontology/cld#> .
+@prefix dbs:    <https://ecosystemcode.com/ontology/dbs#> .
+@prefix lic:    <https://ecosystemcode.com/ontology/lic#> .
+@prefix mob:    <https://ecosystemcode.com/ontology/mob#> .
+@prefix rel:    <https://ecosystemcode.com/ontology/rel#> .
+@prefix srv:    <https://ecosystemcode.com/ontology/srv#> .
+@prefix uia:    <https://ecosystemcode.com/ontology/uia#> .
 
 <https://ecosystemcode.com/ontology/core-alignments> a owl:Ontology ;
     rdfs:label "Core Entity Alignments" ;
@@ -259,6 +268,26 @@ tre:TreasuryDeal rdfs:subClassOf core:FinancialTransaction .
 #   aggregated exposure or balance-sheet view, not a ledger-backed account.
 # - lns:CollateralLink vs core:Asset: CollateralLink is a reference/relationship
 #   to collateral, not the collateral asset itself.
+# - cld:CloudAccount vs crm:Account vs fin:Account: a cloud account is a
+#   provider administrative boundary, not a customer organisation and not
+#   a financial account. crm software overlay SoftwareAccount subclasses
+#   crm:Account and stays distinct from both.
+# - uia:UiComponent vs arc:ArchitectureComponent: a screen widget is not a
+#   structural architecture part. Neither aligns to the other.
+# - rel:ReleaseTarget vs cld:CloudEnvironment: both specialize
+#   core:RuntimeEnvironment so they stay distinct and must not be collapsed.
+# - bks:BackendService vs siv:ServiceInstance vs itsm:Service: a service
+#   definition, a deployed instance, and an IT service stay distinct.
+# - rel:SourceRepository is source control, not an scm supply-chain shipment.
+# - cms:Content is product documentation, not an itsm:ConfigurationItem.
+# - sam:ServiceAlarm remains a monitoring signal and is not an itsm:Incident.
+# - srv:ComputeHost, dbs:DatabaseInstance, and arc:ArchitectureDecision are
+#   not core:Asset and not core:Product.
+# - lic:LicenseAgreement specializes core:Contract. It is not equivalent to
+#   crm:Contract, which remains the commercial customer contract.
+# - The PIM software overlay SoftwareEditionProduct is the catalog product.
+#   industry ProductEdition is the shared edition reference. They are not
+#   the same class and are not aligned.
 #################################################################
 
 
@@ -323,6 +352,24 @@ core:orderedUnderContract a owl:ObjectProperty ;
     rdfs:domain oms:Order ;
     rdfs:range crm:Contract ;
     skos:definition "Links an order to the CRM contract governing its commercial terms." .
+
+# A license agreement is a contract specialization, not the CRM opportunity
+# and not an entitlement record.
+lic:LicenseAgreement rdfs:subClassOf core:Contract .
+
+# User-interface, mobile, and backend applications are one kind of software
+# application and keep their own lifecycles.
+uia:ClientApplication rdfs:subClassOf core:SoftwareApplication .
+mob:MobileApplication rdfs:subClassOf core:SoftwareApplication .
+bks:BackendService rdfs:subClassOf core:SoftwareApplication .
+
+# Cloud environments and release targets are both runtime environments.
+# They are correlated by environment id and are not the same object.
+cld:CloudEnvironment rdfs:subClassOf core:RuntimeEnvironment .
+rel:ReleaseTarget rdfs:subClassOf core:RuntimeEnvironment .
+
+# The deployment record is owned by release management.
+rel:Deployment owl:equivalentClass core:Deployment .
 
 core:creditAccountForRelationship a owl:ObjectProperty ;
     rdfs:label "credit account for relationship" ;

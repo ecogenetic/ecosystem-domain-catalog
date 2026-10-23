@@ -1,0 +1,11 @@
+# Software industry mapping for GRC
+@prefix sw: <https://ecosystemcode.com/ontology/grc/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:security_control owl:equivalentClass sw:SecurityControl .
+legacy:security_control_id rdfs:subPropertyOf sw:securityControlId .
+legacy:soc_evidence owl:equivalentClass sw:SocEvidence .
+legacy:soc_evidence_id rdfs:subPropertyOf sw:socEvidenceId .
+legacy:evidences_security_control rdfs:subPropertyOf sw:evidencesSecurityControl .

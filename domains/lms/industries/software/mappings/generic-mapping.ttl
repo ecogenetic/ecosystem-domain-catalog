@@ -1,0 +1,11 @@
+# Software industry mapping for LMS
+@prefix sw: <https://ecosystemcode.com/ontology/lms/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_enablement_course owl:equivalentClass sw:ProductEnablementCourse .
+legacy:product_enablement_course_id rdfs:subPropertyOf sw:productEnablementCourseId .
+legacy:certification_enrollment owl:equivalentClass sw:CertificationEnrollment .
+legacy:certification_enrollment_id rdfs:subPropertyOf sw:certificationEnrollmentId .
+legacy:certifies_product_enablement rdfs:subPropertyOf sw:certifiesProductEnablement .

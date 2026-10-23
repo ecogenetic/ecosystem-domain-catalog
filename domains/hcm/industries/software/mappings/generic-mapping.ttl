@@ -1,0 +1,11 @@
+# Software industry mapping for HCM
+@prefix sw: <https://ecosystemcode.com/ontology/hcm/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:engineer_employee owl:equivalentClass sw:EngineerEmployee .
+legacy:engineer_employee_id rdfs:subPropertyOf sw:engineerEmployeeId .
+legacy:engineering_position owl:equivalentClass sw:EngineeringPosition .
+legacy:engineering_position_id rdfs:subPropertyOf sw:engineeringPositionId .
+legacy:holds_engineering_position rdfs:subPropertyOf sw:holdsEngineeringPosition .

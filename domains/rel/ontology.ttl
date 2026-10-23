@@ -1,0 +1,161 @@
+@prefix : <https://ecosystemcode.com/ontology/rel#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/rel> a owl:Ontology ;
+    rdfs:label "REL Domain Ontology" ;
+    rdfs:comment "Tracks source repositories, builds, change sets, releases, release targets, and the deployments that place a release on a target." .
+
+#################################################################
+# Classes
+#################################################################
+
+:SourceRepository a owl:Class ;
+    skos:prefLabel "Source Repository" ;
+    skos:definition "A version-control repository that holds the source of a software application. Distinct from a supply-chain shipment." .
+:Build a owl:Class ;
+    skos:prefLabel "Build" ;
+    skos:definition "A produced artefact built from a source repository." .
+:Release a owl:Class ;
+    skos:prefLabel "Release" ;
+    skos:definition "A named set of builds and change sets intended for deployment." .
+:Deployment a owl:Class ;
+    skos:prefLabel "Deployment" ;
+    skos:definition "The placement of a release onto a release target." .
+:ReleaseTarget a owl:Class ;
+    skos:prefLabel "Release Target" ;
+    skos:definition "The environment a deployment is aimed at. Distinct from a cloud environment, and correlated with it by environment identifier." .
+:ChangeSet a owl:Class ;
+    skos:prefLabel "Change Set" ;
+    skos:definition "A bounded set of source changes included in a release." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:producedFromSourceRepository a owl:ObjectProperty ;
+    rdfs:label "produced from source repository" ;
+    rdfs:domain :Build ;
+    rdfs:range :SourceRepository ;
+    skos:definition "Associates a build with the source repository that produced it." .
+:packagesBuild a owl:ObjectProperty ;
+    rdfs:label "packages build" ;
+    rdfs:domain :Release ;
+    rdfs:range :Build ;
+    skos:definition "Associates a release with a build it packages." .
+:includesChangeSet a owl:ObjectProperty ;
+    rdfs:label "includes change set" ;
+    rdfs:domain :Release ;
+    rdfs:range :ChangeSet ;
+    skos:definition "Associates a release with a change set it includes." .
+:deploysRelease a owl:ObjectProperty ;
+    rdfs:label "deploys release" ;
+    rdfs:domain :Deployment ;
+    rdfs:range :Release ;
+    skos:definition "Associates a deployment with the release it deploys." .
+:targetsReleaseTarget a owl:ObjectProperty ;
+    rdfs:label "targets release target" ;
+    rdfs:domain :Deployment ;
+    rdfs:range :ReleaseTarget ;
+    skos:definition "Associates a deployment with the release target it is aimed at." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:sourceRepositoryId a owl:DatatypeProperty ;
+    rdfs:label "source repository id" ;
+    rdfs:domain :SourceRepository ;
+    rdfs:range xsd:string .
+:buildId a owl:DatatypeProperty ;
+    rdfs:label "build id" ;
+    rdfs:domain :Build ;
+    rdfs:range xsd:string .
+:releaseId a owl:DatatypeProperty ;
+    rdfs:label "release id" ;
+    rdfs:domain :Release ;
+    rdfs:range xsd:string .
+:deploymentId a owl:DatatypeProperty ;
+    rdfs:label "deployment id" ;
+    rdfs:domain :Deployment ;
+    rdfs:range xsd:string .
+:releaseTargetId a owl:DatatypeProperty ;
+    rdfs:label "release target id" ;
+    rdfs:domain :ReleaseTarget ;
+    rdfs:range xsd:string .
+:changeSetId a owl:DatatypeProperty ;
+    rdfs:label "change set id" ;
+    rdfs:domain :ChangeSet ;
+    rdfs:range xsd:string .
+:releaseStatus a owl:DatatypeProperty ;
+    rdfs:label "release status" ;
+    rdfs:domain :Release ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of release: planned, built, deployed, rolledBack, retired." .
+
+:repositoryName a owl:DatatypeProperty ;
+    rdfs:label "repository name" ;
+    rdfs:domain :SourceRepository ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the source repository." .
+
+:applicationReference a owl:DatatypeProperty ;
+    rdfs:label "application reference" ;
+    rdfs:domain :SourceRepository ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the software application whose source this repository holds." .
+
+:buildNumber a owl:DatatypeProperty ;
+    rdfs:label "build number" ;
+    rdfs:domain :Build ;
+    rdfs:range xsd:string ;
+    skos:definition "The build number or identifier produced by the pipeline." .
+
+:releaseName a owl:DatatypeProperty ;
+    rdfs:label "release name" ;
+    rdfs:domain :Release ;
+    rdfs:range xsd:string ;
+    skos:definition "The name or version of the release." .
+
+:applicationReference a owl:DatatypeProperty ;
+    rdfs:label "application reference" ;
+    rdfs:domain :Release ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier of the software application this release ships." .
+
+:deployedAt a owl:DatatypeProperty ;
+    rdfs:label "deployed at" ;
+    rdfs:domain :Deployment ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "When the deployment was applied to the release target." .
+
+:targetName a owl:DatatypeProperty ;
+    rdfs:label "target name" ;
+    rdfs:domain :ReleaseTarget ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the release target." .
+
+:environmentCode a owl:DatatypeProperty ;
+    rdfs:label "environment code" ;
+    rdfs:domain :ReleaseTarget ;
+    rdfs:range xsd:string ;
+    skos:definition "Shared code used to correlate this release target with a cloud environment. The two records stay distinct." .
+
+:changeSummary a owl:DatatypeProperty ;
+    rdfs:label "change summary" ;
+    rdfs:domain :ChangeSet ;
+    rdfs:range xsd:string ;
+    skos:definition "A short summary of the changes included." .
+
+#################################################################
+# Roles
+#################################################################
+
+:ReleaseManagerRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Release Manager" ;
+    skos:altLabel "Release Manager Role" ;
+    skos:definition "Assembles releases and approves deployments to a release target. Bearer: person. Permissions: Release:read, Release:write, Deployment:read, Deployment:write, ReleaseTarget:read." .

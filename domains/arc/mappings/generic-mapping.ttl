@@ -1,0 +1,34 @@
+# Generic source mapping for ARC
+@prefix : <https://ecosystemcode.com/ontology/arc#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:architecture_decision owl:equivalentClass :ArchitectureDecision .
+legacy:architecture_decision_id rdfs:subPropertyOf :architectureDecisionId .
+legacy:system_context owl:equivalentClass :SystemContext .
+legacy:system_context_id rdfs:subPropertyOf :systemContextId .
+legacy:architecture_component owl:equivalentClass :ArchitectureComponent .
+legacy:architecture_component_id rdfs:subPropertyOf :architectureComponentId .
+legacy:interface_contract owl:equivalentClass :InterfaceContract .
+legacy:interface_contract_id rdfs:subPropertyOf :interfaceContractId .
+legacy:viewpoint owl:equivalentClass :Viewpoint .
+legacy:viewpoint_id rdfs:subPropertyOf :viewpointId .
+legacy:architecture_principle owl:equivalentClass :ArchitecturePrinciple .
+legacy:architecture_principle_id rdfs:subPropertyOf :architecturePrincipleId .
+
+legacy:applies_to_system_context rdfs:subPropertyOf :appliesToSystemContext .
+legacy:belongs_to_system_context rdfs:subPropertyOf :belongsToSystemContext .
+legacy:exposes_architecture_component rdfs:subPropertyOf :exposesArchitectureComponent .
+legacy:describes_system_context rdfs:subPropertyOf :describesSystemContext .
+legacy:cites_architecture_principle rdfs:subPropertyOf :citesArchitecturePrinciple .
+legacy:architecture_decision_status rdfs:subPropertyOf :architectureDecisionStatus .
+legacy:decision_title rdfs:subPropertyOf :decisionTitle .
+legacy:rationale rdfs:subPropertyOf :rationale .
+legacy:context_name rdfs:subPropertyOf :contextName .
+legacy:component_name rdfs:subPropertyOf :componentName .
+legacy:application_reference rdfs:subPropertyOf :applicationReference .
+legacy:contract_name rdfs:subPropertyOf :contractName .
+legacy:api_contract_reference rdfs:subPropertyOf :apiContractReference .
+legacy:viewpoint_name rdfs:subPropertyOf :viewpointName .
+legacy:principle_name rdfs:subPropertyOf :principleName .

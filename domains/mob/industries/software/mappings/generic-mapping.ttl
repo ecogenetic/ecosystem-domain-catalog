@@ -1,0 +1,9 @@
+# Software industry mapping for MOB
+@prefix sw: <https://ecosystemcode.com/ontology/mob/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_mobile_application owl:equivalentClass sw:ProductMobileApplication .
+legacy:product_mobile_application_id rdfs:subPropertyOf sw:productMobileApplicationId .
+legacy:presents_mobile_edition rdfs:subPropertyOf sw:presentsMobileEdition .

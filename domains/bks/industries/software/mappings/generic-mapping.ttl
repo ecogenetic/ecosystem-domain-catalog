@@ -1,0 +1,9 @@
+# Software industry mapping for BKS
+@prefix sw: <https://ecosystemcode.com/ontology/bks/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:product_backend_service owl:equivalentClass sw:ProductBackendService .
+legacy:product_backend_service_id rdfs:subPropertyOf sw:productBackendServiceId .
+legacy:implements_product_edition rdfs:subPropertyOf sw:implementsProductEdition .

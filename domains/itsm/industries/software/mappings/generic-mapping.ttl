@@ -1,0 +1,11 @@
+# Software industry mapping for ITSM
+@prefix sw: <https://ecosystemcode.com/ontology/itsm/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:production_incident owl:equivalentClass sw:ProductionIncident .
+legacy:production_incident_id rdfs:subPropertyOf sw:productionIncidentId .
+legacy:software_configuration_item owl:equivalentClass sw:SoftwareConfigurationItem .
+legacy:software_configuration_item_id rdfs:subPropertyOf sw:softwareConfigurationItemId .
+legacy:affects_software_configuration_item rdfs:subPropertyOf sw:affectsSoftwareConfigurationItem .

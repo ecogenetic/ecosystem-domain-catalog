@@ -1,0 +1,12 @@
+# Software industry mapping for SAM
+@prefix sw: <https://ecosystemcode.com/ontology/sam/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:application_alarm owl:equivalentClass sw:ApplicationAlarm .
+legacy:application_alarm_id rdfs:subPropertyOf sw:applicationAlarmId .
+legacy:tenant_impact owl:equivalentClass sw:TenantImpact .
+legacy:tenant_impact_id rdfs:subPropertyOf sw:tenantImpactId .
+legacy:assesses_application_alarm rdfs:subPropertyOf sw:assessesApplicationAlarm .
+legacy:affects_software_tenant rdfs:subPropertyOf sw:affectsSoftwareTenant .

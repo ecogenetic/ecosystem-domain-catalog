@@ -1,0 +1,11 @@
+# Software industry mapping for FMS
+@prefix sw: <https://ecosystemcode.com/ontology/fms/software#> .
+@prefix legacy: <https://example.com/legacy/software#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:deferred_revenue_journal owl:equivalentClass sw:DeferredRevenueJournal .
+legacy:deferred_revenue_journal_id rdfs:subPropertyOf sw:deferredRevenueJournalId .
+legacy:subscription_customer_invoice owl:equivalentClass sw:SubscriptionCustomerInvoice .
+legacy:subscription_customer_invoice_id rdfs:subPropertyOf sw:subscriptionCustomerInvoiceId .
+legacy:recognises_subscription_invoice rdfs:subPropertyOf sw:recognisesSubscriptionInvoice .

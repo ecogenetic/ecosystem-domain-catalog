@@ -1,0 +1,149 @@
+@prefix : <https://ecosystemcode.com/ontology/mob#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bfo:  <http://purl.obolibrary.org/obo/BFO_> .
+
+<https://ecosystemcode.com/ontology/mob> a owl:Ontology ;
+    rdfs:label "MOB Domain Ontology" ;
+    rdfs:comment "Manages mobile applications, store listings, device platforms, mobile releases, push channels, and store reviews." .
+
+#################################################################
+# Classes
+#################################################################
+
+:MobileApplication a owl:Class ;
+    skos:prefLabel "Mobile Application" ;
+    skos:definition "A software application built for a phone or tablet platform." .
+:AppStoreListing a owl:Class ;
+    skos:prefLabel "App Store Listing" ;
+    skos:definition "The store listing that publishes a mobile application." .
+:DevicePlatform a owl:Class ;
+    skos:prefLabel "Device Platform" ;
+    skos:definition "A mobile operating platform a mobile application targets." .
+:MobileRelease a owl:Class ;
+    skos:prefLabel "Mobile Release" ;
+    skos:definition "A version of a mobile application submitted to or released through a store." .
+:PushChannel a owl:Class ;
+    skos:prefLabel "Push Channel" ;
+    skos:definition "A channel used to notify a mobile application." .
+:StoreReview a owl:Class ;
+    skos:prefLabel "Store Review" ;
+    skos:definition "The review outcome recorded against an app store listing." .
+
+#################################################################
+# Object properties
+#################################################################
+
+:publishesMobileApplication a owl:ObjectProperty ;
+    rdfs:label "publishes mobile application" ;
+    rdfs:domain :AppStoreListing ;
+    rdfs:range :MobileApplication ;
+    skos:definition "Associates an app store listing with the mobile application it publishes." .
+:targetsDevicePlatform a owl:ObjectProperty ;
+    rdfs:label "targets device platform" ;
+    rdfs:domain :MobileApplication ;
+    rdfs:range :DevicePlatform ;
+    skos:definition "Associates a mobile application with the device platform it targets." .
+:releasesMobileApplication a owl:ObjectProperty ;
+    rdfs:label "releases mobile application" ;
+    rdfs:domain :MobileRelease ;
+    rdfs:range :MobileApplication ;
+    skos:definition "Associates a mobile release with the mobile application it releases." .
+:notifiesMobileApplication a owl:ObjectProperty ;
+    rdfs:label "notifies mobile application" ;
+    rdfs:domain :PushChannel ;
+    rdfs:range :MobileApplication ;
+    skos:definition "Associates a push channel with the mobile application it notifies." .
+:reviewsAppStoreListing a owl:ObjectProperty ;
+    rdfs:label "reviews app store listing" ;
+    rdfs:domain :StoreReview ;
+    rdfs:range :AppStoreListing ;
+    skos:definition "Associates a store review with the app store listing it reviews." .
+
+#################################################################
+# Datatype properties
+#################################################################
+
+:mobileApplicationId a owl:DatatypeProperty ;
+    rdfs:label "mobile application id" ;
+    rdfs:domain :MobileApplication ;
+    rdfs:range xsd:string .
+:appStoreListingId a owl:DatatypeProperty ;
+    rdfs:label "app store listing id" ;
+    rdfs:domain :AppStoreListing ;
+    rdfs:range xsd:string .
+:devicePlatformId a owl:DatatypeProperty ;
+    rdfs:label "device platform id" ;
+    rdfs:domain :DevicePlatform ;
+    rdfs:range xsd:string .
+:mobileReleaseId a owl:DatatypeProperty ;
+    rdfs:label "mobile release id" ;
+    rdfs:domain :MobileRelease ;
+    rdfs:range xsd:string .
+:pushChannelId a owl:DatatypeProperty ;
+    rdfs:label "push channel id" ;
+    rdfs:domain :PushChannel ;
+    rdfs:range xsd:string .
+:storeReviewId a owl:DatatypeProperty ;
+    rdfs:label "store review id" ;
+    rdfs:domain :StoreReview ;
+    rdfs:range xsd:string .
+:mobileReleaseStatus a owl:DatatypeProperty ;
+    rdfs:label "mobile release status" ;
+    rdfs:domain :MobileRelease ;
+    rdfs:range xsd:string ;
+    skos:definition "Lifecycle state of mobile release: built, submitted, released, retired." .
+
+:applicationName a owl:DatatypeProperty ;
+    rdfs:label "application name" ;
+    rdfs:domain :MobileApplication ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the mobile application." .
+
+:productEditionCode a owl:DatatypeProperty ;
+    rdfs:label "product edition code" ;
+    rdfs:domain :MobileApplication ;
+    rdfs:range xsd:string ;
+    skos:definition "Code of the product edition this application presents." .
+
+:listingName a owl:DatatypeProperty ;
+    rdfs:label "listing name" ;
+    rdfs:domain :AppStoreListing ;
+    rdfs:range xsd:string ;
+    skos:definition "The name shown on the store listing." .
+
+:platformName a owl:DatatypeProperty ;
+    rdfs:label "platform name" ;
+    rdfs:domain :DevicePlatform ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the device platform." .
+
+:versionName a owl:DatatypeProperty ;
+    rdfs:label "version name" ;
+    rdfs:domain :MobileRelease ;
+    rdfs:range xsd:string ;
+    skos:definition "The version name of the mobile release." .
+
+:channelName a owl:DatatypeProperty ;
+    rdfs:label "channel name" ;
+    rdfs:domain :PushChannel ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the push channel." .
+
+:reviewOutcome a owl:DatatypeProperty ;
+    rdfs:label "review outcome" ;
+    rdfs:domain :StoreReview ;
+    rdfs:range xsd:string ;
+    skos:definition "The outcome of the store review." .
+
+#################################################################
+# Roles
+#################################################################
+
+:MobileLeadRole a owl:Class ;
+    rdfs:subClassOf bfo:0000023 ;
+    skos:prefLabel "Mobile Lead" ;
+    skos:altLabel "Mobile Lead Role" ;
+    skos:definition "Owns mobile applications, store listings, and mobile releases. Bearer: person. Permissions: MobileApplication:read, MobileApplication:write, MobileRelease:read, MobileRelease:write, AppStoreListing:read." .

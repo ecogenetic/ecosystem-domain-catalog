@@ -42,4 +42,4 @@ MUST NOT redefine, rename, remove, or relax base classes, properties, or shapes.
 
 ## Starter industries
 
-`banking`, `insurance`, `telco`, `healthcare`, `gambling` (gaming & gambling).
+`banking`, `insurance`, `telco`, `healthcare`, `gambling` (gaming & gambling), `software`.

@@ -1,0 +1,32 @@
+# Generic source mapping for UIA
+@prefix : <https://ecosystemcode.com/ontology/uia#> .
+@prefix legacy: <https://example.com/legacy/data#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+legacy:client_application owl:equivalentClass :ClientApplication .
+legacy:client_application_id rdfs:subPropertyOf :clientApplicationId .
+legacy:screen owl:equivalentClass :Screen .
+legacy:screen_id rdfs:subPropertyOf :screenId .
+legacy:ui_component owl:equivalentClass :UiComponent .
+legacy:ui_component_id rdfs:subPropertyOf :uiComponentId .
+legacy:design_system owl:equivalentClass :DesignSystem .
+legacy:design_system_id rdfs:subPropertyOf :designSystemId .
+legacy:navigation_flow owl:equivalentClass :NavigationFlow .
+legacy:navigation_flow_id rdfs:subPropertyOf :navigationFlowId .
+legacy:accessibility_requirement owl:equivalentClass :AccessibilityRequirement .
+legacy:accessibility_requirement_id rdfs:subPropertyOf :accessibilityRequirementId .
+
+legacy:belongs_to_client_application rdfs:subPropertyOf :belongsToClientApplication .
+legacy:composes_screen rdfs:subPropertyOf :composesScreen .
+legacy:adopts_design_system rdfs:subPropertyOf :adoptsDesignSystem .
+legacy:connects_screen rdfs:subPropertyOf :connectsScreen .
+legacy:constrains_screen rdfs:subPropertyOf :constrainsScreen .
+legacy:client_application_status rdfs:subPropertyOf :clientApplicationStatus .
+legacy:application_name rdfs:subPropertyOf :applicationName .
+legacy:product_edition_code rdfs:subPropertyOf :productEditionCode .
+legacy:screen_name rdfs:subPropertyOf :screenName .
+legacy:component_name rdfs:subPropertyOf :componentName .
+legacy:system_name rdfs:subPropertyOf :systemName .
+legacy:flow_name rdfs:subPropertyOf :flowName .
+legacy:requirement_name rdfs:subPropertyOf :requirementName .
