@@ -58,6 +58,17 @@ export const dataApi = {
     ),
   generateMongoSchema: (body: { domainId?: string; industry?: string; turtle?: string }) =>
     request(dataPath('/v1/physical/mongo-schema'), { method: 'POST', body: JSON.stringify(body) }),
+  generateCrudAgent: (body: { domainId?: string; industry?: string; turtle?: string; target: 'postgresql' | 'mongodb' }) =>
+    request<{
+      ok?: boolean;
+      target?: string;
+      tableCount?: number;
+      header?: string;
+      files?: Record<string, string>;
+      zipBase64?: string;
+      model?: import('../contracts/data').PhysicalModel;
+      error?: string;
+    }>(dataPath('/v1/physical/crud-agent'), { method: 'POST', body: JSON.stringify(body) }),
   materialize: (body: {
     sourceId?: string;
     domainId?: string;

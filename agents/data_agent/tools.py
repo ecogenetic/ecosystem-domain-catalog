@@ -12,8 +12,8 @@ from agents.data_agent import ontology as ontology_mod
 from agents.data_agent import physical as physical_mod
 from agents.data_agent import query as query_mod
 from agents.data_agent import registry
+from agents.data_agent.emit_crud import ddl_with_header, emit_crud_package
 from agents.data_agent.emit_mongo import generate_mongo_schema
-from agents.data_agent.emit_sql import generate_ddl
 from agents.data_agent.introspect import introspect
 from agents.data_agent.store import PII_EXCLUDE
 from agents.shared.catalog_index import get_index
@@ -121,8 +121,25 @@ def generate_ddl_from_model(
     model: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     compiled = model or compile_physical_model(domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle)
-    ddl = generate_ddl(compiled)
+    ddl = ddl_with_header(compiled)
     return {"ok": True, "ddl": ddl, "model": compiled, "tableCount": compiled.get("tableCount", 0)}
+
+
+def generate_crud_agent(
+    domainId: str | None = None,
+    domain_id: str | None = None,
+    industry: str | None = None,
+    turtle: str | None = None,
+    target: str = "postgresql",
+    model: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    try:
+        compiled = model or compile_physical_model(
+            domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle
+        )
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
+    return emit_crud_package(compiled, target=target)
 
 
 def generate_mongo_schema_from_model(
@@ -227,6 +244,13 @@ def data_tools() -> list[ToolSpec]:
         ToolSpec(name="compile_physical_model", description="Compile OWL+SHACL into a physical model", method="POST", path="/v1/physical/compile", handler=compile_physical_model),
         ToolSpec(name="generate_ddl", description="PostgreSQL DDL from domain or session ontology", method="POST", path="/v1/physical/ddl", handler=generate_ddl_from_model),
         ToolSpec(name="generate_mongo_schema", description="Mongo JSON Schema from domain or session ontology", method="POST", path="/v1/physical/mongo-schema", handler=generate_mongo_schema_from_model),
+        ToolSpec(
+            name="generate_crud_agent",
+            description="Downloadable Python CRUD agent (PostgreSQL or MongoDB) from domain or session ontology",
+            method="POST",
+            path="/v1/physical/crud-agent",
+            handler=generate_crud_agent,
+        ),
         ToolSpec(name="materialize_source", description="Write DDL artefacts and register as schema-only source", method="POST", path="/v1/physical/materialize", handler=materialize_source),
         ToolSpec(name="compile_query_plan", description="Compile NL to a sandboxed query plan", method="POST", path="/v1/sources/{id}/compile", handler=compile_query_plan),
         ToolSpec(name="execute_query_plan", description="Execute a mapped query plan", method="POST", path="/v1/sources/{id}/execute", handler=execute_query_plan),

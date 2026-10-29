@@ -64,6 +64,7 @@ export const NAV: NavNode[] = [
     to: '/sources/connect',
     children: [
       { id: 'generate', label: 'From ontology', to: '/sources/generate', keywords: ['generate', 'ddl', 'schema', 'ontology'] },
+      { id: 'crud', label: 'CRUD agent', to: '/sources/crud', keywords: ['crud', 'agent', 'fastapi', 'python', 'download'] },
       { id: 'connect', label: 'Data sources', to: '/sources/connect', keywords: ['mongodb', 'postgresql', 'ddl', 'connect'] },
       { id: 'understand', label: 'Schema profiler', to: '/sources/understand', keywords: ['introspect', 'schema', 'understand'] },
       { id: 'map', label: 'Field mapping', to: '/sources/map', keywords: ['coverage', 'catalog', 'map'] },
@@ -243,7 +244,12 @@ export function catalogSessionId(pathname: string): string {
 export const DATA_STEPS = ['generate', 'connect', 'understand', 'map', 'ask'] as const;
 export type DataStep = (typeof DATA_STEPS)[number];
 
+export function isCrudAgentPath(pathname: string): boolean {
+  return pathname === '/sources/crud' || pathname.startsWith('/sources/crud/');
+}
+
 export function dataStepFromPath(pathname: string): DataStep {
+  if (isCrudAgentPath(pathname)) return 'generate';
   const part = pathname.split('/')[2];
   return (DATA_STEPS as readonly string[]).includes(part) ? (part as DataStep) : 'connect';
 }
@@ -277,6 +283,12 @@ export function headerCopy(
     };
   }
   if (pathname.startsWith('/sources')) {
+    if (isCrudAgentPath(pathname)) {
+      return {
+        title: 'CRUD agent',
+        sub: 'Preview and download a Python 3.14 ontology CRUD agent',
+      };
+    }
     const step = dataStepFromPath(pathname);
     const copy: Record<DataStep, { title: string; sub: string }> = {
       generate: { title: 'From ontology', sub: 'Generate PostgreSQL DDL and Mongo schema from catalog or session OWL' },

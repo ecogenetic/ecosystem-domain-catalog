@@ -14,6 +14,7 @@ import { Button } from '../common/Button';
 import { Card } from '../common/Card';
 import { EmptyState } from '../common/EmptyState';
 import { GraphCanvas } from '../common/GraphCanvas';
+import { SearchableSelect, type SearchableOption } from '../common/SearchableSelect';
 import type { GraphPayload } from '../../contracts/catalog';
 import { DATA_STEPS, dataStepFromPath } from '../layout/nav';
 
@@ -50,8 +51,28 @@ function homonymOptions(homonym: MappingHomonym): NonNullable<MappingHomonym['op
   return homonym.options?.length ? homonym.options : homonym.candidates.map((iri) => ({ iri }));
 }
 
+type GenSelection = { kind: 'catalog' | 'session' | 'paste'; id: string };
+
+function parseGenSelection(raw: string): GenSelection {
+  if (raw.startsWith('domain:')) return { kind: 'catalog', id: raw.slice('domain:'.length) };
+  if (raw.startsWith('session:')) return { kind: 'session', id: raw.slice('session:'.length) };
+  return { kind: 'paste', id: '' };
+}
+
+function genSelectionValue(sel: GenSelection): string {
+  if (sel.kind === 'catalog') return `domain:${sel.id}`;
+  if (sel.kind === 'session') return `session:${sel.id}`;
+  return '';
+}
+
+const PG_DDL_HEADER = `-- Connection: postgresql://user:pass@localhost:5432/mydb
+-- Create the database, then apply this file:
+--   createdb mydb
+--   psql "postgresql://user:pass@localhost:5432/mydb" -f schema.sql
+`;
+
 export function DataWizard() {
-  const { useLlm, dataOk, sourceId, setSourceId, setSourceKind, domains, industries } = useApp();
+  const { useLlm, dataOk, sourceId, setSourceId, setSourceKind, domains, industries, sessionLibrary } = useApp();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -70,11 +91,15 @@ export function DataWizard() {
   const [readiness, setReadiness] = useState<MappingReadiness | null>(null);
   const [coverage, setCoverage] = useState<number | null>(null);
   const [preferDomain, setPreferDomain] = useState('');
-  const [genDomain, setGenDomain] = useState(searchParams.get('domain') || '');
+  const initialDomain = searchParams.get('domain') || '';
+  const [genSelection, setGenSelection] = useState<GenSelection>(
+    initialDomain ? { kind: 'catalog', id: initialDomain } : { kind: 'paste', id: '' },
+  );
   const [genIndustry, setGenIndustry] = useState(searchParams.get('industry') || '');
   const [genTurtle, setGenTurtle] = useState('');
   const [genDdl, setGenDdl] = useState('');
   const [genModel, setGenModel] = useState<PhysicalModel | null>(null);
+  const [genHeader, setGenHeader] = useState(PG_DDL_HEADER);
   const [query, setQuery] = useState('');
   const [answer, setAnswer] = useState<QueryResult | null>(null);
   const [busy, setBusy] = useState(false);
@@ -82,17 +107,55 @@ export function DataWizard() {
   const [preview, setPreview] = useState<{ collection: string; documents: unknown[] } | null>(null);
   const [joinGraph, setJoinGraph] = useState<GraphPayload | null>(null);
 
+  const genDomain = genSelection.kind === 'catalog' ? genSelection.id : '';
+  const selectedSession = genSelection.kind === 'session'
+    ? sessionLibrary.items.find((item) => item.id === genSelection.id) || null
+    : null;
+
+  const catalogDomainOptions: SearchableOption[] = [
+    ...sessionLibrary.items.map((item) => ({
+      id: `session:${item.id}`,
+      label: item.name,
+      hint: item.fileName || 'Uploaded ontology',
+      group: 'Your ontologies',
+      tone: 'session' as const,
+    })),
+    ...domains.map((d) => ({
+      id: `domain:${d.id}`,
+      label: d.name || d.id,
+      hint: d.acronym || d.id,
+      group: 'Catalog domains',
+    })),
+  ];
+
   useEffect(() => {
     const d = searchParams.get('domain');
-    if (d) setGenDomain(d);
+    if (d) setGenSelection({ kind: 'catalog', id: d });
     const i = searchParams.get('industry');
     if (i) setGenIndustry(i);
+    const sessionId = sessionStorage.getItem('ecosystem.generate.sessionId');
     const stored = sessionStorage.getItem('ecosystem.generate.turtle');
+    if (sessionId) {
+      setGenSelection({ kind: 'session', id: sessionId });
+      sessionStorage.removeItem('ecosystem.generate.sessionId');
+    }
     if (stored) {
       setGenTurtle(stored);
       sessionStorage.removeItem('ecosystem.generate.turtle');
+      if (!sessionId && !d) setGenSelection({ kind: 'paste', id: '' });
     }
   }, [searchParams]);
+
+  function ontologyPayload(): { domainId?: string; industry?: string; turtle?: string } {
+    if (genSelection.kind === 'catalog') {
+      return { domainId: genSelection.id, industry: genIndustry || undefined };
+    }
+    if (genSelection.kind === 'session') {
+      const turtle = selectedSession?.turtle || genTurtle;
+      return { turtle: turtle.trim() || undefined };
+    }
+    return { turtle: genTurtle.trim() || undefined };
+  }
 
   if (dataOk === false) {
     return (
@@ -217,26 +280,28 @@ export function DataWizard() {
     setBusy(true);
     setError('');
     try {
-      const sid = genDomain ? `gen-${genDomain}${genIndustry ? `-${genIndustry}` : ''}` : 'gen-session';
-      if (!genDomain && !genTurtle.trim()) {
-        setError('Choose a catalog domain or paste session Turtle.');
+      const payload = ontologyPayload();
+      const sid = payload.domainId
+        ? `gen-${payload.domainId}${payload.industry ? `-${payload.industry}` : ''}`
+        : selectedSession
+          ? `gen-${selectedSession.id}`
+          : 'gen-session';
+      if (!payload.domainId && !payload.turtle) {
+        setError('Choose a catalog domain, one of your ontologies, or paste Turtle.');
         return;
       }
-      const ddlPreview = await dataApi.generateDdl({
-        domainId: genDomain || undefined,
-        industry: genIndustry || undefined,
-        turtle: genTurtle.trim() || undefined,
-      });
-      setGenDdl(ddlPreview.ddl || '');
+      const ddlPreview = await dataApi.generateDdl(payload);
+      const rawDdl = ddlPreview.ddl || '';
+      const withHeader = rawDdl.startsWith('-- Connection:') ? rawDdl : `${PG_DDL_HEADER}\n${rawDdl}`;
+      setGenDdl(withHeader);
+      setGenHeader(PG_DDL_HEADER);
       setGenModel(ddlPreview.model || null);
       if (openAsSource) {
         const res = await dataApi.materialize({
           sourceId: sid,
-          domainId: genDomain || undefined,
-          industry: genIndustry || undefined,
-          turtle: genTurtle.trim() || undefined,
+          ...payload,
           autoMap: true,
-          preferDomain: genDomain || undefined,
+          preferDomain: payload.domainId || undefined,
         });
         if (!res.ok) {
           setError('Could not materialize schema.');
@@ -245,7 +310,8 @@ export function DataWizard() {
         setSourceId(res.sourceId || sid);
         setSourceKind('ddl');
         setSchemaOnly(true);
-        setGenDdl(res.ddl || '');
+        const matDdl = res.ddl || '';
+        setGenDdl(matDdl.startsWith('-- Connection:') ? matDdl : `${PG_DDL_HEADER}\n${matDdl}`);
         const mapping = res.mapping || {};
         setMapped((mapping.mapped as typeof mapped) || []);
         setHomonyms(mapping.homonyms || []);
@@ -269,6 +335,26 @@ export function DataWizard() {
     URL.revokeObjectURL(url);
   }
 
+  function openCrudAgent() {
+    const payload = ontologyPayload();
+    if (payload.domainId) {
+      const q = new URLSearchParams({ domain: payload.domainId });
+      if (payload.industry) q.set('industry', payload.industry);
+      navigate(`/sources/crud?${q.toString()}`);
+      return;
+    }
+    if (genSelection.kind === 'session' && genSelection.id) {
+      sessionStorage.setItem('ecosystem.crud.sessionId', genSelection.id);
+      if (payload.turtle) sessionStorage.setItem('ecosystem.crud.turtle', payload.turtle);
+      navigate('/sources/crud');
+      return;
+    }
+    if (payload.turtle) {
+      sessionStorage.setItem('ecosystem.crud.turtle', payload.turtle);
+    }
+    navigate('/sources/crud');
+  }
+
   const generateStep = step === 0;
   const connectStep = step === 1;
   const understandStep = step === 2;
@@ -289,21 +375,35 @@ export function DataWizard() {
         <Card>
           <h3>Generate schema from ontology</h3>
           <p className="muted">
-            Compile catalog OWL + SHACL into PostgreSQL DDL and Mongo JSON Schema. On the public site this produces
-            downloadable artefacts only — live database connect works when you run the gateway locally.
+            Compile catalog OWL + SHACL, or one of your uploaded ontologies, into PostgreSQL DDL. On the public site this
+            produces downloadable artefacts only. SHACL for an upload must be in the same Turtle document. Uploads are
+            not written into the catalog. For a runnable Python agent, use{' '}
+            <button type="button" className="linkish" onClick={() => openCrudAgent()}>
+              CRUD agent
+            </button>
+            .
           </p>
           <div className="form-group">
             <label>Catalog domain</label>
-            <select value={genDomain} onChange={(e) => setGenDomain(e.target.value)}>
-              <option value="">Session Turtle only</option>
-              {domains.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name || d.id}
-                </option>
-              ))}
-            </select>
+            <SearchableSelect
+              className="select-catalog-domain"
+              value={genSelectionValue(genSelection)}
+              allLabel={sessionLibrary.items.length ? 'Paste Turtle' : 'Session Turtle only'}
+              placeholder="Search catalog or your ontologies…"
+              ariaLabel="Catalog domain"
+              options={catalogDomainOptions}
+              onChange={(id) => {
+                const next = parseGenSelection(id);
+                setGenSelection(next);
+                if (next.kind === 'session') {
+                  const item = sessionLibrary.items.find((row) => row.id === next.id);
+                  if (item?.turtle) setGenTurtle(item.turtle);
+                }
+                if (next.kind !== 'catalog') setGenIndustry('');
+              }}
+            />
           </div>
-          {genDomain && (
+          {genSelection.kind === 'catalog' && (
             <div className="form-group">
               <label>Industry overlay (optional)</label>
               <select value={genIndustry} onChange={(e) => setGenIndustry(e.target.value)}>
@@ -316,9 +416,9 @@ export function DataWizard() {
               </select>
             </div>
           )}
-          {!genDomain && (
+          {genSelection.kind === 'paste' && (
             <div className="form-group">
-              <label>Session Turtle (optional)</label>
+              <label>Session Turtle</label>
               <textarea
                 value={genTurtle}
                 onChange={(e) => setGenTurtle(e.target.value)}
@@ -326,6 +426,9 @@ export function DataWizard() {
                 placeholder="@prefix : <https://example.com/ontology/mine#> ."
               />
             </div>
+          )}
+          {genSelection.kind === 'session' && selectedSession && (
+            <p className="muted">Using uploaded ontology “{selectedSession.name}” ({selectedSession.classes.length} classes).</p>
           )}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <Button variant="primary" disabled={busy} onClick={() => void generateFromOntology(false)}>
@@ -335,11 +438,20 @@ export function DataWizard() {
               Open as data source
             </Button>
             {genDdl && (
-              <Button onClick={() => downloadText(`${genDomain || 'session'}.sql`, genDdl)}>
+              <Button onClick={() => downloadText(`${genDomain || selectedSession?.name || 'session'}.sql`, genDdl)}>
                 <Download size={14} /> Download SQL
               </Button>
             )}
+            <Button disabled={busy} onClick={() => openCrudAgent()}>
+              Open CRUD agent
+            </Button>
           </div>
+          {genHeader && (
+            <details open style={{ marginTop: 16 }}>
+              <summary className="muted">Connection and create commands</summary>
+              <pre className="pre">{genHeader}</pre>
+            </details>
+          )}
           {genModel?.tables && (
             <details open style={{ marginTop: 16 }}>
               <summary className="muted">{genModel.tableCount ?? genModel.tables.length} tables</summary>

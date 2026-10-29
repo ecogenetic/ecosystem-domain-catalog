@@ -36,6 +36,7 @@ export const DATA_TOOLS: ToolDef[] = [
   { agent: 'data', name: 'compile_physical_model', description: 'Compile OWL+SHACL to physical model', method: 'POST', path: '/v1/physical/compile', example: { domainId: 'crm' } },
   { agent: 'data', name: 'generate_ddl', description: 'PostgreSQL DDL from ontology', method: 'POST', path: '/v1/physical/ddl', example: { domainId: 'crm' } },
   { agent: 'data', name: 'generate_mongo_schema', description: 'Mongo JSON Schema from ontology', method: 'POST', path: '/v1/physical/mongo-schema', example: { domainId: 'crm' } },
+  { agent: 'data', name: 'generate_crud_agent', description: 'Downloadable Python CRUD agent from ontology', method: 'POST', path: '/v1/physical/crud-agent', example: { domainId: 'crm', target: 'postgresql' } },
   { agent: 'data', name: 'materialize_source', description: 'Write DDL and register schema-only source', method: 'POST', path: '/v1/physical/materialize', example: { domainId: 'crm', autoMap: true } },
   { agent: 'data', name: 'mapping_coverage', description: 'Coverage after mapping', method: 'GET', path: '/v1/sources/{id}/coverage' },
   { agent: 'data', name: 'heal_mapping', description: 'Repair unmapped collections', method: 'POST', path: '/v1/sources/{id}/heal-mapping', example: {} },

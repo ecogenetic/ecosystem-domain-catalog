@@ -381,11 +381,22 @@ export function SessionOntologyPage() {
             <Button
               disabled={!active.turtle}
               onClick={() => {
+                sessionStorage.setItem('ecosystem.generate.sessionId', active.id);
                 sessionStorage.setItem('ecosystem.generate.turtle', active.turtle);
                 navigate('/sources/generate');
               }}
             >
               Generate schema
+            </Button>
+            <Button
+              disabled={!active.turtle}
+              onClick={() => {
+                sessionStorage.setItem('ecosystem.crud.sessionId', active.id);
+                sessionStorage.setItem('ecosystem.crud.turtle', active.turtle);
+                navigate('/sources/crud');
+              }}
+            >
+              CRUD agent
             </Button>
             <span className="muted">
               {acceptedCount} accepted · this tab only

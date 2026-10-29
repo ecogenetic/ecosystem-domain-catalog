@@ -1,7 +1,15 @@
 import { ChevronDown } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-export type SearchableOption = { id: string; label: string; hint?: string };
+export type SearchableOption = {
+  id: string;
+  label: string;
+  hint?: string;
+  /** Optional list section header (e.g. Your ontologies). */
+  group?: string;
+  /** Visual tone — session uploads use light blue. */
+  tone?: 'session';
+};
 
 export function SearchableSelect({
   value,
@@ -10,6 +18,7 @@ export function SearchableSelect({
   placeholder = 'Search…',
   onChange,
   ariaLabel,
+  className = '',
 }: {
   value: string;
   options: SearchableOption[];
@@ -17,6 +26,7 @@ export function SearchableSelect({
   placeholder?: string;
   onChange: (id: string) => void;
   ariaLabel?: string;
+  className?: string;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -26,11 +36,30 @@ export function SearchableSelect({
 
   const filtered = useMemo(() => {
     const q = typed.trim().toLowerCase();
-    if (!q) return options;
-    return options.filter((o) =>
-      [o.id, o.label, o.hint].filter(Boolean).join(' ').toLowerCase().includes(q),
-    );
+    const list = !q
+      ? options
+      : options.filter((o) =>
+          [o.id, o.label, o.hint, o.group].filter(Boolean).join(' ').toLowerCase().includes(q),
+        );
+    // Session / uploaded options stay first when present.
+    return [...list].sort((a, b) => {
+      const at = a.tone === 'session' ? 0 : 1;
+      const bt = b.tone === 'session' ? 0 : 1;
+      if (at !== bt) return at - bt;
+      return 0;
+    });
   }, [options, typed]);
+
+  const grouped = useMemo(() => {
+    const sections: { label: string | null; items: SearchableOption[] }[] = [];
+    for (const opt of filtered) {
+      const label = opt.group || null;
+      const last = sections[sections.length - 1];
+      if (last && last.label === label) last.items.push(opt);
+      else sections.push({ label, items: [opt] });
+    }
+    return sections;
+  }, [filtered]);
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -46,8 +75,13 @@ export function SearchableSelect({
     setOpen(false);
   }
 
+  const sessionSelected = selected?.tone === 'session';
+
   return (
-    <div className={`searchable-select${open ? ' open' : ''}`} ref={rootRef}>
+    <div
+      className={`searchable-select${open ? ' open' : ''}${sessionSelected ? ' searchable-select--session' : ''}${className ? ` ${className}` : ''}`}
+      ref={rootRef}
+    >
       <input
         value={display}
         aria-label={ariaLabel || allLabel}
@@ -84,12 +118,33 @@ export function SearchableSelect({
               {allLabel}
             </button>
           </li>
-          {filtered.map((o) => (
-            <li key={o.id}>
-              <button type="button" role="option" aria-selected={o.id === value} onClick={() => pick(o.id)}>
-                <span>{o.label}</span>
-                {o.hint ? <span className="muted">{o.hint}</span> : null}
-              </button>
+          {grouped.map((section) => (
+            <li key={section.label || '__ungrouped'} className="searchable-select-section">
+              {section.label ? (
+                <div
+                  className={`searchable-select-group${
+                    section.items.some((i) => i.tone === 'session') ? ' searchable-select-group--session' : ''
+                  }`}
+                >
+                  {section.label}
+                </div>
+              ) : null}
+              <ul className="searchable-select-sublist">
+                {section.items.map((o) => (
+                  <li key={o.id}>
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected={o.id === value}
+                      className={o.tone === 'session' ? 'searchable-option--session' : undefined}
+                      onClick={() => pick(o.id)}
+                    >
+                      <span>{o.label}</span>
+                      {o.hint ? <span className="muted">{o.hint}</span> : null}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
           {!filtered.length && <li className="muted searchable-select-empty">No matching ontologies</li>}

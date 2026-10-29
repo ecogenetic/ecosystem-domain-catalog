@@ -145,8 +145,9 @@ Two directions:
 
 1. **Data → ontology** — connect a source, introspect, propose mappings, resolve every ambiguity, and query through the mapping.
 2. **Ontology → data** — compile catalog or session OWL + SHACL into PostgreSQL DDL and Mongo JSON Schema; download artefacts or **materialize** as a schema-only source for round-trip mapping.
+3. **CRUD agent package** — same physical model becomes a downloadable Python 3.14 FastAPI + MCP agent for PostgreSQL or MongoDB. The hosted site returns the zip only; the user runs the package against their own database.
 
-**Hosted site (`ontology.ecosystem.ai`):** generation produces downloadable DDL/JSON only. Live MongoDB/PostgreSQL connect works when you run the gateway locally (or `host.docker.internal` in Docker). The public site never runs `CREATE DATABASE` against a visitor URI.
+**Hosted site (`ontology.ecosystem.ai`):** generation produces downloadable DDL/JSON/CRUD zip only. Live MongoDB/PostgreSQL connect works when you run the gateway locally (or `host.docker.internal` in Docker). The public site never runs `CREATE DATABASE` against a visitor URI.
 
 Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology, propose mappings, resolve every ambiguity, and query. Mapping is graph-first: curated `EXPLICIT` candidates, SKOS/local-name search, and—when `preferDomain` is set—class/`owl:equivalentClass` plus field/`rdfs:subPropertyOf` hints from `domains/{id}/mappings/generic-mapping.ttl`. Mapped fields carry catalog `propertyIri` when a hint or exact catalog property match is found; unresolved field names stay name-only (`mapped: false`). Optionally pass `preferDomain`; an explicit `selections` object overrides it. After `map_to_catalog`, complexity is scored from the **mapping graph**.
 
@@ -155,6 +156,16 @@ Connect MongoDB, PostgreSQL, or a DDL schema, then introspect, generate ontology
 curl -X POST http://127.0.0.1:8080/data/v1/physical/ddl \
   -H 'Content-Type: application/json' \
   -d '{"domainId":"crm"}'
+
+# Downloadable CRUD agent (postgresql | mongodb) — response includes files{} and zipBase64
+curl -X POST http://127.0.0.1:8080/data/v1/physical/crud-agent \
+  -H 'Content-Type: application/json' \
+  -d '{"domainId":"crm","target":"postgresql"}'
+
+# Same for an uploaded / session ontology (Turtle only — no domainId)
+curl -X POST http://127.0.0.1:8080/data/v1/physical/crud-agent \
+  -H 'Content-Type: application/json' \
+  -d '{"turtle":"@prefix : <https://example.com/ontology/mine#> . ...","target":"mongodb"}'
 
 # Materialize as schema-only source and auto-map back to catalog
 curl -X POST http://127.0.0.1:8080/data/v1/physical/materialize \
@@ -196,6 +207,29 @@ curl -X POST http://127.0.0.1:8080/data/v1/sources/sample/query \
 ```
 
 Query compilation is sandboxed: only reviewed classes, source fields, operators, aggregates, and join paths are allowed. Ambiguous targets, unmapped fields, disconnected relationships, unsupported operations, and oversized local joins are rejected. Local multi-collection execution is limited to 10,000 rows per involved entity so truncation can never masquerade as a complete answer.
+
+### Run the CRUD agent
+
+Workbench: **Your data → CRUD agent** (`/sources/crud`). Choose a catalog domain or one of **Your ontologies**, pick PostgreSQL or MongoDB, **Build agent** to preview the package (file list + code pane), then **Download zip**.
+
+Unpack the zip. The header of `README.md`, `app.py`, and `schema.sql` / `init.js` has the connection string and create commands (placeholders `user` / `pass` / `mydb`).
+
+```bash
+python3.14 -m venv .venv && . .venv/bin/activate
+python3.14 -m pip install -r requirements.txt
+export DATABASE_URL=postgresql://user:pass@localhost:5432/mydb   # or MONGO_URI / MONGO_DB
+export CRUD_LLM_BASE_URL=https://api.openai.com/v1
+export CRUD_LLM_API_KEY=sk-...
+export CRUD_LLM_MODEL=gpt-4o-mini
+psql "$DATABASE_URL" -f schema.sql   # Mongo: mongosh ... init.js  or  python3.14 app.py --init
+python3.14 -m uvicorn app:app --port 8090
+```
+
+- HTTP `/docs` and direct table routes for a known key
+- `POST /requests` with `{"request":"..."}` for conversation (query, create, update, delete) via the ontology compiler — no coded question phrases
+- MCP: `POST /mcp` while HTTP is up, or `python3.14 app.py --stdio` for Cursor
+
+The catalog data-agent Ask box on port 8080 stays count-only. Conversation writes run in the downloaded package.
 
 ## Five complexity levels
 
