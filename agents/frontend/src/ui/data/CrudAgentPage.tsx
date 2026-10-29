@@ -159,26 +159,33 @@ export function CrudAgentPage() {
           </p>
         </div>
         <div className="crud-agent-controls">
-          <div className="form-group">
+          <div className="form-group crud-agent-ontology">
             <label>Ontology</label>
-            <SearchableSelect
-              className="select-catalog-domain"
-              value={genSelectionValue(genSelection)}
-              allLabel={sessionLibrary.items.length ? 'Paste Turtle' : 'Session Turtle only'}
-              placeholder="Search catalog or your ontologies…"
-              ariaLabel="Ontology for CRUD agent"
-              options={catalogDomainOptions}
-              onChange={(id) => {
-                const next = parseGenSelection(id);
-                setGenSelection(next);
-                setPreview(null);
-                if (next.kind === 'session') {
-                  const item = sessionLibrary.items.find((row) => row.id === next.id);
-                  if (item?.turtle) setGenTurtle(item.turtle);
-                }
-                if (next.kind !== 'catalog') setGenIndustry('');
-              }}
-            />
+            <div className="crud-agent-ontology-row">
+              <SearchableSelect
+                className="select-catalog-domain"
+                value={genSelectionValue(genSelection)}
+                allLabel={sessionLibrary.items.length ? 'Paste Turtle' : 'Session Turtle only'}
+                placeholder="Search catalog or your ontologies…"
+                ariaLabel="Ontology for CRUD agent"
+                options={catalogDomainOptions}
+                onChange={(id) => {
+                  const next = parseGenSelection(id);
+                  setGenSelection(next);
+                  setPreview(null);
+                  if (next.kind === 'session') {
+                    const item = sessionLibrary.items.find((row) => row.id === next.id);
+                    if (item?.turtle) setGenTurtle(item.turtle);
+                  }
+                  if (next.kind !== 'catalog') setGenIndustry('');
+                }}
+              />
+              {genSelection.kind === 'session' && selectedSession && (
+                <p className="muted crud-agent-session-note">
+                  Using “{selectedSession.name}” ({selectedSession.classes.length} classes).
+                </p>
+              )}
+            </div>
           </div>
           {genSelection.kind === 'catalog' && (
             <div className="form-group">
@@ -213,43 +220,38 @@ export function CrudAgentPage() {
               />
             </div>
           )}
-          {genSelection.kind === 'session' && selectedSession && (
-            <p className="muted crud-agent-session-note">
-              Using “{selectedSession.name}” ({selectedSession.classes.length} classes).
-            </p>
-          )}
-          <div className="form-group">
+          <div className="form-group crud-agent-target">
             <label>Database target</label>
-            <div className="chip-row">
-              <button
-                className={`chip${genTarget === 'postgresql' ? ' active' : ''}`}
-                type="button"
-                onClick={() => {
-                  setGenTarget('postgresql');
-                  setPreview(null);
-                }}
-              >
-                PostgreSQL
-              </button>
-              <button
-                className={`chip${genTarget === 'mongodb' ? ' active' : ''}`}
-                type="button"
-                onClick={() => {
-                  setGenTarget('mongodb');
-                  setPreview(null);
-                }}
-              >
-                MongoDB
-              </button>
+            <div className="crud-agent-target-row">
+              <div className="chip-row">
+                <button
+                  className={`chip${genTarget === 'postgresql' ? ' active' : ''}`}
+                  type="button"
+                  onClick={() => {
+                    setGenTarget('postgresql');
+                    setPreview(null);
+                  }}
+                >
+                  PostgreSQL
+                </button>
+                <button
+                  className={`chip${genTarget === 'mongodb' ? ' active' : ''}`}
+                  type="button"
+                  onClick={() => {
+                    setGenTarget('mongodb');
+                    setPreview(null);
+                  }}
+                >
+                  MongoDB
+                </button>
+              </div>
+              <Button variant="primary" disabled={busy} onClick={() => void buildPreview()}>
+                {busy ? <Loader2 className="spin" size={16} /> : null} Build agent
+              </Button>
+              <Button disabled={busy || !preview} onClick={() => downloadZip()}>
+                <Download size={14} /> Download zip
+              </Button>
             </div>
-          </div>
-          <div className="crud-agent-actions">
-            <Button variant="primary" disabled={busy} onClick={() => void buildPreview()}>
-              {busy ? <Loader2 className="spin" size={16} /> : null} Build agent
-            </Button>
-            <Button disabled={busy || !preview} onClick={() => downloadZip()}>
-              <Download size={14} /> Download zip
-            </Button>
           </div>
         </div>
         {error && <p className="error">{error}</p>}

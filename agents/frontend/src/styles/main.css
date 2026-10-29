@@ -312,14 +312,34 @@ html:not([data-theme='light']) .app-sidebar { background: #06080b; }
   align-items: end;
 }
 .crud-agent-controls .form-group { margin: 0; }
+.crud-agent-ontology { grid-column: 1 / -1; max-width: 720px; }
+.crud-agent-ontology-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.crud-agent-ontology-row .searchable-select {
+  flex: 0 1 280px;
+  min-width: 200px;
+}
+.crud-agent-session-note {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .crud-agent-turtle { grid-column: 1 / -1; }
-.crud-agent-session-note { margin: 0; grid-column: 1 / -1; }
-.crud-agent-actions {
+.crud-agent-target { grid-column: 1 / -1; }
+.crud-agent-target-row {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
 }
+.crud-agent-target-row .chip-row { margin: 0; }
+.crud-agent-target-row .btn { flex-shrink: 0; height: 34px; }
 .crud-agent-empty {
   flex: 1;
   display: flex;
