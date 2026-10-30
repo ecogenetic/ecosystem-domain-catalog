@@ -429,6 +429,7 @@ export function SessionOntologyPage() {
               {graphView.nodes?.length ? (
                 <GraphCanvas
                   payload={graphView}
+                  focusIri={selected?.iri}
                   agentPaths={agentPaths}
                   onAgentPathsChange={setAgentPaths}
                   onSelect={(n) => openClass(n, true)}

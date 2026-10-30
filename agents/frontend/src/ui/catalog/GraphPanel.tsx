@@ -214,6 +214,7 @@ export function GraphPanel({ advanced }: { advanced?: boolean }) {
           {hasGraph ? (
             <GraphCanvas
               payload={graph}
+              focusIri={selected?.iri}
               agentPaths={agentPaths}
               onAgentPathsChange={setAgentPaths}
               showMetricsChip={!threePane}

@@ -288,6 +288,7 @@ export function CatalogHome({ mode }: { mode: 'overview' | 'workspace' }) {
         <div className={`workspace-right${threePane ? ' graph-shell' : ' graph-only'}`}>
           <GraphCanvas
             payload={filteredGraph}
+            focusIri={selected?.iri}
             agentPaths={agentPaths}
             onAgentPathsChange={setAgentPaths}
             showMetricsChip={!threePane}
