@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # Build linux/amd64 and linux/arm64 images. Context is the catalog repository root.
-set -euo pipefail
+set -eu
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 IMAGE="${IMAGE:-ecosystemai/ecosystem-domain-catalog}"
 TAG="${TAG:-latest}"
@@ -12,15 +12,9 @@ case "$(uname -m)" in
   *) NATIVE=amd64 ;;
 esac
 
-if ! docker buildx inspect ecosystem-domain-catalog >/dev/null 2>&1; then
-  docker buildx create --name ecosystem-domain-catalog --driver docker-container --bootstrap
-fi
-docker buildx use ecosystem-domain-catalog
-
 for ARCH in amd64 arm64; do
-  docker buildx build \
+  docker build \
     --platform "linux/${ARCH}" \
-    --load \
     -f "${SCRIPT_DIR}/Dockerfile" \
     -t "${IMAGE}:${ARCH}" \
     "${REPO_ROOT}"
