@@ -11,6 +11,8 @@ export type NavNode = {
   dynamic?: 'domains' | 'industries' | 'session';
   keywords?: string[];
   children?: NavNode[];
+  /** Hide until AppContext.sourceId is set (post-connect data steps). */
+  requiresSource?: boolean;
 };
 
 export const NAV: NavNode[] = [
@@ -66,9 +68,27 @@ export const NAV: NavNode[] = [
       { id: 'generate', label: 'From ontology', to: '/sources/generate', keywords: ['generate', 'ddl', 'schema', 'ontology'] },
       { id: 'crud', label: 'CRUD agent', to: '/sources/crud', keywords: ['crud', 'agent', 'fastapi', 'python', 'download'] },
       { id: 'connect', label: 'Data sources', to: '/sources/connect', keywords: ['mongodb', 'postgresql', 'ddl', 'connect'] },
-      { id: 'understand', label: 'Schema profiler', to: '/sources/understand', keywords: ['introspect', 'schema', 'understand'] },
-      { id: 'map', label: 'Field mapping', to: '/sources/map', keywords: ['coverage', 'catalog', 'map'] },
-      { id: 'ask', label: 'Query', to: '/sources/ask', keywords: ['query', 'count', 'ask'] },
+      {
+        id: 'understand',
+        label: 'Schema profiler',
+        to: '/sources/understand',
+        keywords: ['introspect', 'schema', 'understand'],
+        requiresSource: true,
+      },
+      {
+        id: 'map',
+        label: 'Field mapping',
+        to: '/sources/map',
+        keywords: ['coverage', 'catalog', 'map'],
+        requiresSource: true,
+      },
+      {
+        id: 'ask',
+        label: 'Query',
+        to: '/sources/ask',
+        keywords: ['query', 'count', 'ask'],
+        requiresSource: true,
+      },
     ],
   },
   {
@@ -163,9 +183,19 @@ export function hydrateNav(
     });
     let count: number | undefined;
     if (group.id === 'ontology') count = domains.length;
-    if (group.id === 'data') count = 5;
     return { ...group, count, children };
   });
+}
+
+/** Drop post-connect steps (profiler / mapping / query) until a source exists. */
+export function filterNavForSource(nodes: NavNode[], hasSource: boolean): NavNode[] {
+  return nodes
+    .map((node) => {
+      if (node.requiresSource && !hasSource) return null;
+      const children = node.children ? filterNavForSource(node.children, hasSource) : undefined;
+      return children ? { ...node, children } : node;
+    })
+    .filter((n): n is NavNode => n != null);
 }
 
 export function pathIsActive(to: string | undefined, pathname: string, end?: boolean): boolean {

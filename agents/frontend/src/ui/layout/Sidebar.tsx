@@ -13,6 +13,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../AppContext';
 import { Button } from '../common/Button';
 import {
+  filterNavForSource,
   filterTree,
   groupIdsForPath,
   hydrateNav,
@@ -31,13 +32,13 @@ const ICONS: Record<NavIcon, typeof BookOpen> = {
 };
 
 export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
-  const { resetCatalog, domains, industries, sessionLibrary } = useApp();
+  const { resetCatalog, domains, industries, sessionLibrary, sourceId } = useApp();
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const [query, setQuery] = useState('');
   const tree = useMemo(
-    () => hydrateNav(domains, industries, sessionLibrary.items),
-    [domains, industries, sessionLibrary.items],
+    () => filterNavForSource(hydrateNav(domains, industries, sessionLibrary.items), Boolean(sourceId)),
+    [domains, industries, sessionLibrary.items, sourceId],
   );
   const visible = useMemo(() => filterTree(tree, query), [tree, query]);
   const [open, setOpen] = useState<Record<string, boolean>>({

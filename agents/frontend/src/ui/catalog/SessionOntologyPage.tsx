@@ -1,12 +1,15 @@
-import { Loader2, Plus, Trash2, Upload } from 'lucide-react';
+import { Download, Loader2, Pencil, Plus, Trash2, Upload } from 'lucide-react';
 import { DragEvent, FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { catalogApi } from '../../adapters/catalogApi';
 import { proposeClassMatches } from '../../adapters/matchDomain';
 import {
   addOrUpdateOntology,
+  downloadSessionBundle,
+  mergeSessionLibrary,
   neighborhood,
   overlayDomainMatches,
+  parseSessionBundle,
   patchOntology,
   removeOntology,
   type ClassDomainMatch,
@@ -22,6 +25,16 @@ import { GraphCanvas } from '../common/GraphCanvas';
 import { TurtleView } from '../common/TurtleView';
 import { catalogSessionId } from '../layout/nav';
 import { ConceptInspector } from './ConceptInspector';
+
+function downloadTextFile(filename: string, text: string, mime = 'text/plain') {
+  const blob = new Blob([text], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 const SAMPLE = `@prefix : <https://example.com/ontology/demo#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -69,11 +82,15 @@ export function SessionOntologyPage() {
   const [showPaste, setShowPaste] = useState(false);
   const [replaceId, setReplaceId] = useState<string | null>(null);
   const [domainId, setDomainId] = useState(active?.matchedDomainId || '');
+  const [copyDomainId, setCopyDomainId] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [draftTurtle, setDraftTurtle] = useState('');
   const [selected, setSelected] = useState<CatalogMatch | null>(active?.classes[0] || null);
   const [focused, setFocused] = useState<GraphPayload | null>(active?.graph || null);
   const [trail, setTrail] = useState<CatalogMatch[]>([]);
   const [agentPaths, setAgentPaths] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const sessionFileRef = useRef<HTMLInputElement>(null);
   const uploadTargetRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -83,6 +100,8 @@ export function SessionOntologyPage() {
     setReplaceId(null);
     setError('');
     setDomainId(active?.matchedDomainId || '');
+    setEditing(false);
+    setDraftTurtle(active?.turtle || '');
   }, [active?.id, active?.version]);
 
   const graphView = overlayDomainMatches(focused || { nodes: [], edges: [] }, active?.classMatches);
@@ -150,9 +169,42 @@ export function SessionOntologyPage() {
     }
   }
 
+  function importSessionText(text: string) {
+    const parsed = parseSessionBundle(text);
+    if (!parsed.ok) {
+      setError(parsed.error);
+      return;
+    }
+    const merged = mergeSessionLibrary(sessionLibrary, parsed.library);
+    persist(merged.library);
+    const active = merged.library.items.find((item) => item.id === merged.library.activeId);
+    setNotice(
+      `Loaded saved session (${merged.added} added, ${merged.updated} updated). Matches and actions are restored.`,
+    );
+    setError('');
+    if (active) navigate(`/ontology/yours/${active.id}`);
+    else navigate('/ontology/yours');
+  }
+
   function onFile(file: File, targetId?: string | null) {
     const reader = new FileReader();
-    reader.onload = () => void ingest(String(reader.result || ''), file.name, targetId);
+    reader.onload = () => {
+      const text = String(reader.result || '');
+      const looksLikeSession =
+        /\.ecosystem-session\.json$/i.test(file.name) ||
+        (/\.json$/i.test(file.name) && text.includes('ecosystem.ontology.session'));
+      if (looksLikeSession) {
+        importSessionText(text);
+        return;
+      }
+      void ingest(text, file.name, targetId);
+    };
+    reader.readAsText(file);
+  }
+
+  function onSessionFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => importSessionText(String(reader.result || ''));
     reader.readAsText(file);
   }
 
@@ -161,6 +213,77 @@ export function SessionOntologyPage() {
     setDragging(false);
     const file = e.dataTransfer.files?.[0];
     if (file) onFile(file, targetId);
+  }
+
+  function downloadActiveOrLibrary() {
+    if (!sessionLibrary.items.length) {
+      setError('Nothing to download yet. Add an ontology first.');
+      return;
+    }
+    downloadSessionBundle(sessionLibrary, active?.id);
+    setNotice(
+      active
+        ? `Downloaded “${displayName(active)}” with matches and session actions.`
+        : 'Downloaded your ontology session library.',
+    );
+  }
+
+  function downloadActiveTurtle() {
+    if (!active?.turtle) {
+      setError('No Turtle to download on this ontology.');
+      return;
+    }
+    downloadTextFile(`${displayName(active)}.ttl`, active.turtle, 'text/turtle');
+    setNotice(`Downloaded ${displayName(active)}.ttl`);
+  }
+
+  function startEdit() {
+    if (!active) return;
+    setDraftTurtle(active.turtle || '');
+    setEditing(true);
+    setError('');
+    setNotice('Edit the Turtle, then Apply to re-parse and bump the version. The catalog is not changed.');
+  }
+
+  async function applyEdit() {
+    if (!active) return;
+    await ingest(draftTurtle, active.fileName || `${displayName(active)}.ttl`, active.id);
+    setEditing(false);
+  }
+
+  function cancelEdit() {
+    setEditing(false);
+    setDraftTurtle(active?.turtle || '');
+    setNotice('');
+  }
+
+  async function copyFromCatalog(domain: string) {
+    if (!domain) {
+      setError('Choose a catalog domain to copy.');
+      return;
+    }
+    setBusy(true);
+    setError('');
+    setNotice('');
+    try {
+      const ont = await catalogApi.ontology(domain);
+      const body = (ont.turtle || '').trim();
+      if (!body) {
+        setError(`No Turtle is available for ${domain}.`);
+        return;
+      }
+      const meta = domains.find((d) => d.id === domain);
+      const label = meta?.acronym || domain.toUpperCase();
+      await ingest(body, `${label}-yours.ttl`);
+      setCopyDomainId('');
+      setNotice(
+        `Copied ${label} into Your ontology. Edit freely — this is your copy; the catalog is unchanged.`,
+      );
+    } catch {
+      setError('Could not load that catalog domain. Check the gateway and try again.');
+    } finally {
+      setBusy(false);
+    }
   }
 
   function onPasteSubmit(e: FormEvent) {
@@ -287,7 +410,7 @@ export function SessionOntologyPage() {
         <span>
           {updating
             ? 'Replaces this entry and bumps the version'
-            : 'Adds a new item under Your ontology in the left panel'}
+            : 'Adds a .ttl/.owl under Your ontology, or restores a .ecosystem-session.json'}
         </span>
       </button>
     );
@@ -299,16 +422,52 @@ export function SessionOntologyPage() {
       <p>
         {sessionLibrary.items.length
           ? 'This adds a separate file under Your ontology. It does not replace ones already in the list.'
-          : 'Load Turtle or OWL, then browse its classes. You can match them to a catalog domain after it opens.'}
-        {' '}Closing the tab clears the list. The catalog is not changed.
+          : 'Load Turtle or OWL, start from a catalog domain as your editable copy, then browse and change classes.'}
+        {' '}
+        Closing the tab clears the browser list — download Turtle or a session file to keep your work. The catalog is
+        not changed.
       </p>
       {error && <p className="error">{error}</p>}
+      {notice && <p className="session-notice">{notice}</p>}
       {dropzone()}
+      <div className="session-copy-catalog">
+        <label className="session-match-label">
+          Start from catalog domain
+          <select
+            value={copyDomainId}
+            onChange={(e) => setCopyDomainId(e.target.value)}
+            aria-label="Catalog domain to copy into Your ontology"
+          >
+            <option value="">Choose a domain…</option>
+            {domains.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.acronym || d.id.toUpperCase()} — {d.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <Button
+          variant="primary"
+          disabled={busy || !copyDomainId}
+          onClick={() => void copyFromCatalog(copyDomainId)}
+        >
+          {busy ? <Loader2 className="spin" size={14} /> : null}
+          Use as my ontology
+        </Button>
+      </div>
       <div className="session-alt">
         <Button onClick={() => void ingest(SAMPLE, 'demo')}>Try a 2-class sample</Button>
         <Button onClick={() => setShowPaste((v) => !v)}>
           {showPaste ? 'Hide paste box' : 'Paste Turtle instead'}
         </Button>
+        <Button onClick={() => sessionFileRef.current?.click()}>
+          <Upload size={14} /> Upload saved session
+        </Button>
+        {sessionLibrary.items.length > 0 && (
+          <Button onClick={() => downloadSessionBundle(sessionLibrary)}>
+            <Download size={14} /> Download all sessions
+          </Button>
+        )}
       </div>
       {showPaste && (
         <form className="session-paste" onSubmit={onPasteSubmit}>
@@ -331,7 +490,7 @@ export function SessionOntologyPage() {
       <input
         ref={fileRef}
         type="file"
-        accept=".ttl,.owl,.rdf,.txt,text/turtle,application/rdf+xml"
+        accept=".ttl,.owl,.rdf,.txt,.json,.ecosystem-session.json,text/turtle,application/rdf+xml,application/json"
         hidden
         onChange={(e) => {
           const file = e.target.files?.[0];
@@ -339,71 +498,141 @@ export function SessionOntologyPage() {
           if (file) onFile(file, uploadTargetRef.current);
         }}
       />
+      <input
+        ref={sessionFileRef}
+        type="file"
+        accept=".json,.ecosystem-session.json,application/json"
+        hidden
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          e.target.value = '';
+          if (file) onSessionFile(file);
+        }}
+      />
       {adding || !active ? (
         addForm
       ) : (
         <>
-          <div className="session-toolbar">
+          <div className="session-toolbar session-toolbar-title">
             <span className="name">{displayName(active)}</span>
             <span className="chip">v{active.version}</span>
             <span className="muted">
               {active.classes.length} class{active.classes.length === 1 ? '' : 'es'}
+              {acceptedCount ? ` · ${acceptedCount} matched` : ''}
             </span>
             <span className="grow" />
             {notice && <span className="session-notice">{notice}</span>}
             <Button onClick={() => navigate('/ontology/yours')}>
               <Plus size={14} /> Add another
             </Button>
-            <Button onClick={() => { setFocused(active.graph); setTrail([]); }}>Show all</Button>
-            <Button onClick={() => pickFile(active.id)} disabled={busy}>
-              Upload update
-            </Button>
             <Button variant="danger" onClick={() => removeItem(active.id)}>
               <Trash2 size={14} /> Remove
             </Button>
           </div>
-          <div className="session-toolbar">
-            <label className="session-match-label">
-              Match to domain
-              <select value={domainId} onChange={(e) => setDomainId(e.target.value)}>
-                <option value="">Choose a catalog domain…</option>
-                {domains.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.acronym || d.id.toUpperCase()} — {d.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <Button variant="primary" onClick={() => void proposeMatches()} disabled={matching || !domainId}>
-              {matching ? <Loader2 className="spin" size={14} /> : null}
-              {matching ? 'Proposing…' : 'Propose matches'}
-            </Button>
-            <Button
-              disabled={!active.turtle}
-              onClick={() => {
-                sessionStorage.setItem('ecosystem.generate.sessionId', active.id);
-                sessionStorage.setItem('ecosystem.generate.turtle', active.turtle);
-                navigate('/sources/generate');
-              }}
-            >
-              Generate schema
-            </Button>
-            <Button
-              disabled={!active.turtle}
-              onClick={() => {
-                sessionStorage.setItem('ecosystem.crud.sessionId', active.id);
-                sessionStorage.setItem('ecosystem.crud.turtle', active.turtle);
-                navigate('/sources/crud');
-              }}
-            >
-              CRUD agent
-            </Button>
-            <span className="muted">
-              {acceptedCount} accepted · this tab only
-            </span>
+          <div className="session-action-bar">
+            <div className="session-action-group">
+              <span className="session-action-label">Ontology</span>
+              <div className="session-action-buttons">
+                <Button onClick={startEdit} disabled={busy || !active.turtle} title="Edit Turtle for this ontology">
+                  <Pencil size={14} /> Edit Turtle
+                </Button>
+                <Button onClick={() => pickFile(active.id)} disabled={busy} title="Replace with a new .ttl / .owl file">
+                  <Upload size={14} /> Replace file
+                </Button>
+                <Button onClick={() => { setFocused(active.graph); setTrail([]); }} title="Show the full class graph">
+                  Show all
+                </Button>
+              </div>
+            </div>
+            <div className="session-action-group">
+              <span className="session-action-label">Save / restore</span>
+              <div className="session-action-buttons">
+                <Button onClick={downloadActiveTurtle} disabled={!active.turtle} title="Download Turtle (.ttl)">
+                  <Download size={14} /> .ttl
+                </Button>
+                <Button onClick={downloadActiveOrLibrary} title="Download ontology plus matches and actions">
+                  <Download size={14} /> Session
+                </Button>
+                <Button onClick={() => sessionFileRef.current?.click()} title="Restore a previously downloaded session">
+                  <Upload size={14} /> Session
+                </Button>
+              </div>
+            </div>
+            <div className="session-action-group">
+              <span className="session-action-label">Catalog match</span>
+              <div className="session-action-buttons">
+                <label className="session-match-label">
+                  <span className="visually-hidden">Match to domain</span>
+                  <select
+                    value={domainId}
+                    onChange={(e) => setDomainId(e.target.value)}
+                    aria-label="Catalog domain to match against"
+                  >
+                    <option value="">Choose a domain…</option>
+                    {domains.map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.acronym || d.id.toUpperCase()} — {d.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <Button variant="primary" onClick={() => void proposeMatches()} disabled={matching || !domainId}>
+                  {matching ? <Loader2 className="spin" size={14} /> : null}
+                  {matching ? 'Proposing…' : 'Propose matches'}
+                </Button>
+              </div>
+            </div>
+            <div className="session-action-group">
+              <span className="session-action-label">Build</span>
+              <div className="session-action-buttons">
+                <Button
+                  disabled={!active.turtle}
+                  onClick={() => {
+                    sessionStorage.setItem('ecosystem.generate.sessionId', active.id);
+                    sessionStorage.setItem('ecosystem.generate.turtle', active.turtle);
+                    navigate('/sources/generate');
+                  }}
+                >
+                  Generate schema
+                </Button>
+                <Button
+                  disabled={!active.turtle}
+                  onClick={() => {
+                    sessionStorage.setItem('ecosystem.crud.sessionId', active.id);
+                    sessionStorage.setItem('ecosystem.crud.turtle', active.turtle);
+                    navigate('/sources/crud');
+                  }}
+                >
+                  CRUD agent
+                </Button>
+              </div>
+            </div>
           </div>
           {error && <p className="error" style={{ padding: '0 16px' }}>{error}</p>}
           {replaceId === active.id && <div className="session-update-banner">{dropzone(active.id)}</div>}
+          {editing && (
+            <div className="session-edit-panel">
+              <div className="session-edit-head">
+                <strong>Edit Turtle</strong>
+                <span className="muted">Apply re-parses the graph and bumps the version. Catalog stays unchanged.</span>
+                <span className="grow" />
+                <Button variant="primary" disabled={busy} onClick={() => void applyEdit()}>
+                  {busy ? <Loader2 className="spin" size={14} /> : null}
+                  Apply changes
+                </Button>
+                <Button disabled={busy} onClick={cancelEdit}>
+                  Cancel
+                </Button>
+              </div>
+              <textarea
+                className="session-edit-turtle"
+                value={draftTurtle}
+                onChange={(e) => setDraftTurtle(e.target.value)}
+                spellCheck={false}
+                aria-label="Edit ontology Turtle"
+              />
+            </div>
+          )}
           <div className="workspace">
             <div className="workspace-left">
               <div className="result-list">
@@ -504,6 +733,14 @@ export function SessionOntologyPage() {
                       {active.turtle ? (
                         <details>
                           <summary className="muted">Turtle in this tab</summary>
+                          <div className="session-alt" style={{ marginBottom: 8 }}>
+                            <Button onClick={startEdit}>
+                              <Pencil size={14} /> Edit
+                            </Button>
+                            <Button onClick={downloadActiveTurtle}>
+                              <Download size={14} /> Download .ttl
+                            </Button>
+                          </div>
                           <TurtleView turtle={active.turtle} />
                         </details>
                       ) : null}

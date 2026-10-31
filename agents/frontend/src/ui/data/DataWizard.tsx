@@ -362,7 +362,7 @@ export function DataWizard() {
   const askStep = step === 4;
 
   return (
-    <div className="page">
+    <div className={generateStep ? 'page page-stretch' : 'page'}>
       {error && <p className="error">{error}</p>}
       {step > 1 && !sourceId ? (
         <EmptyState
@@ -372,7 +372,7 @@ export function DataWizard() {
       ) : null}
 
       {generateStep && (
-        <Card>
+        <Card className="card-fill">
           <h3>Generate schema from ontology</h3>
           <p className="muted">
             Compile catalog OWL + SHACL, or one of your uploaded ontologies, into PostgreSQL DDL. On the public site this

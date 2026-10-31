@@ -220,3 +220,136 @@ export function overlayDomainMatches(graph: GraphPayload, matches: ClassDomainMa
   }
   return { nodes, edges };
 }
+
+export const SESSION_BUNDLE_KIND = 'ecosystem.ontology.session';
+export const SESSION_BUNDLE_VERSION = 1;
+
+export type SessionBundle = {
+  kind: typeof SESSION_BUNDLE_KIND;
+  version: number;
+  exportedAt: string;
+  library: SessionLibrary;
+};
+
+function isSessionOntology(value: unknown): value is SessionOntology {
+  if (!value || typeof value !== 'object') return false;
+  const item = value as SessionOntology;
+  return Boolean(item.id && item.graph && typeof item.turtle === 'string' && Array.isArray(item.classes));
+}
+
+/** Build a downloadable JSON bundle for one ontology or the whole library. */
+export function buildSessionBundle(library: SessionLibrary, onlyId?: string): SessionBundle {
+  const items = onlyId ? library.items.filter((item) => item.id === onlyId) : library.items;
+  const activeId =
+    onlyId && items.some((item) => item.id === onlyId)
+      ? onlyId
+      : items.some((item) => item.id === library.activeId)
+        ? library.activeId
+        : items[0]?.id || null;
+  return {
+    kind: SESSION_BUNDLE_KIND,
+    version: SESSION_BUNDLE_VERSION,
+    exportedAt: new Date().toISOString(),
+    library: { items, activeId },
+  };
+}
+
+export function sessionBundleFileName(library: SessionLibrary, onlyId?: string): string {
+  const item = onlyId ? library.items.find((row) => row.id === onlyId) : undefined;
+  const base = (item?.name || 'ontology-session')
+    .replace(/\.(ttl|owl|rdf|txt|json)$/i, '')
+    .replace(/[^\w.-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 64);
+  return `${base || 'ontology-session'}.ecosystem-session.json`;
+}
+
+/**
+ * Parse a saved session file. Accepts the bundle format, a bare SessionLibrary,
+ * or a single SessionOntology (legacy-friendly).
+ */
+export function parseSessionBundle(raw: string): { ok: true; library: SessionLibrary } | { ok: false; error: string } {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return { ok: false, error: 'That file is not valid JSON.' };
+  }
+  if (!parsed || typeof parsed !== 'object') {
+    return { ok: false, error: 'That file does not look like a saved session.' };
+  }
+  const obj = parsed as Record<string, unknown>;
+
+  if (obj.kind === SESSION_BUNDLE_KIND && obj.library && typeof obj.library === 'object') {
+    const lib = obj.library as SessionLibrary;
+    const items = (lib.items || []).filter(isSessionOntology);
+    if (!items.length) return { ok: false, error: 'The session file has no ontologies.' };
+    return {
+      ok: true,
+      library: {
+        items,
+        activeId: items.some((item) => item.id === lib.activeId) ? lib.activeId : items[0].id,
+      },
+    };
+  }
+
+  if (Array.isArray((obj as SessionLibrary).items)) {
+    const lib = obj as SessionLibrary;
+    const items = (lib.items || []).filter(isSessionOntology);
+    if (!items.length) return { ok: false, error: 'The session file has no ontologies.' };
+    return {
+      ok: true,
+      library: {
+        items,
+        activeId: items.some((item) => item.id === lib.activeId) ? lib.activeId : items[0].id,
+      },
+    };
+  }
+
+  if (isSessionOntology(obj)) {
+    return { ok: true, library: { items: [obj], activeId: obj.id } };
+  }
+
+  return {
+    ok: false,
+    error: 'Expected an ecosystem ontology session file (.ecosystem-session.json).',
+  };
+}
+
+/** Merge an imported library into the current one (same id replaces; new ids are added). */
+export function mergeSessionLibrary(
+  current: SessionLibrary,
+  incoming: SessionLibrary,
+): { library: SessionLibrary; added: number; updated: number } {
+  const byId = new Map(current.items.map((item) => [item.id, item]));
+  let added = 0;
+  let updated = 0;
+  for (const item of incoming.items) {
+    if (byId.has(item.id)) {
+      updated += 1;
+      byId.set(item.id, { ...item, updatedAt: Date.now() });
+    } else {
+      added += 1;
+      byId.set(item.id, item);
+    }
+  }
+  const items = [...byId.values()].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  const activeId =
+    (incoming.activeId && items.some((item) => item.id === incoming.activeId) && incoming.activeId) ||
+    current.activeId ||
+    items[0]?.id ||
+    null;
+  return { library: { items, activeId }, added, updated };
+}
+
+export function downloadSessionBundle(library: SessionLibrary, onlyId?: string): void {
+  const bundle = buildSessionBundle(library, onlyId);
+  const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = sessionBundleFileName(library, onlyId);
+  a.click();
+  URL.revokeObjectURL(url);
+}
