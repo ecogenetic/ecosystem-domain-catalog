@@ -17,6 +17,8 @@ services:
       ECOSYSTEM_LLM_API_KEY: ${ECOSYSTEM_LLM_API_KEY:-}
       AGENTS_CORS_ORIGINS: ${AGENTS_CORS_ORIGINS:-}
       ONTOLOGY_VALIDATION_SERVER: ${ONTOLOGY_VALIDATION_SERVER:-http://host.docker.internal:3001}
+      WORKBENCH_ONTOLOGY_SERVER: ${WORKBENCH_ONTOLOGY_SERVER:-http://host.docker.internal:8000}
+      WORKBENCH_API_KEY: ${WORKBENCH_API_KEY:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:

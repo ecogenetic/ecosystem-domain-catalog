@@ -109,8 +109,29 @@ def compile_physical_model(
     domain_id: str | None = None,
     industry: str | None = None,
     turtle: str | None = None,
+    ontologyId: str | None = None,
+    ontology_id: str | None = None,
 ) -> dict[str, Any]:
-    return physical_mod.compile_physical_model(domain_id=domainId or domain_id, industry=industry, turtle=turtle)
+    """Prefer Workbench intelligence; fall back to local compiler for offline use."""
+    from agents.shared import workbench_client
+
+    oid = ontologyId or ontology_id or ""
+
+    def _remote() -> dict[str, Any]:
+        if not oid:
+            raise ValueError("ontology_id required for Workbench physical compile")
+        return workbench_client.compile_physical(
+            oid,
+            content=turtle,
+            target="postgresql",
+        )
+
+    def _local() -> dict[str, Any]:
+        return physical_mod.compile_physical_model(
+            domain_id=domainId or domain_id, industry=industry, turtle=turtle
+        )
+
+    return workbench_client.call_or_fallback(_remote, _local)
 
 
 def generate_ddl_from_model(
@@ -119,10 +140,26 @@ def generate_ddl_from_model(
     industry: str | None = None,
     turtle: str | None = None,
     model: dict[str, Any] | None = None,
+    ontologyId: str | None = None,
+    ontology_id: str | None = None,
 ) -> dict[str, Any]:
-    compiled = model or compile_physical_model(domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle)
-    ddl = ddl_with_header(compiled)
-    return {"ok": True, "ddl": ddl, "model": compiled, "tableCount": compiled.get("tableCount", 0)}
+    from agents.shared import workbench_client
+
+    oid = ontologyId or ontology_id or ""
+
+    def _remote() -> dict[str, Any]:
+        if not oid:
+            raise ValueError("ontology_id required for Workbench DDL")
+        return workbench_client.generate_ddl(oid, dialect="postgresql", content=turtle)
+
+    def _local() -> dict[str, Any]:
+        compiled = model or compile_physical_model(
+            domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle
+        )
+        ddl = ddl_with_header(compiled)
+        return {"ok": True, "ddl": ddl, "model": compiled, "tableCount": compiled.get("tableCount", 0)}
+
+    return workbench_client.call_or_fallback(_remote, _local)
 
 
 def generate_crud_agent(
@@ -132,14 +169,31 @@ def generate_crud_agent(
     turtle: str | None = None,
     target: str = "postgresql",
     model: dict[str, Any] | None = None,
+    ontologyId: str | None = None,
+    ontology_id: str | None = None,
 ) -> dict[str, Any]:
-    try:
-        compiled = model or compile_physical_model(
-            domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle
+    from agents.shared import workbench_client
+
+    oid = ontologyId or ontology_id or ""
+
+    def _remote() -> dict[str, Any]:
+        if not oid:
+            raise ValueError("ontology_id required for Workbench CRUD agent")
+        return workbench_client.post(
+            f"/ontology/{oid}/physical/crud-agent",
+            {"target": target, "content": turtle},
         )
-    except Exception as exc:  # noqa: BLE001
-        return {"ok": False, "error": str(exc)}
-    return emit_crud_package(compiled, target=target)
+
+    def _local() -> dict[str, Any]:
+        try:
+            compiled = model or compile_physical_model(
+                domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle
+            )
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": str(exc)}
+        return emit_crud_package(compiled, target=target)
+
+    return workbench_client.call_or_fallback(_remote, _local)
 
 
 def generate_mongo_schema_from_model(
@@ -148,10 +202,29 @@ def generate_mongo_schema_from_model(
     industry: str | None = None,
     turtle: str | None = None,
     model: dict[str, Any] | None = None,
+    ontologyId: str | None = None,
+    ontology_id: str | None = None,
 ) -> dict[str, Any]:
-    compiled = model or compile_physical_model(domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle)
-    schema = generate_mongo_schema(compiled)
-    return {"ok": True, **schema, "model": compiled}
+    from agents.shared import workbench_client
+
+    oid = ontologyId or ontology_id or ""
+
+    def _remote() -> dict[str, Any]:
+        if not oid:
+            raise ValueError("ontology_id required for Workbench mongo schema")
+        return workbench_client.post(
+            f"/ontology/{oid}/physical/mongo-schema",
+            {"content": turtle},
+        )
+
+    def _local() -> dict[str, Any]:
+        compiled = model or compile_physical_model(
+            domainId=domainId, domain_id=domain_id, industry=industry, turtle=turtle
+        )
+        schema = generate_mongo_schema(compiled)
+        return {"ok": True, **schema, "model": compiled}
+
+    return workbench_client.call_or_fallback(_remote, _local)
 
 
 def materialize_source(
