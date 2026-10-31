@@ -43,6 +43,7 @@ const SAME_ROW_DY = NODE_H * 0.6;
 type ConceptData = {
   label: string;
   sub?: string;
+  definition?: string;
   muted?: boolean;
   pulse?: boolean;
   selected?: boolean;
@@ -75,6 +76,11 @@ function nodeSubLabel(n: CatalogMatch): string {
   return n.domainId || n.kind || '';
 }
 
+function nodeTooltip(data: ConceptData): string {
+  const desc = (data.definition || '').trim();
+  return desc ? `${data.label} — ${desc}` : data.label;
+}
+
 function ConceptNode({ data }: NodeProps<Node<ConceptData>>) {
   const classes = [
     'xy-node',
@@ -86,7 +92,7 @@ function ConceptNode({ data }: NodeProps<Node<ConceptData>>) {
     .filter(Boolean)
     .join(' ');
   return (
-    <div className={classes} title={data.label}>
+    <div className={classes} title={nodeTooltip(data)}>
       <Handle type="source" position={Position.Top} id="top" />
       <Handle type="source" position={Position.Right} id="right" />
       <Handle type="source" position={Position.Bottom} id="bottom" />
@@ -547,6 +553,7 @@ function layout(
       data: {
         label: n.prefLabel || n.localName || n.iri.split('#').pop() || n.iri,
         sub: nodeSubLabel(n),
+        definition: n.definition,
         muted: n.kind === 'unmapped',
         pulse: agentPaths && hotIris.has(n.iri),
         selected: Boolean(focus && n.iri === focus),

@@ -19,6 +19,7 @@ export type MappedEntity = {
   catalogIri?: string;
   catalogDomain?: string;
   prefLabel?: string;
+  definition?: string;
   alignmentStatus?: 'catalog_aligned';
   mappingRelation?: 'rdfs:subClassOf';
   propertyCoveragePct?: number;

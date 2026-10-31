@@ -25,6 +25,54 @@ export const catalogApi = {
       catalogPath('/v1/ontologies/preview'),
       { method: 'POST', body: JSON.stringify({ turtle }) },
     ),
+  validationMetadata: () =>
+    request<Record<string, unknown>>(catalogPath('/v1/ontologies/validation/metadata')),
+  validateOntology: (body: {
+    turtle?: string;
+    ontologyContent?: string;
+    shapesContent?: string;
+    domainId?: string;
+    industryId?: string;
+    includeRecommendations?: boolean;
+  }) =>
+    request<{
+      ok?: boolean;
+      summary?: { errors?: number; warnings?: number; passed?: boolean };
+      issues?: { ruleId?: string; severity?: string; message?: string; subject?: string }[];
+      recommendations?: {
+        id: string;
+        ruleId?: string;
+        category?: string;
+        severity?: string;
+        title?: string;
+        rationale?: string;
+        suggestedTtl?: string;
+        autoApplicable?: boolean;
+        subject?: string;
+      }[];
+      validationSource?: string;
+      validationSummary?: Record<string, unknown>;
+    }>(catalogPath('/v1/ontologies/validate'), {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  applyOntologyRecommendations: (body: {
+    turtle?: string;
+    ontologyContent?: string;
+    shapesContent?: string;
+    recommendations?: Record<string, unknown>[];
+    customTtl?: string;
+  }) =>
+    request<{
+      ok?: boolean;
+      content?: string;
+      shapesContent?: string;
+      applied?: string[];
+      validation?: Record<string, unknown>;
+    }>(catalogPath('/v1/ontologies/recommendations/apply'), {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
   mappings: (iri: string) => request(`${catalogPath('/v1/mappings')}?iri=${encodeURIComponent(iri)}`),
   alignments: (iri: string) => request(`${catalogPath('/v1/alignments')}?iri=${encodeURIComponent(iri)}`),
   validateText: (text: string) =>

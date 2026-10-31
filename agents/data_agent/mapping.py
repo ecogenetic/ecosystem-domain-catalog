@@ -278,6 +278,7 @@ def _mapped_entry(
         "catalogIri": catalog_iri,
         "catalogDomain": chosen.get("domainId"),
         "prefLabel": chosen.get("prefLabel"),
+        "definition": chosen.get("definition") or "",
         "alignmentStatus": "catalog_aligned",
         "mappingRelation": "rdfs:subClassOf",
         "properties": properties,

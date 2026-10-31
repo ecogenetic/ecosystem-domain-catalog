@@ -16,6 +16,7 @@ services:
       ECOSYSTEM_LLM_MODEL: ${ECOSYSTEM_LLM_MODEL:-}
       ECOSYSTEM_LLM_API_KEY: ${ECOSYSTEM_LLM_API_KEY:-}
       AGENTS_CORS_ORIGINS: ${AGENTS_CORS_ORIGINS:-}
+      ONTOLOGY_VALIDATION_SERVER: ${ONTOLOGY_VALIDATION_SERVER:-http://host.docker.internal:3001}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:

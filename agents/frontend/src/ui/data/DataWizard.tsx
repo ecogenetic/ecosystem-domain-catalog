@@ -84,7 +84,7 @@ export function DataWizard() {
   const [ddlName, setDdlName] = useState('uploaded-schema');
   const [schemaOnly, setSchemaOnly] = useState(false);
   const [collections, setCollections] = useState<{ name: string; entity?: string; count?: number; infrastructure?: boolean }[]>([]);
-  const [mapped, setMapped] = useState<{ entity: string; collection?: string; prefLabel?: string; catalogDomain?: string; joins?: { field: string; targetEntity: string }[] }[]>([]);
+  const [mapped, setMapped] = useState<{ entity: string; collection?: string; prefLabel?: string; definition?: string; catalogDomain?: string; joins?: { field: string; targetEntity: string }[] }[]>([]);
   const [unmapped, setUnmapped] = useState<{ entity: string; reason?: string }[]>([]);
   const [homonyms, setHomonyms] = useState<MappingHomonym[]>([]);
   const [mappingSelections, setMappingSelections] = useState<Record<string, string>>({});
@@ -217,12 +217,14 @@ export function DataWizard() {
         ...(mappedRes.mapped || []).map((m) => ({
           iri: m.catalogIri || m.entity,
           prefLabel: m.prefLabel || m.entity,
+          definition: m.definition,
           domainId: m.catalogDomain,
           kind: 'class',
         })),
         ...(mappedRes.unmapped || []).map((m) => ({
           iri: m.entity,
           prefLabel: m.entity,
+          definition: m.reason,
           kind: 'unmapped',
         })),
       ];

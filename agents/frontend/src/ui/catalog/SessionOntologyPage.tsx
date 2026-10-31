@@ -1,4 +1,4 @@
-import { Download, Loader2, Pencil, Plus, Trash2, Upload } from 'lucide-react';
+import { Download, Loader2, Pencil, Plus, ShieldCheck, Trash2, Upload } from 'lucide-react';
 import { DragEvent, FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { catalogApi } from '../../adapters/catalogApi';
@@ -25,6 +25,11 @@ import { GraphCanvas } from '../common/GraphCanvas';
 import { TurtleView } from '../common/TurtleView';
 import { catalogSessionId } from '../layout/nav';
 import { ConceptInspector } from './ConceptInspector';
+import {
+  OntologyValidationModal,
+  type ValidationRecommendation,
+  type ValidationReportPayload,
+} from './OntologyValidationModal';
 
 function downloadTextFile(filename: string, text: string, mime = 'text/plain') {
   const blob = new Blob([text], { type: mime });
@@ -89,6 +94,11 @@ export function SessionOntologyPage() {
   const [focused, setFocused] = useState<GraphPayload | null>(active?.graph || null);
   const [trail, setTrail] = useState<CatalogMatch[]>([]);
   const [agentPaths, setAgentPaths] = useState(false);
+  const [validating, setValidating] = useState(false);
+  const [validationOpen, setValidationOpen] = useState(false);
+  const [validationReport, setValidationReport] = useState<ValidationReportPayload | null>(null);
+  const [selectedRecIds, setSelectedRecIds] = useState<string[]>([]);
+  const [lastApplyFeedback, setLastApplyFeedback] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
   const sessionFileRef = useRef<HTMLInputElement>(null);
   const uploadTargetRef = useRef<string | null>(null);
@@ -116,6 +126,94 @@ export function SessionOntologyPage() {
   function saveActive(patch: Partial<SessionOntology>) {
     if (!active) return;
     persist(patchOntology(sessionLibrary, active.id, patch));
+  }
+
+  async function runValidation() {
+    if (!active?.turtle) return;
+    setValidating(true);
+    setError('');
+    try {
+      const report = await catalogApi.validateOntology({
+        turtle: active.turtle,
+        includeRecommendations: true,
+      });
+      setValidationReport(report);
+      setSelectedRecIds((report.recommendations || []).filter((r) => r.suggestedTtl).map((r) => r.id));
+      setValidationOpen(true);
+      const errs = report.summary?.errors ?? 0;
+      const warns = report.summary?.warnings ?? 0;
+      setNotice(
+        report.summary?.passed
+          ? `RDF 1.2 · OWL · SHACL · SKOS Validated${warns ? ` (${warns} warning${warns === 1 ? '' : 's'})` : ''}`
+          : `Validation found ${errs} error${errs === 1 ? '' : 's'}, ${warns} warning${warns === 1 ? '' : 's'}`,
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Validation failed');
+    } finally {
+      setValidating(false);
+    }
+  }
+
+  async function applyRecommendationsToActive(
+    recsToApply: ValidationRecommendation[],
+    customTtl?: string,
+  ) {
+    if (!active?.turtle) return;
+    if (!recsToApply.length && !customTtl?.trim()) return;
+    setValidating(true);
+    setError('');
+    try {
+      const result = await catalogApi.applyOntologyRecommendations({
+        turtle: active.turtle,
+        recommendations: recsToApply,
+        customTtl,
+      });
+      const nextTurtle = result.content || active.turtle;
+      let nextClasses = active.classes;
+      let nextGraph = active.graph;
+      let nextIri = active.ontologyIri;
+      try {
+        const preview = await catalogApi.previewOntology(nextTurtle);
+        if (preview && preview.ok !== false) {
+          nextClasses = preview.classes || preview.nodes || active.classes;
+          nextGraph = {
+            nodes: preview.nodes || preview.classes || [],
+            edges: preview.edges || [],
+          };
+          nextIri = preview.ontologyIri || active.ontologyIri;
+        }
+      } catch {
+        /* keep existing graph if preview fails on partial syntax */
+      }
+      const nextVersion = (active.version || 1) + 1;
+      saveActive({
+        turtle: nextTurtle,
+        version: nextVersion,
+        classes: nextClasses,
+        graph: nextGraph,
+        ontologyIri: nextIri,
+      });
+      setFocused(nextGraph);
+      setDraftTurtle(nextTurtle);
+      const count = result.applied?.length || recsToApply.length || 1;
+      const msg = `Applied ${count} recommendation${count === 1 ? '' : 's'} to ${displayName(active)} (now v${nextVersion}).`;
+      setNotice(msg);
+      setLastApplyFeedback(msg);
+      const refreshed =
+        (result.validation as ValidationReportPayload | undefined) ||
+        (await catalogApi.validateOntology({
+          turtle: nextTurtle,
+          includeRecommendations: true,
+        }));
+      setValidationReport(refreshed);
+      setSelectedRecIds(
+        (refreshed.recommendations || []).filter((r) => r.suggestedTtl).map((r) => r.id),
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Apply recommendations failed');
+    } finally {
+      setValidating(false);
+    }
   }
 
   function applyLibrary(next: SessionLibrary, item?: SessionOntology) {
@@ -539,6 +637,14 @@ export function SessionOntologyPage() {
                 <Button onClick={() => pickFile(active.id)} disabled={busy} title="Replace with a new .ttl / .owl file">
                   <Upload size={14} /> Replace file
                 </Button>
+                <Button
+                  onClick={() => void runValidation()}
+                  disabled={validating || !active.turtle}
+                  title="Validate & Recommendations"
+                >
+                  {validating ? <Loader2 size={14} className="spin" /> : <ShieldCheck size={14} />}
+                  Validate
+                </Button>
                 <Button onClick={() => { setFocused(active.graph); setTrail([]); }} title="Show the full class graph">
                   Show all
                 </Button>
@@ -609,6 +715,44 @@ export function SessionOntologyPage() {
             </div>
           </div>
           {error && <p className="error" style={{ padding: '0 16px' }}>{error}</p>}
+          {validationReport && (
+            <div className="val-summary-strip" onClick={() => setValidationOpen(true)} role="button" tabIndex={0}>
+              <ShieldCheck size={14} style={{ color: 'var(--primary)' }} />
+              <strong>
+                {validationReport.summary?.passed
+                  ? 'RDF 1.2 · OWL · SHACL · SKOS Validated'
+                  : `Validation: ${validationReport.summary?.errors ?? 0} error(s), ${validationReport.summary?.warnings ?? 0} warning(s)`}
+              </strong>
+              <span className="muted">
+                {(validationReport.issues || []).length} finding(s) ·{' '}
+                {(validationReport.recommendations || []).length} recommendation(s)
+              </span>
+              <span className="grow" />
+              <span style={{ color: 'var(--primary)', fontWeight: 600 }}>
+                Open Validation &amp; Recommendations Modal →
+              </span>
+            </div>
+          )}
+          <OntologyValidationModal
+            open={validationOpen}
+            onClose={() => setValidationOpen(false)}
+            ontologyName={displayName(active)}
+            turtle={active.turtle}
+            report={validationReport}
+            busy={validating}
+            selectedRecIds={selectedRecIds}
+            onToggleRec={(id) =>
+              setSelectedRecIds((prev) =>
+                prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+              )
+            }
+            onSelectAllRecs={(ids) => setSelectedRecIds(ids)}
+            onRevalidate={() => void runValidation()}
+            onApplyRecommendations={(recs, customTtl) =>
+              void applyRecommendationsToActive(recs, customTtl)
+            }
+            lastApplyFeedback={lastApplyFeedback}
+          />
           {replaceId === active.id && <div className="session-update-banner">{dropzone(active.id)}</div>}
           {editing && (
             <div className="session-edit-panel">

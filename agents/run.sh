@@ -5,5 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
+ONTOLOGY_VALIDATION_SERVER=http://localhost:3002
+
 cd "${REPO_ROOT}"
 PYTHONPATH="${REPO_ROOT}" python3.14 -m agents --rebuild --port 8080 "$@"

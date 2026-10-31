@@ -125,6 +125,65 @@ def preview_ontology(turtle: str = "") -> dict[str, Any]:
     return preview_ontology_text(turtle)
 
 
+def get_ontology_validation_metadata() -> dict[str, Any]:
+    from agents.shared.validation_client import get_ontology_validation_metadata as remote_meta
+
+    return remote_meta()
+
+
+def validate_ontology(
+    turtle: str = "",
+    ontologyContent: str = "",
+    ontology_content: str = "",
+    shapesContent: str | None = None,
+    shapes_content: str | None = None,
+    domainId: str | None = None,
+    domain_id: str | None = None,
+    industryId: str | None = None,
+    industry_id: str | None = None,
+    format: str | None = None,
+    includeRecommendations: bool = True,
+    include_recommendations: bool | None = None,
+) -> dict[str, Any]:
+    from agents.shared.validation_client import validate_ontology as remote_validate
+
+    content = ontologyContent or ontology_content or turtle or ""
+    shapes = shapesContent if shapesContent is not None else shapes_content
+    did = domainId or domain_id
+    iid = industryId or industry_id
+    include = includeRecommendations if include_recommendations is None else bool(include_recommendations)
+    return remote_validate(
+        ontology_content=content,
+        shapes_content=shapes,
+        domain_id=did,
+        industry_id=iid,
+        format=format,
+        include_recommendations=include,
+    )
+
+
+def apply_ontology_recommendations(
+    turtle: str = "",
+    ontologyContent: str = "",
+    ontology_content: str = "",
+    shapesContent: str | None = None,
+    shapes_content: str | None = None,
+    recommendations: list | None = None,
+    customTtl: str | None = None,
+    custom_ttl: str | None = None,
+) -> dict[str, Any]:
+    from agents.shared.validation_client import apply_ontology_recommendations as remote_apply
+
+    content = ontologyContent or ontology_content or turtle or ""
+    shapes = shapesContent if shapesContent is not None else shapes_content
+    return remote_apply(
+        ontology_content=content,
+        recommendations=recommendations or [],
+        shapes_content=shapes,
+        custom_ttl=customTtl or custom_ttl,
+    )
+
+
 def catalog_tools() -> list[ToolSpec]:
     return [
         ToolSpec(name="rebuild_index", description="Rebuild the catalog knowledge graph index", method="POST", path="/v1/index/rebuild", handler=rebuild_index),
@@ -147,5 +206,26 @@ def catalog_tools() -> list[ToolSpec]:
             method="POST",
             path="/v1/ontologies/preview",
             handler=preview_ontology,
+        ),
+        ToolSpec(
+            name="get_ontology_validation_metadata",
+            description="Return RDF 1.2 / OWL / SKOS / SHACL validation service metadata (via ONTOLOGY_VALIDATION_SERVER)",
+            method="GET",
+            path="/v1/ontologies/validation/metadata",
+            handler=get_ontology_validation_metadata,
+        ),
+        ToolSpec(
+            name="validate_ontology",
+            description="Validate Turtle/OWL/RDF (or a catalog domain) via ONTOLOGY_VALIDATION_SERVER",
+            method="POST",
+            path="/v1/ontologies/validate",
+            handler=validate_ontology,
+        ),
+        ToolSpec(
+            name="apply_ontology_recommendations",
+            description="Apply selected ontology recommendations and return patched Turtle",
+            method="POST",
+            path="/v1/ontologies/recommendations/apply",
+            handler=apply_ontology_recommendations,
         ),
     ]

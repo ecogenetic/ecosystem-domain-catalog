@@ -153,6 +153,7 @@ env:Area rdfs:subClassOf env:Quantity {| rdfs:comment "IES building class" |} .
     client = TestClient(catalog_app)
     body = client.post("/v1/ontologies/preview", json={"turtle": turtle}).json()
     assert body.get("ok") is True, body
-    labels = {n.get("prefLabel") for n in body.get("nodes") or []}
-    assert "Quantity" in labels
-    assert "Area" in labels
+    by_label = {n.get("prefLabel"): n for n in body.get("nodes") or []}
+    assert "Quantity" in by_label
+    assert "Area" in by_label
+    assert by_label["Area"].get("definition") == "IES building class"

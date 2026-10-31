@@ -54,13 +54,25 @@ def parse_rdf_graph(*, data: str | None = None, path: Path | None = None) -> Gra
         try:
             g = Graph()
             fmt = _guess_ox_format(text)
+            reified_subj: dict[BNode, URIRef] = {}
             for quad in ox.parse(text.encode("utf-8"), format=fmt):
+                if (
+                    isinstance(quad.subject, ox.BlankNode)
+                    and isinstance(quad.predicate, ox.NamedNode)
+                    and quad.predicate.value == "http://www.w3.org/1999/02/22-rdf-syntax-ns#reifies"
+                    and isinstance(quad.object, ox.Triple)
+                    and isinstance(quad.object.subject, ox.NamedNode)
+                ):
+                    reified_subj[BNode(quad.subject.value)] = URIRef(quad.object.subject.value)
+                    continue
                 subj = _ox_term(quad.subject)
                 pred = _ox_term(quad.predicate)
                 obj = _ox_term(quad.object)
                 if subj is None or pred is None or obj is None:
                     continue
                 g.add((subj, pred, obj))
+                if isinstance(subj, BNode) and subj in reified_subj:
+                    g.add((reified_subj[subj], pred, obj))
             return g
         except Exception as exc:  # noqa: BLE001 — try RDFLib Turtle 1.1 next
             ox_error = exc

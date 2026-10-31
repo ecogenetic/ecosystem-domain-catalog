@@ -14,7 +14,7 @@ from typing import Any, Iterable
 
 import networkx as nx
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import OWL, RDF, RDFS, SKOS
+from rdflib.namespace import DC, DCTERMS, OWL, RDF, RDFS, SKOS
 
 from agents.shared.paths import CATALOG_ROOT, GRAPH_PATH, INDEX_DB, ensure_data_dir
 from agents.shared.rdf_parse import parse_rdf_graph
@@ -670,7 +670,7 @@ class CatalogIndex:
                 continue
             pref = _lit(g, subj, SKOS.prefLabel) or _lit(g, subj, RDFS.label) or local_name(iri)
             alts = _lits(g, subj, SKOS.altLabel)
-            definition = _lit(g, subj, SKOS.definition) or _lit(g, subj, RDFS.comment)
+            definition = _definition(g, subj)
             d_id, i_id = domain_from_iri(iri)
             doc = IndexDoc(
                 iri=iri,
@@ -706,7 +706,7 @@ class CatalogIndex:
                     industry_id=i_id or industry_id,
                     pref_label=pref,
                     alt_labels=_lits(g, subj, SKOS.altLabel),
-                    definition=_lit(g, subj, SKOS.definition) or _lit(g, subj, RDFS.comment),
+                    definition=_definition(g, subj),
                     ontology_iri=ontology_iri,
                     local_name=prop_local,
                     source_path=rel,
@@ -1189,6 +1189,15 @@ def _lit(g: Graph, subj, pred) -> str:
     return ""
 
 
+def _definition(g: Graph, subj) -> str:
+    return (
+        _lit(g, subj, SKOS.definition)
+        or _lit(g, subj, RDFS.comment)
+        or _lit(g, subj, DCTERMS.description)
+        or _lit(g, subj, DC.description)
+    )
+
+
 def _lits(g: Graph, subj, pred) -> list[str]:
     return [str(v) for v in g.objects(subj, pred)]
 
@@ -1248,7 +1257,7 @@ def preview_ontology_text(turtle: str = "") -> dict[str, Any]:
                 "kind": "class",
                 "prefLabel": _lit(g, subj, SKOS.prefLabel) or _lit(g, subj, RDFS.label) or local_name(iri),
                 "altLabels": _lits(g, subj, SKOS.altLabel),
-                "definition": _lit(g, subj, SKOS.definition) or _lit(g, subj, RDFS.comment),
+                "definition": _definition(g, subj),
                 "localName": local_name(iri),
                 "ontologyIri": ontology_iri,
             }
