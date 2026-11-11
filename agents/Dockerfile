@@ -18,7 +18,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     AGENTS_DATA_DIR=/app/agents/data \
     AGENTS_PORT=8080
 
-RUN pip install --no-cache-dir \
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/* && \
+    pip install --no-cache-dir --upgrade "pip>=26.2" "setuptools>=84.1.0" "wheel>=0.46.2" && \
+    pip install --no-cache-dir \
         "fastapi>=0.115.0" \
         "uvicorn>=0.32.0" \
         "httpx>=0.28.0" \
@@ -26,9 +28,11 @@ RUN pip install --no-cache-dir \
         "rdflib>=7.1.0" \
         "pyoxigraph>=0.5.9" \
         "networkx>=3.4.0" \
-        "pymongo>=4.10.0" \
+        "pymongo>=4.18.3" \
         "psycopg[binary]>=3.2.0" \
-        "sqlparse>=0.5.0"
+        "sqlparse>=0.5.0" \
+        "certifi>=2026.10.18" \
+        "dnspython>=2.9.0"
 
 COPY index.json industries.json /app/
 COPY core /app/core
