@@ -11,7 +11,13 @@ import httpx
 
 DEFAULT_BASE = os.environ.get("ECOSYSTEM_LLM_BASE_URL") or os.environ.get("CHAT_SERVER") or ""
 DEFAULT_MODEL = os.environ.get("ECOSYSTEM_LLM_MODEL") or os.environ.get("CHAT_SERVER_MODEL") or ""
-DEFAULT_KEY = os.environ.get("ECOSYSTEM_LLM_API_KEY") or os.environ.get("CHAT_SERVER_KEY", "")
+DEFAULT_KEY = (
+    os.environ.get("ECOSYSTEM_LLM_API_KEY")
+    or os.environ.get("CHAT_SERVER_KEY")
+    or os.environ.get("GEMINI_API_KEY")
+    or os.environ.get("GOOGLE_API_KEY")
+    or ""
+)
 
 
 class LlmClient:
@@ -48,7 +54,19 @@ class LlmClient:
             "temperature": temperature,
         }
         last_error: Exception | None = None
-        for path in ("/v1/chat/completions", "/api/chat"):
+        lower_base = self.base_url.lower()
+        if lower_base.endswith("/chat/completions"):
+            candidate_paths: tuple[str, ...] = ("",)
+        elif (
+            lower_base.endswith(("/v1", "/openai", "/endpoints/openapi"))
+            or "generativelanguage.googleapis.com" in lower_base
+            or "aiplatform.googleapis.com" in lower_base
+            or "/v1beta" in lower_base
+        ):
+            candidate_paths = ("/chat/completions", "/v1/chat/completions", "/api/chat")
+        else:
+            candidate_paths = ("/v1/chat/completions", "/chat/completions", "/api/chat")
+        for path in candidate_paths:
             url = self.base_url + path
             try:
                 body = payload
@@ -58,7 +76,7 @@ class LlmClient:
                     resp = client.post(url, headers=self._headers(), json=body)
                     resp.raise_for_status()
                     data = resp.json()
-                if path == "/v1/chat/completions":
+                if path in ("", "/chat/completions", "/v1/chat/completions"):
                     choices = data.get("choices") or []
                     if choices:
                         return str((choices[0].get("message") or {}).get("content") or "")
