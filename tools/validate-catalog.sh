@@ -226,6 +226,22 @@ PYEOF
     fi
 fi
 
+# ---------- deep ontology / SHACL (Python 3.14 companion) ----------
+if [ -x "$ROOT/tools/validate-ontology.py" ] || [ -f "$ROOT/tools/validate-ontology.py" ]; then
+    echo ""
+    echo "Running tools/validate-ontology.py --catalog ..."
+    if command -v python3.14 >/dev/null 2>&1; then
+        PY=python3.14
+    else
+        PY=python3
+    fi
+    if ! $PY "$ROOT/tools/validate-ontology.py" --catalog; then
+        fail "tools/validate-ontology.py reported ontology/SHACL errors"
+    else
+        note "ontology/SHACL deep validation"
+    fi
+fi
+
 echo ""
 if [ "$ERRORS" -gt 0 ]; then
     echo "Validation FAILED ($ERRORS error(s))"

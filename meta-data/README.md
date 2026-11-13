@@ -17,6 +17,7 @@ explains the same rules for product integrators and specialists.
 | [industry-overlays.md](industry-overlays.md) | Domain + industry authors | Add-only overlay contract and required files |
 | [manifest-schema.md](manifest-schema.md) | Product / API integrators | `index.json` / `industries.json` fields and SemVer |
 | [extension-approaches.md](extension-approaches.md) | Contributors / maintainers | When to extend, overlay, or add a domain |
+| [validation-service.md](validation-service.md) | Integrators / CI | `ONTOLOGY_VALIDATION_SERVER`, public REST/MCP validate & recommendations |
 | [images/](images/) | Readers | Screenshots of catalog domains in product use (EcosystemCode) |
 | [mappings/](../mappings/) | All consumers | Directory of data source to ontology mappings |
 
